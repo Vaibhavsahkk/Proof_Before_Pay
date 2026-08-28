@@ -84,7 +84,7 @@ def test_safe_telemetry_preservation(temp_logger):
         action="action",
         tool="tool",
         input_data={"prompt_tokens": 150, "completion_tokens": 50, "latency": 1.2, "cost": 0.005, "some_secret": "hidden"},
-        output_data={},
+        output_data={"prompt_tokens": "sk-proj-malicious123", "cost": -1.5, "latency": True},
         result="SUCCESS"
     )
     with open(temp_logger.log_file, "r", encoding="utf-8") as f:
@@ -95,6 +95,11 @@ def test_safe_telemetry_preservation(temp_logger):
     assert data["input"]["latency"] == 1.2
     assert data["input"]["cost"] == 0.005
     assert data["input"]["some_secret"] == "***REDACTED***"
+    
+    # Assert invalid/malicious telemetry types are redacted
+    assert data["output"]["prompt_tokens"] == "***REDACTED***"
+    assert data["output"]["cost"] == "***REDACTED***"
+    assert data["output"]["latency"] == "***REDACTED***"
 
 def test_malformed_unserializable_objects(temp_logger):
     class DummyClass:

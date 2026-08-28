@@ -48,7 +48,11 @@ class TraceLogger:
             for k, v in val.items():
                 str_key = str(k)
                 if str_key.lower() in cls.SAFE_TELEMETRY_KEYS:
-                    sanitized_dict[str_key] = val[k]
+                    # Enforce that telemetry values are strictly non-negative numbers
+                    if isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0:
+                        sanitized_dict[str_key] = v
+                    else:
+                        sanitized_dict[str_key] = "***REDACTED***"
                 elif any(sens in str_key.lower() for sens in cls.SENSITIVE_KEYS):
                     sanitized_dict[str_key] = "***REDACTED***"
                 else:

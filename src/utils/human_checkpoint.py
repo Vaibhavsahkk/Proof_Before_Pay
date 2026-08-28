@@ -5,10 +5,14 @@ from typing import Any, Optional
 from src.utils.logger import TraceLogger, TraceLoggerError
 
 def _sanitize_for_display(val: str, max_len: int = 100) -> str:
-    """Escapes control characters and bounds length for safe terminal display."""
+    """Escapes control characters, ANSI codes, and Bidi controls for safe terminal display."""
     val = str(val)
-    # Remove control characters
+    # Remove ANSI escape sequences FIRST before \x1b is stripped
+    val = re.sub(r'\x1b\[[0-9;]*[a-zA-Z]', '', val)
+    # Remove control characters (including \n, \r, etc)
     val = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', val)
+    # Remove Unicode Bidi controls
+    val = re.sub(r'[\u202A-\u202E\u2066-\u2069]', '', val)
     if len(val) > max_len:
         return val[:max_len] + "..."
     return val
