@@ -1,6 +1,8 @@
 services:
   micro1_app:
     build: .
+    image: micro1-challenge-phase0:latest
+    user: micro1user
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}

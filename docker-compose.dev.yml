@@ -1,9 +1,7 @@
 services:
   micro1_app:
+    # Read-only and writable mounts for local development
     volumes:
-      # Read-only mount of src for live reloading
       - ./src:/app/src:ro
-      # Read-only mount of tests
       - ./tests:/app/tests:ro
-      # Writable mount for traces
       - ./traces:/app/traces

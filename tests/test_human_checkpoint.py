@@ -91,21 +91,18 @@ def test_audit_write_failure_fails_closed():
 def test_ui_safety_sanitization(tmp_path):
     mock_logger = MagicMock(spec=TraceLogger)
     with patch("builtins.input", return_value="y"), patch("sys.stdin.isatty", return_value=True):
-        from src.utils.human_checkpoint import request_human_approval, _sanitize_for_display
+        from src.utils.human_checkpoint import request_human_approval, _validate_ui_safety
         
         malicious_action = "Action\n\r\x1b[31mRed\x1b[0m\u202A(Hidden Bidi)\u202C"
         oversized_reason = "A" * 200
         
-        # Test the sanitizer directly
-        safe_action = _sanitize_for_display(malicious_action)
-        assert "\x1b" not in safe_action
-        assert "\u202A" not in safe_action
-        assert "\n" not in safe_action
-        assert "Red(Hidden Bidi)" in safe_action
-        
-        safe_reason = _sanitize_for_display(oversized_reason)
-        assert len(safe_reason) == 103
-        assert safe_reason.endswith("...")
+        # Test the validator directly
+        import pytest
+        with pytest.raises(ValueError):
+            _validate_ui_safety(malicious_action)
+            
+        with pytest.raises(ValueError):
+            _validate_ui_safety(oversized_reason)
         
         # Test integration
         result = request_human_approval(
@@ -116,4 +113,28 @@ def test_ui_safety_sanitization(tmp_path):
             consequence_if_declined="nothing",
             logger=mock_logger
         )
-        assert result is True
+        assert result is False
+
+def test_ui_safety_ambiguity_and_spoofing():
+    mock_logger = MagicMock(spec=TraceLogger)
+    with patch("builtins.input", return_value="y"), patch("sys.stdin.isatty", return_value=True):
+        from src.utils.human_checkpoint import request_human_approval, _validate_ui_safety
+        import pytest
+        
+        # ANSI OSC and CSI sequences
+        osc_action = "Title\x1b]0;Spoofed\x07Action"
+        with pytest.raises(ValueError):
+            _validate_ui_safety(osc_action)
+
+        # Zero-width formatting characters
+        zero_width = "Action\u200B\u200D\uFEFFHidden"
+        with pytest.raises(ValueError):
+            _validate_ui_safety(zero_width)
+            
+        # Ambiguous actions (suffixes hidden by length)
+        action1 = "A" * 100 + "delete /"
+        action2 = "A" * 100 + "safe"
+        with pytest.raises(ValueError):
+            _validate_ui_safety(action1)
+        with pytest.raises(ValueError):
+            _validate_ui_safety(action2)

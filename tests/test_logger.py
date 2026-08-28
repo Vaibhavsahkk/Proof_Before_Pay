@@ -78,13 +78,22 @@ def test_recursive_nested_sanitization_and_sensitive_keys(temp_logger):
     assert data["metadata"]["private_key"] == "***REDACTED***"
 
 def test_safe_telemetry_preservation(temp_logger):
+    import math
     event = temp_logger.log_event(
         phase="phase",
         agent="agent",
         action="action",
         tool="tool",
         input_data={"prompt_tokens": 150, "completion_tokens": 50, "latency": 1.2, "cost": 0.005, "some_secret": "hidden"},
-        output_data={"prompt_tokens": "sk-proj-malicious123", "cost": -1.5, "latency": True},
+        output_data={
+            "prompt_tokens": "sk-proj-malicious123", 
+            "cost": -1.5, 
+            "latency": True,
+            "completion_tokens": 5.5, # Should be integer
+            "latency_ms": math.inf,
+            "total_tokens": math.nan,
+            "other_float": math.inf
+        },
         result="SUCCESS"
     )
     with open(temp_logger.log_file, "r", encoding="utf-8") as f:
@@ -100,6 +109,10 @@ def test_safe_telemetry_preservation(temp_logger):
     assert data["output"]["prompt_tokens"] == "***REDACTED***"
     assert data["output"]["cost"] == "***REDACTED***"
     assert data["output"]["latency"] == "***REDACTED***"
+    assert data["output"]["completion_tokens"] == "***REDACTED***"
+    assert data["output"]["latency_ms"] == "***REDACTED***"
+    assert data["output"]["total_tokens"] == "***REDACTED***"
+    assert data["output"]["other_float"] == "***REDACTED***"
 
 def test_malformed_unserializable_objects(temp_logger):
     class DummyClass:

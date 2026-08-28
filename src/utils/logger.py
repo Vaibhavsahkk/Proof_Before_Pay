@@ -2,6 +2,7 @@ import json
 import os
 import uuid
 import re
+import math
 from datetime import datetime, timezone
 from typing import Any, Dict, Union
 
@@ -36,9 +37,8 @@ class TraceLogger:
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         self.log_file = os.path.join(self.log_dir, f"trace_{timestamp}_{self.run_id[:8]}.jsonl")
 
-    SAFE_TELEMETRY_KEYS = {
-        "prompt_tokens", "completion_tokens", "total_tokens", "latency", "cost", "latency_ms"
-    }
+    SAFE_TELEMETRY_KEYS_INT = {"prompt_tokens", "completion_tokens", "total_tokens"}
+    SAFE_TELEMETRY_KEYS_FLOAT = {"latency", "latency_ms", "cost"}
 
     @classmethod
     def sanitize_value(cls, val: Any, key_name: str = "") -> Any:
@@ -47,9 +47,13 @@ class TraceLogger:
             sanitized_dict = {}
             for k, v in val.items():
                 str_key = str(k)
-                if str_key.lower() in cls.SAFE_TELEMETRY_KEYS:
-                    # Enforce that telemetry values are strictly non-negative numbers
-                    if isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0:
+                if str_key.lower() in cls.SAFE_TELEMETRY_KEYS_INT:
+                    if isinstance(v, int) and not isinstance(v, bool) and v >= 0:
+                        sanitized_dict[str_key] = v
+                    else:
+                        sanitized_dict[str_key] = "***REDACTED***"
+                elif str_key.lower() in cls.SAFE_TELEMETRY_KEYS_FLOAT:
+                    if isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) and v >= 0:
                         sanitized_dict[str_key] = v
                     else:
                         sanitized_dict[str_key] = "***REDACTED***"
@@ -65,13 +69,17 @@ class TraceLogger:
             for pattern in cls.SECRET_PATTERNS:
                 res = pattern.sub('***REDACTED***', res)
             return res
-        elif isinstance(val, (int, float, bool, type(None))):
+        elif isinstance(val, (int, float, type(None))) and not isinstance(val, bool):
+            if isinstance(val, float) and not math.isfinite(val):
+                return "***REDACTED***"
+            return val
+        elif isinstance(val, bool):
             return val
         else:
             # Fallback for non-JSON-serializable custom objects
             try:
                 # Try json serializable check
-                json.dumps(val)
+                json.dumps(val, allow_nan=False)
                 return val
             except (TypeError, ValueError):
                 return cls.sanitize_value(str(val), key_name)
