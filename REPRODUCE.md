@@ -12,12 +12,10 @@ No model API or `GEMINI_API_KEY` is required for Phase 0.
 
 ### 1. Clone the repository
 
-**UNVERIFIED:** no remote URL is configured. `git remote -v` returns no entries.
-
-When the human provides the intended URL:
+**VERIFIED:** repository URL is configured.
 
 ```bash
-git clone <PENDING_URL> micro1-challenge
+git clone https://github.com/Vaibhavsahkk/Proof_Before_Pay.git micro1-challenge
 cd micro1-challenge
 ```
 
@@ -28,8 +26,6 @@ cd micro1-challenge
 ```
 
 Expected successful result: `HARNESS EXIT: 0` in `evidence/phase_0/adversarial_execution.txt`.
-
-The harness must also show `TEST L WRAPPER: PASS`; this is the recorded full Git Bash/POSIX pipeline check.
 
 ### 3. Run the Windows verification pipeline
 

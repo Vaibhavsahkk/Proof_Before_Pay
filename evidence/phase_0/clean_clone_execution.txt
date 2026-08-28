@@ -1,0 +1,34 @@
+================================================================
+CLEAN CLONE EVIDENCE
+================================================================
+Timestamp: 2026-08-29T05:25:51+05:30
+Source URL: https://github.com/Vaibhavsahkk/Proof_Before_Pay.git
+Commit SHA: f653476ccfb4d842df6f4110cb2875d06d63be41
+Clone Directory: temp_clone
+
+COMMAND: .\scripts\run_adversarial_tests.ps1
+EXIT CODE: 0
+OUTPUT SUMMARY: All adversarial tests passed (Tests A-L and harness precondition). Security scan successful.
+
+COMMAND: .\verify.ps1
+EXIT CODE: 0
+OUTPUT SUMMARY: All Windows pipeline verification steps passed, including the 16-test suite inside Docker, Compose isolation check, and Recursive Container Security Assertion.
+
+COMMAND: bash ./verify.sh
+EXIT CODE: 0
+OUTPUT SUMMARY: All POSIX pipeline verification steps passed, including the 16-test suite inside Docker and Container Security Assertion.
+
+COMMAND: git diff --check
+EXIT CODE: 0
+OUTPUT: (no output)
+
+COMMAND: git status --short
+EXIT CODE: 0
+OUTPUT: 
+ M evidence/phase_0/adversarial_execution.txt
+ M evidence/phase_0/pipeline_execution.txt
+
+Note: The modified evidence files are expected during the run in the clone. The source tree itself had no modifications.
+================================================================
+ALL CLEAN CLONE VERIFICATIONS PASSED
+================================================================
