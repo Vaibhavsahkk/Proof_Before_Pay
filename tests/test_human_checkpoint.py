@@ -138,3 +138,21 @@ def test_ui_safety_ambiguity_and_spoofing():
             _validate_ui_safety(action1)
         with pytest.raises(ValueError):
             _validate_ui_safety(action2)
+
+def test_ui_rejection_reports_audit_failure(capsys):
+    mock_logger = MagicMock(spec=TraceLogger)
+    mock_logger.log_event.side_effect = TraceLoggerError("Disk write failed")
+
+    result = request_human_approval(
+        action="unsafe\nlabel",
+        reason="reason",
+        risk="low",
+        expected_result="nothing",
+        consequence_if_declined="nothing",
+        logger=mock_logger,
+    )
+
+    assert result is False
+    output = capsys.readouterr().out
+    assert "Audit logging failed while recording rejected unsafe input" in output
+    assert "Action remains declined" in output

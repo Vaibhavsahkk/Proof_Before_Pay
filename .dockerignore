@@ -9,5 +9,6 @@ venv/
 **/*.pyc
 **/.pytest_cache
 traces/raw
+trajectories/raw
 *.log
 .DS_Store

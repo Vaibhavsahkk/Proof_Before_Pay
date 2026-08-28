@@ -5,11 +5,11 @@ set -o pipefail
 echo "Starting Micro1 Challenge Verification Pipeline (POSIX)..."
 
 # 1. Dependency Check
-if ! command -v docker >/dev/null 2>&1; then
+if ! command -v docker; then
     echo "[FAIL] Docker is not installed or not in PATH."
     exit 1
 fi
-if ! command -v git >/dev/null 2>&1; then
+if ! command -v git; then
     echo "[FAIL] Git is not installed or not in PATH."
     exit 1
 fi
@@ -18,10 +18,38 @@ echo "============================================================"
 echo "STEP: Git Tracked Traces Check"
 echo "============================================================"
 # Enforce trace allowlisting: Fail if any trace outside traces/sanitized/** is tracked.
-INVALID_TRACES=$(git ls-files "traces/" | grep -v "^traces/sanitized/" || true)
-if [ -n "$INVALID_TRACES" ]; then
+if ! TRACKED_TRACES=$(git ls-files -- "traces/"); then
+    echo "[FAIL] Git command failed while listing traces."
+    exit 1
+fi
+INVALID_TRACES=()
+while IFS= read -r tracked_path; do
+    [ -z "$tracked_path" ] && continue
+    case "$tracked_path" in
+        traces/sanitized/*|traces/README.md) ;;
+        *) INVALID_TRACES+=("$tracked_path") ;;
+    esac
+done <<< "$TRACKED_TRACES"
+if [ "${#INVALID_TRACES[@]}" -ne 0 ]; then
     echo "[FAIL] Found improperly tracked traces:"
-    echo "$INVALID_TRACES"
+    printf '%s\n' "${INVALID_TRACES[@]}"
+    exit 1
+fi
+if ! TRACKED_TRAJECTORIES=$(git ls-files -- "trajectories/"); then
+    echo "[FAIL] Git command failed while listing trajectories."
+    exit 1
+fi
+INVALID_TRAJECTORIES=()
+while IFS= read -r tracked_path; do
+    [ -z "$tracked_path" ] && continue
+    case "$tracked_path" in
+        trajectories/sanitized/*|trajectories/README.md) ;;
+        *) INVALID_TRAJECTORIES+=("$tracked_path") ;;
+    esac
+done <<< "$TRACKED_TRAJECTORIES"
+if [ "${#INVALID_TRAJECTORIES[@]}" -ne 0 ]; then
+    echo "[FAIL] Found improperly tracked trajectories:"
+    printf '%s\n' "${INVALID_TRAJECTORIES[@]}"
     exit 1
 fi
 echo "[PASS] Git Tracked Traces Check completed successfully."
@@ -36,6 +64,10 @@ if echo "$CONFIG_OUT" | grep -q "/app/src"; then
 fi
 if echo "$CONFIG_OUT" | grep -q "type: bind"; then
     echo "[FAIL] Found unexpected bind mounts in docker-compose.yml."
+    exit 1
+fi
+if echo "$CONFIG_OUT" | grep -qE "OPENAI_API_KEY|ANTHROPIC_API_KEY|GEMINI_API_KEY"; then
+    echo "[FAIL] Found unexpected API key credentials forwarded in docker-compose.yml."
     exit 1
 fi
 echo "[PASS] Compose Config Isolation Check completed successfully."
@@ -63,50 +95,10 @@ echo "STEP: Recursive Container Security Assertion"
 echo "============================================================"
 # Inspect the actual verification container, not merely the image.
 # We fail if any .env, .env.* (except .env.example), .git, __pycache__, .pytest_cache, .pyc, or raw traces are found.
-docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c '
-    FAILED=0
-    echo "Inspecting container filesystem for prohibited artifacts..."
-    
-    # Check for forbidden files
-    for f in $(find /app -type f -o -type d); do
-        case "$f" in
-            */.git|*/.git/*)
-                echo "[FAIL] Found .git repository artifact: $f"
-                FAILED=1
-                ;;
-            */.env|*/.env.local|*/.env.production|*/.env.development|*/.env.test)
-                echo "[FAIL] Found prohibited secret file: $f"
-                FAILED=1
-                ;;
-            */__pycache__|*/__pycache__/*|*.pyc)
-                echo "[FAIL] Found python cache artifact: $f"
-                FAILED=1
-                ;;
-            */.pytest_cache|*/.pytest_cache/*)
-                echo "[FAIL] Found pytest cache artifact: $f"
-                FAILED=1
-                ;;
-            */traces/raw|*/traces/raw/*)
-                echo "[FAIL] Found raw trace artifact: $f"
-                FAILED=1
-                ;;
-        esac
-    done
-    
-    # Check for non-root user
-    UID=$(id -u)
-    if [ "$UID" -eq 0 ]; then
-        echo "[FAIL] Container is running as root (UID 0)."
-        FAILED=1
-    fi
-    
-    if [ $FAILED -ne 0 ]; then
-        exit 1
-    fi
-    echo "[PASS] Container security assertion passed. No prohibited artifacts found."
-'
+docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app ./scripts/verify_container_security.sh
 echo "[PASS] Recursive Container Security Assertion completed successfully."
 
 echo "************************************************************"
 echo "ALL VERIFICATION STEPS PASSED"
 echo "************************************************************"
+exit 0

@@ -1,0 +1,3727 @@
+Why do freelancers ghost projects after partial payments without accountability systems?
+
+76
+
+B2B Services
+
+Businesses hiring ad-hoc freelancers through informal channels experience high churn rates when workers disappear mid-project after receiving partial payments, leaving companies with incomplete deliverables and no legal framework to recover damages or enforce completion.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+76
+
+Why are small retailers forced into distributor margins without direct brand access?
+
+68.5
+
+B2B Services
+
+Small retailers operating on thin margins find themselves trapped in traditional distribution chains where intermediaries and distributors capture 40-50% of potential profits because retailers lack the connections, minimum order quantities, or platforms to source products directly from brands and manufacturers.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+68.5
+
+Why do micro-SMEs waste 10+ hours weekly on invoice management?
+
+67.5
+
+B2B Services
+
+Micro and small businesses waste significant administrative time creating, tracking, and reconciling invoices manually because enterprise-grade ERP systems are prohibitively expensive, overly complex for their simple needs, and require extensive training that small teams cannot afford.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+67.5
+
+Why can’t manufacturers rely on guaranteed, accountable pickup logistics for outbound deliveries?
+
+79
+
+B2B Services
+
+Small-scale manufacturers frequently miss critical delivery deadlines and lose customer orders when local logistics providers and transport vendors fail to arrive for scheduled pick-ups, leaving products stranded at factories with no reliable alternative transportation networks to fall back on.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+8
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+79
+
+Why do factory owners wait days for industrial repair technicians?
+
+78.5
+
+B2B Services
+
+When specialized machinery breaks down in small manufacturing units, owners face multi-day production halts because there is no on-demand network or marketplace connecting them with qualified industrial technicians who can diagnose and repair niche equipment quickly.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+78.5
+
+Why can't shops see real-time supplier stock levels?
+
+67.5
+
+B2B Services
+
+Small shop owners constantly face inventory mismanagement issues because they cannot see real-time stock levels or availability from their upstream suppliers, leading to either excessive over-ordering that ties up working capital or frustrating stockouts that result in lost sales.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+67.5
+
+Why can’t small restaurants access wholesale ingredient pricing without large minimum orders?
+
+71.5
+
+B2B Services
+
+Independent restaurants and small food establishments cannot access the same cost-effective wholesale pricing that larger chains enjoy because suppliers impose minimum order quantities that exceed their storage capacity and demand, forcing them to buy from retail distributors at significantly higher per-unit costs.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+71.5
+
+Why can't businesses verify new suppliers before purchasing?
+
+76
+
+B2B Services
+
+Small businesses looking to source raw materials from unfamiliar suppliers face substantial risks of receiving substandard goods, inconsistent quality, or outright fraud because there is no centralized verification system or B2B trust rating infrastructure to validate vendor credentials and track performance before committing to purchases.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+76
+
+Why can't SMEs negotiate favorable payment terms with large buyers?
+
+82.8
+
+B2B Services
+
+Small suppliers selling to large corporate buyers face one-sided payment terms of 60-90 days or longer, while needing to pay their own suppliers within 30 days. This creates working capital gaps forcing SMEs to take expensive short-term loans at 18-24% interest. Large buyers refuse to negotiate shorter payment cycles, knowing small suppliers are desperate for orders. No mechanism exists to standardize or enforce fair payment terms, leaving SMEs cash-starved despite having confirmed orders.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+82.8
+
+Why do businesses struggle finding reliable contract manufacturers for small batches?
+
+75.2
+
+B2B Services
+
+Startups and small brands needing 500-5,000 unit production runs cannot find contract manufacturers willing to accept small-batch orders. Most job-work units demand minimum orders of 10,000+ units or charge 40-50% premiums for small quantities. Quality consistency issues arise when manufacturers prioritize large clients. No B2B marketplace connects small brands with verified contract manufacturers offering flexible MOQs, transparent pricing, and quality guarantees for emerging businesses.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+
+
+
+
+ITCHES
+
+ITCH SCORE
+
+INDUSTRY
+
+Why do makeup artists ignore diverse skin tones?
+
+75
+
+Beauty & Personal Care
+
+Brides with diverse skin tones express frustration when makeup artists default to applying identical "fair and lovely" style makeup to all clients without customizing foundation shades, undertones, or techniques to enhance and celebrate each individual's natural complexion and ethnic beauty.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+75
+
+Where can working women find on-call saree draping professionals?
+
+60.5
+
+Beauty & Personal Care
+
+Urban professional women attending traditional weddings, office functions, or morning ceremonies cannot easily locate and book skilled saree draping experts on short notice who can arrive at their homes early to help them dress appropriately and elegantly for time-sensitive events.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+3
+
+ITCH SCORE
+
+60.5
+
+Why don't salon bookings guarantee your preferred stylist?
+
+62
+
+Beauty & Personal Care
+
+Customers booking salon appointments find themselves assigned to random available staff members rather than their preferred skilled stylist, resulting in inconsistent haircut quality, miscommunication about desired styles, and repeated disappointments that erode trust in salon booking systems.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+62
+
+Why do skincare products fail in India's humidity and pollution?
+
+66.5
+
+Beauty & Personal Care
+
+Consumers investing in premium international skincare brands discover their products underperform or cause skin problems because formulations designed for temperate Western climates don't account for India's extreme humidity levels, high pollution exposure, and intense UV radiation that require region-specific adjustments.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+66.5
+
+Why is finding affordable mehendi artists so difficult for small home celebrations?
+
+57.3
+
+Beauty & Personal Care
+
+Families hosting intimate celebrations and small home gatherings struggle to find talented mehendi/henna artists available for modest events because most professionals are either booked for large weddings or charge the same premium "wedding season" rates regardless of event size or complexity.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+4
+
+ITCH SCORE
+
+57.3
+
+Where can men find affordable specialized beard grooming services?
+
+58.5
+
+Beauty & Personal Care
+
+Men seeking professional beard trimming, shaping, and grooming services find limited options beyond overpriced upscale grooming lounges, as neighborhood barbershops typically lack the specialized training, tools, and products needed to create and maintain modern beard styles and designs.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+58.5
+
+Why do confirmed salon appointments still involve 30-minute waits?
+
+66
+
+Beauty & Personal Care
+
+Despite booking confirmed appointment slots, salon customers routinely experience lengthy waiting periods because establishments rely on manual scheduling systems that don't account for service duration variability, stylist availability conflicts, or the cascading delays caused by earlier appointments running overtime.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+66
+
+Where can DIY skincare makers source lab-grade raw ingredients?
+
+57.5
+
+Beauty & Personal Care
+
+Home beauty product makers and natural skincare experimenters cannot easily purchase high-quality raw materials like cosmetic-grade clays, essential oils, botanical extracts, and specialty ingredients in small consumer-friendly quantities from trusted suppliers who can verify purity and provide safety data sheets.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+57.5
+
+Why can't elderly people find at-home beautician services?
+
+75
+
+Beauty & Personal Care
+
+Senior citizens and people with mobility challenges face difficulty accessing basic beauty and grooming services like haircuts, manicures, or facials because very few beauty professionals offer home visit services, and those who do often charge prohibitively high premiums or have limited availability for residential appointments.
+
+SEVERITY SCORE
+
+4
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+4
+
+ITCH SCORE
+
+75
+
+Why do hair color treatments damage hair despite salon promises?
+
+69.8
+
+Beauty & Personal Care
+
+Customers getting hair coloring, highlighting, or balayage services at salons experience severe hair damage - dryness, breakage, and texture loss - within 2-3 weeks despite salons promising 'no damage' formulas. Salons use harsh bleaching agents to achieve desired colors quickly rather than gentler multi-session processes. Post-color care product recommendations are expensive (₹2,000-5,000 for shampoos and serums). No salon offers damage-free guarantees with refunds or corrective treatments, leaving customers with damaged hair and ₹3,000-8,000 sunk costs per service.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+69.8
+
+How do parents find trustworthy evening childcare for short hours?
+
+81
+
+Consumer Services
+
+Professional parents working late shifts or attending evening events face severe childcare gaps because they cannot easily locate verified, trustworthy caregivers available for short-duration evening sessions without committing to expensive monthly nanny services or imposing on already-exhausted grandparents.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+81
+
+Why can’t households easily access digital proof for in-warranty product repairs?
+
+65.5
+
+Consumer Services
+
+Households lose hundreds to thousands annually on out-of-warranty repair charges for products still within coverage because they cannot find misplaced paper warranty cards or present faded thermal-paper receipts that have become illegible, leaving manufacturers and retailers to deny valid warranty claims.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+65.5
+
+Why do valet customers lack car parking visibility?
+
+70
+
+Consumer Services
+
+Customers using valet parking services at shopping centers and restaurants experience anxiety about the security and treatment of their vehicles because they receive no transparency about actual parking locations, cannot monitor their cars remotely, and hear stories of valets taking vehicles for unauthorized personal use.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+70
+
+Why can’t pet owners find trusted home-stay alternatives to boarding kennels?
+
+70
+
+Consumer Services
+
+Dog and cat owners dreading business trips or vacations avoid traditional pet boarding kennels where animals are confined to small cages for extended periods and instead seek verified networks of local pet-loving families who can provide home-stay arrangements where pets roam freely in family environments.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+4
+
+ITCH SCORE
+
+70
+
+Why is there no reliable same-day personalized gifting for last-minute occasions?
+
+65.5
+
+Consumer Services
+
+Busy professionals and forgetful individuals who suddenly remember birthdays or anniversaries at the last minute resort to generic, thoughtless gift purchases like cash, gift cards, or random store items because there is no curated, personalized, same-day gift delivery service that can save them from social embarrassment.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+65.5
+
+Why do drivers circle markets for 20 minutes finding parking?
+
+81
+
+Consumer Services
+
+Shoppers and visitors driving to popular commercial areas and crowded markets waste significant time circling streets looking for available parking spots, creating traffic congestion and pollution, because there is no system allowing them to view real-time parking availability or reserve spaces in advance.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+81
+
+Why is specialized care missing for silk, embroidery and designer clothing?
+
+69.5
+
+Consumer Services
+
+Consumers owning premium fabrics like silk sarees, designer suits, and delicate embroidered clothing frequently have these expensive items damaged or destroyed by neighborhood dry cleaners who use aggressive chemical solvents and lack specialized knowledge about treating different fabric types with appropriate gentle cleaning methods.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+69.5
+
+Why do appliance technicians overcharge for parts and inspections?
+
+68.3
+
+Consumer Services
+
+Homeowners needing repairs for washing machines, refrigerators, or air conditioners feel trapped and exploited when service technicians charge substantial upfront "inspection fees" just for diagnosis and then provide inflated quotations for replacement parts, knowing desperate customers have few alternatives.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+68.3
+
+Why do households lack emergency backup services when domestic help quits suddenly?
+
+74.3
+
+Consumer Services
+
+Households relying on full-time domestic workers for cooking, cleaning, and childcare face sudden crises when their help quits abruptly without serving proper notice periods, leaving working parents scrambling to manage household responsibilities with no emergency backup service providers available.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+5.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+74.3
+
+Why can’t citizens quickly find the right animal rescue help during emergencies?
+
+76
+
+Consumer Services
+
+Compassionate citizens encountering injured, sick, or trapped stray animals feel helpless because they don't know which NGO, veterinary service, or municipal department to contact for rescue assistance, and they need a unified emergency animal rescue app aggregating contact information for nearest rescue organizations based on GPS location.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+6
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+76
+
+
+Why do shoppers visit stores only to find items unavailable?
+
+83
+
+E-commerce
+
+Consumers planning to purchase specific products from nearby retail stores frequently make wasted trips because they cannot check real-time shelf inventory online before leaving home, arriving at stores only to discover their desired items are sold out or not yet restocked.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+83
+
+How can online platforms enable price negotiation and bulk discounts?
+
+78
+
+E-commerce
+
+Online shoppers accustomed to traditional retail's bargaining culture feel they overpay on e-commerce platforms because there is no mechanism allowing them to negotiate prices, request bulk discounts for multiple purchases, or propose alternate pricing for slightly older inventory or products nearing expiration.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+78
+
+Why do quick-delivery apps send bruised fruits and vegetables?
+
+81
+
+E-commerce
+
+Customers ordering from ultra-fast delivery services prioritizing speed over quality routinely receive damaged fruits, bruised vegetables, and crushed packaged goods because warehouse pickers rush through selection and delivery partners prioritize completion times over careful product handling and temperature-controlled transportation.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+9
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+81
+
+How do beauty buyers verify product authenticity on e-commerce?
+
+87
+
+E-commerce
+
+Consumers purchasing skincare and cosmetics through online marketplaces live in fear of receiving counterfeit products, expired inventory, or tampered-with items because platforms lack robust batch verification systems, holographic authentication seals, or manufacturing date transparency that would guarantee genuine product origins.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+87
+
+Why do small online orders arrive in oversized wasteful packaging?
+
+76.5
+
+E-commerce
+
+Environmentally conscious consumers ordering single items or small products online feel frustrated when deliveries arrive in oversized boxes filled with excessive bubble wrap, plastic padding, and unnecessary packaging materials, and they want sustainable "right-sized" or reusable eco-friendly bag delivery options instead.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+76.5
+
+Why can’t working professionals return online purchases outside of business hours?
+
+80
+
+E-commerce
+
+Employees working 9-to-6 jobs who need to return online purchases cannot coordinate delivery-partner pickup schedules that only operate during business hours when they are away from home, and they lack access to convenient 24/7 smart locker systems where they can drop off returns independently.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+80
+
+Why do hidden shipping fees inflate affordable product prices?
+
+76.5
+
+E-commerce
+
+Budget-conscious shoppers attracted to affordably-priced products on e-commerce platforms experience frustration at checkout when previously hidden or unclear shipping fees, handling charges, and platform fees suddenly inflate the total cost by 30-50%, making the purchase no longer economically viable.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+9
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+76.5
+
+Why do fashion products look different in reality?
+
+79
+
+E-commerce
+
+Online fashion shoppers frequently receive garments that look dramatically different in person compared to professional product photographs, discovering mismatched colors, unexpected fabric quality, and poor fits because listings lack authentic user-generated video reviews showing items on real people with varied body types.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+79
+
+Why can't large families get wholesale grocery pricing online?
+
+75.5
+
+E-commerce
+
+Households with 6+ members or joint families that regularly purchase large quantities of groceries, cooking staples, and household essentials cannot obtain the same wholesale rates that restaurants and businesses receive because grocery apps only offer consumer retail pricing without volume-based discount tiers.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+75.5
+
+Why can’t rural residents receive doorstep deliveries despite ordering products online?
+
+80
+
+E-commerce
+
+Residents of small villages and remote rural areas cannot access the full benefits of online shopping because delivery partners refuse to service locations without proper addresses or road access, forcing villagers to travel 10-20 kilometers to district headquarters to collect packages from centralized hubs.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+4
+
+ITCH SCORE
+
+80
+
+Why do fresh graduates lack practical coding skills despite strong academic performance?
+
+86.5
+
+EdTech
+
+Companies hiring fresh graduates discover candidates possess theoretical knowledge and good academic scores but cannot solve basic programming problems, debug code, or apply concepts practically because college curricula rely on theoretical lectures without providing hands-on industry-simulation labs or real-world project experience.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+86.5
+
+Why are college choices influenced by referral fees instead of student aptitude?
+
+85.5
+
+EdTech
+
+High school graduates receive biased college recommendations from counseling agencies and education consultants who prioritize their own commission structures over student aptitude, interests, or career goals, steering confused teenagers toward expensive private institutions that pay the highest referral fees.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+85.5
+
+Why hasn’t tutoring shifted from answer-giving to skill-building learning?
+
+78.5
+
+EdTech
+
+Parents hiring private tutors to help with challenging math and science subjects discover their children remain weak in fundamentals because tutors simply solve homework problems on students' behalf rather than explaining underlying concepts, principles, and problem-solving approaches that build genuine understanding.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+78.5
+
+Why don’t global learning platforms support high-quality regional language instruction?
+
+85.5
+
+EdTech
+
+Exceptionally talented students from non-metro areas who are highly skilled in their fields cannot access elite global online courses, certification programs, or educational content from top institutions because these resources are exclusively available in English and haven't been localized into regional Indian languages.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+85.5
+
+Why don’t schools provide step-by-step, student-friendly kits for complex assignments?
+
+75.5
+
+EdTech
+
+Elementary and middle school students assigned elaborate science fair projects, working models, or craft assignments rely heavily on parental intervention because schools assign overly complex tasks without providing age-appropriate guidance, pre-assembled DIY kits, or step-by-step student-friendly instruction materials.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+75.5
+
+Why do resumes fail ATS filters despite candidates being qualified for roles?
+
+76.5
+
+EdTech
+
+Fresh graduates and career switchers applying to dozens of entry-level positions receive no response or interview callbacks because corporate ATS (Applicant Tracking Systems) automatically filter out resumes lacking specific keywords, employer brand names, or exact experience criteria, and candidates lack guidance on optimizing applications for AI screening.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+9
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+76.5
+
+Why are mock tests and analytics inaccessible to low-income exam candidates?
+
+81.5
+
+EdTech
+
+NEET, JEE, and competitive exam aspirants from economically disadvantaged backgrounds cannot afford premium coaching classes that provide extensive question banks, doubt-clearing support, and mock test series, leaving them relying solely on outdated textbooks without access to quality practice problems and performance analytics.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+81.5
+
+Why is scholarship information fragmented and inaccessible to low-income and rural students?
+
+82
+
+EdTech
+
+Deserving students from economically weaker sections or remote areas remain unaware of available government scholarships, private grants, and financial aid opportunities because information is scattered across disconnected platforms, application processes are complex, and they lack mentors who can guide them through documentation requirements.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+82
+
+Why must students commit to expensive annual subscriptions before testing exam platforms?
+
+73.5
+
+EdTech
+
+Students wanting to try online learning platforms for exam preparation discover that most services require upfront annual subscription commitments with non-refundable payments, offering no flexibility for pay-per-topic access, course-switching, or trial periods that let students test teaching quality before major financial commitments.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+9
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+73.5
+
+Why don’t people understand the insurance policies they buy?
+
+82
+
+FinTech
+
+Policyholders make uninformed decisions because insurance documents are written in legal and technical language, obscuring exclusions and conditions that directly affect claim outcomes.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+82
+
+Why do families lose track of wedding gift money?
+
+73.5
+
+FinTech
+
+Households lose financial records because traditional cash and envelope-based gifting lacks a digital system to track contributors, amounts, and reciprocity over time.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+73.5
+
+Why can’t heirs access bank accounts easily after a death?
+
+80
+
+FinTech
+
+Families face financial paralysis because succession processes remain paperwork-heavy and fragmented, making it difficult to securely transfer access to assets after a person’s death.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+80
+
+Why do migrant workers lose money on remittances?
+
+82.5
+
+FinTech
+
+Workers overpay to send money home because remittance services hide fees within exchange rates and charges, preventing transparent comparison and fair pricing.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+82.5
+
+Why does investing feel intimidating to ordinary people?
+
+81.5
+
+FinTech
+
+Retail investors avoid markets because investment platforms emphasize products and jargon instead of personal goals, making participation feel complex and risky. The investors have to self educate using online sources that leave them feeling under-confident and intimidated.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+2
+
+ITCH SCORE
+
+81.5
+
+Why do people struggle to track where their money goes each month?
+
+90.5
+
+FinTech
+
+Individuals lose control over spending because transactions are scattered across UPI apps, cards, wallets, and subscriptions, with no single, simple view of everyday expenses in plain language.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCO
+
+Why can’t hosts prepare restaurant-quality meals at home within 15 minutes?
+
+73.5
+
+Food & Beverage
+
+Hosts organizing spontaneous gatherings or last-minute parties struggle to prepare gourmet-quality food within tight timeframes. Shopping for ingredients, marinating proteins, and cooking elaborate dishes takes 3-4 hours minimum. Pre-packaged meal kits available in supermarkets are either unhealthy frozen foods or require extensive cooking time. No premium ready-to-cook gourmet kits exist that deliver restaurant-quality meals in under 15 minutes for home entertaining.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+73.5
+
+How do consumers verify cold chain integrity?
+
+70
+
+Food & Beverage
+
+Customers ordering ice cream, frozen foods, or temperature-sensitive products through delivery apps receive items that show signs of melting and refreezing, indicating cold chain breaks during transportation. Delivery partners lack refrigerated vehicles or insulated containers. Consumers cannot verify whether products maintained required temperatures throughout the journey. Complaints to platforms are difficult to prove without evidence, leaving customers with compromised food safety and quality.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+70
+
+Why can't tiffin subscribers customize daily meals?
+
+74.5
+
+Food & Beverage
+
+Professionals subscribing to tiffin services receive pre-decided daily menus with no customization options. Dietary preferences, allergies, or taste preferences aren't accommodated. Customers endure dishes they dislike 2-3 times weekly but cannot switch to alternatives within their subscription. Canceling entire subscriptions wastes money on remaining days. No tiffin service allows day-to-day menu selection while maintaining subscription economics.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+74.5
+
+How can buyers verify alcohol authenticity before purchase?
+
+77
+
+Food & Beverage
+
+Alcohol consumers fear purchasing counterfeit or adulterated liquor from retail shops, especially for premium brands. News reports of methanol poisoning and fake alcohol deaths create anxiety. Bottles lack tamper-evident seals or authentication mechanisms. Buyers in tier 2/3 cities particularly worry about product authenticity. No scan-based verification system allows customers to confirm genuine alcohol at point of purchase before opening bottles.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+77
+
+Why can't consumers track sugar content in packaged snacks?
+
+78.5
+
+Food & Beverage
+
+Health-conscious consumers trying to limit sugar intake cannot accurately track consumption from packaged Indian snacks, biscuits, and beverages. Nutrition labels use grams rather than teaspoons, making it difficult to understand actual sugar quantities. Hidden sugars in savory products surprise consumers. No app aggregates and simplifies sugar content data for commonly consumed Indian packaged foods based on barcode scanning.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+78.5
+
+Why do office workers resort to unhealthy afternoon snacks?
+
+71
+
+Food & Beverage
+
+Office professionals experiencing 4 PM hunger pangs resort to unhealthy snacks like samosas, biscuits, or chips from nearby cafeterias due to lack of healthy alternatives. Meal subscriptions deliver only lunch and dinner. Carrying healthy snacks from home isn't practical daily. No service delivers portion-controlled healthy snack boxes to offices timed for afternoon hunger, filling the gap between lunch and dinner.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+71
+
+Why don't consumers trust pre-ground masala powder quality?
+
+72.5
+
+Food & Beverage
+
+Home cooks suspicious of store-bought spice powders worry about adulteration, stale grinding, or artificial colors and preservatives added by manufacturers. Grinding spices at home ensures freshness but requires buying whole spices, owning a grinder, and spending time daily. No service offers custom whole-spice-to-fresh-ground delivery where consumers select spices and receive freshly ground powders within hours.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+72.5
+
+How can consumers verify water purification in delivery cans?
+
+82.5
+
+Food & Beverage
+
+Households ordering 20-liter water cans from local suppliers cannot verify whether water is genuinely RO-purified or just filtered tap water. Suppliers claim RO purification but provide no proof. Testing water quality at home requires expensive TDS meters. Water-borne illnesses from impure delivered water are common. No tamper-proof purity verification seals or batch-level quality certificates exist for packaged drinking water delivery.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+82.5
+
+Why do diners waste time waiting for restaurant tables?
+
+71.5
+
+Food & Beverage
+
+Customers visiting popular restaurants during peak hours face 30-60 minute waits for tables without knowing exact wait times. Restaurant staff provide vague estimates. Customers cannot join virtual queues remotely or pre-order while waiting. Walking to another restaurant risks encountering similar waits. No real-time restaurant queue visibility system allows diners to make informed decisions or pre-order food before being seated.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+71.5
+
+How do people moving struggle to dispose old furniture?
+
+80.5
+
+Home Services
+
+Families relocating to new apartments or cities cannot easily sell, donate, or responsibly dispose of old sofas, beds, wardrobes, and appliances because second-hand furniture markets are unorganized, online platforms attract only lowball offers, and municipalities don't provide convenient bulk furniture recycling or pickup services.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+80.5
+
+Why can't customers find verified plumbers for emergencies?
+
+83
+
+Home Services
+
+Homeowners facing plumbing emergencies at night or weekends cannot find verified, trustworthy plumbers instantly. Local search results show unverified listings with no ratings or background checks. Emergency charges are inflated 2-3x. Service quality is unpredictable. No on-demand platform provides verified emergency plumbers with transparent pricing and instant availability.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+83
+
+How do home painters quote prices without hidden costs?
+
+68.5
+
+Home Services
+
+Customers hiring painters for home renovation receive initial low quotes but face cost escalations during work for primer, putty, labor extras, or material quality upgrades. Final bills exceed estimates by 40-60%. No standardized pricing exists. Customers cannot compare quotes transparently or lock-in final costs before work begins.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+68.5
+
+Why do AC installation charges vary unpredictably?
+
+70.5
+
+Home Services
+
+Customers purchasing air conditioners discover installation costs vary from ₹2,000 to ₹8,000 for the same work depending on technician. Additional charges for copper piping, brackets, or electrical work surprise customers. Dealers and brands don't provide installation cost estimates upfront. No transparent AC installation pricing standards exist.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+70.5
+
+How do homeowners verify carpenter work quality before payment?
+
+66
+
+Home Services
+
+Customers commissioning custom furniture or carpentry work cannot verify quality standards before final payment. Defects like misaligned doors, poor finishing, or wrong measurements appear after installation. Carpenters demand full payment upon installation. Rework requests are denied or cost extra. No quality verification or milestone-based payment system exists.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+66
+
+Why are pest control treatments ineffective within months?
+
+73
+
+Home Services
+
+Households paying ₹3,000-8,000 for cockroach or termite treatment discover pests return within 3-6 months despite service warranties. Companies blame customers for cleanliness. Warranty claims require extensive proof. Re-treatment isn't provided. No performance-based pest control with guaranteed results exists.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+73
+
+How do customers find water tank cleaning services?
+
+62.8
+
+Home Services
+
+Apartment residents needing annual water tank cleaning struggle finding professional services. Most plumbers don't offer tank cleaning. Finding specialized agencies requires word-of-mouth. Pricing isn't transparent (₹1,500-5,000 per tank). Scheduling is difficult. No verified water tank cleaning platform exists with health certification.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+62.8
+
+Why do appliance repair shops not provide warranties?
+
+72.8
+
+Home Services
+
+Customers getting washing machines, refrigerators, or microwaves repaired at local shops receive no warranty on repair work or replacement parts. If the same issue recurs within days, customers must pay again. Unauthorized service centers use duplicate parts without guarantees. No accountability exists for repair quality.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+72.8
+
+How do customers book electricians for small jobs?
+
+70
+
+Home Services
+
+Homeowners needing fan installation, switchboard replacement, or light fixture changes cannot find electricians willing to take small jobs. Most electricians prefer full rewiring contracts. Per-point charging varies wildly (₹200-800 per point). Booking for specific time slots is impossible. No platform aggregates electricians for small electrical work.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+70
+
+Why do home deep cleaning services lack quality standards?
+
+60.8
+
+Home Services
+
+Customers hiring deep cleaning services for ₹3,000-8,000 experience inconsistent quality - some areas are cleaned well while others are missed. No checklists or quality verification exists. Customers cannot track cleaner background or reviews. Payment is expected regardless of satisfaction. Standardized deep cleaning protocols don't exist.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+60.8
+
+Why is booking cargo vehicles harder than passenger transport?
+
+92.1
+
+Logistics
+
+Consumers needing to transport single pieces of furniture, appliances, or bulk purchases across the city cannot easily book small cargo tempos or pickup trucks on-demand through apps like Uber, forcing them to negotiate with unorganized tempo drivers at inflated prices with no fare transparency or digital convenience.
+
+SEVERITY SCORE
+
+10
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+92.1
+
+Why do factory workers lack affordable first-mile transport to factory jobs?
+
+89
+
+Logistics
+
+Daily wage laborers and factory shift workers in industrial areas lack affordable first-mile and last-mile connectivity from residential areas to manufacturing plants, wasting 2-3 hours daily on exhausting walks, and companies need dedicated micro-transit systems that provide subsidized transportation for blue-collar employees.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+89
+
+Why do courier companies lose or damage 5% of packages?
+
+75.2
+
+Logistics
+
+E-commerce sellers and personal shippers face 3-5% package loss or damage rates during courier transit. Filing claims requires extensive documentation. Courier companies take 30-45 days for claim processing. Compensation is disputed or denied. Insurance options are expensive. No accountability mechanism ensures careful package handling.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+75.2
+
+Why do regional logistics lack real-time tracking and reliable delivery ETAs?
+
+77
+
+Logistics
+
+Businesses shipping via local transport companies or smaller couriers have zero real-time tracking visibility. Customers call repeatedly for delivery updates. ETA predictions are unreliable. No unified tracking API exists for regional logistics providers, forcing businesses to manually coordinate delivery communications.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+77
+
+Why can't businesses compare courier rates easily?
+
+70
+
+Logistics
+
+E-commerce sellers must manually check rates across 5-10 courier companies for each shipment. Rate cards have complex zone-based, weight-based, and volumetric pricing. No real-time rate aggregator exists. Businesses waste 30-60 minutes daily on rate comparison, often choosing suboptimal couriers.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+70
+
+Why can’t reverse logistics be dynamically priced like forward shipping?
+
+70.8
+
+Logistics
+
+Product returns, warranty replacements, and rejected deliveries cost 30-40% more than forward shipping. Couriers charge premiums for reverse pickup. Small businesses cannot negotiate reverse logistics rates. High reverse logistics costs eat into thin margins on returned products.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+70.8
+
+Why can't small shippers access bulk shipping discounts?
+
+71.2
+
+Logistics
+
+Small online sellers shipping 50-200 orders monthly pay retail courier rates while large sellers get 40-50% discounts for 1,000+ shipments. No platform aggregates small sellers for collective bargaining. Per-shipment costs are ₹20-30 higher, destroying competitiveness.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+71.2
+
+Why isn’t fragile-handling monitored with sensors and chain-of-custody tech?
+
+68.2
+
+Logistics
+
+Sellers shipping electronics, glassware, or ceramics face 10-15% damage rates. Fragile stickers are ignored by handlers. Businesses cannot mandate special handling. Insurance claims are tedious. No courier guarantees fragile item safety with damage-free delivery assurance.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+68.2
+Why isn’t subscription pause logic built into auto-debit infrastructure?
+
+76.2
+
+Payment Issues
+
+Users traveling abroad, facing temporary financial constraints, or wanting to skip a month of gym/subscription services cannot pause auto-debit mandates temporarily. The only option is permanent cancellation followed by re-enrollment with new KYC and setup. This forces users to continue paying for unused services for 1-3 months. No temporary freeze option exists for UPI autopay, e-mandates, or standing instructions.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+76.2
+
+Why can't users redeem credit card reward points easily?
+
+73.2
+
+Payment Issues
+
+Credit card holders accumulate thousands of reward points but struggle to redeem them effectively. Redemption portals have limited inventory, inflated prices, or products worth 30-40% less than point value. Conversion to cash or statement credit has poor rates. Points expire without notification. Users cannot compare redemption value across categories or find optimal use of accumulated rewards.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+73.2
+
+Why do payment apps have confusing cashback terms?
+
+81.2
+
+Payment Issues
+
+Users making payments see promotional offers like '10% cashback up to ₹100' but discover complex conditions in fine print - minimum transaction amounts, specific merchants only, first-time user restrictions, or bank-specific offers. Cashback promised at payment time often doesn't arrive. Terms like 'up to' mislead users into expecting more than they receive. No standardized, upfront clarity exists on exact cashback users will receive before confirming payment.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+81.2
+
+Why do apartment maintenance payments lack itemized breakdowns?
+
+72.2
+
+Payment Issues
+
+Residents paying monthly society maintenance fees (₹3,000-10,000) receive no itemized breakdown of where money is spent. Lump sum amounts are collected without transparency on staff salaries, repair costs, utilities, or reserve fund allocation. Digital payment receipts just show 'maintenance' without expense categories. Residents cannot verify if charges are justified or question specific expense increases without detailed financial reporting.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+72.2
+
+How do users reconcile bank statement transactions monthly?
+
+79.5
+
+Payment Issues
+
+Individuals reviewing monthly bank statements cannot remember what each transaction was for after 15-30 days. UPI transactions show cryptic merchant IDs. Small payments of ₹50-200 are unidentifiable. Tagging or categorizing transactions post-facto is tedious. No automatic transaction description and categorization exists, making expense tracking and budget analysis nearly impossible without extensive manual work.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+79.5
+
+Why is reward visibility missing across UPI and wallet ecosystems?
+
+77.2
+
+Payment Issues
+
+Consumers using multiple payment apps (Paytm, PhonePe, Google Pay, Amazon Pay) cannot track total cashback earned, pending amounts, and expiring offers across platforms. Each app has different reward structures and expiry timelines. Users miss out on claiming earned cashback or using expiring rewards. No unified dashboard shows total earnings and pending actions across all payment apps.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+77.2
+
+Why is foreign transaction pricing still confusing for consumers?
+
+63.2
+
+Payment Issues
+
+Travelers using forex cards for international payments discover they're paying 3-5% more than advertised exchange rates through hidden markups and transaction fees. Card companies advertise 'zero markup' but add charges in fine print. Comparing actual costs across forex cards, credit cards, and cash withdrawal is complex. Users cannot calculate true cost of foreign transactions before travel.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+63.2
+
+How do users manage multiple payment app wallets?
+
+75
+
+Payment Issues
+
+Users maintaining wallets in Paytm, PhonePe, Amazon Pay, and Mobikwik face fragmented balance management. Money sits idle across wallets. Transferring wallet balance to bank accounts incurs fees or isn't allowed. Checking balances across apps before payments is tedious. No wallet aggregator shows combined balance or allows inter-wallet transfers, forcing users to maintain ₹500-2,000 idle in each app.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+50
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+75
+
+Why don't homebuyers have standardized neighborhood quality data reports?
+
+94.5
+
+Real Estate
+
+Home buyers making multi-crore investment decisions lack comprehensive, data-driven information about neighborhood characteristics like school quality, crime statistics, air quality indices, water availability, power outage frequency, and future infrastructure plans that would inform purchasing choices beyond individual property inspection.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+94.5
+
+Why don’t apartments use QR gates for visitor parking management?
+
+93.5
+
+Real Estate
+
+Society residents constantly clash over visitor parking management because guests occupy limited parking spots for hours without proper permits, causing inconvenience to owners who find their own spaces blocked, yet societies lack digital permit systems, automated barriers, or QR-code-based temporary access controls.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+50
+
+Whitespace Score
+
+4
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+93.5
+
+Why don't apartments have smart water sub-meters?
+
+89.5
+
+Real Estate
+
+Apartment residents overpay for water because buildings lack affordable smart sub-meters, forcing societies to split bills equally regardless of actual consumption and removing incentives for conservation.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+5
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+89.5
+
+Why are half of rental listings fake broker clickbait?
+
+88.5
+
+Real Estate
+
+Prospective tenants searching for rental homes discover that half of attractive listings on property portals are fraudulent advertisements posted by brokers using fake photos, unavailable properties, or significantly different actual offerings designed purely to capture contact information and generate commission-based inquiries.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+88.5
+
+How do buyers discover dampness after moving into homes?
+
+86.5
+
+Real Estate
+
+Home purchasers investing life savings discover hidden water seepage, structural cracks, termite damage, or foundation issues within weeks of possession because pre-purchase home inspections using thermal imaging, moisture meters, and structural engineering assessments are not standard practice in Indian real estate transactions.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+86.5
+
+Why can’t NRIs remotely secure vacant properties with real-time monitoring and alerts?
+
+85.8
+
+Real Estate
+
+Non-resident Indians maintaining vacant properties in their hometowns live with constant anxiety about unauthorized occupancy, illegal construction, or squatter occupation during prolonged absences because traditional property management services don't provide smart home security systems, video monitoring, or biometric access controls with real-time alerts.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+85.8
+
+How do property ads lie about commute times?
+
+85.5
+
+Real Estate
+
+Prospective home buyers and renters discover that real estate marketing claims like "5 minutes from metro" are wildly inaccurate because they measure straight-line distances on maps rather than actual peak-hour walking time accounting for traffic signals, crowded sidewalks, and infrastructure obstacles.
+
+SEVERITY SCORE
+
+10
+
+TAM Score
+
+100
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+7
+
+ITCH S
+
+Why are CRM systems too complex for 3-person businesses?
+
+74
+
+SaaS
+
+Micro-businesses with tiny teams cannot adopt traditional customer relationship management software because these platforms are designed for large sales organizations with complex workflows, requiring extensive setup time, expensive subscriptions, and technical expertise that small teams lack, whereas they need simple WhatsApp-based contact management.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+74
+
+How can companies eliminate unused SaaS subscriptions efficiently?
+
+83.4
+
+SaaS
+
+Organizations accumulate wasteful spending on dozens of SaaS subscriptions with inactive user seats, forgotten trial conversions, and redundant tools purchased by different departments because finance teams lack centralized visibility into all software expenditures and automated alerts for license optimization opportunities.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+83.4
+
+Why can't shop owners create websites without coding knowledge?
+
+92.4
+
+SaaS
+
+Small retail shop owners wanting basic online presence to display products, hours, and contact information cannot use complex website builders requiring coding knowledge, design skills, or content structure planning, and they need voice-to-website AI tools that convert natural speech descriptions into functional storefronts.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+92.4
+
+How can data flow seamlessly between Excel, CRM, and invoicing systems?
+
+68
+
+SaaS
+
+SMEs operating with fragmented software tools waste significant administrative time manually transferring customer data from spreadsheets to CRM systems, copying invoices to accounting software, and re-entering information across platforms because affordable no-code integration connectors that can automate data syncing don't exist.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+68
+
+Why do meetings waste 4 hours daily instead of summaries?
+
+64
+
+SaaS
+
+Corporate employees spend half their workday in back-to-back status meetings, planning discussions, and review calls that could be replaced by brief written updates if they had AI-powered real-time meeting transcription and summarization tools optimized to understand Indian accents and business context.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+64
+
+How do small teams struggle with manual payroll calculations?
+
+82.2
+
+SaaS
+
+Businesses employing fewer than 10 workers spend hours each month manually calculating employee salaries factoring in variable elements like paid leave, unpaid absences, overtime hours, and festival bonuses because payroll software is designed for larger organizations and doesn't offer one-click processing for tiny teams.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+82.2
+
+How can kirana stores predict restocking needs using past sales data?
+
+61.5
+
+SaaS
+
+Small retail kirana stores managing hundreds of SKUs rely on guesswork to reorder inventory, frequently running out of fast-moving items or over-stocking slow sellers because they lack affordable AI-powered predictive analytics that can forecast demand patterns based on historical sales data and seasonal trends.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+61.5
+
+Is there a way for businesses collect quick customer feedback beyond surveys?
+
+70.8
+
+SaaS
+
+Local service businesses receive minimal customer feedback because traditional lengthy online surveys have poor completion rates, and they need interactive audio-based feedback systems that let customers record 5-second voice reviews immediately after service delivery, making input effortless and increasing response rates dramatically.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8.5
+
+ITCH SCORE
+
+70.8
+
+How can affordable cybersecurity checks be made accessible to small businesses?
+
+68
+
+SaaS
+
+Small enterprises operating e-commerce sites or company websites lack cybersecurity budgets and technical expertise to monitor for vulnerabilities, malware injections, or data breaches, and they need simple one-click security audit tools that automatically scan for common threats and provide plain-language alerts.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+68
+
+How can small brands optimize digital ads within limited budgets?
+
+85
+
+SaaS
+
+Small brands lose advertising spend because they lack the expertise and time to continuously optimize campaigns, making manual keyword tuning and budget allocation inefficient for low-budget Google Ads accounts.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+50
+
+Whitespace Score
+
+5
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+85
+
+Why don’t parents get real-time visibility when school buses run late?
+
+75.6
+
+Transportation
+
+Parents experience extreme anxiety when their children's school buses run late without any communication explaining delays or confirming student safety, and they want GPS-tracked transportation with live interior cabin video feeds and automated arrival notifications to eliminate uncertainty about child whereabouts.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+75.6
+
+Why aren’t office shuttles dynamically routed based on real-time employee demand?
+
+92.1
+
+Transportation
+
+Corporate employees commuting to business parks and IT campuses waste significant time waiting for scheduled company shuttles that run on fixed routes without demand-responsive scheduling, and they need on-demand van pooling apps that dynamically route vehicles based on real-time passenger requests.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+5.5
+
+ITCH SCORE
+
+92.1
+
+Why hasn’t late-night women’s mobility been solved with tech-enabled safety systems?
+
+76.5
+
+Transportation
+
+Women working night shifts, traveling after social events, or returning home late avoid auto-rickshaws and cabs due to safety concerns and instead need dedicated women-only driver networks with verified female chauffeurs, panic buttons, live journey tracking, and emergency response systems for secure nighttime transportation.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+76.5
+
+Why can't EV drivers see real-time charger availability?
+
+79.5
+
+Transportation
+
+Electric vehicle drivers waste time and battery charge navigating to public charging stations listed on apps only to discover they are non-functional, under maintenance, or occupied, and they need real-time verification systems that confirm charger availability, functionality status, and queuing times before departure.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+79.5
+
+Why do daily commuters waste 90 minutes in traffic?
+
+84.2
+
+Transportation
+
+Office goers in metros spend 1.5-2 hours each way commuting through congested routes. No carpooling culture exists. Company shuttles are limited. Public transport is overcrowded. Real-time traffic-based route optimization apps don't provide multi-modal alternatives. Commute time wastes 15-20 hours weekly.
+
+SEVERITY SCORE
+
+5
+
+TAM Score
+
+50
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+7.5
+
+ITCH SCORE
+
+84.2
+
+Why is hotel and café WiFi unreliable for travelers?
+
+90.5
+
+Travel
+
+Travelers are misled by “high-speed WiFi” claims because connectivity quality is rarely measured or verified, leaving remote workers and tourists without dependable internet access when they need it most.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+90.5
+
+Why isn't there a women-first travel app for solo travellers?
+
+76
+
+Travel
+
+Solo women travelers and backpackers exploring unfamiliar cities face safety concerns about getting lost, experiencing harassment, or encountering emergencies far from home, and they need verified local guardian networks of background-checked residents they can contact immediately if they feel threatened or require urgent assistance.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+76
+
+Why is it so hard to find power outlets for devices while traveling?
+
+82.5
+
+Travel
+
+Travelers whose mobile phones die during sightseeing, shopping, or commuting face severe inconvenience because finding public electrical outlets for emergency charging is impossible, and they need widespread powerbank-sharing networks with kiosk pickup/drop-off systems similar to bike-sharing services.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+6
+
+ITCH SCORE
+
+82.5
+
+How can travelers quickly find trusted doctors with clear costs in unfamiliar cities?
+
+100
+
+Travel
+
+International travelers and domestic tourists from other states who fall ill in unfamiliar cities don't know which hospitals or clinics to visit, whether doctors speak their language, or what treatment costs to expect, and they need dedicated tourist medical assistance helplines connecting them with verified English-speaking healthcare providers.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+100
+
+How can regional menus be made more accessible for interstate travellers?
+
+76.5
+
+Travel
+
+Travelers from different regions struggle to understand restaurant menus written exclusively in regional scripts and they need instant visual AI translation apps that can scan and convert menu images into their preferred language with food descriptions.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+60
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+6.5
+
+ITCH SCORE
+
+76.5
+
+How can tourists find authentic experiences beyond major attractions?
+
+63.5
+
+Travel
+
+Tourists tired of visiting the same overcrowded landmark attractions mentioned in guidebooks want access to authentic local experiences, hidden neighborhood spots, and cultural activities but cannot easily connect with knowledgeable local insiders who can curate personalized off-the-beaten-path itineraries matched to interests.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+8
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+63.5
+
+Why do medicine prices vary wildly across pharmacy chains?
+
+91
+
+HealthTech
+
+Consumers discover the same prescription medicines are priced dramatically differently across pharmacy chains, with variations of 30-50% between retailers for identical drugs and dosages, because there is no transparent price comparison app allowing patients to find the most affordable nearby source before purchasing.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+91
+
+Why do patients lack tools to compare conflicting diagnoses confidently?
+
+82.5
+
+HealthTech
+
+Patients seeking second medical opinions for serious health conditions struggle to determine if conflicting diagnoses, contradictory treatment plans, or significantly different prescriptions from multiple doctors are due to legitimate medical complexity or potential misdiagnosis requiring further specialist consultation and diagnostic confirmation.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+7
+
+Whitespace Score
+
+6.5
+
+Frequency Score
+
+10
+
+ITCH SCORE
+
+82.5
+
+Why do emergency rooms lack systems to prioritize critical patients instantly?
+
+81.5
+
+HealthTech
+
+Hospital emergency departments operate on chaotic first-come-first-serve protocols where critical patients wait behind less urgent cases because facilities lack AI-powered triage systems that can instantly assess vital signs, symptom severity, and medical urgency to prioritize life-threatening conditions over minor ailments.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+81.5
+
+Why can't doctors access patient medical histories across hospitals?
+
+80
+
+HealthTech
+
+Doctors treating patients in emergencies or follow-up visits across different hospitals cannot access consolidated medical histories, previous prescriptions, drug allergy information, or ongoing medication regimens because health records remain fragmented across individual hospitals with no interoperable national health database system.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+80
+
+Why do rural patients waste time traveling for diagnostic tests?
+
+79.5
+
+HealthTech
+
+Patients in small towns and villages requiring basic blood tests, X-rays, or ultrasounds must travel 30-50 kilometers to reach diagnostic laboratories in larger cities, wasting entire days in transit and delaying treatment decisions because mobile diagnostic vans or local sample collection services are unavailable in rural areas.
+
+SEVERITY SCORE
+
+6
+
+TAM Score
+
+7
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+79.5
+
+Why are diagnostic services not designed for women’s privacy and mobility needs?
+
+78.5
+
+HealthTech
+
+Female patients, particularly married women in conservative areas, postpone essential diagnostic tests because medical facilities and transportation options lack adequate privacy, female-friendly infrastructure, or same-gender accompaniment services that would allow them to visit clinics independently without male family escorts.
+
+SEVERITY SCORE
+
+10
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+78.5
+
+Why is finding specialist doctors in smaller cities hard?
+
+77
+
+HealthTech
+
+Patients in tier 2 and tier 3 cities needing consultations with neurologists, cardiologists, oncologists, or other super-specialists face appointment wait times of 3-4 weeks or must travel to metro cities because there are too few specialists serving large populations and no telemedicine platforms connecting them efficiently.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+77
+
+Why do branded drugs dominate prescriptions despite equivalent, cheaper generic alternatives?
+
+76
+
+HealthTech
+
+Doctors and patients continue prescribing expensive branded pharmaceuticals over affordable generic equivalents containing the same active ingredients and dosages because of lingering suspicions about generic quality, manufacturing standards, bioavailability, and effectiveness despite regulatory equivalence certifications.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+76
+
+Why do hospitals hide procedure pricing from patients?
+
+74.5
+
+HealthTech
+
+Patients admitted for routine procedures or surgeries receive massive bills with line items for consumables, doctor fees, and facility charges that bear no relation to market rates because hospitals don't disclose standardized procedure pricing upfront, leaving patients vulnerable to price gouging during medical emergencies.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+74.5
+
+Why can't patients access digital copies of medical records?
+
+73.5
+
+HealthTech
+
+Healthcare consumers visiting multiple doctors and specialists must carry physical folders of paper reports, X-ray films, and prescription histories because most hospitals don't provide patients with digital copies of their own medical data, test results, and imaging studies in portable formats.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+10
+
+Whitespace Score
+
+8.5
+
+Frequency Score
+
+9
+
+ITCH SCORE
+
+73.5
+
+Why can’t citizens verify whether segregated waste is actually recycled?
+
+79
+
+Other
+
+Citizens diligently segregating wet and dry waste have no visibility into whether municipal collectors actually maintain segregation or mix everything. This undermines individual efforts. No verification system shows waste actually reaches recycling facilities versus landfills.
+
+SEVERITY SCORE
+
+9
+
+TAM Score
+
+90
+
+Whitespace Score
+
+9
+
+Frequency Score
+
+8
+
+ITCH SCORE
+
+79
+
+Why don’t smart water systems detect underground leaks automatically?
+
+78.5
+
+Other
+
+Municipal water authorities waste 40% of water supply through underground pipeline leaks that go undetected for months. Citizens face shortages while water is lost. No acoustic leak detection or citizen reporting systems exist for identifying underground water wastage.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+7
+
+ITCH SCORE
+
+78.5
+
+Why doesn’t on-demand arborist tech exist for emergency tree risk mitigation?
+
+61.2
+
+Other
+
+Residents requesting municipal tree pruning of dangerous overhanging branches threatening power lines or buildings face 6-12 month delays. No emergency arborist services exist. Monsoon damage risks increase due to bureaucratic processes.
+
+SEVERITY SCORE
+
+10
+
+TAM Score
+
+100
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+61.2
+
+Why can’t households schedule doorstep e-waste pickup with instant rewards?
+
+71.2
+
+Other
+
+Households accumulating old phones, laptops, batteries, and chargers cannot find convenient e-waste collection points. Items end up in regular trash. No incentive or bounty programs exist for proper disposal. E-waste awareness is low.
+
+SEVERITY SCORE
+
+7
+
+TAM Score
+
+70
+
+Whitespace Score
+
+7
+
+Frequency Score
+
+5.5
+
+ITCH SCORE
+
+71.2
+
+How do societies manage monsoon waterlogging prevention?
+
+71
+
+Other
+
+Residential areas face repeated waterlogging during monsoons due to clogged drains. Citizens report issues but municipal action is slow. No preventive drain cleaning happens. Communities cannot crowdsource drain clearing or get real-time waterlogging alerts for route planning.
+
+SEVERITY SCORE
+
+8
+
+TAM Score
+
+80
+
+Whitespace Score
+
+6
+
+Frequency Score
+
+5
+
+ITCH SCORE
+
+71

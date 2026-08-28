@@ -61,8 +61,11 @@ def request_human_approval(
                 output_data={"decision": "DECLINED", "approved_by": approved_by},
                 result="DECLINED"
             )
-        except Exception:
-            pass
+        except Exception as audit_error:
+            print(
+                "[ERROR] Audit logging failed while recording rejected unsafe input: "
+                f"{audit_error}. Action remains declined."
+            )
         return False
 
     print("\n" + "="*60)

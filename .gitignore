@@ -7,6 +7,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+tmp/
 .coverage
 htmlcov/
 
@@ -16,11 +17,12 @@ venv/
 ENV/
 env/
 
-# Traces (strict pattern)
+# Traces and Trajectories (strict pattern)
 traces/raw/
 traces/*.jsonl
 traces/unreviewed/
 traces/sanitized/raw*
+trajectories/raw/
 
 # Logs
 *.log

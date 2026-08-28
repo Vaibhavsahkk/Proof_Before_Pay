@@ -1,22 +1,24 @@
 # Project Status
 
-Current phase: 0 (Pre-Kickoff Infrastructure Scaffold)
-Phase status: FINAL VERIFIED PRE-KICKOFF
-Overall completion: 100% of Phase 0 Infrastructure
-Last completed task: Fixed Compose isolation, image security, trace telemetry whitelist bypass, UI safety Unicode/ANSI handling, and Docker-driven single verification script.
-Current task: Await ChatGPT Phase 0 Formal Sign-Off ("PHASE PASS — 100%")
-Next task: Phase 1 (Requirement Analysis & Metric Definition - Pending Kickoff)
-Known risks: Challenge problem statement not yet released; infrastructure must remain modular and strictly un-opinionated about the final task domain.
-Blocked items: Phase 1 is unauthorized until explicit ChatGPT approval is granted.
-Human actions required: Present final verified Phase 0 review packet to ChatGPT for final phase sign-off.
+Current phase: Phase 0 — Environment & Governance
+Phase status: IN PROGRESS — CLEAN-CLONE REPRODUCTION REQUIRED
+Last completed task: The updated adversarial harness passed, including current-image build, all security checks, and full POSIX Test L.
+Current task: Provide the intended repository URL and perform clean-clone reproduction.
+Next task: External ChatGPT review only after clean-clone reproduction succeeds. Phase 1 remains unauthorized.
 
-## Test & Build Verification Summary
-- Single Verification Command (`python verify.py`): PASS
-- Automated Test Suite: 12/12 PASS (Docker-driven execution)
-- Docker Build Status: PASS (docker compose build --no-cache with sha256 pinned base image)
-- Docker Compose Isolation Status: PASS (No host binds loaded in default verification run)
-- Docker Execution Status: PASS (docker compose run --rm micro1_app)
-- Image Security Inspection: PASS (.env, .git, caches, and raw traces excluded recursively from built image)
-- Telemetry & Security Audit: PASS (Strict numeric requirement for safe telemetry preservation, recursive redaction of secret tokens, API keys, and sensitive dictionary keys)
-- Human Checkpoint Safety: PASS (ANSI escape codes and Unicode bidi controls stripped, lengths bounded, mandatory audit log written before action; fails closed on logger write error, EOF, or non-interactive TTY)
-- Documentation Status: Fully updated and verified against live execution evidence. No claims of completion without executable evidence.
+Human actions required:
+1. Provide the intended repository URL so clean-clone reproduction can be tested.
+
+## Current verification summary
+
+- `verify.ps1`: CURRENT RUN PASS, exit 0. Evidence: `evidence/phase_0/pipeline_execution.txt`.
+- `verify.sh`: CURRENT RUN PASS, exit 0 under Git Bash; 16 tests passed in 0.15s. Recorded as Test L in `evidence/phase_0/adversarial_execution.txt`.
+- Adversarial harness: CURRENT RUN PASS, exit 0. Build precondition and Tests A-L passed.
+- Automated test suite: PASS. Current 16-test suite completes successfully inside Docker.
+- Docker build, smoke execution, and current container security runtime checks: PASS.
+- Compose isolation: PASS; host API key names and harmless sentinel values are absent from resolved config.
+- Clean-clone reproduction: UNVERIFIED; `git remote -v` has no entries.
+- Staged-state verification: PASS; `git diff --cached --check` evaluates successfully with exit 0.
+- Security scanner/CVE status: filename/path scanner runtime is PASS. No CVE remediation claim is made.
+
+No Gemini API is needed or authorized during Phase 0.

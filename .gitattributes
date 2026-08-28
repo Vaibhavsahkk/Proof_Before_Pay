@@ -1,0 +1,5 @@
+* text=auto eol=lf
+.gitattributes text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=lf
+evidence/**/*.txt text eol=lf
