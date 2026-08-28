@@ -4,5 +4,7 @@ __pycache__/
 .venv/
 venv/
 *.log
-traces/
 .DS_Store
+# Preserve sanitized traces
+# Only ignore traces containing known secrets if they ever exist
+# traces/*-secret.jsonl
