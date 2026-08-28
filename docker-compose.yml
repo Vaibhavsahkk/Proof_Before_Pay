@@ -1,8 +1,6 @@
 services:
   micro1_app:
     build: .
-    volumes:
-      - .:/app
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}

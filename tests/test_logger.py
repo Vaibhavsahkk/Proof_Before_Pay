@@ -77,6 +77,25 @@ def test_recursive_nested_sanitization_and_sensitive_keys(temp_logger):
     # Verify metadata redaction
     assert data["metadata"]["private_key"] == "***REDACTED***"
 
+def test_safe_telemetry_preservation(temp_logger):
+    event = temp_logger.log_event(
+        phase="phase",
+        agent="agent",
+        action="action",
+        tool="tool",
+        input_data={"prompt_tokens": 150, "completion_tokens": 50, "latency": 1.2, "cost": 0.005, "some_secret": "hidden"},
+        output_data={},
+        result="SUCCESS"
+    )
+    with open(temp_logger.log_file, "r", encoding="utf-8") as f:
+        data = json.loads(f.readline())
+        
+    assert data["input"]["prompt_tokens"] == 150
+    assert data["input"]["completion_tokens"] == 50
+    assert data["input"]["latency"] == 1.2
+    assert data["input"]["cost"] == 0.005
+    assert data["input"]["some_secret"] == "***REDACTED***"
+
 def test_malformed_unserializable_objects(temp_logger):
     class DummyClass:
         def __str__(self):

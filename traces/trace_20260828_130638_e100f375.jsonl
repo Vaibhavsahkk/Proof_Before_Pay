@@ -1,1 +1,0 @@
-{"timestamp": "2026-08-28T13:06:38.643558Z", "run_id": "e100f375-94a3-4bbb-96cf-8a48d961b751", "phase": "smoke_test", "agent": "system", "action": "init", "tool": "none", "input": {"status": "starting"}, "output": {"status": "success"}, "result": "SUCCESS", "error": null, "latency_ms": 0}

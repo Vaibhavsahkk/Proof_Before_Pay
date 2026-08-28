@@ -1,7 +1,17 @@
 import sys
 import getpass
+import re
 from typing import Any, Optional
 from src.utils.logger import TraceLogger, TraceLoggerError
+
+def _sanitize_for_display(val: str, max_len: int = 100) -> str:
+    """Escapes control characters and bounds length for safe terminal display."""
+    val = str(val)
+    # Remove control characters
+    val = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', val)
+    if len(val) > max_len:
+        return val[:max_len] + "..."
+    return val
 
 def request_human_approval(
     action: str, 
@@ -17,14 +27,20 @@ def request_human_approval(
     Audits the decision BEFORE allowing execution. Fails closed if audit logging fails.
     Returns True if approved and audited successfully, False otherwise.
     """
+    safe_action = _sanitize_for_display(action)
+    safe_reason = _sanitize_for_display(reason)
+    safe_risk = _sanitize_for_display(risk)
+    safe_expected = _sanitize_for_display(expected_result)
+    safe_consequence = _sanitize_for_display(consequence_if_declined)
+
     print("\n" + "="*60)
     print("HUMAN APPROVAL REQUIRED")
     print("="*60)
-    print(f"Action: {action}")
-    print(f"Reason: {reason}")
-    print(f"Risk: {risk}")
-    print(f"What will happen: {expected_result}")
-    print(f"What happens if declined: {consequence_if_declined}")
+    print(f"Action: {safe_action}")
+    print(f"Reason: {safe_reason}")
+    print(f"Risk: {safe_risk}")
+    print(f"What will happen: {safe_expected}")
+    print(f"What happens if declined: {safe_consequence}")
     print("="*60)
     
     proposed_approval = False
@@ -50,13 +66,11 @@ def request_human_approval(
     # Instantiate default TraceLogger if none provided
     active_logger = logger if logger is not None else TraceLogger()
 
-    # Determine user identity safely
     try:
         approved_by = getpass.getuser()
     except Exception:
         approved_by = "unknown"
 
-    # MANDATORY AUDIT LOGGING BEFORE PROCEEDING
     try:
         active_logger.log_event(
             phase=phase,
@@ -64,10 +78,10 @@ def request_human_approval(
             action="request_approval",
             tool="human_input",
             input_data={
-                "action_requested": action,
-                "action_description": expected_result,
-                "reason": reason,
-                "risk": risk
+                "action_requested": safe_action,
+                "action_description": safe_expected,
+                "reason": safe_reason,
+                "risk": safe_risk
             },
             output_data={
                 "decision": "APPROVED" if proposed_approval else "DECLINED",
@@ -76,7 +90,6 @@ def request_human_approval(
             result="SUCCESS" if proposed_approval else "DECLINED"
         )
     except Exception as e:
-        # FAIL CLOSED: If audit logging fails, force decision to False even if human said Yes!
         print(f"[ERROR] Audit logging failed: {e}. FAILING CLOSED for security.")
         return False
 

@@ -36,20 +36,26 @@ class TraceLogger:
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         self.log_file = os.path.join(self.log_dir, f"trace_{timestamp}_{self.run_id[:8]}.jsonl")
 
+    SAFE_TELEMETRY_KEYS = {
+        "prompt_tokens", "completion_tokens", "total_tokens", "latency", "cost", "latency_ms"
+    }
+
     @classmethod
-    def sanitize_value(cls, val: Any) -> Any:
+    def sanitize_value(cls, val: Any, key_name: str = "") -> Any:
         """Recursively sanitize dicts, lists, strings, and arbitrary objects."""
         if isinstance(val, dict):
             sanitized_dict = {}
             for k, v in val.items():
                 str_key = str(k)
-                if any(sens in str_key.lower() for sens in cls.SENSITIVE_KEYS):
+                if str_key.lower() in cls.SAFE_TELEMETRY_KEYS:
+                    sanitized_dict[str_key] = val[k]
+                elif any(sens in str_key.lower() for sens in cls.SENSITIVE_KEYS):
                     sanitized_dict[str_key] = "***REDACTED***"
                 else:
-                    sanitized_dict[str_key] = cls.sanitize_value(v)
+                    sanitized_dict[str_key] = cls.sanitize_value(v, str_key)
             return sanitized_dict
         elif isinstance(val, (list, tuple, set)):
-            return [cls.sanitize_value(item) for item in val]
+            return [cls.sanitize_value(item, key_name) for item in val]
         elif isinstance(val, str):
             res = val
             for pattern in cls.SECRET_PATTERNS:
@@ -64,7 +70,7 @@ class TraceLogger:
                 json.dumps(val)
                 return val
             except (TypeError, ValueError):
-                return cls.sanitize_value(str(val))
+                return cls.sanitize_value(str(val), key_name)
 
     def log_event(
         self, 
