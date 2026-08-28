@@ -1,6 +1,7 @@
 import sys
 import getpass
 from typing import Any, Optional
+from src.utils.logger import TraceLogger, TraceLoggerError
 
 def request_human_approval(
     action: str, 
@@ -13,7 +14,8 @@ def request_human_approval(
 ) -> bool:
     """
     Pause execution and request explicit human approval for consequential actions.
-    Returns True if approved, False if declined.
+    Audits the decision BEFORE allowing execution. Fails closed if audit logging fails.
+    Returns True if approved and audited successfully, False otherwise.
     """
     print("\n" + "="*60)
     print("HUMAN APPROVAL REQUIRED")
@@ -25,37 +27,38 @@ def request_human_approval(
     print(f"What happens if declined: {consequence_if_declined}")
     print("="*60)
     
-    approved = False
+    proposed_approval = False
     try:
         if not sys.stdin.isatty():
-            # In non-interactive mode, fail safely
             print("[DECLINED] Non-interactive execution detected. Action declined by default for safety.")
-            approved = False
+            proposed_approval = False
         else:
             while True:
                 choice = input("Do you approve this action? (y/n): ").strip().lower()
                 if choice in ['y', 'yes']:
-                    print("[SUCCESS] Action approved by human.")
-                    approved = True
+                    proposed_approval = True
                     break
                 elif choice in ['n', 'no']:
-                    print("[DECLINED] Action declined by human.")
-                    approved = False
+                    proposed_approval = False
                     break
                 else:
                     print("Please enter 'y' or 'n'.")
     except (EOFError, KeyboardInterrupt):
         print("\n[DECLINED] Input interrupted or EOF reached. Action declined for safety.")
-        approved = False
+        proposed_approval = False
 
-    # Auditable record
-    if logger:
-        try:
-            approved_by = getpass.getuser()
-        except:
-            approved_by = "unknown"
-            
-        logger.log_event(
+    # Instantiate default TraceLogger if none provided
+    active_logger = logger if logger is not None else TraceLogger()
+
+    # Determine user identity safely
+    try:
+        approved_by = getpass.getuser()
+    except Exception:
+        approved_by = "unknown"
+
+    # MANDATORY AUDIT LOGGING BEFORE PROCEEDING
+    try:
+        active_logger.log_event(
             phase=phase,
             agent="human_checkpoint",
             action="request_approval",
@@ -67,10 +70,19 @@ def request_human_approval(
                 "risk": risk
             },
             output_data={
-                "decision": "APPROVED" if approved else "DECLINED",
+                "decision": "APPROVED" if proposed_approval else "DECLINED",
                 "approved_by": approved_by
             },
-            result="SUCCESS"
+            result="SUCCESS" if proposed_approval else "DECLINED"
         )
-        
-    return approved
+    except Exception as e:
+        # FAIL CLOSED: If audit logging fails, force decision to False even if human said Yes!
+        print(f"[ERROR] Audit logging failed: {e}. FAILING CLOSED for security.")
+        return False
+
+    if proposed_approval:
+        print("[SUCCESS] Action approved by human and audit log written.")
+        return True
+    else:
+        print("[DECLINED] Action declined.")
+        return False

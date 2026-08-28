@@ -2,60 +2,111 @@ import json
 import os
 import uuid
 import re
-from datetime import datetime
-from typing import Any, Dict
+from datetime import datetime, timezone
+from typing import Any, Dict, Union
+
+class TraceLoggerError(RuntimeError):
+    """Exception raised when trace logger fails to write or initialize."""
+    pass
 
 class TraceLogger:
-    def __init__(self, log_dir: str = "traces"):
+    SENSITIVE_KEYS = {
+        "api_key", "apikey", "secret", "token", "password", "auth", 
+        "authorization", "private_key", "credentials", "access_token", 
+        "refresh_token", "secret_key"
+    }
+
+    SECRET_PATTERNS = [
+        re.compile(r'sk-proj-[a-zA-Z0-9_\-\.]+'),
+        re.compile(r'sk-ant-[a-zA-Z0-9_\-\.]+'),
+        re.compile(r'sk-[a-zA-Z0-9_\-\.]{20,}'),
+        re.compile(r'Bearer\s+[a-zA-Z0-9\-\._~+/]+=*', re.IGNORECASE),
+        re.compile(r'ghp_[a-zA-Z0-9]{36}'),
+        re.compile(r'AKIA[0-9A-Z]{16}'),
+    ]
+
+    def __init__(self, log_dir: str = "traces/raw"):
         self.log_dir = log_dir
-        os.makedirs(self.log_dir, exist_ok=True)
-        # Collision-resistant filename
+        try:
+            os.makedirs(self.log_dir, exist_ok=True)
+        except Exception as e:
+            raise TraceLoggerError(f"Failed to create trace directory '{log_dir}': {e}") from e
+
         self.run_id = str(uuid.uuid4())
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         self.log_file = os.path.join(self.log_dir, f"trace_{timestamp}_{self.run_id[:8]}.jsonl")
 
-    def _sanitize_data(self, data: Any) -> Any:
-        """Sanitize secrets and ensure JSON serializability."""
-        # Handle non-serializable objects by converting to string
-        try:
-            # Test if it's purely serializable
-            json.dumps(data)
-            safe_data = data
-        except (TypeError, ValueError):
-            safe_data = str(data)
-            
-        json_str = json.dumps(safe_data)
-        
-        # Redact secrets
-        # Match typical API keys like sk-...
-        json_str = re.sub(r'sk-[a-zA-Z0-9]{20,}', '***REDACTED***', json_str)
-        # Match Anthropic keys
-        json_str = re.sub(r'sk-ant-[a-zA-Z0-9_-]{20,}', '***REDACTED***', json_str)
-        # Match Bearer tokens
-        json_str = re.sub(r'Bearer\s+[a-zA-Z0-9\-\._~+/]+', 'Bearer ***REDACTED***', json_str)
-        
-        return json.loads(json_str)
+    @classmethod
+    def sanitize_value(cls, val: Any) -> Any:
+        """Recursively sanitize dicts, lists, strings, and arbitrary objects."""
+        if isinstance(val, dict):
+            sanitized_dict = {}
+            for k, v in val.items():
+                str_key = str(k)
+                if any(sens in str_key.lower() for sens in cls.SENSITIVE_KEYS):
+                    sanitized_dict[str_key] = "***REDACTED***"
+                else:
+                    sanitized_dict[str_key] = cls.sanitize_value(v)
+            return sanitized_dict
+        elif isinstance(val, (list, tuple, set)):
+            return [cls.sanitize_value(item) for item in val]
+        elif isinstance(val, str):
+            res = val
+            for pattern in cls.SECRET_PATTERNS:
+                res = pattern.sub('***REDACTED***', res)
+            return res
+        elif isinstance(val, (int, float, bool, type(None))):
+            return val
+        else:
+            # Fallback for non-JSON-serializable custom objects
+            try:
+                # Try json serializable check
+                json.dumps(val)
+                return val
+            except (TypeError, ValueError):
+                return cls.sanitize_value(str(val))
 
-    def log_event(self, phase: str, agent: str, action: str, tool: str, input_data: Any, output_data: Any, result: str, error: str = None, latency_ms: int = 0):
+    def log_event(
+        self, 
+        phase: str, 
+        agent: str, 
+        action: str, 
+        tool: str, 
+        input_data: Any, 
+        output_data: Any, 
+        result: str, 
+        error: Any = None, 
+        latency_ms: int = 0,
+        metadata: Any = None
+    ) -> Dict[str, Any]:
         """
-        Log an agent interaction event into the trace.
+        Log an agent interaction event into the trace after full recursive sanitization.
         """
-        event = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+        raw_event = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "run_id": self.run_id,
             "phase": phase,
             "agent": agent,
             "action": action,
             "tool": tool,
-            "input": self._sanitize_data(input_data),
-            "output": self._sanitize_data(output_data),
+            "input": input_data,
+            "output": output_data,
             "result": result,
-            "error": str(error) if error else None,
-            "latency_ms": latency_ms
+            "error": str(error) if error is not None else None,
+            "latency_ms": latency_ms,
+            "metadata": metadata
         }
-        
-        with open(self.log_file, "a", encoding="utf-8") as f:
-            f.write(json.dumps(event) + "\n")
-        
+
+        # Apply recursive sanitization across the entire event dictionary
+        sanitized_event = self.sanitize_value(raw_event)
+
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(sanitized_event) + "\n")
+        except Exception as e:
+            raise TraceLoggerError(f"Failed to write trace event to '{self.log_file}': {e}") from e
+
         if result == "ERROR":
-            print(f"[TRACE ERROR] Phase: {phase} | Agent: {agent} | Action: {action} | Error: {error}")
+            print(f"[TRACE ERROR] Phase: {sanitized_event['phase']} | Agent: {sanitized_event['agent']} | Error: {sanitized_event['error']}")
+
+        return sanitized_event

@@ -1,10 +1,12 @@
 __pycache__/
 *.pyc
+.pytest_cache/
 .env
 .venv/
 venv/
 *.log
 .DS_Store
-# Preserve sanitized traces
-# Only ignore traces containing known secrets if they ever exist
-# traces/*-secret.jsonl
+# Ignore raw runtime traces containing unvetted dynamic logs
+traces/raw/
+# Keep traces/sanitized/ explicitly tracked in git for submission evidence
+!traces/sanitized/
