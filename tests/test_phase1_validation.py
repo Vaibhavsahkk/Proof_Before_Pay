@@ -337,6 +337,7 @@ def test_schema_validator_fails_invalid_schema():
     with pytest.raises(jsonschema.exceptions.ValidationError):
         jsonschema.validate(instance=invalid_data, schema=public_schema)
 
+    expected_vocabulary = HOLD_FINDINGS | INVESTIGATE_FINDINGS
     try:
         with open('benchmark/schemas/ground_truth.json') as f:
             ground_truth_schema = json.load(f)
