@@ -195,7 +195,15 @@ exit $LASTEXITCODE
             if (Test-Path -LiteralPath $reportPath) {
                 try {
                     $report = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json
-                    if ($report.evaluation_status -eq "VALID") {
+                    $manifestPath = Join-Path $_.FullName "run_manifest.json"
+                    if (-not (Test-Path -LiteralPath $manifestPath)) {
+                        continue
+                    }
+                    $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+                    if (
+                        $report.evaluation_status -eq "VALID" -and
+                        $manifest.manifest_schema_version -eq "phase2-baseline-run-v2"
+                    ) {
                         $validRunCandidates += $_.Name
                     }
                 }

@@ -24,6 +24,8 @@ EXPECTED_CASE_IDS = tuple(f"case_{number:03d}" for number in range(1, 7))
 PROMPT_V1_SHA256 = "CA0A31712B6058EE0CFEE0A510740581D6880B0F652F4D9D8AC161FAC8445FD3"
 MODEL_ID = "gemini-3.6-flash"
 MAX_ATTEMPTS = 3
+MANIFEST_SCHEMA_VERSION = "phase2-baseline-run-v2"
+INPUT_HASH_MODE = "utf8-text-normalized-lf"
 GENERATION_SETTINGS = {
     "temperature": 0.0,
     "response_mime_type": "application/json",
@@ -47,6 +49,11 @@ def compute_file_sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(65536), b""):
             digest.update(chunk)
     return digest.hexdigest().upper()
+
+
+def compute_text_file_sha256(path: Path) -> str:
+    with path.open("r", encoding="utf-8", newline=None) as handle:
+        return compute_sha256(handle.read())
 
 
 def redact_secrets(text: str | None, api_key: str) -> str | None:
@@ -99,7 +106,7 @@ def get_source_state() -> dict:
 def run_case(client, model_id, prompt_template, rulebook, schema_obj, case_path, api_key):
     case_id = case_path.stem
     evidence = case_path.read_text(encoding="utf-8")
-    input_hash = compute_file_sha256(case_path)
+    input_hash = compute_text_file_sha256(case_path)
     prompt = prompt_template.format(
         rulebook=rulebook,
         evidence=evidence,
@@ -184,6 +191,7 @@ def run_case(client, model_id, prompt_template, rulebook, schema_obj, case_path,
         "runtime_seconds": latency,
         "rendered_prompt_sha256": prompt_hash,
         "input_sha256": input_hash,
+        "input_hash_mode": INPUT_HASH_MODE,
         "usage_metadata": usage_metadata
         or {
             "prompt_token_count": "NOT_RETURNED",
@@ -268,7 +276,8 @@ def main() -> int:
         return 1
 
     manifest = {
-        "manifest_schema_version": "phase2-baseline-run-v1",
+        "manifest_schema_version": MANIFEST_SCHEMA_VERSION,
+        "input_hash_mode": INPUT_HASH_MODE,
         "run_id": run_id,
         "start_time_utc": utc_now(),
         "provider": "google",

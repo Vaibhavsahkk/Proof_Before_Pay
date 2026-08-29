@@ -98,6 +98,17 @@ def test_prompt_v1_hash_is_literal_and_pinned():
     assert runner.compute_sha256(content) == runner.PROMPT_V1_SHA256
 
 
+def test_text_file_hash_is_line_ending_independent(tmp_path):
+    lf_path = tmp_path / "lf.json"
+    crlf_path = tmp_path / "crlf.json"
+    lf_path.write_bytes(b'{"case_id":"case_001"}\n')
+    crlf_path.write_bytes(b'{"case_id":"case_001"}\r\n')
+    assert runner.compute_text_file_sha256(lf_path) == runner.compute_text_file_sha256(
+        crlf_path
+    )
+    assert runner.compute_file_sha256(lf_path) != runner.compute_file_sha256(crlf_path)
+
+
 def test_prompt_contains_safety_boundaries():
     prompt = runner.PROMPT_PATH.read_text(encoding="utf-8").lower()
     assert "human reviewer" in prompt
@@ -253,7 +264,8 @@ def test_main_generates_complete_six_case_manifest(monkeypatch, tmp_path):
     run_dirs = list((tmp_path / "runs").iterdir())
     assert len(run_dirs) == 1
     manifest = json.loads((run_dirs[0] / "run_manifest.json").read_text(encoding="utf-8"))
-    assert manifest["manifest_schema_version"] == "phase2-baseline-run-v1"
+    assert manifest["manifest_schema_version"] == runner.MANIFEST_SCHEMA_VERSION
+    assert manifest["input_hash_mode"] == runner.INPUT_HASH_MODE
     assert manifest["expected_case_ids"] == list(runner.EXPECTED_CASE_IDS)
     assert manifest["source"] == {"commit_sha": "a" * 40, "working_tree_dirty": False}
     assert [item["case_id"] for item in manifest["cases"]] == list(runner.EXPECTED_CASE_IDS)
@@ -324,7 +336,8 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
                 "returned_model": runner.MODEL_ID,
                 "sdk_version": "test-sdk",
                 "settings": dict(runner.GENERATION_SETTINGS),
-                "input_sha256": runner.compute_file_sha256(public_path),
+                "input_sha256": runner.compute_text_file_sha256(public_path),
+                "input_hash_mode": runner.INPUT_HASH_MODE,
                 "runtime_seconds": 1.0,
                 "usage_metadata": usage_metadata,
                 "retry_policy": "transient_only",
@@ -338,7 +351,7 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
         records.append(
             {
                 "case_id": case_id,
-                "input_sha256": runner.compute_file_sha256(public_path),
+                "input_sha256": runner.compute_text_file_sha256(public_path),
                 "output_file": output_path.name,
                 "output_sha256": output_hash,
                 "status": "SUCCESS",
@@ -348,7 +361,8 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
         )
 
     manifest = {
-        "manifest_schema_version": "phase2-baseline-run-v1",
+        "manifest_schema_version": runner.MANIFEST_SCHEMA_VERSION,
+        "input_hash_mode": runner.INPUT_HASH_MODE,
         "run_id": "run_test",
         "start_time_utc": "2026-08-29T00:00:00Z",
         "end_time_utc": "2026-08-29T00:00:01Z",

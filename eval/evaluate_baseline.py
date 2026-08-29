@@ -11,12 +11,15 @@ from jsonschema import ValidationError, validate
 from baseline.run_baseline import (
     EXPECTED_CASE_IDS,
     GENERATION_SETTINGS,
+    INPUT_HASH_MODE,
+    MANIFEST_SCHEMA_VERSION,
     MAX_ATTEMPTS,
     MODEL_ID,
     PROMPT_PATH,
     RULEBOOK_PATH,
     compute_file_sha256,
     compute_sha256,
+    compute_text_file_sha256,
     write_json_exclusive,
 )
 from scripts.verify_manifest import ManifestVerifier
@@ -46,6 +49,7 @@ def read_json(path: Path) -> dict:
 def validate_manifest(manifest: dict, run_path: Path) -> dict:
     required = {
         "manifest_schema_version",
+        "input_hash_mode",
         "run_id",
         "start_time_utc",
         "end_time_utc",
@@ -65,8 +69,10 @@ def validate_manifest(manifest: dict, run_path: Path) -> dict:
     missing = sorted(required - set(manifest))
     if missing:
         raise EvaluationError(f"Manifest missing required fields: {missing}")
-    if manifest["manifest_schema_version"] != "phase2-baseline-run-v1":
+    if manifest["manifest_schema_version"] != MANIFEST_SCHEMA_VERSION:
         raise EvaluationError("Unsupported Phase 2 manifest schema version")
+    if manifest["input_hash_mode"] != INPUT_HASH_MODE:
+        raise EvaluationError("Unsupported Phase 2 input hash mode")
     if manifest["provider"] != "google" or manifest["requested_model"] != MODEL_ID:
         raise EvaluationError("Manifest provider or requested model does not match the baseline")
     if manifest["settings"] != GENERATION_SETTINGS:
@@ -175,7 +181,7 @@ def evaluate_baseline(run_dir: str) -> dict:
         actual_output_hash = compute_file_sha256(output_path)
         if record["output_sha256"] != actual_output_hash:
             raise EvaluationError(f"Output hash mismatch for {case_id}")
-        actual_input_hash = compute_file_sha256(public_case_path)
+        actual_input_hash = compute_text_file_sha256(public_case_path)
         if record["input_sha256"] != actual_input_hash:
             raise EvaluationError(f"Input hash mismatch for {case_id}")
 
@@ -194,6 +200,8 @@ def evaluate_baseline(run_dir: str) -> dict:
             raise EvaluationError(f"Manifest status mismatch for {case_id}")
         if metadata.get("input_sha256") != record["input_sha256"]:
             raise EvaluationError(f"Wrapper input hash mismatch for {case_id}")
+        if metadata.get("input_hash_mode") != manifest["input_hash_mode"]:
+            raise EvaluationError(f"Wrapper input hash mode mismatch for {case_id}")
         if metadata.get("provider") != manifest["provider"]:
             raise EvaluationError(f"Wrapper provider mismatch for {case_id}")
         if metadata.get("requested_model") != manifest["requested_model"]:
