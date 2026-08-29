@@ -9,7 +9,7 @@ Build an evidence-driven pre-payment exception investigator for small businesses
 ## Current State
 Phase 0 (Environment & Governance) is fully completed and verified.
 Phase 1 (Problem Scope & Benchmark Design) is implemented and APPROVED.
-Phase 2 is READY FOR EXTERNAL CHATGPT REVIEW. Phases 3 through 10 are unstarted and remain LOCKED pending explicit approval from the External ChatGPT gatekeeper.
+Phase 2 is ACTIVE in remediation following an external PHASE FAIL verdict. Phases 3 through 10 are unstarted and remain LOCKED pending explicit approval from the External ChatGPT gatekeeper.
 
 ## Source of Truth
 Use the hierarchy in `docs/SOURCE_OF_TRUTH.md`: official hackathon PDF first, original candidate pool second, locked project decision third, then `STATUS.md` plus executable repository artifacts. `PLAN.md` defines phase gates. Advisory research cannot override this hierarchy.

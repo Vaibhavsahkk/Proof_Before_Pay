@@ -19,7 +19,7 @@ Build an evidence-driven pre-payment exception investigator for small businesses
 
 ## Current State
 
-Hackathon Phase 1 is APPROVED. Phase 2 is READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ is locked.
+Hackathon Phase 1 is APPROVED. Phase 2 is ACTIVE in remediation following a PHASE FAIL verdict. Phase 3+ is locked.
 
 ## What Has Been Completed
 

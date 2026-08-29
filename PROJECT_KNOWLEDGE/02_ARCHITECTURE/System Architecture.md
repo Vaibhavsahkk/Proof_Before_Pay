@@ -1,7 +1,7 @@
 # System Architecture
 
 ## Overview
-Phase 1 benchmark design is externally approved and Phase 2 Fair Baseline is ready for external review. Docker defines separate runtime and verifier targets. The runtime uses an explicit COPY allowlist and excludes ground truth, evaluator code, tests, evidence, and reports. The verifier contains the frozen answer key and validation tools.
+Phase 1 benchmark design is externally approved and Phase 2 Fair Baseline is ACTIVE in remediation following a PHASE FAIL verdict. Docker defines separate runtime and verifier targets. The runtime uses an explicit COPY allowlist and excludes ground truth, evaluator code, tests, evidence, and reports. The verifier contains the frozen answer key and validation tools.
 
 ## Components
 1. **Verification Scripts:** `verify.ps1` and `verify.sh`. They orchestrate the environment checks, Docker build, and test runs.
