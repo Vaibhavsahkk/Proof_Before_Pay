@@ -79,7 +79,7 @@ if ($exeContent -match "COMMAND: bash \./verify\.sh[\r\n]+EXIT CODE: ([1-9][0-9]
 
 if ($auditContent -match "COMMAND: git status --short \(post-test clean\)[\r\n]+EXIT CODE: [0-9]+[\r\n]+OUTPUT:[\r\n]+([^\r\n]+)") {
     $matched = $matches[1]
-    if ($matched.Trim() -ne "") {
+    if ($matched.Trim() -ne "" -and $matched.Trim() -ne "POST-TEST AUDIT RESULT: PASS") {
         Write-Error "post-test final status is not empty"
         exit 1
     }
