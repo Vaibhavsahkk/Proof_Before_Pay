@@ -2,11 +2,11 @@
 ================================================================
 ADVERSARIAL EVIDENCE FILE
 ================================================================
-Timestamp : 2026-08-29T13:50:53+05:30
-Workdir   : C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450
+Timestamp : 2026-08-29T14:02:35+05:30
+Workdir   : C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0
 Command    : git rev-parse HEAD
 Exit       : 0
-ddca58b880b973c7f91df5d89e95402d7bbe54cf
+e53b5f6601d2ff50ce98f047fbadba3a62e51aca
 Command    : git status --short
 Exit       : 0
 
@@ -35,7 +35,7 @@ HASH EXIT 0: 0E6EE56342B9F8DDE66F4A10D2318D96E2912FC9979A67525C0FCC668F788908  t
 TEST A: PowerShell Git negative-path test
 ================================================================
 Command      : powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File "verify.ps1"
-Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_74f9dc0d5cb74efd8907c40366964266
+Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_975fdeb1058d4e4f962b85dab7cd3e08
 Process exit : 128
 --- stdout/stderr ---
 Starting Micro1 Challenge Verification Pipeline (PowerShell)...
@@ -44,7 +44,7 @@ STEP: Git Tracked Traces Check
 ============================================================
 
 fatal: not a git repository (or any of the parent directories): .git
-C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_74f9dc0d5cb74efd8907c40366964266\verify.ps1 : [FAIL] Git command failed.
+C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_975fdeb1058d4e4f962b85dab7cd3e08\verify.ps1 : [FAIL] Git command failed.
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
     + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,verify.ps1
 --- end ---
@@ -68,7 +68,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_aacb3b783a27495ba12701891c873dd8\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_8397783ce5c8425f9aa504bf7b4b73e1\verify.ps1 : [FAIL] Found
 improperly tracked traces:
 traces/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -94,7 +94,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_6f4a782cd0584eb3a1b7c0562be21476\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_804f8ecb800641878905a595a923298b\verify.ps1 : [FAIL] Found
 improperly tracked trajectories:
 trajectories/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -110,11 +110,11 @@ TEST D: Three-provider Compose sentinel test
 ================================================================
 Command      : docker compose -f docker-compose.yml config (with three harmless sentinel variables)
 Process exit : 0
-name: proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450
+name: proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0
 services:
   micro1_app:
     build:
-      context: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450
+      context: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0
       dockerfile: Dockerfile
     command:
       - python
@@ -127,7 +127,7 @@ services:
     user: micro1user
 networks:
   default:
-    name: proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450_default
+    name: proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0_default
   OPENAI absent          : PASS
   ANTHROPIC absent       : PASS
   GEMINI absent          : PASS
@@ -147,7 +147,7 @@ Process exit : 0
 #1 DONE 0.0s
 
 #2 [internal] load build definition from Dockerfile
-#2 transferring dockerfile: 380B 0.0s done
+#2 transferring dockerfile: 380B done
 #2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
@@ -165,18 +165,18 @@ Process exit : 0
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 5.59MB 0.4s done
-#7 DONE 0.4s
+#7 transferring context: 5.59MB 0.5s done
+#7 DONE 0.5s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.272 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.387
-#9 1.387 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.387 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.5s
+#9 1.475 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.570
+#9 1.570 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.570 [notice] To update, run: pip install --upgrade pip
+#9 DONE 1.6s
 
 #10 [5/6] COPY . .
 #10 DONE 0.0s
@@ -186,11 +186,11 @@ Process exit : 0
 
 #12 exporting to image
 #12 exporting layers
-#12 exporting layers 0.4s done
-#12 exporting manifest sha256:73e1569101eb0776edf9ffda1d33f263b90da6901c896ccbc34403f63cdf9080 done
-#12 exporting config sha256:6a6901fa76cc148ce296099b42ab6f87d6767b8da305db6755c7771ddaa519d0 done
-#12 exporting attestation manifest sha256:43f67c681d42af891abf692df86ec87dc7e1df0fada01c81ac638a6b1e8aca51 0.0s done
-#12 exporting manifest list sha256:87322ef1729b2a7c1e61e573d472bdd0f4220982e07d3fae657a8c99be627186 done
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:ef287dd03dde4680f40cda96ffdfaad40af0403140bb6ace43e19578926f45a0 done
+#12 exporting config sha256:55a6941f55b9ccfffc0c14b358529fe4f878ec19c4a70cffd44e1871157ee2b9 done
+#12 exporting attestation manifest sha256:28a1a62ace965e34ace5f73d18b356eb839f445faec9c77836de601c5729c197 0.0s done
+#12 exporting manifest list sha256:391863e9bc2410f31afa910f306b91919b733454f488e4d578366ecdfb57cd3f 0.0s done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
@@ -204,7 +204,7 @@ BUILD PRECONDITION: PASS
 ================================================================
 TEST E: Security prohibited-path matrix
 ================================================================
-Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "mkdir -p '/app/folder with space' '/app/.git' '/app/__pycache__' '/app/.pytest_cache' '/app/traces/raw/t1' '/app/trajectories/raw/t1' && touch '/app/folder with space/.env' '/app/.env.staging' '/app/test.pyc' && sh /app/verify_container_security.sh"
+Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "mkdir -p '/app/folder with space' '/app/.git' '/app/__pycache__' '/app/.pytest_cache' '/app/traces/raw/t1' '/app/trajectories/raw/t1' && touch '/app/folder with space/.env' '/app/.env.staging' '/app/test.pyc' && sh /app/verify_container_security.sh"
 Scanner exit : 1
 Inspecting container filesystem for prohibited artifacts...
 [FAIL] Found prohibited secret or artifact:
@@ -224,7 +224,7 @@ TEST E WRAPPER: PASS
 ================================================================
 TEST F: Security allowed lookalikes
 ================================================================
-Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "mkdir -p '/app/traces/raw_backup' '/app/trajectories/raw_notes' && sh /app/verify_container_security.sh"
+Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "mkdir -p '/app/traces/raw_backup' '/app/trajectories/raw_notes' && sh /app/verify_container_security.sh"
 Scanner exit : 0
 Inspecting container filesystem for prohibited artifacts...
 [PASS] Container security assertion passed. No prohibited artifacts found.
@@ -233,7 +233,7 @@ TEST F WRAPPER: PASS
 ================================================================
 TEST G: Security find failure
 ================================================================
-Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "SCAN_ROOT=/app/does-not-exist sh /app/verify_container_security.sh"
+Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh -c "SCAN_ROOT=/app/does-not-exist sh /app/verify_container_security.sh"
 Scanner exit : 1
 Inspecting container filesystem for prohibited artifacts...
 [FAIL] Container filesystem scan failed.
@@ -243,7 +243,7 @@ TEST G WRAPPER: PASS
 ================================================================
 TEST H: Security root execution
 ================================================================
-Command      : docker run --rm -u 0 -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh /app/verify_container_security.sh
+Command      : docker run --rm -u 0 -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh /app/verify_container_security.sh
 Scanner exit : 1
 Inspecting container filesystem for prohibited artifacts...
 [FAIL] Container is running as root (UID 0).
@@ -252,7 +252,7 @@ TEST H WRAPPER: PASS
 ================================================================
 TEST I: Normal security scan
 ================================================================
-Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-72d0fb17766f4d44a47f9058fc1fa450\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh /app/verify_container_security.sh
+Command      : docker run --rm -v "C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-8d4e547b244d4ab795aeae65990346a0\scripts\verify_container_security.sh:/app/verify_container_security.sh:ro" micro1-challenge-phase0:latest sh /app/verify_container_security.sh
 Scanner exit : 0
 Inspecting container filesystem for prohibited artifacts...
 [PASS] Container security assertion passed. No prohibited artifacts found.
@@ -350,10 +350,10 @@ STEP: Docker Build
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.203 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.317
-#9 1.317 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.317 [notice] To update, run: pip install --upgrade pip
+#9 1.233 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.315
+#9 1.315 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.315 [notice] To update, run: pip install --upgrade pip
 #9 DONE 1.4s
 
 #10 [5/6] COPY . .
@@ -365,10 +365,10 @@ STEP: Docker Build
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.3s done
-#12 exporting manifest sha256:1fabc1ddf1316950bfa2d40e3fd84762ea62452c306c393f8e38ec3a3013c2d1 done
-#12 exporting config sha256:f7d40ceae26b10dc3ae4ea0807a434731aab0308b3cec25700d840dd01b42a3a done
-#12 exporting attestation manifest sha256:9497ebf2cdc09278fabbfe3c56f5609c1a7853e18fea000d2668368fd1951eab 0.0s done
-#12 exporting manifest list sha256:ea069b447a5b5aa03698e0d6b53d6826a9eafa4794a36f3ed877534e4af7fc7b done
+#12 exporting manifest sha256:2bdf39a7208911cc5a14eac6dbcf8109727926a2640d83aba8fd06fd8ac929bb done
+#12 exporting config sha256:697f80f2b14810284477c775937839b9a21a995c51a835b53a3f0060b9315e6a done
+#12 exporting attestation manifest sha256:24fea95adf7745345287757e29233e7a86f8ee8b9011427e404d6223e15efde5 0.0s done
+#12 exporting manifest list sha256:ba34f2a31c2ac13635ada1a997204de816a385193509967142802c14815ca6ca done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
@@ -395,7 +395,7 @@ Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
 Installing collected packages: pluggy, packaging, iniconfig, pytest
 Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
 .................                                                        [100%]
-17 passed in 0.14s
+17 passed in 0.16s
 [PASS] Automated Test Suite Execution completed successfully.
 ============================================================
 STEP: Smoke Execution
@@ -415,19 +415,19 @@ ALL VERIFICATION STEPS PASSED
 
  Image micro1-challenge-phase0:latest Building
  Image micro1-challenge-phase0:latest Built
- Network proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450_default Creating
- Network proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450_default Created
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8acfb4f26631 Creating
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8acfb4f26631 Created
+ Network proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0_default Creating
+ Network proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0_default Created
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-f2c69843635a Creating
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-f2c69843635a Created
   WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: pip install --upgrade pip
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8d33fd384697 Creating
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8d33fd384697 Created
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8d82d14cbc95 Creating
- Container proofbeforepay-final-72d0fb17766f4d44a47f9058fc1fa450-micro1_app-run-8d82d14cbc95 Created
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-603ef5e5df79 Creating
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-603ef5e5df79 Created
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-7c9d2a4f2be1 Creating
+ Container proofbeforepay-final-8d4e547b244d4ab795aeae65990346a0-micro1_app-run-7c9d2a4f2be1 Created
   process exit 0       : PASS
   completion marker    : PASS
   current 17 tests     : PASS
