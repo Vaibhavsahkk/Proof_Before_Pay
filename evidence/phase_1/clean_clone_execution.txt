@@ -1,0 +1,329 @@
+﻿--- PHASE 1 CLEAN CLONE EXECUTION ---
+CANDIDATE SHA: a2fe2dc11916a5bf9008c2253e346296509b8a4b
+CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea
+--- VALIDATE PHASE 1 ---
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+[PASS] Arithmetic validation
+ALL PHASE 1 VALIDATIONS PASSED
+--- PYTEST ---
+============================= test session starts =============================
+platform win32 -- Python 3.11.15, pytest-9.1.0, pluggy-1.6.0
+rootdir: C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea
+configfile: pytest.ini
+plugins: anyio-4.14.1, langsmith-0.11.1
+collected 2 items
+
+tests\test_phase1_validation.py ..                                       [100%]
+
+============================== 2 passed in 0.08s ==============================
+--- VERIFY PS1 ---
+Starting Micro1 Challenge Verification Pipeline (PowerShell)...
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+docker :  Image micro1-challenge-phase0:latest Building 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea\verify.ps1:69 char:1
++ docker compose -f docker-compose.yml build --no-cache
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image micro1-c...atest Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load local bake definitions
+#1 reading from stdin 710B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 380B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 187B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#5 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 5.65MB 0.6s done
+#7 DONE 0.6s
+
+#8 [3/6] COPY requirements.lock requirements.txt ./
+#8 DONE 0.0s
+
+#9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
+#9 2.510 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 2.635 
+#9 2.635 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 2.635 [notice] To update, run: pip install --upgrade pip
+#9 DONE 2.7s
+
+#10 [5/6] COPY . .
+#10 DONE 0.1s
+
+#11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
+#11 DONE 0.6s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.8s done
+#12 exporting manifest sha256:ec86ac8e7995d948abc8e2b40d54033523a18dc4eab17cdee3ef73fcaff5a46e 0.0s done
+#12 exporting config sha256:5e27148d7d23605f28461cb9c70c66dcaad0700b12813918d4010fde7589449e 0.0s done
+#12 exporting attestation manifest sha256:30a0698602f3780f564fc4c4cf9d5578377c931606182b131a12b4a63ca641e2 0.0s done
+#12 exporting manifest list sha256:73133c5f6f77b5ec6963614875814f3c1f12143bd727f039988eb54d228e922b
+#12 exporting manifest list sha256:73133c5f6f77b5ec6963614875814f3c1f12143bd727f039988eb54d228e922b 0.0s done
+#12 naming to docker.io/library/micro1-challenge-phase0:latest done
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.5s done
+#12 DONE 1.5s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image micro1-challenge-phase0:latest Built 
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Automated Test Suite Execution (Docker-driven)
+============================================================
+Running tests inside container...
+docker :  Network phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea_default Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea\verify.ps1:80 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip i ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Network phase1...fault Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Network phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea_default Created 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-a62322456406 Creating 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-a62322456406 Created 
+Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+  Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+  Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Downloading packaging-24.1-py3-none-any.whl (53 kB)
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Installing collected packages: pluggy, packaging, iniconfig, pytest
+  WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+...................                                                      [100%]
+19 passed in 0.30s
+Running Phase 1 Schema Validator...
+docker :  Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-3bb8ec1d382d Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea\verify.ps1:87 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app python scrip ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container phas...d382d Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-3bb8ec1d382d Created 
+Starting Phase 1 Validation...
+[PASS] Case count validation
+jsonschema not installed, skipping strict json schema validation for now.
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+[PASS] Arithmetic validation
+ALL PHASE 1 VALIDATIONS PASSED
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+docker :  Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-32bc515fb74e Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea\verify.ps1:98 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container phas...fb74e Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-32bc515fb74e Created 
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+docker :  Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-3fc3592850f7 Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Test3-97d2e044030e4ec6a0c9ddb2dcb29cea\verify.ps1:108 char:1
++ docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container phas...850f7 Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-3fc3592850f7 Created 
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
+--- VERIFY BASH ---
+Starting Micro1 Challenge Verification Pipeline (POSIX)...
+/c/Program Files/Docker/Docker/resources/bin/docker
+/mingw64/bin/git
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+bash.exe :  Image micro1-challenge-phase0:latest Building 
+At line:18 char:1
++ & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh 2>&1 | Out-File $ou ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image micro1-c...atest Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load local bake definitions
+#1 reading from stdin 710B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 380B 0.1s done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 187B 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#6 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
+#6 DONE 0.1s
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 16.76kB 0.1s done
+#5 DONE 0.1s
+
+#8 [3/6] COPY requirements.lock requirements.txt ./
+#8 DONE 0.1s
+
+#9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
+#9 2.571 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 2.663 
+#9 2.663 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 2.663 [notice] To update, run: pip install --upgrade pip
+#9 DONE 2.8s
+
+#10 [5/6] COPY . .
+#10 DONE 0.1s
+
+#11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
+#11 DONE 1.1s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.8s done
+#12 exporting manifest sha256:f8ecdd439a45fc5e9af5d4a802380fc7c7f96a3e3e0eba4081a97c8a74dfbccc 0.0s done
+#12 exporting config sha256:ad95866ddfbbae74c7550e02f69af7e6b75694697445cf5969e26d71982147b7 0.0s done
+#12 exporting attestation manifest sha256:b72a881a192075846d5c922267d706ec4018a79fe20d5571ff52bb41fedbcff2
+#12 exporting attestation manifest sha256:b72a881a192075846d5c922267d706ec4018a79fe20d5571ff52bb41fedbcff2 0.1s done
+#12 exporting manifest list sha256:3656a7420a05b9c8b7b59ea5ffe3e5dc4ba3e9026123055320acfdb9c3eb10e0 0.0s done
+#12 naming to docker.io/library/micro1-challenge-phase0:latest
+#12 naming to docker.io/library/micro1-challenge-phase0:latest done
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.4s done
+#12 DONE 1.5s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.1s
+ Image micro1-challenge-phase0:latest Built 
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Automated Test Suite Execution (Docker-driven)
+============================================================
+Running tests inside container...
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-e6b624cc7803 Creating 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-e6b624cc7803 Created 
+Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+  Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+  Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Downloading packaging-24.1-py3-none-any.whl (53 kB)
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Installing collected packages: pluggy, packaging, iniconfig, pytest
+  WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+...................                                                      [100%]
+19 passed in 0.16s
+Running Phase 1 Schema Validator...
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-8006ad92be5c Creating 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-8006ad92be5c Created 
+Starting Phase 1 Validation...
+[PASS] Case count validation
+jsonschema not installed, skipping strict json schema validation for now.
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+[PASS] Arithmetic validation
+ALL PHASE 1 VALIDATIONS PASSED
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-ed24e6703a60 Creating 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-ed24e6703a60 Created 
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-7d1cc596e72d Creating 
+ Container phase1test3-97d2e044030e4ec6a0c9ddb2dcb29cea-micro1_app-run-7d1cc596e72d Created 
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
