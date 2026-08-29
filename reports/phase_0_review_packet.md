@@ -17,6 +17,7 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 - `tests/test_human_checkpoint.py` adds a regression test for that audit-log failure path. The current test count is 16.
 - Gemini remains a conditional later-phase provider only. No model API is required or authorized in Phase 0, and no API key is forwarded through Compose.
 - Modified `verify.sh` and `verify.ps1` to use a relative path (`./scripts/verify_container_security.sh`) to prevent MSYS2 path conversion issues inside Git Bash.
+- Resolved 218-character filename issue breaking default Windows git clones by renaming the image to `sources/hackathon_announcement.png`.
 
 ## Commands actually run in the current correction pass
 
@@ -44,7 +45,7 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 
 - `evidence/phase_0/adversarial_execution.txt`: current harness output. Current-image build and Tests A-L pass; harness exit 0.
 - `evidence/phase_0/pipeline_execution.txt`: current Windows pipeline attempt. Git, Compose, Docker Build, Pytest, and Security scan all pass; process exit 0.
-- `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on commit f653476ccfb4d842df6f4110cb2875d06d63be41.
+- `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on exact tested candidate SHA 9783ac6f09fe869f195a061bfa7f83847a517f66. The subsequent final evidence commit adds this documentation without changing executable code.
 
 ## Assumptions
 
