@@ -83,7 +83,7 @@ Phase 2 was READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ remains locked.
 ## 2026-08-29 - Phase 2 External Review and Remediation
 
 ### What Changed
-External ChatGPT returned a `PHASE FAIL` verdict for Phase 2. The baseline achieved 100% Exact Case-Level Recommendation Accuracy on the frozen six-case benchmark, leaving no headroom to measure future agentic improvements (a mandatory hackathon scorecard item). Created `docs/PHASE_2_REMEDIATION_PLAN.md` mandating the expansion of the benchmark to 10 cases while keeping existing Phase 0/1 artifacts strictly frozen.
+External ChatGPT returned a `PHASE FAIL` verdict for Phase 2. The baseline achieved 100% Exact Case-Level Recommendation Accuracy on the frozen six-case benchmark, leaving no headroom to measure future agentic improvements (a mandatory hackathon scorecard item). Created `docs/PHASE_2_REMEDIATION_PLAN.md` mandating the expansion of the benchmark via a coverage matrix while keeping existing Phase 0/1 artifacts strictly frozen.
 
 ### Verification
 Local inspection of the external gatekeeper verdict. The failure is recognized as a benchmark-design and experimental-validity blocker.

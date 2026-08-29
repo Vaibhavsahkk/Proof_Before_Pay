@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 benchmark design currently has 6 frozen synthetic cases (`case_001` to `case_006`). Phase 2 baseline scored 100% accuracy on these cases, leading to a `PHASE FAIL` gate verdict. A remediation plan (`docs/PHASE_2_REMEDIATION_PLAN.md`) mandates expanding the benchmark to 10 cases without modifying existing immutable artifacts. Phase 3+ is unauthorized and LOCKED.
+Phase 1 benchmark design currently has 6 frozen synthetic cases (`case_001` to `case_006`). Phase 2 baseline scored 100% accuracy on these cases, leading to a `PHASE FAIL` gate verdict. A remediation plan (`docs/PHASE_2_REMEDIATION_PLAN.md`) mandates expanding the benchmark without a predetermined case count via a coverage matrix, while maintaining existing immutable artifacts. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
@@ -37,7 +37,7 @@ Phase 1 benchmark design currently has 6 frozen synthetic cases (`case_001` to `
 - Default Docker Compose configuration does not forward model credentials.
 
 ## Not Completed
-- Phase 2: Remediation (4 new cases), new baseline run, and external re-approval.
+- Phase 2: Remediation coverage matrix and metric amendment proposal under local review, baseline run, and external re-approval.
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
@@ -56,7 +56,7 @@ Phase 1 benchmark design currently has 6 frozen synthetic cases (`case_001` to `
 - A bare `bash ./verify.sh` launched from PowerShell resolves to WSL on this host and failed before test execution; the documented Git Bash execution passes.
 
 ## Current Priorities
-Execute the Phase 2 Remediation Plan by creating 4 new cases, verifying them, running the baseline again, and obtaining a new external Phase 2 review. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
+Execute the Phase 2 Remediation Plan by verifying the coverage matrix and metric amendment proposal, designing new cases strictly mapped to the rulebook, running the baseline again, and obtaining a new external Phase 2 review. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
 
 ## Important Files
 [[Important Files]]

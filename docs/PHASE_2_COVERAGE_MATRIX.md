@@ -3,12 +3,18 @@
 ## 1. Context & Purpose
 Following the Phase 2 (Fair Baseline) `PHASE FAIL` verdict, the baseline achieved 100% Exact Case-Level Recommendation Accuracy on the frozen 6-case benchmark. To establish a rigorous, measurable foundation for agentic improvement without outcome-targeting, this document maps the current benchmark coverage against the authoritative taxonomy in `benchmark/RULEBOOK.md`. 
 
-The objective is to identify legitimate, untested workflow gaps and anomaly types to justify expanding the benchmark to 12 cases. 
+The objective is to identify legitimate, untested workflow gaps and anomaly types to justify expanding the benchmark based strictly on taxonomy coverage, avoiding any predetermined or arbitrary case counts.
 
-## 2. Current Benchmark Coverage (Cases 001 - 006)
+## 2. Selection Rule for Benchmark Expansion
+- **Outcome-Independent:** Case inclusion is determined solely by the presence of unrepresented taxonomy elements, not by the baseline's expected success or failure.
+- **Coverage Mandate:** Include one atomic test case for each unrepresented primary rulebook category to ensure baseline algorithms are tested against all deterministic rule variants.
+- **Representative Sampling:** For categories with multiple sub-types (e.g., Math Errors have 4 sub-types), sample one representative sub-type to bound dataset size while proving algorithmic capability, unless specific sub-types exercise distinct data sources (e.g., PO vs. GRN).
+- **No Artificial Complexity:** Do not artificially combine anomalies unless explicitly testing precedence boundaries.
 
-| Case ID | Expected Outcome | Anomalies Present | Taxonomy Category | Coverage Status |
-|---------|-----------------|-------------------|-------------------|-----------------|
+## 3. Current Benchmark Coverage (Cases 001 - 006)
+
+| Case ID | Rule-derived Expected Recommendation | Anomalies Present | Taxonomy Category | Coverage Status |
+|---------|--------------------------------------|-------------------|-------------------|-----------------|
 | `case_001` | PAY | None | PAY | Covered |
 | `case_002` | HOLD | Duplicate Billing | HOLD | Covered |
 | `case_003` | HOLD | Quantity Mismatch | HOLD | Covered |
@@ -16,45 +22,53 @@ The objective is to identify legitimate, untested workflow gaps and anomaly type
 | `case_005` | INVESTIGATE | Unverified Bank Change | INVESTIGATE | Covered |
 | `case_006` | HOLD | Duplicate Billing, Unverified Bank Change | HOLD, INVESTIGATE | Covered (Precedence Test) |
 
-**Analysis of Current Coverage:**
-The current 6 cases cover the basic execution paths (clean PAY, single HOLD, single INVESTIGATE) and one multi-signal precedence test. However, large portions of the `RULEBOOK.md` anomaly taxonomy remain completely untested.
+## 4. Taxonomy & Gap Analysis
 
-## 3. Identified Coverage Gaps
+Based on `benchmark/RULEBOOK.md`, the following maps every approved taxonomy and safety category to existing coverage or identifies it as a gap:
 
-Based on `benchmark/RULEBOOK.md`, the following critical anomaly types are currently **untested**:
+### HOLD Conditions
+| Anomaly Type | Coverage | Proposed Resolution |
+|--------------|----------|---------------------|
+| Duplicate Billing | Covered (`case_002`, `case_006`) | None |
+| Quantity Mismatch | Covered (`case_003`) | None |
+| Price Contradiction | Covered (`case_004`) | None |
+| Currency Mismatch | **Gap** | Draft candidate |
+| Invalid Currency | **Gap** | Omitted (Redundant to Currency Mismatch for testing string comparison logic) |
+| Tax Rate Contradiction | **Gap** | Omitted (Redundant to Price Contradiction for testing line-item field comparison) |
+| Math Error | **Gap** (4 subtypes) | Draft candidate (Sample: Sum of line totals != subtotal) |
 
-### Untested HOLD Conditions:
-1. **Currency Mismatch** (Invoice vs PO)
-2. **Invalid Currency** (Not exactly USD)
-3. **Tax Rate Contradiction**
-4. **Math Errors** (Line total calculations, subtotal summation, tax calculation, or grand total calculation)
+### INVESTIGATE Conditions
+| Anomaly Type | Coverage | Proposed Resolution |
+|--------------|----------|---------------------|
+| Missing Vendor Master | **Gap** | Draft candidate |
+| Vendor Identity Mismatch | **Gap** | Draft candidate |
+| Unverified Bank Change | Covered (`case_005`, `case_006`) | None |
+| Missing PO | **Gap** | Draft candidate |
+| Missing GRN | **Gap** | Omitted (Redundant to Missing PO for testing missing object handling) |
+| Duplicate Line ID | **Gap** | Omitted (Rare structural JSON error, lower priority than reconciliation logic) |
+| Missing PO Line ID | **Gap** | Draft candidate |
+| Missing GRN Line ID | **Gap** | Omitted (Redundant to Missing PO Line ID) |
 
-### Untested INVESTIGATE Conditions:
-1. **Missing Vendor Master** (Object is null)
-2. **Vendor Identity Mismatch** (Name or Tax ID mismatch)
-3. **Missing PO / Missing GRN** (Objects are null)
-4. **Duplicate Line ID** 
-5. **Missing PO Line ID / Missing GRN Line ID** (Orphaned invoice lines)
+### PAY Exceptions / Workflows
+| Workflow / Exception | Coverage | Proposed Resolution |
+|----------------------|----------|---------------------|
+| Clean PAY | Covered (`case_001`) | None |
+| Verified Bank Change | **Gap** | Draft candidate (Tests condition where bank change is approved, leading to PAY) |
 
-### Untested Workflow Complexities:
-1. **Verified Bank Change (PAY)**: The rulebook states an `Unverified Bank Change` is an INVESTIGATE condition *unless* it is verified via a matching `old_bank_account`, `new_bank_account`, and `APPROVED` status. An invoice with a valid, approved bank change should result in a `PAY` recommendation. This is currently untested.
+## 5. Draft Candidate Additions
 
-## 4. Proposed Expansion Cases (Cases 007 - 012)
+Derived mechanically from the selection rule and gap analysis. These are draft candidates only and do not mandate an arbitrary final case count.
 
-To address these gaps without forcing outcome bias, we propose 6 new frozen cases carefully designed to test the absent taxonomy items:
+| Proposed Candidate | Primary Anomaly Focus | Rule-derived Expected Recommendation | Justification |
+|--------------------|-----------------------|--------------------------------------|---------------|
+| `candidate_A` | Math Error (Sum of line totals != subtotal) | HOLD | Tests deterministic decimal calculation logic. |
+| `candidate_B` | Currency Mismatch (Invoice vs PO) | HOLD | Tests explicit string comparison constraints. |
+| `candidate_C` | Vendor Identity Mismatch | INVESTIGATE | Tests master data string validation. |
+| `candidate_D` | Missing PO Line ID | INVESTIGATE | Tests line-item level cross-document reconciliation. |
+| `candidate_E` | Missing Vendor Master | INVESTIGATE | Tests missing root object handling. |
+| `candidate_F` | Verified Bank Change (Approved) | PAY | Tests complex conditional exemptions (Exception to INVESTIGATE). |
 
-| Proposed ID | Target Outcome | Primary Anomaly Focus | Justification |
-|-------------|---------------|-----------------------|---------------|
-| `case_007` | HOLD | Math Error (Sum of line totals != subtotal) | Tests deterministic decimal calculation logic. |
-| `case_008` | HOLD | Currency Mismatch (Invoice vs PO) | Tests explicit string comparison constraints. |
-| `case_009` | INVESTIGATE | Vendor Identity Mismatch | Tests master data validation. |
-| `case_010` | INVESTIGATE | Missing PO Line ID | Tests line-item level cross-document reconciliation. |
-| `case_011` | PAY | Verified Bank Change (Approved) | Tests complex conditional exemptions (Exception to INVESTIGATE). |
-| `case_012` | HOLD | Math Error + Missing GRN (Multi-signal) | Tests complex precedence (HOLD > INVESTIGATE) across missing objects and math. |
-
-## 5. Next Steps for Remediation
-1. **Review & Approval:** This coverage matrix must be reviewed and approved (conceptually by the user/gatekeeper) to confirm it does not violate the anti-overfitting rules.
-2. **Drafting Cases:** Once approved, cases `007` through `012` will be authored adhering strictly to the `benchmark/schemas/` JSON definitions.
-3. **Ground Truth Validation:** The ground truth files for `007`-`012` will be created and visually verified for strict `RULEBOOK.md` compliance.
-4. **Test Suite Updates:** `scripts/validate_phase1.py` and Pytest harnesses will be updated to accommodate 12 cases.
-5. **Baseline Execution:** The Phase 2 baseline will be re-run on all 12 cases. The resulting accuracy metric will be recorded as the new official baseline, regardless of whether it is 100% or lower.
+## 6. Next Steps
+1. **Review & Approval:** This coverage matrix must be reviewed and approved locally to confirm it aligns with outcome-independent rules.
+2. **Drafting Cases:** Once approved, the draft candidates will be authored adhering strictly to `benchmark/schemas/`.
+3. **Metric Amendment:** A separate metric amendment proposal will be reviewed to determine how expanded coverage is scored.

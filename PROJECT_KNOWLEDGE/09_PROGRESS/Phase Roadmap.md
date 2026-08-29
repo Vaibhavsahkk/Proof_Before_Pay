@@ -16,7 +16,7 @@ Current evidence: 6 synthetic cases, deterministic oracle, manifest verifier, 29
 
 ## Phase 2 - Fair Baseline
 
-Status: READY FOR EXTERNAL CHATGPT REVIEW.
+Status: PHASE FAIL - REMEDIATION ACTIVE.
 
 Observed completed Phase 2 facts: recorded exact provider/model/version, prompt, tools, settings, raw outputs, evaluator outputs, runtime, and cost. Used the frozen Phase 1 cases without changes.
 

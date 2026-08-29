@@ -138,11 +138,11 @@ No failed or superseded attempt contributes to accepted performance metrics.
 - Risk: no vulnerability/CVE scanner was run; no remediation claim is made.
 - Risk: benchmark size is six synthetic cases, so no production-generalization claim is made.
 - Risk: citation coverage is not separately scored; citations were independently checked for truth and traceability.
-- Blockers: none for Phase 2 review.
+- Blockers: External review `PHASE FAIL` verdict based on benchmark design (100% baseline exact recommendation accuracy ceiling). Remediation is active.
 - Human action required: none.
 
 ## Reproduction
 
 Follow `REPRODUCE.md`. Offline report verification requires no API key. A new provider run requires `GEMINI_API_KEY` in the local process environment and must never write it to source, logs, evidence, or chat.
 
-**READY FOR EXTERNAL CHATGPT REVIEW**
+**PHASE FAIL — REMEDIATION ACTIVE**
