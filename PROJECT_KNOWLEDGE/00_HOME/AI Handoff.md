@@ -19,7 +19,7 @@ Build an evidence-driven pre-payment exception investigator for small businesses
 
 ## Current State
 
-Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair Baseline) is ACTIVE. Phase 3+ is locked.
+Hackathon Phase 1 is APPROVED. Phase 2 is READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ is locked.
 
 ## What Has Been Completed
 
@@ -27,10 +27,12 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 - Dockerized verification pipelines (`verify.ps1`, `verify.sh`)
 - Phase 1 benchmark schemas, data generation, and deterministic ground-truth oracle validation (6 synthetic cases).
 - Container isolation and security assertion tests.
+- Portable six-case `gemini-3.6-flash` baseline run and deterministic evaluation.
+- Exact remote clean-clone verification of the accepted Phase 2 evidence.
 
 ## What Is In Progress
 
-- Retrying and evaluating the real six-case Phase 2 Fair Baseline with pinned `gemini-3.6-flash`; the earlier 2.5 Pro and 3.1 Pro attempts are preserved as INVALID evidence.
+- External ChatGPT review of `reports/phase_2_review_packet.md`.
 
 ## What Is Not Complete
 
@@ -38,7 +40,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## Known Problems
 
-- No known validation failure in Phase 2 scaffold candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
+- No known validation failure in Phase 2 candidate `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`.
 - External approval for Phase 1 has been received.
 - Native macOS/Linux execution remains unverified. Git Bash on Windows is the verified POSIX-like environment.
 
@@ -67,7 +69,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## Current Task
 
-Implement and run the smallest fair Phase 2 baseline. DO NOT START Phase 3 until the exact verdict `PHASE APPROVED — 100%` is returned for Phase 2.
+Stop implementation and request the Phase 2 external gate verdict. DO NOT START Phase 3 until the exact verdict `PHASE APPROVED — 100%` is returned.
 
 ## Rules For Future AI Agents
 

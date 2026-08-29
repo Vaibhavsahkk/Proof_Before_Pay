@@ -29,4 +29,4 @@ If sources conflict, stop the affected work, record the conflict, and escalate. 
 
 ## Current Gate
 
-Hackathon Phase 1 is externally approved. Phase 2 Fair Baseline is the active phase. Phase 3+ is locked until External ChatGPT returns exactly `PHASE APPROVED — 100%` for Phase 2.
+Hackathon Phase 1 is externally approved. Phase 2 Fair Baseline is ready for external review. Phase 3+ is locked until External ChatGPT returns exactly `PHASE APPROVED — 100%` for Phase 2.

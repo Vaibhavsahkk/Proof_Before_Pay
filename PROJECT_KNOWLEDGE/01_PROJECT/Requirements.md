@@ -23,7 +23,7 @@
 
 ## Current Phase Requirement
 
-Phase 1 defines the workflow, schemas, anomaly taxonomy, output contract, benchmark, ground truth, and evaluation design. Phase 2 cannot begin without the exact external verdict `PHASE APPROVED — 100%`.
+Phase 2 must preserve the frozen Phase 1 benchmark, run a reasonable simple baseline, record exact provider/model/prompt/settings/raw outputs/runtime/cost where available, and produce reproducible deterministic evaluation evidence. Phase 3 cannot begin without the exact external verdict `PHASE APPROVED — 100%` for Phase 2.
 
 ## Evidence
 

@@ -45,7 +45,7 @@ The clean-clone harness gained a Phase 2 path, exact candidate whitespace valida
 The exact remote candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f` passed 29 focused Phase 2 tests, both 75-test Docker pipelines, missing-key rejection, clean post-test Git state, and cleanup. Evidence: `evidence/phase_2/scaffold_clean_clone_execution.txt`.
 
 ### Current Status
-Phase 2 remains ACTIVE. Real Gemini baseline NOT RUN. Human-only local key setup is the sole current blocker. Phase 3+ remains locked.
+Historical state at this checkpoint: Phase 2 remained ACTIVE, the real baseline had not run, and local key setup was then the blocker. Later entries supersede this state.
 
 ## 2026-08-29 - Phase 2 Baseline Attempt 1
 
@@ -68,3 +68,14 @@ All six calls returned HTTP 429 because the account's Pro free-tier request and 
 
 ### Current Status
 Both failed attempts are preserved and excluded from performance reporting. The valid retry is pinned to `gemini-3.6-flash`.
+
+## 2026-08-29 - Phase 2 Portable Baseline
+
+### What Changed
+The first successful Flash run exposed a clean-clone failure because v1 hashed raw CRLF input bytes. The runner and evaluator moved to manifest v2 with canonical UTF-8 text hashes. The superseded run and failure log were preserved. A new six-case provider run was generated from clean source `7512b9eace0e43045a406bc7cf46d76e1eb21ea7`.
+
+### Verification
+Run `run_20260829_154058_02e9416b` completed six successful calls and evaluated VALID. Independent recomputation confirmed 100% exact recommendations, findings, and schema validity; unsafe PAY 0/5; no common secret patterns. Exact remote candidate `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c` passed 35 focused tests, committed-report verification, both 81-test Docker pipelines, clean Git state, and scoped cleanup.
+
+### Current Status
+Phase 2 is READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ remains locked.

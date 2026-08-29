@@ -12,10 +12,10 @@ Winning is the goal, not a guaranteed result. Every strategic choice must improv
 
 - Phase 0: externally approved.
 - Phase 1: externally approved.
-- Phase 2: ACTIVE.
+- Phase 2: READY FOR EXTERNAL CHATGPT REVIEW.
 - Phase 3 and later: locked.
 - Approved Phase 1 candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`.
-- Phase 2 clean-clone scaffold candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
+- Phase 2 clean-clone candidate: `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`.
 
 ## Official 100-Point Scorecard
 
@@ -41,7 +41,7 @@ Winning is the goal, not a guaranteed result. Every strategic choice must improv
 
 ## Next Authorized Action
 
-Run the valid six-case retry with pinned `gemini-3.1-pro-preview`, then evaluate and independently audit it. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
+Submit `reports/phase_2_review_packet.md` to External ChatGPT. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
 
 ## Links
 

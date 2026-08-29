@@ -4,45 +4,42 @@
 
 Date: 2026-08-29
 
-Corrected Phase 2 scaffold code candidate: `95cebd1`
+Accepted baseline source: `7512b9eace0e43045a406bc7cf46d76e1eb21ea7`
 
-Phase 2 exact remote clean-clone candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`
-
-Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
+Exact remote clean-clone candidate: `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`
 
 | Check | Observed Result |
 | --- | --- |
-| `python scripts/validate_phase1.py` | Exit 0; 6/6 cases matched |
-| `python scripts/verify_manifest.py` | Exit 0 |
-| Focused Phase 1 pytest suite | Exit 0; 29 passed |
-| `verify.ps1` | Exit 0; 46 passed; runtime isolation checks passed |
-| `C:\Program Files\Git\bin\bash.exe ./verify.sh` | Exit 0; 46 passed; runtime isolation checks passed |
-| Bare `bash ./verify.sh` from PowerShell | Exit 1 under WSL; not accepted as passing evidence |
-| Vault secret-pattern scan | Exit 0; no matching secret material |
+| Accepted provider run | 6/6 SUCCESS using requested/returned `gemini-3.6-flash` |
+| Offline evaluator | VALID; 100% recommendations/findings/schema; unsafe PAY 0/5 |
+| Existing-report verification | Exit 0; deterministic regenerated report matched |
+| Focused Phase 2 suite | Exit 0; 35 passed |
+| `verify.ps1` | Exit 0; 81 passed; runtime isolation checks passed |
+| Git Bash `./verify.sh` | Exit 0; 81 passed; runtime isolation checks passed |
+| Exact remote clean clone | PASS; report verification and both full pipelines passed |
+| Missing-key negative path | Exact expected error; exit 1 |
+| Post-test clone state | Clean; exact Compose and TEMP resources removed |
+| Secret-pattern scan | No common provider-token or private-key patterns |
 
-## Phase 2 Scaffold Audit
+## Evidence integrity
 
-- Gemini attempt 1: INVALID; six provider HTTP 404 responses for unavailable `gemini-2.5-pro`.
-- Gemini attempt 2: INVALID; six provider HTTP 429 responses because 3.1 Pro free-tier quota is zero.
-- `gemini-3.6-flash` health probe: exit 0 and returned model `gemini-3.6-flash`. No valid performance metric yet.
-- Model performance metrics: UNVERIFIED.
-- Corrected focused API-independent suite: 29 passed with deprecation warnings treated as errors.
-- Corrected PowerShell and Git Bash Docker pipelines: each passed on committed source `95cebd1` with 75 tests, manifest validation, credential isolation, runtime import, and ground-truth rejection.
-- Exact remote clean clone: PASS on `eac35cdb4994f917d76cde4a6ca1749957d65f3f`; 29 focused tests, both 75-test Docker pipelines, exact missing-key rejection, clean Git state, and scoped cleanup passed.
-- Phase 3+ remains locked.
+- Manifest v2 binds normalized public-input hashes, raw output hashes, source artifacts, settings, retry policy, model, SDK, usage metadata, and source commit.
+- Per-case wrapper binds the full rendered prompt and its SHA-256.
+- Raw successful responses parse exactly to the scored output objects.
+- The independent audit recomputed all metrics and checked citations/calculations against public inputs.
+- The v1 CRLF portability failure remains preserved and excluded from accepted metrics.
 
-## Current Evidence Files
+## Current evidence files
 
-- `evidence/phase_1/final_clean_clone_execution.txt`
+- `evidence/phase_2/runs/run_20260829_154058_02e9416b/`
+- `evidence/phase_2/final_clean_clone_execution.txt`
+- `reports/phase_2_review_packet.md`
 - `evidence/phase_1/SHA256_MANIFEST.txt`
-- `reports/phase_1_review_packet.md`
-- `evidence/phase_2/scaffold_verify_powershell.txt`
-- `evidence/phase_2/scaffold_verify_git_bash.txt`
-- `evidence/phase_2/scaffold_clean_clone_execution.txt` (normalized machine-captured log)
 
-Historical `superseded_` logs are retained but are not current decision evidence.
+Historical `superseded_` logs and INVALID runs are retained but are not current decision evidence.
 
 ## Unverified
 
 - Native macOS/Linux execution.
 - Vulnerability/CVE scanner results.
+- Provider cost; recorded as UNKNOWN.

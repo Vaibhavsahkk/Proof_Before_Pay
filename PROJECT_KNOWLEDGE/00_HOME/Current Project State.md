@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-Phase 1 is externally approved. The API-independent Phase 2 scaffold passed an exact remote clean-clone gate on committed source `eac35cdb4994f917d76cde4a6ca1749957d65f3f`. Attempts with unavailable 2.5 Pro and zero-quota 3.1 Pro are INVALID. No valid Phase 2 metric exists yet; the retry is pinned to successfully probed `gemini-3.6-flash`.
+Phase 1 is externally approved. Phase 2 has one accepted portable `gemini-3.6-flash` run with a VALID deterministic evaluation and an exact remote clean-clone PASS. Phase 2 is ready for external review, not approved. Phase 3+ remains locked.
 
 ## Current Branch
 master
@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Strict JSON-schema validation, leakage checks, deterministic oracle validation, manifest verification, and runtime/evaluator isolation are implemented and passing. Phase 2 contains a verified simple Gemini baseline runner and fail-closed offline evaluator. A real six-case Gemini run is still required. Phase 3+ is unauthorized and LOCKED.
+Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Phase 2 contains a simple one-call-per-case Gemini baseline and fail-closed offline evaluator. Accepted run `run_20260829_154058_02e9416b` scored 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY on this benchmark. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
@@ -30,13 +30,14 @@ Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic
 - Benchmark SHA-256 Manifest generation and verification
 - Phase 2 baseline script implementation using `google-genai` SDK
 - Phase 2 evaluation script implementation
-- Phase 2 API-independent focused suite passed 29 meaningful tests.
-- PowerShell and Git Bash Docker pipelines each passed 75 tests on committed source `95cebd1`.
-- Exact remote clean-clone Phase 2 scaffold gate passed on `eac35cdb4994f917d76cde4a6ca1749957d65f3f`; its normalized machine log is `evidence/phase_2/scaffold_clean_clone_execution.txt`.
+- Phase 2 focused suite passed 35 meaningful tests.
+- PowerShell and Git Bash Docker pipelines each passed 81 tests.
+- Exact remote clean-clone Phase 2 gate passed on `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`; its normalized machine log is `evidence/phase_2/final_clean_clone_execution.txt`.
+- Deterministic verification of the committed VALID report passed in the clean clone.
 - Default Docker Compose configuration does not forward model credentials.
 
 ## Not Completed
-- Phase 2: Execute the valid real baseline with the provider-supported pinned model.
+- Phase 2: External gate review.
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
@@ -55,7 +56,7 @@ Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic
 - A bare `bash ./verify.sh` launched from PowerShell resolves to WSL on this host and failed before test execution; the documented Git Bash execution passes.
 
 ## Current Priorities
-Implement and run the smallest fair Phase 2 baseline. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
+Stop execution and obtain external Phase 2 review. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
 
 ## Important Files
 [[Important Files]]
@@ -67,13 +68,13 @@ Implement and run the smallest fair Phase 2 baseline. Do not start Phase 3 until
 2026-08-29
 
 ## Verified Revisions
-- Last committed Phase 2 scaffold before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`
-- Phase 2 clean-clone scaffold candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`
+- Accepted baseline source: `7512b9eace0e43045a406bc7cf46d76e1eb21ea7`
+- Phase 2 clean-clone candidate: `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`
 - Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
 ## Verification Source
 - `STATUS.md`
 - `PLAN.md`
 - `README.md`
-- `reports/phase_1_review_packet.md`
-- `evidence/phase_1/final_clean_clone_execution.txt`
+- `reports/phase_2_review_packet.md`
+- `evidence/phase_2/final_clean_clone_execution.txt`

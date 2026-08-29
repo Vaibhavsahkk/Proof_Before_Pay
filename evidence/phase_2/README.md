@@ -1,24 +1,49 @@
 # Phase 2 Evidence
 
-**STATUS: API-independent scaffold verified. Attempts with unavailable 2.5 Pro and zero-quota 3.1 Pro are INVALID; no valid Phase 2 metric exists yet.**
+**STATUS: VALID portable baseline verified from an exact remote clean clone; ready for external review.**
 
-This directory will contain the evidence output for Phase 2 (Fair Baseline), including:
-1. `runs/<run_id>/`: The exact raw outputs and run_manifest from the LLM for each test case.
-2. `runs/<run_id>/evaluation_report.json`: The computed accuracy and safety metrics based on `eval/evaluate_baseline.py`.
-3. `reproduction.txt`: Instructions to reproduce the baseline from a clean clone.
+## Accepted decision evidence
 
-The human supplied `GEMINI_API_KEY` locally without sharing it in chat or evidence. `runs/run_20260829_151625_260ba740/` preserves the failed provider-availability attempt, and `runs/run_20260829_152146_25ba3699/` preserves the failed Pro-quota attempt. Both evaluator reports are INVALID. The retry is pinned to successfully probed `gemini-3.6-flash`.
+- Run: `runs/run_20260829_154058_02e9416b/`
+- Source commit: `7512b9eace0e43045a406bc7cf46d76e1eb21ea7`
+- Requested/returned model: `gemini-3.6-flash`
+- Manifest: `phase2-baseline-run-v2`
+- Input hash mode: `utf8-text-normalized-lf`
+- Evaluator status: `VALID`
+- Clean-clone candidate: `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`
+- Clean-clone evidence: `final_clean_clone_execution.txt`
+- Clean-clone evidence SHA-256: `D720522023C2ACBB17399E1F47A976FD2894FBBD1E4E3AD761518E5E159D2D15`
 
-Scaffold verification logs:
+The clean-clone harness re-ran 35 focused tests, verified the committed report deterministically, ran both 81-test Docker pipelines, checked Git cleanliness, and removed its exact temporary resources. The normalized log is machine-captured evidence, not a byte-for-byte terminal transcript.
 
-- `scaffold_verify_powershell.txt`
-- `scaffold_verify_git_bash.txt`
-- `scaffold_clean_clone_execution.txt`
+## Metrics
 
-## Reproduction Command
-To reproduce the Phase 2 baseline (requires `GEMINI_API_KEY` to be set in environment):
+- Exact case-level recommendation accuracy: 100% (6/6)
+- Findings correctness: 100% (6/6)
+- Schema validity: 100% (6/6)
+- Unsafe-PAY rate: 0% (0/5 non-PAY ground-truth cases)
+- Total runtime: 181.891378800006 seconds
+- Prompt tokens: 11,710
+- Candidate tokens: 1,439
+- Cost: UNKNOWN
 
-```bash
-python -m baseline.run_baseline
-python -m eval.evaluate_baseline evidence/phase_2/runs/<run_id>
+These results apply only to the frozen six-case synthetic benchmark. They are not a production-performance claim.
+
+## Historical and superseded evidence
+
+- `runs/run_20260829_151625_260ba740/`: INVALID, six HTTP 404 provider responses.
+- `runs/run_20260829_152146_25ba3699/`: INVALID, six HTTP 429 zero-quota responses.
+- `runs/run_20260829_152514_caab4d45/`: superseded. Its v1 raw-byte input hashes were checkout-line-ending dependent and failed clean-clone verification.
+- `superseded_clean_clone_failure_c21cb36.txt`: the observed portability failure that caused manifest v2.
+- `superseded_clean_clone_invalid_sha_attempt.txt`: a command-input error using a guessed nonexistent SHA; not a product failure.
+- `scaffold_*`: earlier API-independent scaffold evidence.
+
+No superseded or INVALID run contributes to the accepted metrics.
+
+## Offline verification
+
+```powershell
+python -m eval.evaluate_baseline evidence/phase_2/runs/run_20260829_154058_02e9416b --verify-existing
 ```
+
+This verifies the existing report without making an API call or modifying the run.

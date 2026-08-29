@@ -92,3 +92,22 @@ Active. The failed attempt is retained as INVALID operational evidence and is no
 
 ### Evidence
 `DECISIONS.md` and the two INVALID run directories under `evidence/phase_2/runs/`.
+
+---
+
+## Canonical Phase 2 Input Hashing
+
+### Date
+2026-08-29
+
+### Decision
+Use manifest `phase2-baseline-run-v2` and hash UTF-8 public-case text after universal newline normalization.
+
+### Reason
+A real clean-clone check proved that raw-byte hashes from a Windows CRLF checkout were not portable to an LF checkout. Canonical hashing binds semantic input content without hiding byte-level output tampering.
+
+### Current Status
+Active and verified by the accepted v2 run and exact remote clean-clone gate.
+
+### Evidence
+`DECISIONS.md`, `evidence/phase_2/superseded_clean_clone_failure_c21cb36.txt`, and `evidence/phase_2/final_clean_clone_execution.txt`.

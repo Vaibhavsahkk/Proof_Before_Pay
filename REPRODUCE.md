@@ -10,7 +10,7 @@
 - Approximate Phase 1 verification runtime: 1-2 minutes after dependencies are available
 - API/service cost for Phases 0 and 1: $0
 
-No model API or `GEMINI_API_KEY` is required for Phase 0, Phase 1, or Phase 2 scaffold verification.
+No model API or `GEMINI_API_KEY` is required for Phase 0, Phase 1, or offline verification of the committed Phase 2 evidence.
 
 ## Tested toolchain
 
@@ -86,7 +86,7 @@ Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and process exit 0. The harn
 
 Current raw evidence: `evidence/phase_1/final_clean_clone_execution.txt`.
 
-## Phase 2 API-independent verification
+## Phase 2 verification
 
 These commands do not call Gemini:
 
@@ -97,14 +97,27 @@ python scripts/verify_manifest.py
 & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh
 ```
 
-Run the exact remote clean-clone scaffold gate with:
+The current accepted candidate is verified with:
 
 ```powershell
-.\scripts\run_clean_clone_tests.ps1 -CandidateSha "eac35cdb4994f917d76cde4a6ca1749957d65f3f" -Phase "phase_2"
+.\scripts\run_clean_clone_tests.ps1 -CandidateSha "1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c" -Phase "phase_2"
 ```
 
-Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and exit 0. This gate verifies the candidate commit, frozen manifest, 29 focused Phase 2 tests, the exact missing-key rejection, both 75-test Docker pipelines, clean post-test Git state, and exact-project cleanup. Its current evidence is the normalized machine-captured log `evidence/phase_2/scaffold_clean_clone_execution.txt` with SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`; it is not represented as byte-for-byte terminal capture.
+Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and exit 0. The gate verifies the candidate commit, frozen manifest, 35 focused Phase 2 tests, exact missing-key rejection, deterministic verification of the committed VALID report, both 81-test Docker pipelines, clean post-test Git state, and exact-project cleanup. Current normalized evidence is `evidence/phase_2/final_clean_clone_execution.txt`, SHA-256 `D720522023C2ACBB17399E1F47A976FD2894FBBD1E4E3AD761518E5E159D2D15`.
 
-The 2.5 Pro provider-availability attempt and 3.1 Pro zero-quota attempt are preserved as INVALID operational evidence. The valid retry is pinned to successfully probed `gemini-3.6-flash`. Supply `GEMINI_API_KEY` only through the process environment; never paste it into chat, source files, logs, or evidence.
+Verify the accepted report offline, without an API key:
+
+```powershell
+python -m eval.evaluate_baseline evidence/phase_2/runs/run_20260829_154058_02e9416b --verify-existing
+```
+
+To generate a new provider run, first ensure the repository is clean and set `GEMINI_API_KEY` only in the local process environment, then run:
+
+```powershell
+python -m baseline.run_baseline
+python -m eval.evaluate_baseline evidence/phase_2/runs/<new_run_id>
+```
+
+The accepted run is pinned to `gemini-3.6-flash`. The two provider failures and the CRLF-dependent v1 run are preserved but excluded from decision metrics. Never paste the API key into chat, source files, logs, or evidence.
 
 Do not run global Docker prune commands for this workflow.

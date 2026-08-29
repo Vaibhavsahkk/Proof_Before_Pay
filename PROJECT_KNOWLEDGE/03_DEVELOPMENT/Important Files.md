@@ -36,3 +36,6 @@
 - `evidence/phase_1/final_clean_clone_execution.txt`: Current clean-clone execution evidence for the tested Phase 1 candidate.
 - `evidence/phase_1/SHA256_MANIFEST.txt`: Frozen benchmark integrity manifest.
 - `reports/phase_1_review_packet.md`: Phase 1 external-review packet.
+- `evidence/phase_2/runs/run_20260829_154058_02e9416b/`: Accepted Phase 2 outputs, manifest, and evaluation report.
+- `evidence/phase_2/final_clean_clone_execution.txt`: Current Phase 2 exact-candidate verification.
+- `reports/phase_2_review_packet.md`: Phase 2 external-review packet.

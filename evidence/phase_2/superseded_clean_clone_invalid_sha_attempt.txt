@@ -1,0 +1,51 @@
+--- CLEAN CLONE EXECUTION (phase_2) ---
+CANDIDATE SHA: 1ffb228b55c1dc2706481697f217b48924205015
+COMPOSE PROJECT: pbp_clone_a5e28c68
+CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-f466dbc66317465289e4992f71fcafd0
+
+========================================
+COMMAND: fail-closed harness self-test
+EXPECTED EXIT CODE: 1
+========================================
+FAIL-CLOSED SELF-TEST INNER EXIT: 7
+FAIL-CLOSED SELF-TEST RESULT: EXPECTED FAILURE
+EXIT CODE: 1
+
+========================================
+COMMAND: git clone
+EXPECTED EXIT CODE: 0
+========================================
+Cloning into 'C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-f466dbc66317465289e4992f71fcafd0'...
+EXIT CODE: 0
+
+========================================
+COMMAND: git checkout 1ffb228b55c1dc2706481697f217b48924205015
+EXPECTED EXIT CODE: 0
+========================================
+fatal: unable to read tree (1ffb228b55c1dc2706481697f217b48924205015)
+EXIT CODE: 128
+ERROR: Expected exit 0 but observed 128.
+HARNESS ABORTED: Checkout failed.
+
+========================================
+COMMAND: exact-project docker compose down --remove-orphans
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+
+========================================
+COMMAND: verify exact-project containers removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT CONTAINERS:
+
+========================================
+COMMAND: verify exact-project networks removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT NETWORKS:
+EXACT CLONE PATH REMOVED: PASS
+CLEAN CLONE HARNESS RESULT: FAIL
+HARNESS EXIT CODE: 1

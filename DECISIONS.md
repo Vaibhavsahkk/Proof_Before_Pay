@@ -50,3 +50,12 @@ The baseline model is pinned to `gemini-3.6-flash`.
 - A minimal non-benchmark health probe to provider-recommended `gemini-3.6-flash` returned exit 0 and identified the returned model as `gemini-3.6-flash`.
 - A concrete model ID is used instead of the mutable `gemini-pro-latest` alias.
 - Both failed runs are retained under `evidence/phase_2/runs/` as INVALID operational evidence, not performance results.
+
+## Decision 009 — Canonical Phase 2 input hashing
+
+Phase 2 run manifests use schema `phase2-baseline-run-v2` and hash UTF-8 input text after universal newline normalization (`utf8-text-normalized-lf`).
+
+- A clean-clone audit proved that v1 raw-byte hashes depended on Windows CRLF checkout state.
+- The affected v1 run is preserved as superseded evidence and is not used for the gate decision.
+- The accepted v2 run was generated from clean source commit `7512b9eace0e43045a406bc7cf46d76e1eb21ea7` and verified from a fresh clone.
+- This decision changes evidence portability only; it does not change benchmark cases or ground truth.

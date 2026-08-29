@@ -20,7 +20,7 @@ Phase 1 is externally approved.
 
 Phase 2 - Fair Baseline - is the only active phase. Phase 3+ remains locked.
 
-The repository contains the frozen benchmark and a verified API-independent Phase 2 baseline/evaluator scaffold. One real provider-availability attempt failed and is preserved as INVALID evidence; no valid Gemini baseline metric is claimed yet.
+The repository contains the frozen benchmark, a verified Phase 2 baseline/evaluator, and a valid six-case Gemini baseline run. Phase 2 is ready for external review; it is not self-approved.
 
 ## Source of Truth
 
@@ -48,7 +48,7 @@ The Dockerfile uses separate targets:
 - PowerShell on Windows.
 - Git Bash for the verified Windows POSIX-like pipeline.
 
-No model API or API key is required for Phase 0, Phase 1, or the API-independent Phase 2 verification. A real Phase 2 baseline run will require `GEMINI_API_KEY` supplied only through the local environment.
+No model API or API key is required for Phase 0, Phase 1, or offline verification of the committed Phase 2 evidence. Re-running the provider baseline requires `GEMINI_API_KEY` supplied only through the local process environment.
 
 ## Verification
 
@@ -89,10 +89,13 @@ See `REPRODUCE.md` for the clean-clone workflow and tested toolchain. Native mac
 - `evidence/phase_1/final_clean_clone_execution.txt`
 - `evidence/phase_1/SHA256_MANIFEST.txt`
 - `reports/phase_1_review_packet.md`
+- `evidence/phase_2/runs/run_20260829_154058_02e9416b/`
+- `evidence/phase_2/final_clean_clone_execution.txt`
+- `reports/phase_2_review_packet.md`
 
 Historical files prefixed with `superseded_` are retained for audit history and are not current decision evidence.
 
-Phase 2 model outputs and metrics do not exist yet. Files under `evidence/phase_2/runs/` are valid evidence only when produced by the real runner from a clean committed source state and accepted by the evaluator.
+The accepted Phase 2 run is `evidence/phase_2/runs/run_20260829_154058_02e9416b`. It records six successful `gemini-3.6-flash` responses, 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY recommendations. These are six-case synthetic benchmark results, not production-performance claims. See `reports/phase_2_review_packet.md` for provenance, limitations, and the clean-clone gate.
 
 ## Development Mode
 

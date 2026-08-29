@@ -13,7 +13,7 @@ Use the original master-context conversation titled `Hackathon research prompt` 
 
 ## Gate Rule
 
-Only the exact external verdict `PHASE APPROVED — 100%` unlocks the next hackathon phase. `PHASE FAIL` keeps the current phase locked. Phase 1 is approved; Phase 2 is currently active; Phase 3+ is locked.
+Only the exact external verdict `PHASE APPROVED — 100%` unlocks the next hackathon phase. `PHASE FAIL` keeps the current phase locked. Phase 1 is approved; Phase 2 is ready for external review; Phase 3+ is locked.
 
 ## Data Sharing Boundary
 

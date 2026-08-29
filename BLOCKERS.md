@@ -1,5 +1,7 @@
 # BLOCKERS
 
-No blockers currently exist.
+No Phase 2 implementation or verification blocker remains.
 
-The human supplied the Gemini credential locally. The unavailable 2.5 Pro and zero-quota 3.1 Pro attempts are preserved as INVALID; the successfully probed concrete replacement is recorded in Decision 008.
+Phase 3 is intentionally blocked by governance until External ChatGPT returns the exact verdict `PHASE APPROVED — 100%` for Phase 2.
+
+Human action required: None.

@@ -1,7 +1,7 @@
 # System Architecture
 
 ## Overview
-Phase 1 benchmark design is externally approved and Phase 2 Fair Baseline is active. Docker defines separate runtime and verifier targets. The runtime uses an explicit COPY allowlist and excludes ground truth, evaluator code, tests, evidence, and reports. The verifier contains the frozen answer key and validation tools.
+Phase 1 benchmark design is externally approved and Phase 2 Fair Baseline is ready for external review. Docker defines separate runtime and verifier targets. The runtime uses an explicit COPY allowlist and excludes ground truth, evaluator code, tests, evidence, and reports. The verifier contains the frozen answer key and validation tools.
 
 ## Components
 1. **Verification Scripts:** `verify.ps1` and `verify.sh`. They orchestrate the environment checks, Docker build, and test runs.
@@ -21,11 +21,11 @@ flowchart TD
 ```
 
 ## Agent Architecture
-The Phase 2 baseline is intentionally one pinned `gemini-3.6-flash` call per case, without agent tools. Its API-independent scaffold and clean-clone gate are verified. Phase 3+ architecture remains locked.
+The Phase 2 baseline is intentionally one pinned `gemini-3.6-flash` call per case, without agent tools. Its accepted six-case run and clean-clone gate are verified. Phase 3+ architecture remains locked.
 
 ## Integrations
 - Docker Engine for containerized execution.
-- Gemini is the selected Phase 2 provider. The first real attempt is recorded as INVALID provider-availability evidence; no valid performance metric exists yet.
+- Gemini is the selected Phase 2 provider. Two provider failures and one nonportable v1 run are preserved as superseded evidence. The accepted v2 run uses canonical text hashes and has a VALID report.
 
 ## Unknowns
 - Exact LLM provider and agent framework for Phase 4.

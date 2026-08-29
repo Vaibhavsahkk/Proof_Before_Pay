@@ -1,0 +1,930 @@
+--- CLEAN CLONE EXECUTION (phase_2) ---
+CANDIDATE SHA: 1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c
+COMPOSE PROJECT: pbp_clone_49140a3c
+CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-368aa95649b243ad8e40304e506a63a6
+
+========================================
+COMMAND: fail-closed harness self-test
+EXPECTED EXIT CODE: 1
+========================================
+FAIL-CLOSED SELF-TEST INNER EXIT: 7
+FAIL-CLOSED SELF-TEST RESULT: EXPECTED FAILURE
+EXIT CODE: 1
+
+========================================
+COMMAND: git clone
+EXPECTED EXIT CODE: 0
+========================================
+Cloning into 'C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-368aa95649b243ad8e40304e506a63a6'...
+EXIT CODE: 0
+
+========================================
+COMMAND: git checkout 1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c
+EXPECTED EXIT CODE: 0
+========================================
+Note: switching to '1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 1ffb228 feat(phase2): record portable Gemini baseline
+EXIT CODE: 0
+OBSERVED CLONED HEAD: 1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c
+GIT REV-PARSE EXIT CODE: 0
+
+========================================
+COMMAND: git show --check candidate
+EXPECTED EXIT CODE: 0
+========================================
+1ffb228 feat(phase2): record portable Gemini baseline
+EXIT CODE: 0
+
+========================================
+COMMAND: python scripts/verify_manifest.py
+EXPECTED EXIT CODE: 0
+========================================
+Manifest verification passed.
+EXIT CODE: 0
+
+========================================
+COMMAND: pytest focused Phase 2 suite
+EXPECTED EXIT CODE: 0
+========================================
+...................................                                      [100%]
+35 passed in 1.41s
+EXIT CODE: 0
+
+========================================
+COMMAND: missing-key baseline rejection
+EXPECTED EXIT CODE: 1
+========================================
+Error: GEMINI_API_KEY environment variable is not set.
+EXIT CODE: 1
+OBSERVED VALID BASELINE RUN: evidence/phase_2/runs/run_20260829_154058_02e9416b
+
+========================================
+COMMAND: verify committed Phase 2 evaluation report
+EXPECTED EXIT CODE: 0
+========================================
+=== Phase 2 Baseline Evaluation ===
+Run ID: run_20260829_154058_02e9416b
+Total Cases: 6
+Exact Case-Level Recommendation Accuracy: 100.00%
+Unsafe-PAY Rate: 0.00% (0/5)
+Schema Valid Rate: 100.00%
+Findings Correctness: 100.00%
+EXIT CODE: 0
+
+========================================
+COMMAND: .\verify.ps1
+EXPECTED EXIT CODE: 0
+========================================
+Starting Micro1 Challenge Verification Pipeline (PowerShell)...
+============================================================
+STEP: Git Whitespace Integrity
+============================================================
+[PASS] Git whitespace integrity checks passed.
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+ Image micro1-challenge-phase1-verifier:latest Building
+ Image micro1-challenge-phase0:latest Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.40kB done
+#1 DONE 0.0s
+
+#2 [phase1_verifier internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.91kB done
+#2 DONE 0.0s
+
+#3 [micro1_app internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#3 DONE 0.1s
+
+#4 [micro1_app internal] load .dockerignore
+#4 transferring context: 187B done
+#4 DONE 0.0s
+
+#4 [phase1_verifier internal] load .dockerignore
+#4 DONE 0.0s
+
+#5 [phase1_verifier base 1/5] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#5 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
+#5 DONE 0.0s
+
+#6 [phase1_verifier base 2/5] WORKDIR /app
+#6 CACHED
+
+#7 [micro1_app internal] load build context
+#7 transferring context: 45.36kB 0.0s done
+#7 DONE 0.0s
+
+#8 [micro1_app base 3/5] COPY requirements.lock requirements.txt ./
+#8 DONE 0.0s
+
+#9 [phase1_verifier internal] load build context
+#9 transferring context: 216.46kB 0.1s done
+#9 DONE 0.1s
+
+#10 [micro1_app base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#10 ...
+
+#8 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
+#8 DONE 0.0s
+
+#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#10 1.500 Collecting google-genai==2.19.0 (from -r requirements.lock (line 2))
+#10 1.602   Downloading google_genai-2.19.0-py3-none-any.whl.metadata (56 kB)
+#10 1.676 Collecting jsonschema==4.26.0 (from -r requirements.lock (line 3))
+#10 1.701   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+#10 1.721 Collecting anyio<5.0.0,>=4.8.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.729   Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+#10 1.787 Collecting google-auth<3.0.0,>=2.56.0 (from google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.795   Downloading google_auth-2.57.0-py3-none-any.whl.metadata (6.0 kB)
+#10 1.820 Collecting httpx<1.0.0,>=0.28.1 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.826   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#10 1.940 Collecting pydantic<3.0.0,>=2.12.5 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.954   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+#10 2.022 Collecting requests<3.0.0,>=2.28.1 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.037   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#10 2.075 Collecting tenacity<9.2.0,>=8.2.3 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.080   Downloading tenacity-9.1.4-py3-none-any.whl.metadata (1.2 kB)
+#10 2.251 Collecting websockets<17.0,>=13.0.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.266   Downloading websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+#10 2.323 Collecting typing-extensions<5.0.0,>=4.14.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.328   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 2.358 Collecting distro<2,>=1.7.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.365   Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+#10 2.394 Collecting sniffio (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.399   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+#10 2.432 Collecting attrs>=22.2.0 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 2.438   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+#10 2.476 Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 2.481   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+#10 2.522 Collecting referencing>=0.28.4 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 2.527   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+#10 2.793 Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 2.803   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+#10 2.838 Collecting idna>=2.8 (from anyio<5.0.0,>=4.8.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.844   Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+#10 2.907 Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.920   Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+#10 3.105 Collecting cryptography>=38.0.3 (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.126   Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+#10 3.163 Collecting certifi (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.171   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#10 3.199 Collecting httpcore==1.* (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.208   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#10 3.230 Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.249   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 3.268 Collecting annotated-types>=0.6.0 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.290   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#10 3.866 Collecting pydantic-core==2.46.5 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.895   Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#10 3.909 Collecting typing-inspection>=0.4.2 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.926   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#10 4.133 Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 4.149   Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+#10 4.191 Collecting urllib3<3,>=1.26 (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 4.197   Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+#10 4.314 Collecting cffi>=2.0.0 (from cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 4.325   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#10 4.355 Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 4.361   Downloading pyasn1-0.6.4-py3-none-any.whl.metadata (8.4 kB)
+#10 4.388 Collecting pycparser (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 4.395   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+#10 4.415 Downloading google_genai-2.19.0-py3-none-any.whl (1.1 MB)
+#10 4.546    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 8.6 MB/s eta 0:00:00
+#10 4.562 Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+#10 4.586 Downloading anyio-4.14.2-py3-none-any.whl (125 kB)
+#10 4.636 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+#10 4.668 Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+#10 4.696 Downloading google_auth-2.57.0-py3-none-any.whl (259 kB)
+#10 4.772 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#10 4.794 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#10 4.833 Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+#10 4.861 Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+#10 4.934 Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#10 5.144    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 9.6 MB/s eta 0:00:00
+#10 5.161 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+#10 5.168 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+#10 5.191 Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+#10 5.251 Downloading tenacity-9.1.4-py3-none-any.whl (28 kB)
+#10 5.272 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#10 5.286 Downloading websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (187 kB)
+#10 5.312 Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+#10 5.326 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#10 5.338 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#10 5.391 Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+#10 5.439 Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+#10 6.393    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 4.9 MB/s eta 0:00:00
+#10 6.414 Downloading idna-3.19-py3-none-any.whl (68 kB)
+#10 6.478 Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+#10 6.886 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#10 6.902 Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+#10 6.941 Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#10 7.004 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#10 7.567 Downloading pyasn1-0.6.4-py3-none-any.whl (84 kB)
+#10 7.883 Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+#10 7.997 Installing collected packages: websockets, urllib3, typing-extensions, tenacity, sniffio, rpds-py, pycparser, pyasn1, idna, h11, distro, charset_normalizer, certifi, attrs, annotated-types, typing-inspection, requests, referencing, pydantic-core, pyasn1-modules, httpcore, cffi, anyio, pydantic, jsonschema-specifications, httpx, cryptography, jsonschema, google-auth, google-genai
+#10 10.09 Successfully installed annotated-types-0.8.0 anyio-4.14.2 attrs-26.1.0 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.1 cryptography-50.0.1 distro-1.9.0 google-auth-2.57.0 google-genai-2.19.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.19 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 pyasn1-0.6.4 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 referencing-0.37.0 requests-2.34.2 rpds-py-2026.6.3 sniffio-1.3.1 tenacity-9.1.4 typing-extensions-4.16.0 typing-inspection-0.4.4 urllib3-2.7.0 websockets-16.1.1
+#10 10.09 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 10.16
+#10 10.16 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#10 10.16 [notice] To update, run: pip install --upgrade pip
+#10 DONE 10.3s
+
+#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#10 DONE 10.3s
+
+#11 [micro1_app base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#11 DONE 0.2s
+
+#11 [micro1_app base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#11 DONE 0.2s
+
+#12 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#12 CACHED
+
+#13 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
+#13 CACHED
+
+#14 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#14 CACHED
+
+#15 [phase1_verifier verifier  1/11] COPY requirements-dev.txt ./
+#15 DONE 0.0s
+
+#16 [micro1_app runtime 1/6] COPY --chown=micro1user:micro1user src/ ./src/
+#16 DONE 0.0s
+
+#17 [micro1_app runtime 2/6] COPY --chown=micro1user:micro1user benchmark/RULEBOOK.md ./benchmark/RULEBOOK.md
+#17 DONE 0.0s
+
+#18 [micro1_app runtime 3/6] COPY --chown=micro1user:micro1user benchmark/schemas/public_evidence_bundle.json benchmark/schemas/output_contract.json ./benchmark/schemas/
+#18 DONE 0.0s
+
+#19 [phase1_verifier verifier  2/11] RUN pip install --no-cache-dir -r requirements-dev.txt
+#19 ...
+
+#20 [micro1_app runtime 4/6] COPY --chown=micro1user:micro1user data/cases/public/ ./data/cases/public/
+#20 DONE 0.0s
+
+#21 [micro1_app runtime 5/6] COPY --chown=micro1user:micro1user baseline/ ./baseline/
+#21 DONE 0.0s
+
+#22 [micro1_app runtime 6/6] COPY --chown=micro1user:micro1user scripts/verify_container_security.sh ./scripts/verify_container_security.sh
+#22 DONE 0.0s
+
+#23 [micro1_app] exporting to image
+#23 exporting layers
+#23 ...
+
+#19 [phase1_verifier verifier  2/11] RUN pip install --no-cache-dir -r requirements-dev.txt
+#19 0.446 Requirement already satisfied: google-genai==2.19.0 in /usr/local/lib/python3.12/site-packages (from -r /app/requirements.lock (line 2)) (2.19.0)
+#19 0.447 Requirement already satisfied: jsonschema==4.26.0 in /usr/local/lib/python3.12/site-packages (from -r /app/requirements.lock (line 3)) (4.26.0)
+#19 0.549 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+#19 0.596   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+#19 0.621 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+#19 0.635   Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+#19 0.670 Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+#19 0.681   Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+#19 0.702 Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+#19 0.707   Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+#19 0.713 Requirement already satisfied: anyio<5.0.0,>=4.8.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (4.14.2)
+#19 0.713 Requirement already satisfied: google-auth<3.0.0,>=2.56.0 in /usr/local/lib/python3.12/site-packages (from google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.57.0)
+#19 0.714 Requirement already satisfied: httpx<1.0.0,>=0.28.1 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.28.1)
+#19 0.714 Requirement already satisfied: pydantic<3.0.0,>=2.12.5 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.13.5)
+#19 0.715 Requirement already satisfied: requests<3.0.0,>=2.28.1 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.34.2)
+#19 0.715 Requirement already satisfied: tenacity<9.2.0,>=8.2.3 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (9.1.4)
+#19 0.716 Requirement already satisfied: websockets<17.0,>=13.0.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (16.1.1)
+#19 0.716 Requirement already satisfied: typing-extensions<5.0.0,>=4.14.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (4.16.0)
+#19 0.716 Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.9.0)
+#19 0.717 Requirement already satisfied: sniffio in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.3.1)
+#19 0.719 Requirement already satisfied: attrs>=22.2.0 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (26.1.0)
+#19 0.720 Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (2025.9.1)
+#19 0.720 Requirement already satisfied: referencing>=0.28.4 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (0.37.0)
+#19 0.720 Requirement already satisfied: rpds-py>=0.25.0 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (2026.6.3)
+#19 0.725 Requirement already satisfied: idna>=2.8 in /usr/local/lib/python3.12/site-packages (from anyio<5.0.0,>=4.8.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.19)
+#19 0.731 Requirement already satisfied: pyasn1-modules>=0.2.1 in /usr/local/lib/python3.12/site-packages (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.4.2)
+#19 0.731 Requirement already satisfied: cryptography>=38.0.3 in /usr/local/lib/python3.12/site-packages (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (50.0.1)
+#19 0.734 Requirement already satisfied: certifi in /usr/local/lib/python3.12/site-packages (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2026.7.22)
+#19 0.735 Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/site-packages (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.0.9)
+#19 0.736 Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/site-packages (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.16.0)
+#19 0.739 Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.8.0)
+#19 0.740 Requirement already satisfied: pydantic-core==2.46.5 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.46.5)
+#19 0.740 Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.4.4)
+#19 0.743 Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/site-packages (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.5.1)
+#19 0.744 Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.12/site-packages (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.7.0)
+#19 0.751 Requirement already satisfied: cffi>=2.0.0 in /usr/local/lib/python3.12/site-packages (from cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.1.1)
+#19 0.754 Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in /usr/local/lib/python3.12/site-packages (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.6.4)
+#19 0.757 Requirement already satisfied: pycparser in /usr/local/lib/python3.12/site-packages (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.0)
+#19 0.784 Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+#19 0.839 Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#19 0.863 Downloading packaging-24.1-py3-none-any.whl (53 kB)
+#19 0.882 Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#19 0.904 Installing collected packages: pluggy, packaging, iniconfig, pytest
+#19 1.161 Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+#19 1.162 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#19 1.234
+#19 1.234 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#19 1.234 [notice] To update, run: pip install --upgrade pip
+#19 DONE 1.3s
+
+#24 [phase1_verifier verifier  3/11] COPY --chown=micro1user:micro1user src/ ./src/
+#24 DONE 0.0s
+
+#25 [phase1_verifier verifier  4/11] COPY --chown=micro1user:micro1user tests/ ./tests/
+#25 DONE 0.0s
+
+#26 [phase1_verifier verifier  5/11] COPY --chown=micro1user:micro1user scripts/ ./scripts/
+#26 DONE 0.0s
+
+#27 [phase1_verifier verifier  6/11] COPY --chown=micro1user:micro1user benchmark/ ./benchmark/
+#27 DONE 0.0s
+
+#23 [micro1_app] exporting to image
+#23 ...
+
+#28 [phase1_verifier verifier  7/11] COPY --chown=micro1user:micro1user data/ ./data/
+#28 DONE 0.0s
+
+#29 [phase1_verifier verifier  8/11] COPY --chown=micro1user:micro1user baseline/ ./baseline/
+#29 DONE 0.0s
+
+#30 [phase1_verifier verifier  9/11] COPY --chown=micro1user:micro1user eval/ ./eval/
+#30 DONE 0.0s
+
+#31 [phase1_verifier verifier 10/11] COPY --chown=micro1user:micro1user evidence/phase_1/SHA256_MANIFEST.txt ./evidence/phase_1/SHA256_MANIFEST.txt
+#31 DONE 0.0s
+
+#32 [phase1_verifier verifier 11/11] COPY --chown=micro1user:micro1user pytest.ini Dockerfile .dockerignore docker-compose.yml ./
+#32 DONE 0.0s
+
+#33 [phase1_verifier] exporting to image
+#33 exporting layers 0.5s done
+#33 exporting manifest sha256:23c2eb0148c8880662f436dd57a2815196ae02ceeced246fe0c2f1e15d42829c 0.0s done
+#33 exporting config sha256:79de0c0625321858ee06fb13006cc0240467139a18326b115c232182e560a486 0.0s done
+#33 exporting attestation manifest sha256:09ee98dace801619520da980bf944f40b88041b7b74514e4774fabb718e71507 0.0s done
+#33 exporting manifest list sha256:fe020862cdf72d3573a056cb6b694b2caf974f71536fd5147a96386a86b322a8 done
+#33 naming to docker.io/library/micro1-challenge-phase1-verifier:latest done
+#33 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest
+#33 ...
+
+#23 [micro1_app] exporting to image
+#23 exporting layers 1.9s done
+#23 exporting manifest sha256:b2dc6898cc74d0127a3f198ec65777e05ef201bc46554cac17e7308b88aba5ad done
+#23 exporting config sha256:2242b115d9533b10bfc92fff269139abb5bc1ff608b78d462de071f4e04d8540 0.0s done
+#23 exporting attestation manifest sha256:51b4ec9a8143eaef2246e90ceee054955176d96d82bf3b9b8bab4791a6eb95ce 0.0s done
+#23 exporting manifest list sha256:7f17e68dedbc8f6c84148f308951adfef22ebc8912b8cdb192218d2752c890ee 0.0s done
+#23 naming to docker.io/library/micro1-challenge-phase0:latest done
+#23 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.7s done
+#23 DONE 2.6s
+
+#33 [phase1_verifier] exporting to image
+#33 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest 0.8s done
+#33 DONE 1.4s
+
+#34 [micro1_app] resolving provenance for metadata file
+#34 DONE 0.0s
+
+#35 [phase1_verifier] resolving provenance for metadata file
+#35 DONE 0.0s
+ Image micro1-challenge-phase0:latest Built
+ Image micro1-challenge-phase1-verifier:latest Built
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Evaluator Test Suite Execution (isolated Docker target)
+============================================================
+Running tests inside evaluator-only container...
+ Network pbp_clone_49140a3c_default Creating
+ Network pbp_clone_49140a3c_default Created
+ Container pbp_clone_49140a3c-phase1_verifier-run-18b2cba1323e Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-18b2cba1323e Created
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 0.76s
+Running Phase 1 Schema Validator...
+ Container pbp_clone_49140a3c-phase1_verifier-run-49d4af421952 Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-49d4af421952 Created
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+Case ID                             | Derived Rec | Truth Rec   | PASS
+--------------------------------------------------------------------------------
+case_001                            | PAY         | PAY         | True
+case_002                            | HOLD        | HOLD        | True
+case_003                            | HOLD        | HOLD        | True
+case_004                            | HOLD        | HOLD        | True
+case_005                            | INVESTIGATE | INVESTIGATE | True
+case_006                            | HOLD        | HOLD        | True
+[PASS] Oracle ground truth validation
+ALL PHASE 1 VALIDATIONS PASSED
+Running Manifest Verification...
+ Container pbp_clone_49140a3c-phase1_verifier-run-fd9ff94a1976 Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-fd9ff94a1976 Created
+Manifest verification passed.
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+ Container pbp_clone_49140a3c-micro1_app-run-4fa51c5ec281 Creating
+ Container pbp_clone_49140a3c-micro1_app-run-4fa51c5ec281 Created
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+Checking required public runtime inputs and API-free baseline import...
+ Container pbp_clone_49140a3c-micro1_app-run-b339bcded53e Creating
+ Container pbp_clone_49140a3c-micro1_app-run-b339bcded53e Created
+[PASS] Required public runtime inputs are present.
+[PASS] Runtime image configuration contains no provider credentials.
+Running forced-failure isolation test...
+docker :  Container pbp_clone_49140a3c-micro1_app-run-3b6f5cba0a23 Creating
+At C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-368aa95649b243ad8e40304e506a63a6\verify.ps1:182 char:17
++ ... cedOutput = docker compose -f docker-compose.yml run --rm --volume "$ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container pbp_...a0a23 Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container pbp_clone_49140a3c-micro1_app-run-3b6f5cba0a23 Created
+Inspecting container filesystem for prohibited artifacts...
+[FAIL] Found prohibited secret, answer key, or evaluator artifact:
+/app/data/cases/ground_truth
+/app/data/cases/ground_truth/case_001.json
+/app/data/cases/ground_truth/case_002.json
+/app/data/cases/ground_truth/case_003.json
+/app/data/cases/ground_truth/case_004.json
+/app/data/cases/ground_truth/case_005.json
+/app/data/cases/ground_truth/case_006.json
+Forced-failure scanner exit code: 1
+[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1.
+ Container pbp_clone_49140a3c-micro1_app-run-07f66b314b62 Creating
+ Container pbp_clone_49140a3c-micro1_app-run-07f66b314b62 Created
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
+EXIT CODE: 0
+
+========================================
+COMMAND: bash ./verify.sh
+EXPECTED EXIT CODE: 0
+========================================
+Starting Micro1 Challenge Verification Pipeline (POSIX)...
+/c/Program Files/Docker/Docker/resources/bin/docker
+/mingw64/bin/git
+============================================================
+STEP: Git Whitespace Integrity
+============================================================
+[PASS] Git whitespace integrity checks passed.
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+ Image micro1-challenge-phase0:latest Building
+ Image micro1-challenge-phase1-verifier:latest Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.40kB done
+#1 DONE 0.0s
+
+#2 [phase1_verifier internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.91kB done
+#2 DONE 0.0s
+
+#3 [phase1_verifier internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#3 DONE 0.0s
+
+#4 [micro1_app internal] load .dockerignore
+#4 transferring context: 187B done
+#4 DONE 0.0s
+
+#5 [micro1_app internal] load build context
+#5 transferring context: 1.11kB done
+#5 DONE 0.0s
+
+#6 [phase1_verifier internal] load build context
+#6 transferring context: 2.78kB done
+#6 DONE 0.0s
+
+#7 [micro1_app base 1/5] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
+#7 DONE 0.0s
+
+#8 [micro1_app base 2/5] WORKDIR /app
+#8 CACHED
+
+#9 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
+#9 DONE 0.0s
+
+#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#10 1.244 Collecting google-genai==2.19.0 (from -r requirements.lock (line 2))
+#10 1.277   Downloading google_genai-2.19.0-py3-none-any.whl.metadata (56 kB)
+#10 1.312 Collecting jsonschema==4.26.0 (from -r requirements.lock (line 3))
+#10 1.324   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+#10 1.353 Collecting anyio<5.0.0,>=4.8.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.362   Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+#10 1.402 Collecting google-auth<3.0.0,>=2.56.0 (from google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.409   Downloading google_auth-2.57.0-py3-none-any.whl.metadata (6.0 kB)
+#10 1.442 Collecting httpx<1.0.0,>=0.28.1 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.449   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#10 1.568 Collecting pydantic<3.0.0,>=2.12.5 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.578   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+#10 1.619 Collecting requests<3.0.0,>=2.28.1 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.627   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#10 1.644 Collecting tenacity<9.2.0,>=8.2.3 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.652   Downloading tenacity-9.1.4-py3-none-any.whl.metadata (1.2 kB)
+#10 1.752 Collecting websockets<17.0,>=13.0.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.767   Downloading websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+#10 1.784 Collecting typing-extensions<5.0.0,>=4.14.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.791   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 1.804 Collecting distro<2,>=1.7.0 (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.812   Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+#10 1.823 Collecting sniffio (from google-genai==2.19.0->-r requirements.lock (line 2))
+#10 1.829   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+#10 1.843 Collecting attrs>=22.2.0 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 1.856   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+#10 1.871 Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 1.879   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+#10 1.902 Collecting referencing>=0.28.4 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 1.908   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+#10 2.144 Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0->-r requirements.lock (line 3))
+#10 2.155   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+#10 2.173 Collecting idna>=2.8 (from anyio<5.0.0,>=4.8.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.180   Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+#10 2.213 Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.222   Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+#10 2.461 Collecting cryptography>=38.0.3 (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.473   Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+#10 2.521 Collecting certifi (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.529   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#10 2.558 Collecting httpcore==1.* (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.575   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#10 2.588 Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.606   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 2.624 Collecting annotated-types>=0.6.0 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 2.642   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#10 3.293 Collecting pydantic-core==2.46.5 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.308   Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#10 3.324 Collecting typing-inspection>=0.4.2 (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.329   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#10 3.490 Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.508   Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+#10 3.549 Collecting urllib3<3,>=1.26 (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.555   Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+#10 3.673 Collecting cffi>=2.0.0 (from cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.686   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#10 3.725 Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.732   Downloading pyasn1-0.6.4-py3-none-any.whl.metadata (8.4 kB)
+#10 3.765 Collecting pycparser (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r requirements.lock (line 2))
+#10 3.772   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+#10 3.803 Downloading google_genai-2.19.0-py3-none-any.whl (1.1 MB)
+#10 4.071    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 4.1 MB/s eta 0:00:00
+#10 4.088 Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+#10 4.113 Downloading anyio-4.14.2-py3-none-any.whl (125 kB)
+#10 4.150 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+#10 4.176 Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+#10 4.198 Downloading google_auth-2.57.0-py3-none-any.whl (259 kB)
+#10 4.264 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#10 4.284 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#10 4.315 Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+#10 4.335 Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+#10 4.441 Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#10 4.868    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 4.8 MB/s eta 0:00:00
+#10 4.885 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+#10 4.905 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+#10 4.928 Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+#10 5.007 Downloading tenacity-9.1.4-py3-none-any.whl (28 kB)
+#10 5.026 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#10 5.049 Downloading websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (187 kB)
+#10 5.089 Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+#10 5.100 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#10 5.127 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#10 5.170 Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+#10 5.230 Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+#10 5.882    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 7.4 MB/s eta 0:00:00
+#10 5.895 Downloading idna-3.19-py3-none-any.whl (68 kB)
+#10 5.912 Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+#10 5.936 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#10 5.960 Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+#10 5.984 Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#10 6.016 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#10 6.031 Downloading pyasn1-0.6.4-py3-none-any.whl (84 kB)
+#10 6.049 Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+#10 6.126 Installing collected packages: websockets, urllib3, typing-extensions, tenacity, sniffio, rpds-py, pycparser, pyasn1, idna, h11, distro, charset_normalizer, certifi, attrs, annotated-types, typing-inspection, requests, referencing, pydantic-core, pyasn1-modules, httpcore, cffi, anyio, pydantic, jsonschema-specifications, httpx, cryptography, jsonschema, google-auth, google-genai
+#10 8.253 Successfully installed annotated-types-0.8.0 anyio-4.14.2 attrs-26.1.0 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.1 cryptography-50.0.1 distro-1.9.0 google-auth-2.57.0 google-genai-2.19.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.19 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 pyasn1-0.6.4 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 referencing-0.37.0 requests-2.34.2 rpds-py-2026.6.3 sniffio-1.3.1 tenacity-9.1.4 typing-extensions-4.16.0 typing-inspection-0.4.4 urllib3-2.7.0 websockets-16.1.1
+#10 8.253 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 8.340
+#10 8.340 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#10 8.340 [notice] To update, run: pip install --upgrade pip
+#10 DONE 8.5s
+
+#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#10 DONE 8.5s
+
+#11 [micro1_app base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#11 DONE 0.3s
+
+#11 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#11 DONE 0.3s
+
+#12 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
+#12 CACHED
+
+#13 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
+#13 CACHED
+
+#14 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
+#14 CACHED
+
+#15 [phase1_verifier verifier  1/11] COPY requirements-dev.txt ./
+#15 DONE 0.0s
+
+#16 [micro1_app runtime 1/6] COPY --chown=micro1user:micro1user src/ ./src/
+#16 DONE 0.0s
+
+#17 [micro1_app runtime 2/6] COPY --chown=micro1user:micro1user benchmark/RULEBOOK.md ./benchmark/RULEBOOK.md
+#17 DONE 0.0s
+
+#18 [micro1_app runtime 3/6] COPY --chown=micro1user:micro1user benchmark/schemas/public_evidence_bundle.json benchmark/schemas/output_contract.json ./benchmark/schemas/
+#18 DONE 0.0s
+
+#19 [phase1_verifier verifier  2/11] RUN pip install --no-cache-dir -r requirements-dev.txt
+#19 ...
+
+#20 [micro1_app runtime 4/6] COPY --chown=micro1user:micro1user data/cases/public/ ./data/cases/public/
+#20 DONE 0.0s
+
+#21 [micro1_app runtime 5/6] COPY --chown=micro1user:micro1user baseline/ ./baseline/
+#21 DONE 0.0s
+
+#22 [micro1_app runtime 6/6] COPY --chown=micro1user:micro1user scripts/verify_container_security.sh ./scripts/verify_container_security.sh
+#22 DONE 0.0s
+
+#23 [micro1_app] exporting to image
+#23 exporting layers
+#23 ...
+
+#19 [phase1_verifier verifier  2/11] RUN pip install --no-cache-dir -r requirements-dev.txt
+#19 0.452 Requirement already satisfied: google-genai==2.19.0 in /usr/local/lib/python3.12/site-packages (from -r /app/requirements.lock (line 2)) (2.19.0)
+#19 0.453 Requirement already satisfied: jsonschema==4.26.0 in /usr/local/lib/python3.12/site-packages (from -r /app/requirements.lock (line 3)) (4.26.0)
+#19 0.544 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+#19 0.581   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+#19 0.596 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+#19 0.601   Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+#19 0.627 Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+#19 0.632   Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+#19 0.654 Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+#19 0.659   Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+#19 0.665 Requirement already satisfied: anyio<5.0.0,>=4.8.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (4.14.2)
+#19 0.665 Requirement already satisfied: google-auth<3.0.0,>=2.56.0 in /usr/local/lib/python3.12/site-packages (from google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.57.0)
+#19 0.666 Requirement already satisfied: httpx<1.0.0,>=0.28.1 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.28.1)
+#19 0.667 Requirement already satisfied: pydantic<3.0.0,>=2.12.5 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.13.5)
+#19 0.667 Requirement already satisfied: requests<3.0.0,>=2.28.1 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.34.2)
+#19 0.668 Requirement already satisfied: tenacity<9.2.0,>=8.2.3 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (9.1.4)
+#19 0.668 Requirement already satisfied: websockets<17.0,>=13.0.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (16.1.1)
+#19 0.668 Requirement already satisfied: typing-extensions<5.0.0,>=4.14.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (4.16.0)
+#19 0.669 Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.9.0)
+#19 0.669 Requirement already satisfied: sniffio in /usr/local/lib/python3.12/site-packages (from google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.3.1)
+#19 0.672 Requirement already satisfied: attrs>=22.2.0 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (26.1.0)
+#19 0.672 Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (2025.9.1)
+#19 0.672 Requirement already satisfied: referencing>=0.28.4 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (0.37.0)
+#19 0.672 Requirement already satisfied: rpds-py>=0.25.0 in /usr/local/lib/python3.12/site-packages (from jsonschema==4.26.0->-r /app/requirements.lock (line 3)) (2026.6.3)
+#19 0.677 Requirement already satisfied: idna>=2.8 in /usr/local/lib/python3.12/site-packages (from anyio<5.0.0,>=4.8.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.19)
+#19 0.683 Requirement already satisfied: pyasn1-modules>=0.2.1 in /usr/local/lib/python3.12/site-packages (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.4.2)
+#19 0.684 Requirement already satisfied: cryptography>=38.0.3 in /usr/local/lib/python3.12/site-packages (from google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (50.0.1)
+#19 0.687 Requirement already satisfied: certifi in /usr/local/lib/python3.12/site-packages (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2026.7.22)
+#19 0.688 Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/site-packages (from httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (1.0.9)
+#19 0.690 Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/site-packages (from httpcore==1.*->httpx<1.0.0,>=0.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.16.0)
+#19 0.693 Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.8.0)
+#19 0.693 Requirement already satisfied: pydantic-core==2.46.5 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.46.5)
+#19 0.694 Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.12/site-packages (from pydantic<3.0.0,>=2.12.5->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.4.4)
+#19 0.698 Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/site-packages (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.5.1)
+#19 0.698 Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.12/site-packages (from requests<3.0.0,>=2.28.1->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.7.0)
+#19 0.707 Requirement already satisfied: cffi>=2.0.0 in /usr/local/lib/python3.12/site-packages (from cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (2.1.1)
+#19 0.709 Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in /usr/local/lib/python3.12/site-packages (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (0.6.4)
+#19 0.713 Requirement already satisfied: pycparser in /usr/local/lib/python3.12/site-packages (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.56.0->google-auth[requests]<3.0.0,>=2.56.0->google-genai==2.19.0->-r /app/requirements.lock (line 2)) (3.0)
+#19 0.742 Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+#19 0.796 Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+#19 0.821 Downloading packaging-24.1-py3-none-any.whl (53 kB)
+#19 0.840 Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+#19 0.861 Installing collected packages: pluggy, packaging, iniconfig, pytest
+#19 1.108 Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+#19 1.109 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#19 1.180
+#19 1.180 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#19 1.180 [notice] To update, run: pip install --upgrade pip
+#19 DONE 1.2s
+
+#24 [phase1_verifier verifier  3/11] COPY --chown=micro1user:micro1user src/ ./src/
+#24 DONE 0.0s
+
+#25 [phase1_verifier verifier  4/11] COPY --chown=micro1user:micro1user tests/ ./tests/
+#25 DONE 0.0s
+
+#26 [phase1_verifier verifier  5/11] COPY --chown=micro1user:micro1user scripts/ ./scripts/
+#26 DONE 0.0s
+
+#27 [phase1_verifier verifier  6/11] COPY --chown=micro1user:micro1user benchmark/ ./benchmark/
+#27 DONE 0.0s
+
+#23 [micro1_app] exporting to image
+#23 ...
+
+#28 [phase1_verifier verifier  7/11] COPY --chown=micro1user:micro1user data/ ./data/
+#28 DONE 0.0s
+
+#29 [phase1_verifier verifier  8/11] COPY --chown=micro1user:micro1user baseline/ ./baseline/
+#29 DONE 0.0s
+
+#30 [phase1_verifier verifier  9/11] COPY --chown=micro1user:micro1user eval/ ./eval/
+#30 DONE 0.0s
+
+#31 [phase1_verifier verifier 10/11] COPY --chown=micro1user:micro1user evidence/phase_1/SHA256_MANIFEST.txt ./evidence/phase_1/SHA256_MANIFEST.txt
+#31 DONE 0.0s
+
+#32 [phase1_verifier verifier 11/11] COPY --chown=micro1user:micro1user pytest.ini Dockerfile .dockerignore docker-compose.yml ./
+#32 DONE 0.0s
+
+#33 [phase1_verifier] exporting to image
+#33 exporting layers 0.5s done
+#33 exporting manifest sha256:94b355228bda67c3cbfec2adbc6296b6ddd4a10bf398e600814099190161c0e6 0.0s done
+#33 exporting config sha256:edf4526a2e7024045c4170f970a7dec0a439197503517882b50e36e0d58ffc92 0.0s done
+#33 exporting attestation manifest sha256:497128bf8c4a0fb1a637b246057d41e4f92f79666c8f557c79da51127804f24f 0.0s done
+#33 exporting manifest list sha256:9352314612ebb69ca897cba855e5d1b3bbac7e3cd5dee933f16cbf2f0251e7a5 done
+#33 naming to docker.io/library/micro1-challenge-phase1-verifier:latest done
+#33 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest
+#33 ...
+
+#23 [micro1_app] exporting to image
+#23 exporting layers 1.8s done
+#23 exporting manifest sha256:1fdaf2de2e9b1fe5ec39f9e23ea5e248861944110d8b72952250562a3708fe06 0.0s done
+#23 exporting config sha256:c83b181eb8fac52ceecf4893ba1d9be824229bbdbd6fec7251e5ffd8bccf7198 0.0s done
+#23 exporting attestation manifest sha256:ec42728676617e1a88e9519666373e5cf3a8f4460a1582a0933e72d52361424f 0.0s done
+#23 exporting manifest list sha256:6377501253b8a349aeac7c29b57288dec19580e9dfdb5b2b401b2f160694d0b2 0.0s done
+#23 naming to docker.io/library/micro1-challenge-phase0:latest done
+#23 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.8s done
+#23 DONE 2.7s
+
+#33 [phase1_verifier] exporting to image
+#33 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest 0.9s done
+#33 DONE 1.5s
+
+#34 [micro1_app] resolving provenance for metadata file
+#34 DONE 0.0s
+
+#35 [phase1_verifier] resolving provenance for metadata file
+#35 DONE 0.0s
+ Image micro1-challenge-phase0:latest Built
+ Image micro1-challenge-phase1-verifier:latest Built
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Evaluator Test Suite Execution (isolated Docker target)
+============================================================
+Running tests inside evaluator-only container...
+ Container pbp_clone_49140a3c-phase1_verifier-run-d73211fb3396 Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-d73211fb3396 Created
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 0.76s
+Running Phase 1 Schema Validator...
+ Container pbp_clone_49140a3c-phase1_verifier-run-bffee94e4338 Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-bffee94e4338 Created
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+Case ID                             | Derived Rec | Truth Rec   | PASS
+--------------------------------------------------------------------------------
+case_001                            | PAY         | PAY         | True
+case_002                            | HOLD        | HOLD        | True
+case_003                            | HOLD        | HOLD        | True
+case_004                            | HOLD        | HOLD        | True
+case_005                            | INVESTIGATE | INVESTIGATE | True
+case_006                            | HOLD        | HOLD        | True
+[PASS] Oracle ground truth validation
+ALL PHASE 1 VALIDATIONS PASSED
+Running Manifest Verification...
+ Container pbp_clone_49140a3c-phase1_verifier-run-bffa5508752f Creating
+ Container pbp_clone_49140a3c-phase1_verifier-run-bffa5508752f Created
+Manifest verification passed.
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+ Container pbp_clone_49140a3c-micro1_app-run-590f90111e62 Creating
+ Container pbp_clone_49140a3c-micro1_app-run-590f90111e62 Created
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+Checking required public runtime inputs and API-free baseline import...
+ Container pbp_clone_49140a3c-micro1_app-run-d2886c5b238d Creating
+ Container pbp_clone_49140a3c-micro1_app-run-d2886c5b238d Created
+[PASS] Required public runtime inputs are present.
+[PASS] Runtime image configuration contains no provider credentials.
+Running forced-failure isolation test...
+ Container pbp_clone_49140a3c-micro1_app-run-ab29b54c12db Creating
+ Container pbp_clone_49140a3c-micro1_app-run-ab29b54c12db Created
+Inspecting container filesystem for prohibited artifacts...
+[FAIL] Found prohibited secret, answer key, or evaluator artifact:
+/app/data/cases/ground_truth
+/app/data/cases/ground_truth/case_001.json
+/app/data/cases/ground_truth/case_002.json
+/app/data/cases/ground_truth/case_003.json
+/app/data/cases/ground_truth/case_004.json
+/app/data/cases/ground_truth/case_005.json
+/app/data/cases/ground_truth/case_006.json
+Forced-failure scanner exit code: 1
+[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1.
+ Container pbp_clone_49140a3c-micro1_app-run-975470ab154e Creating
+ Container pbp_clone_49140a3c-micro1_app-run-975470ab154e Created
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
+EXIT CODE: 0
+
+========================================
+COMMAND: git diff --check
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+
+========================================
+COMMAND: git diff --cached --check
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+
+========================================
+COMMAND: git status --short
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+POST-TEST STATUS EXIT CODE: 0
+POST-TEST STATUS OUTPUT:
+
+CLEAN CLONE TEST RESULT: PASS
+
+========================================
+COMMAND: exact-project docker compose down --remove-orphans
+EXPECTED EXIT CODE: 0
+========================================
+ Network pbp_clone_49140a3c_default Removing
+ Network pbp_clone_49140a3c_default Removed
+EXIT CODE: 0
+
+========================================
+COMMAND: verify exact-project containers removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT CONTAINERS:
+
+========================================
+COMMAND: verify exact-project networks removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT NETWORKS:
+EXACT CLONE PATH REMOVED: PASS
+CLEAN CLONE HARNESS RESULT: PASS
+HARNESS EXIT CODE: 0
