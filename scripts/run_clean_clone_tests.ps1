@@ -71,8 +71,12 @@ try {
         exit 1
     }
 
-    Run-Command -CmdName ".\scripts\run_adversarial_tests.ps1" -ScriptBlock { .\scripts\run_adversarial_tests.ps1 }
-    Run-Command -CmdName ".\verify.ps1" -ScriptBlock { .\verify.ps1 }
+    Run-Command -CmdName ".\scripts\run_adversarial_tests.ps1" -ScriptBlock {
+        & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_adversarial_tests.ps1"
+    }
+    Run-Command -CmdName ".\verify.ps1" -ScriptBlock {
+        & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\verify.ps1"
+    }
     Run-Command -CmdName "bash ./verify.sh" -ScriptBlock { & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh }
 
     "================================================================" | Out-File -FilePath $outAudit -Encoding utf8
