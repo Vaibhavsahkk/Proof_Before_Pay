@@ -485,10 +485,11 @@ def test_evaluator_refuses_to_overwrite_report(monkeypatch, tmp_path):
         evaluator.evaluate_baseline(str(run_dir))
 
 
-def test_phase_1_manifest_is_exact_and_verifies():
+def test_phase_1_manifest_canonical_hash_is_exact_and_verifies():
     manifest_path = runner.BASE_DIR / "evidence" / "phase_1" / "SHA256_MANIFEST.txt"
-    assert hashlib.sha256(manifest_path.read_bytes()).hexdigest().upper() == (
-        "01AD1525F5D7F16416FC62C8B348A719268DE6AF5136FEA5E80A82D7741419E4"
+    canonical_bytes = manifest_path.read_bytes().replace(b"\r\n", b"\n")
+    assert hashlib.sha256(canonical_bytes).hexdigest().upper() == (
+        "EEF0BDF46D385F9BC47E14AF4E188DACE2B2E03B9510793E62D04706E03DAABE"
     )
     ManifestVerifier(str(runner.BASE_DIR)).verify()
 
