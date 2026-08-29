@@ -15,7 +15,7 @@ Human actions required: None.
 - Provider/model: Google Gemini, requested and returned `gemini-3.6-flash`.
 - SDK: `google-genai==2.19.0`.
 - Manifest: `phase2-baseline-run-v2`; input hashes use `utf8-text-normalized-lf`.
-- Six of six provider calls: SUCCESS.
+- 6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved.
 - Evaluator status: VALID.
 - Exact case-level recommendation accuracy: 100%.
 - Findings correctness: 100%.

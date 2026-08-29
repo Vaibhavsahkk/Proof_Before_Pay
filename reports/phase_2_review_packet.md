@@ -10,7 +10,7 @@ This packet does not approve Phase 2. Phase 3 remains locked unless External Cha
 
 ## Scope and safety
 
-The baseline performs one model call per frozen public case, with no tools and no access to hidden ground truth. It emits advisory `PAY`, `HOLD`, or `INVESTIGATE` recommendations for a human reviewer.
+The baseline performs model calls per frozen public case (6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved), with no tools and no access to hidden ground truth. It emits advisory `PAY`, `HOLD`, or `INVESTIGATE` recommendations for a human reviewer.
 
 - No payment execution.
 - No bank-detail changes or payment instructions.
@@ -69,7 +69,7 @@ These figures describe only the frozen six-case synthetic benchmark and do not i
 
 | Criterion | Result | Evidence |
 | --- | --- | --- |
-| Reasonable simple baseline | PASS | one pinned model call per case; no tools |
+| Reasonable simple baseline | PASS | 6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved; no tools |
 | Same frozen cases | PASS | manifest binds exact six case IDs and normalized hashes |
 | Exact prompt preserved | PASS | full request and rendered SHA-256 in each wrapper |
 | Model/provider/version recorded | PASS | manifest and per-case metadata |

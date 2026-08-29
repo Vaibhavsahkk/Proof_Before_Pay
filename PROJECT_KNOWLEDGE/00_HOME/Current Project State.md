@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Phase 2 contains a simple one-call-per-case Gemini baseline and fail-closed offline evaluator. Accepted run `run_20260829_154058_02e9416b` scored 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY on this benchmark. Phase 3+ is unauthorized and LOCKED.
+Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Phase 2 contains a baseline and fail-closed offline evaluator (6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved). Accepted run `run_20260829_154058_02e9416b` scored 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY on this benchmark. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
