@@ -2,18 +2,15 @@
 ================================================================
 ADVERSARIAL EVIDENCE FILE
 ================================================================
-Timestamp : 2026-08-29T11:30:01+05:30
+Timestamp : 2026-08-29T13:35:35+05:30
 Workdir   : D:\MICRO.1
 Command    : git rev-parse HEAD
 Exit       : 0
-b767bae637c6955516f2140a11515d404601fdfc
+a98533e30beb513a0bfce0cab1d778ee24a26371
 Command    : git status --short
 Exit       : 0
- M STATUS.md
- M evidence/phase_0/clean_clone_adversarial_execution.txt
- M evidence/phase_0/clean_clone_execution.txt
- M evidence/phase_0/clean_clone_post_test_audit.txt
- M reports/phase_0_review_packet.md
+ M scripts/generate_final_proof.ps1
+ M scripts/run_clean_clone_tests.ps1
 
 --- SHA-256 Hashes ---
 HASH EXIT 0: 5A201932D5F36766DE8AC6D951377CEF29EBEEDF40049FF7DEC845EE22AA0505  .dockerignore
@@ -40,7 +37,7 @@ HASH EXIT 0: DF17ACA6B5C832B982524AEBCA3ED1F3143B49491AAD8AC0767AEEC13E703D74  t
 TEST A: PowerShell Git negative-path test
 ================================================================
 Command      : powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File "verify.ps1"
-Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_c1b69056a082468aac9999775eb11402
+Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_6c8627a4f1dd40dab9c0a0a84d336f50
 Process exit : 128
 --- stdout/stderr ---
 Starting Micro1 Challenge Verification Pipeline (PowerShell)...
@@ -49,7 +46,7 @@ STEP: Git Tracked Traces Check
 ============================================================
 
 fatal: not a git repository (or any of the parent directories): .git
-C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_c1b69056a082468aac9999775eb11402\verify.ps1 : [FAIL] Git command failed.
+C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_6c8627a4f1dd40dab9c0a0a84d336f50\verify.ps1 : [FAIL] Git command failed.
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
     + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,verify.ps1
 --- end ---
@@ -73,7 +70,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_417ea97d69af4e278c4c27cc6fe20e01\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_4f6f29aece7c44c2b5f48f4c4d8f2f22\verify.ps1 : [FAIL] Found
 improperly tracked traces:
 traces/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -99,7 +96,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_3f65e3175c694d8785f933b9c0a45287\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_0779692430a94bf897f7c35205b99d16\verify.ps1 : [FAIL] Found
 improperly tracked trajectories:
 trajectories/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -170,18 +167,18 @@ Process exit : 0
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 183.24kB 0.0s done
+#7 transferring context: 4.26kB done
 #7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.193 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.268
-#9 1.268 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.268 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.3s
+#9 1.280 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.354
+#9 1.354 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.354 [notice] To update, run: pip install --upgrade pip
+#9 DONE 1.5s
 
 #10 [5/6] COPY . .
 #10 DONE 0.1s
@@ -192,10 +189,10 @@ Process exit : 0
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.3s done
-#12 exporting manifest sha256:5c492ddaa5661aa6d3ac33431322685dca5953d498e71677508e6fc5c825bc76 0.0s done
-#12 exporting config sha256:43f479ca46f4909de1516ae8426aec64e0737dad7a877fa1593ac31e080eee99 done
-#12 exporting attestation manifest sha256:53606552b79b9a309a4fd1dda157ed764c922a354c53e238fcd2c13599deb6fe 0.0s done
-#12 exporting manifest list sha256:068442d57bba2e4076c09b78b73c1e984add96fa5af2ba618954af6dc76f375d done
+#12 exporting manifest sha256:f713edc19c064c891a57925867a949809c012c72d14582e2e220902bb3edc288 done
+#12 exporting config sha256:4a084448e0d366b02c7af1b7deac714791dd21fb9a6568febb979ed1c3856a4d done
+#12 exporting attestation manifest sha256:f7e466ca3e902bb8b063510d9d8a8927bceed38850da47737fb432cc4bbcd490 0.0s done
+#12 exporting manifest list sha256:bba918962f91585ce8bc6f48cabf0b4411ffd5bfc45742bad291b3c02af73aae done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
@@ -348,32 +345,32 @@ STEP: Docker Build
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 3.91kB done
+#7 transferring context: 4.26kB done
 #7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.189 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.267
-#9 1.267 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.267 [notice] To update, run: pip install --upgrade pip
+#9 1.169 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.238
+#9 1.238 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.238 [notice] To update, run: pip install --upgrade pip
 #9 DONE 1.3s
 
 #10 [5/6] COPY . .
 #10 DONE 0.0s
 
 #11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
-#11 DONE 0.4s
+#11 DONE 0.3s
 
 #12 exporting to image
 #12 exporting layers
-#12 exporting layers 0.4s done
-#12 exporting manifest sha256:6fee01e3ff521f03f7329ae459ae049d7262b20fc81a68b283e070d86f171a37 done
-#12 exporting config sha256:06fd60f39af5de1635a3a6807fb9a95b3f91831dc8b8a52dcda3b36685c8a544 done
-#12 exporting attestation manifest sha256:62b68f83d38360b8ad2bb905309140b59c7d51282132a4765450cbdd5b8d13e2 0.0s done
-#12 exporting manifest list sha256:971d360a88c0b75c3d800ca0e6efbaba5d318c27be5610b496b9ec86dfae228b done
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:ed010c4e579553c8179a6b322b369a6a686bf6780cfe013b0f37f4c9d5c59de7 done
+#12 exporting config sha256:b756d7883dd4a3f4fd1704e5d7944a3d0a06c944b2f0dd3eeff5369c98cdeea6 done
+#12 exporting attestation manifest sha256:6e3f6df2ad0e1ae23566dc0d511cba1c0e3bd496df4d61e267b06a3c53ac6188 0.0s done
+#12 exporting manifest list sha256:33f81355783dddeb86f3ae89a8dad8d912b26838f40a5c2dc323a2cb8e041b9b done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
@@ -400,7 +397,7 @@ Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
 Installing collected packages: pluggy, packaging, iniconfig, pytest
 Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
 .................                                                        [100%]
-17 passed in 0.14s
+17 passed in 0.13s
 [PASS] Automated Test Suite Execution completed successfully.
 ============================================================
 STEP: Smoke Execution
@@ -420,20 +417,20 @@ ALL VERIFICATION STEPS PASSED
 
  Image micro1-challenge-phase0:latest Building
  Image micro1-challenge-phase0:latest Built
-time="2026-08-29T11:30:11+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-5bd45f143f84 Creating
- Container micro1-micro1_app-run-5bd45f143f84 Created
+time="2026-08-29T13:35:45+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-4d44f10e1fb0 Creating
+ Container micro1-micro1_app-run-4d44f10e1fb0 Created
   WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: pip install --upgrade pip
-time="2026-08-29T11:30:13+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-62209a588c47 Creating
- Container micro1-micro1_app-run-62209a588c47 Created
-time="2026-08-29T11:30:14+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-161a75196ff6 Creating
- Container micro1-micro1_app-run-161a75196ff6 Created
+time="2026-08-29T13:35:47+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-bfc7ab3d437c Creating
+ Container micro1-micro1_app-run-bfc7ab3d437c Created
+time="2026-08-29T13:35:48+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-0e87482b4d44 Creating
+ Container micro1-micro1_app-run-0e87482b4d44 Created
   process exit 0       : PASS
   completion marker    : PASS
   current 17 tests     : PASS
