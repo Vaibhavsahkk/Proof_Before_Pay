@@ -21,3 +21,6 @@ The evaluator will:
 
 ## Execution Isolation
 Agents and baselines will be executed in a dedicated, read-only mounted container with network access restricted, preventing any external data leakage or API misuse, aside from the authorized model endpoint.
+
+## Challenging Case Analysis
+The benchmark includes a multi-signal challenging case (`case_006`) containing both a HOLD condition (Duplicate Billing) and an INVESTIGATE condition (Unverified Bank Change). This explicitly tests deterministic precedence handling (HOLD > INVESTIGATE > PAY), evaluating if an agent can identify multiple anomalies and correctly prioritize the highest-severity risk according to `RULEBOOK.md`. It reveals whether the agent stops analysis upon finding one anomaly or conducts a full comprehensive check as required.

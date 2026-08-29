@@ -20,7 +20,7 @@ None.
 - Harness fail-closed self-test: PASS; forced inner exit 7 produced harness exit 1 as required.
 - Public benchmark identifiers: neutral `case_001` through `case_005` in filenames and JSON `case_id` values.
 - Leakage validation: PASS for the real public bundle; adversarial value, key, filename/path, and `case_id` leaks are rejected.
-- Ground-truth oracle: PASS for all five cases using exact Decimal arithmetic.
+- Ground-truth oracle: PASS for all six cases using exact Decimal arithmetic.
 - Rulebook, oracle, and schema finding vocabulary: aligned and tested.
 - Exact-project cleanup: PASS; no test containers or networks remained and the exact temporary clone path was removed.
 - Git hygiene for candidate commit: `git show --check 81258dab505429df34135a1fc72ea45527505510` exit 0.

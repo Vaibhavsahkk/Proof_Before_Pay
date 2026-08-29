@@ -101,8 +101,14 @@ echo "[PASS] Smoke Execution completed successfully."
 echo "============================================================"
 echo "STEP: Recursive Container Security Assertion"
 echo "============================================================"
+
+echo "Running forced-failure isolation test..."
+docker compose -f docker-compose.yml run --rm \
+  -v "$(pwd)/data/cases/ground_truth:/app/data/cases/ground_truth" \
+  --entrypoint sh micro1_app ./scripts/verify_container_security.sh > /dev/null 2>&1 && { echo "[FAIL] Isolation check failed to fail closed when ground_truth injected!"; exit 1; } || echo "[PASS] Forced-failure isolation check failed as expected."
+
 # Inspect the actual verification container, not merely the image.
-# We fail if any .env, .env.* (except .env.example), .git, __pycache__, .pytest_cache, .pyc, or raw traces are found.
+# We fail if any .env, .env.* (except .env.example), .git, __pycache__, .pytest_cache, .pyc, raw traces, or ground_truth are found.
 docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app ./scripts/verify_container_security.sh
 echo "[PASS] Recursive Container Security Assertion completed successfully."
 

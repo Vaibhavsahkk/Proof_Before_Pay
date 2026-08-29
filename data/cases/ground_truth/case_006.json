@@ -1,0 +1,8 @@
+{
+  "expected_recommendation": "HOLD",
+  "expected_findings": [
+    "Duplicate Billing",
+    "Unverified Bank Change"
+  ],
+  "case_id": "case_006"
+}

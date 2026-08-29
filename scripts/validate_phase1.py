@@ -13,7 +13,8 @@ HOLD_FINDINGS = {
     "Math Error",
     "Price Contradiction",
     "Quantity Mismatch",
-    "Tax Rate Contradiction"
+    "Tax Rate Contradiction",
+    "Invalid Currency"
 }
 
 INVESTIGATE_FINDINGS = {
@@ -48,8 +49,8 @@ def validate_schemas():
 def validate_cases_count():
     public_files = sorted(glob.glob('data/cases/public/*.json'))
     gt_files = sorted(glob.glob('data/cases/ground_truth/*.json'))
-    assert len(public_files) == 5, f"Expected 5 public cases, found {len(public_files)}"
-    assert len(gt_files) == 5, f"Expected 5 ground truth cases, found {len(gt_files)}"
+    assert len(public_files) == 6, f"Expected 6 public cases, found {len(public_files)}"
+    assert len(gt_files) == 6, f"Expected 6 ground truth cases, found {len(gt_files)}"
 
     public_names = {Path(path).name for path in public_files}
     ground_truth_names = {Path(path).name for path in gt_files}
@@ -175,8 +176,14 @@ class Phase1Oracle:
                     
             if inv['currency'] != po['currency']:
                 findings.append("Currency Mismatch")
+            if po['currency'] != "USD" and "Invalid Currency" not in findings:
+                findings.append("Invalid Currency")
+                
             if inv['tax_rate_percent'] != po['tax_rate_percent']:
                 findings.append("Tax Rate Contradiction")
+                
+        if inv['currency'] != "USD" and "Invalid Currency" not in findings:
+            findings.append("Invalid Currency")
                         
         # Math Error
         calculated_subtotal = Decimal('0.00')

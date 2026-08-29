@@ -112,12 +112,22 @@ Write-Output "[PASS] Smoke Execution completed successfully."
 Write-Output "============================================================"
 Write-Output "STEP: Recursive Container Security Assertion"
 Write-Output "============================================================"
+
+Write-Output "Running forced-failure isolation test..."
+docker compose -f docker-compose.yml run --rm -v "$((Get-Location).Path)/data/cases/ground_truth:/app/data/cases/ground_truth" --entrypoint sh micro1_app ./scripts/verify_container_security.sh > $null 2>&1
+if ($LASTEXITCODE -eq 0) {
+    Write-Error "[FAIL] Isolation check failed to fail closed when ground_truth injected!"
+    exit 1
+}
+Write-Output "[PASS] Forced-failure isolation check failed as expected."
+
 docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app ./scripts/verify_container_security.sh
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Security assertion failed."
     exit $LASTEXITCODE
 }
 Write-Output "[PASS] Recursive Container Security Assertion completed successfully."
+
 
 Write-Output "************************************************************"
 Write-Output "ALL VERIFICATION STEPS PASSED"

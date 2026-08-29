@@ -11,6 +11,7 @@ Deterministic precedence for resolving multiple conditions (first match wins):
 - **Quantity Mismatch**: Any invoice item's `quantity` is greater than the accepted `quantity_accepted` in the GRN (matched by exact `item_id`).
 - **Price Contradiction**: Any invoice item's `unit_price` differs from the PO's `unit_price` by more than 0.01 (matched by exact `item_id`).
 - **Currency Mismatch**: Invoice `currency` differs from PO `currency`.
+- **Invalid Currency**: Invoice or PO `currency` is not exactly `USD`.
 - **Tax Rate Contradiction**: Invoice `tax_rate_percent` differs from PO `tax_rate_percent`.
 - **Math Error**:
   - `quantity * unit_price` differs from `line_total` by > 0.01.

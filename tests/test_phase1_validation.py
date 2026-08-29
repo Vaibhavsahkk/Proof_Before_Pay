@@ -199,8 +199,26 @@ def test_oracle_tax_hold():
 
     case = get_base_case()
     case["invoice"]["currency"] = "EUR"
+    case["purchase_order"]["currency"] = "EUR"
     rec, findings = oracle.evaluate(case)
     assert rec == "HOLD"
+    assert "Invalid Currency" in findings
+    assert "Currency Mismatch" not in findings
+
+    case = get_base_case()
+    case["invoice"]["currency"] = "EUR"
+    case["purchase_order"]["currency"] = "USD"
+    rec, findings = oracle.evaluate(case)
+    assert rec == "HOLD"
+    assert "Invalid Currency" in findings
+    assert "Currency Mismatch" in findings
+    
+    case = get_base_case()
+    case["invoice"]["currency"] = "USD"
+    case["purchase_order"]["currency"] = "EUR"
+    rec, findings = oracle.evaluate(case)
+    assert rec == "HOLD"
+    assert "Invalid Currency" in findings
     assert "Currency Mismatch" in findings
 
 def test_oracle_subtotal_total_hold():

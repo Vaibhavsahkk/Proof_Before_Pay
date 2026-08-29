@@ -13,3 +13,5 @@ traces/raw
 trajectories/raw
 *.log
 .DS_Store
+data/cases/ground_truth/
+benchmark/schemas/ground_truth.json

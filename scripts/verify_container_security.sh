@@ -20,7 +20,10 @@ OUTPUT=$(find "$SCAN_ROOT" \( \
     -path "*/traces/raw" -o \
     -path "*/traces/raw/*" -o \
     -path "*/trajectories/raw" -o \
-    -path "*/trajectories/raw/*" \
+    -path "*/trajectories/raw/*" -o \
+    -path "*/data/cases/ground_truth" -o \
+    -path "*/data/cases/ground_truth/*" -o \
+    -name "ground_truth.json" \
 \) -print 2>&1)
 FIND_EXIT=$?
 set -e

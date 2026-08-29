@@ -26,10 +26,10 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 | Safety boundaries | PASS | `docs/PHASE_1_SCOPE.md`, `docs/LOCKED_PROBLEM.md` |
 | Strict versioned JSON schemas | PASS | `benchmark/schemas/*.json`; strict validator exit 0 |
 | Deterministic anomaly taxonomy and precedence | PASS | `benchmark/RULEBOOK.md`; oracle tests |
-| Five synthetic benchmark cases | PASS | `data/cases/public/`, `data/cases/ground_truth/` |
+| Six synthetic benchmark cases | PASS | `data/cases/public/`, `data/cases/ground_truth/` |
 | Neutral public filenames and case IDs | PASS | `case_001` through `case_005`; leakage tests |
 | No answer leakage in public input | PASS | real-bundle validation plus adversarial value, key, filename/path, and case-ID tests |
-| Independent deterministic ground truth | PASS | five-case oracle matrix below |
+| Independent deterministic ground truth | PASS | six-case oracle matrix below |
 | Frozen benchmark integrity | PASS | SHA-256 manifest verifier and mutation tests |
 | Fair evaluation design | PASS | `eval/EVAL_DESIGN.md` |
 | Clean-clone reproducibility | PASS | `evidence/phase_1/final_clean_clone_execution.txt` |
@@ -52,7 +52,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 | Exact-project Compose cleanup | exit 0; no matching containers or networks remained |
 | Exact temporary clone cleanup | PASS; path absent after cleanup |
 
-## Five-case ground-truth matrix
+## Six-case ground-truth matrix
 
 | Case ID | Deterministically derived | Frozen ground truth | Result |
 | --- | --- | --- | --- |
@@ -61,6 +61,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 | `case_003` | HOLD - Quantity Mismatch | HOLD - Quantity Mismatch | PASS |
 | `case_004` | HOLD - Price Contradiction | HOLD - Price Contradiction | PASS |
 | `case_005` | INVESTIGATE - Unverified Bank Change | INVESTIGATE - Unverified Bank Change | PASS |
+| `case_006` | HOLD - Duplicate Billing, Unverified Bank Change | HOLD - Duplicate Billing, Unverified Bank Change | PASS |
 
 ## Integrity hashes
 
@@ -101,6 +102,13 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 - `data/cases/public/case_003.json`
 - `data/cases/public/case_004.json`
 - `data/cases/public/case_005.json`
+- `data/cases/public/case_006.json`
+- `data/cases/ground_truth/case_001.json`
+- `data/cases/ground_truth/case_002.json`
+- `data/cases/ground_truth/case_003.json`
+- `data/cases/ground_truth/case_004.json`
+- `data/cases/ground_truth/case_005.json`
+- `data/cases/ground_truth/case_006.json`
 - `docs/PHASE_1_SCOPE.md`
 - `eval/EVAL_DESIGN.md`
 - `evidence/phase_1/SHA256_MANIFEST.txt`
@@ -129,7 +137,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 - Native macOS/Linux execution is unverified; Git Bash on Windows is the observed POSIX-like environment.
 - No vulnerability/CVE scanner was run, and no vulnerability-remediation claim is made.
-- The benchmark currently contains five cases by explicit Phase 1 plan; scaling is deferred until the design is approved.
+- The benchmark currently contains six cases by explicit Phase 1 plan; scaling is deferred until the design is approved.
 
 ## Failures
 
