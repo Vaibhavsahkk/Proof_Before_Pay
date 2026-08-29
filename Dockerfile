@@ -17,6 +17,8 @@ COPY --chown=micro1user:micro1user tests/ ./tests/
 COPY --chown=micro1user:micro1user scripts/ ./scripts/
 COPY --chown=micro1user:micro1user benchmark/ ./benchmark/
 COPY --chown=micro1user:micro1user data/ ./data/
+COPY --chown=micro1user:micro1user baseline/ ./baseline/
+COPY --chown=micro1user:micro1user eval/ ./eval/
 COPY --chown=micro1user:micro1user evidence/phase_1/SHA256_MANIFEST.txt ./evidence/phase_1/SHA256_MANIFEST.txt
 COPY --chown=micro1user:micro1user pytest.ini Dockerfile .dockerignore docker-compose.yml ./
 USER micro1user
@@ -29,6 +31,7 @@ COPY --chown=micro1user:micro1user src/ ./src/
 COPY --chown=micro1user:micro1user benchmark/RULEBOOK.md ./benchmark/RULEBOOK.md
 COPY --chown=micro1user:micro1user benchmark/schemas/public_evidence_bundle.json benchmark/schemas/output_contract.json ./benchmark/schemas/
 COPY --chown=micro1user:micro1user data/cases/public/ ./data/cases/public/
+COPY --chown=micro1user:micro1user baseline/ ./baseline/
 COPY --chown=micro1user:micro1user scripts/verify_container_security.sh ./scripts/verify_container_security.sh
 USER micro1user
 

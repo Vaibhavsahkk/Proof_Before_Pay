@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-Phase 2 (Fair Baseline) - ACTIVE. Phase 1 APPROVED.
+API-independent scaffold tested, actual baseline run NOT RUN, Phase 2 incomplete. Blocked only on local GEMINI_API_KEY after scaffold verification.
 
 ## Current Branch
 master
@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Strict JSON-schema validation, leakage checks, deterministic oracle validation, manifest verification, and runtime/evaluator isolation are implemented and passing. Phase 2 fair baseline work is ACTIVE. Phase 3+ is unauthorized and LOCKED.
+Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Strict JSON-schema validation, leakage checks, deterministic oracle validation, manifest verification, and runtime/evaluator isolation are implemented and passing. Phase 2 fair baseline infrastructure, API-independent evaluation harness, tests, and security isolation are complete. Awaiting GEMINI_API_KEY for actual run. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
@@ -28,9 +28,13 @@ Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic
 - Six synthetic benchmark cases including challenging multi-signal case (`data/cases/`)
 - Independent deterministic ground truth oracle (`scripts/validate_phase1.py`)
 - Benchmark SHA-256 Manifest generation and verification
+- Phase 2 baseline script implementation using `google-genai` SDK
+- Phase 2 evaluation script implementation
+- Phase 2 API-independent tests (100% passing)
+- Phase 2 Security checks (Docker integration, GEMINI_API_KEY secure injection)
 
 ## Not Completed
-- Phase 2: Fair Baseline implementation
+- Phase 2: Fair Baseline execution and evidence generation (BLOCKED on GEMINI_API_KEY)
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
