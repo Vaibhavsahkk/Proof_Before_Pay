@@ -1,149 +1,280 @@
 param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $false)]
     [string]$CandidateSha,
-    [Parameter(Mandatory=$false)]
-    [string]$Phase = "phase_1"
+
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("phase_0", "phase_1")]
+    [string]$Phase = "phase_1",
+
+    [Parameter(Mandatory = $false)]
+    [switch]$SelfTestFailClosed
 )
 
-$ErrorActionPreference = 'Continue'
-$repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
-$cloneDir = "ProofBeforePay-clone-" + [guid]::NewGuid().ToString("N")
-$clonePath = Join-Path $env:TEMP $cloneDir
+$ErrorActionPreference = "Continue"
 
-# Write log outside the repo
-$logPath = Join-Path $env:TEMP "clean_clone_log_$cloneDir.txt"
-
-$COMPOSE_PROJECT_NAME = "pbp_clone_$([guid]::NewGuid().ToString('N').Substring(0,8))"
-$env:COMPOSE_PROJECT_NAME = $COMPOSE_PROJECT_NAME
-
-$global:hasErrors = $false
-
-function Log {
-    param([string]$message)
-    Write-Output $message
-    $message | Out-File -FilePath $logPath -Append -Encoding utf8
+if ($SelfTestFailClosed) {
+    & powershell.exe -NonInteractive -NoProfile -Command "exit 7"
+    $forcedExit = $LASTEXITCODE
+    Write-Output "FAIL-CLOSED SELF-TEST INNER EXIT: $forcedExit"
+    if ($forcedExit -eq 0) {
+        Write-Error "Fail-closed self-test did not produce a non-zero exit."
+        exit 2
+    }
+    Write-Output "FAIL-CLOSED SELF-TEST RESULT: EXPECTED FAILURE"
+    exit 1
 }
 
-function Run-Command {
+if ($CandidateSha -notmatch "^[0-9a-fA-F]{40}$") {
+    Write-Error "CandidateSha must be an exact 40-character Git commit SHA."
+    exit 2
+}
+
+$repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
+$cloneName = "ProofBeforePay-clone-" + [guid]::NewGuid().ToString("N")
+$clonePath = Join-Path $env:TEMP $cloneName
+$logPath = Join-Path $env:TEMP "clean_clone_log_$cloneName.txt"
+$composeProjectName = "pbp_clone_$([guid]::NewGuid().ToString('N').Substring(0, 8))"
+$previousComposeProjectName = [Environment]::GetEnvironmentVariable("COMPOSE_PROJECT_NAME", "Process")
+$hadComposeProjectName = $null -ne $previousComposeProjectName
+$env:COMPOSE_PROJECT_NAME = $composeProjectName
+$script:hasErrors = $false
+
+function Write-Log {
+    param([string]$Message)
+
+    Write-Output $Message
+    $Message | Out-File -FilePath $logPath -Append -Encoding utf8
+}
+
+function Invoke-LoggedCommand {
     param(
-        [string]$CmdName,
-        [scriptblock]$ScriptBlock
+        [string]$Name,
+        [scriptblock]$Command,
+        [int]$ExpectedExit = 0
     )
-    Log "`n========================================"
-    Log "COMMAND: $CmdName"
-    Log "========================================"
-    
+
+    Write-Log ""
+    Write-Log "========================================"
+    Write-Log "COMMAND: $Name"
+    Write-Log "EXPECTED EXIT CODE: $ExpectedExit"
+    Write-Log "========================================"
+
     try {
-        $output = & $ScriptBlock *>&1
-        foreach ($line in $output) {
-            if ($line -ne $null) { Log $line.ToString() }
-        }
+        $output = & $Command *>&1
         $exitCode = $LASTEXITCODE
-        Log "EXIT CODE: $exitCode"
-        if ($exitCode -ne 0) {
-            Log "ERROR: Command failed with exit $exitCode"
-            $global:hasErrors = $true
+        foreach ($line in $output) {
+            if ($null -ne $line) {
+                Write-Log $line.ToString()
+            }
         }
-    } catch {
-        Log "Exception: $_"
-        Log "EXIT CODE: 1"
-        $global:hasErrors = $true
+        Write-Log "EXIT CODE: $exitCode"
+        if ($exitCode -ne $ExpectedExit) {
+            Write-Log "ERROR: Expected exit $ExpectedExit but observed $exitCode."
+            $script:hasErrors = $true
+        }
+    }
+    catch {
+        Write-Log "EXCEPTION: $_"
+        Write-Log "EXIT CODE: 1"
+        $script:hasErrors = $true
     }
 }
 
 try {
-    Log "--- CLEAN CLONE EXECUTION ($Phase) ---"
-    Log "CANDIDATE SHA: $CandidateSha"
-    Log "COMPOSE PROJECT: $COMPOSE_PROJECT_NAME"
+    Write-Log "--- CLEAN CLONE EXECUTION ($Phase) ---"
+    Write-Log "CANDIDATE SHA: $CandidateSha"
+    Write-Log "COMPOSE PROJECT: $composeProjectName"
+    Write-Log "CLONE PATH: $clonePath"
 
-    Run-Command "git clone" { git clone https://github.com/Vaibhavsahkk/Proof_Before_Pay.git $clonePath }
-    if ($global:hasErrors) { throw "Clone failed" }
+    Invoke-LoggedCommand "fail-closed harness self-test" {
+        & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath -CandidateSha $CandidateSha -Phase $Phase -SelfTestFailClosed
+    } -ExpectedExit 1
+    if ($script:hasErrors) {
+        throw "Fail-closed harness self-test failed."
+    }
+
+    Invoke-LoggedCommand "git clone" {
+        git clone https://github.com/Vaibhavsahkk/Proof_Before_Pay.git $clonePath
+    }
+    if ($script:hasErrors) {
+        throw "Clone failed."
+    }
 
     Set-Location $clonePath
 
-    Run-Command "git checkout" { git checkout $CandidateSha }
-    if ($global:hasErrors) { throw "Checkout failed" }
-    
-    $headOutput = git rev-parse HEAD 2>&1 | Out-String
-    $clonedHead = $headOutput.Trim()
-    if ($clonedHead -ne $CandidateSha) {
-        Log "ERROR: Cloned HEAD ($clonedHead) does not match Candidate SHA ($CandidateSha)."
-        $global:hasErrors = $true
-        throw "Head mismatch"
+    Invoke-LoggedCommand "git checkout $CandidateSha" {
+        git checkout $CandidateSha
+    }
+    if ($script:hasErrors) {
+        throw "Checkout failed."
+    }
+
+    $clonedHead = (git rev-parse HEAD 2>&1 | Out-String).Trim()
+    $headExit = $LASTEXITCODE
+    Write-Log "OBSERVED CLONED HEAD: $clonedHead"
+    Write-Log "GIT REV-PARSE EXIT CODE: $headExit"
+    if ($headExit -ne 0 -or $clonedHead -ne $CandidateSha) {
+        $script:hasErrors = $true
+        throw "Cloned HEAD does not exactly match CandidateSha."
     }
 
     if ($Phase -eq "phase_1") {
-        Run-Command "python scripts/validate_phase1.py" { python scripts/validate_phase1.py }
-        if ($global:hasErrors) { throw "validate_phase1 failed" }
+        Invoke-LoggedCommand "python scripts/validate_phase1.py" {
+            python scripts/validate_phase1.py
+        }
+        if ($script:hasErrors) {
+            throw "Phase 1 validator failed."
+        }
 
-        Run-Command "python scripts/verify_manifest.py" { python scripts/verify_manifest.py }
-        if ($global:hasErrors) { throw "verify_manifest failed" }
+        Invoke-LoggedCommand "python scripts/verify_manifest.py" {
+            python scripts/verify_manifest.py
+        }
+        if ($script:hasErrors) {
+            throw "Manifest verifier failed."
+        }
 
-        Run-Command "pytest tests/test_phase1_validation.py tests/test_manifest.py" { pytest tests/test_phase1_validation.py tests/test_manifest.py }
-        if ($global:hasErrors) { throw "pytest failed" }
-    } else {
-        Run-Command ".\scripts\run_adversarial_tests.ps1" { & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_adversarial_tests.ps1" }
-        if ($global:hasErrors) { throw "adversarial tests failed" }
+        Invoke-LoggedCommand "pytest focused Phase 1 suite" {
+            python -m pytest tests/test_phase1_validation.py tests/test_manifest.py -q
+        }
+        if ($script:hasErrors) {
+            throw "Focused Phase 1 tests failed."
+        }
+    }
+    else {
+        Invoke-LoggedCommand ".\scripts\run_adversarial_tests.ps1" {
+            & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_adversarial_tests.ps1"
+        }
+        if ($script:hasErrors) {
+            throw "Phase 0 adversarial tests failed."
+        }
     }
 
-    Run-Command ".\verify.ps1" { & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\verify.ps1" }
-    if ($global:hasErrors) { throw "verify.ps1 failed" }
-
-    Run-Command "bash ./verify.sh" { & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh }
-    if ($global:hasErrors) { throw "verify.sh failed" }
-
-    Run-Command "git diff --check" { git diff --check }
-    if ($global:hasErrors) { throw "Dirty tree (diff --check)" }
-
-    Run-Command "git diff --cached --check" { git diff --cached --check }
-    if ($global:hasErrors) { throw "Dirty tree (cached)" }
-
-    Run-Command "git status --short" { git status --short }
-    if ($global:hasErrors) { throw "Dirty tree (status)" }
-    
-    $cleanStatusOut = git status --short 2>&1 | Out-String
-    if ($cleanStatusOut.Trim() -ne "") {
-        Log "ERROR: Post-test clean clone is not empty: $cleanStatusOut"
-        throw "Dirty tree"
+    Invoke-LoggedCommand ".\verify.ps1" {
+        & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\verify.ps1"
+    }
+    if ($script:hasErrors) {
+        throw "verify.ps1 failed."
     }
 
-    Log "`nCLEAN CLONE HARNESS RESULT: PASS"
-    Log "ALL CHECKS EXITED 0"
+    Invoke-LoggedCommand "bash ./verify.sh" {
+        & "C:\Program Files\Git\bin\bash.exe" ./verify.sh
+    }
+    if ($script:hasErrors) {
+        throw "verify.sh failed."
+    }
 
-} catch {
-    Log "HARNESS ABORTED: $_"
-    $global:hasErrors = $true
-} finally {
+    Invoke-LoggedCommand "git diff --check" {
+        git diff --check
+    }
+    if ($script:hasErrors) {
+        throw "git diff --check failed."
+    }
+
+    Invoke-LoggedCommand "git diff --cached --check" {
+        git diff --cached --check
+    }
+    if ($script:hasErrors) {
+        throw "git diff --cached --check failed."
+    }
+
+    Invoke-LoggedCommand "git status --short" {
+        git status --short
+    }
+    if ($script:hasErrors) {
+        throw "git status failed."
+    }
+
+    $cleanStatus = (git status --short 2>&1 | Out-String).Trim()
+    $cleanStatusExit = $LASTEXITCODE
+    Write-Log "POST-TEST STATUS EXIT CODE: $cleanStatusExit"
+    Write-Log "POST-TEST STATUS OUTPUT: $cleanStatus"
+    if ($cleanStatusExit -ne 0 -or $cleanStatus -ne "") {
+        $script:hasErrors = $true
+        throw "Post-test clean clone is not clean."
+    }
+
+    Write-Log ""
+    Write-Log "CLEAN CLONE TEST RESULT: PASS"
+}
+catch {
+    Write-Log "HARNESS ABORTED: $_"
+    $script:hasErrors = $true
+}
+finally {
     Set-Location $repoRoot
-    
-    # Cleanup Docker Compose for this unique project only
-    if (Test-Path "$clonePath\docker-compose.yml") {
-        Write-Output "Cleaning up docker compose for project $COMPOSE_PROJECT_NAME..."
-        & docker compose -f "$clonePath\docker-compose.yml" --project-name $COMPOSE_PROJECT_NAME down --remove-orphans --volumes 2>&1 | Out-Null
+
+    $composeFile = Join-Path $clonePath "docker-compose.yml"
+    if (Test-Path -LiteralPath $composeFile) {
+        Invoke-LoggedCommand "exact-project docker compose down --remove-orphans" {
+            docker compose -f $composeFile --project-name $composeProjectName down --remove-orphans
+        }
     }
 
-    if (Test-Path $clonePath) {
-        Remove-Item -Path $clonePath -Recurse -Force -ErrorAction SilentlyContinue
+    Invoke-LoggedCommand "verify exact-project containers removed" {
+        docker ps -a --filter "label=com.docker.compose.project=$composeProjectName" --format "{{.ID}}"
     }
-    
-    # Normalize log and copy to repo
-    Write-Output "Normalizing and copying log..."
-    $content = [System.IO.File]::ReadAllText($logPath)
-    $content = $content.Replace("`r`n", "`n")
+    $remainingContainers = (docker ps -a --filter "label=com.docker.compose.project=$composeProjectName" --format "{{.ID}}" 2>&1 | Out-String).Trim()
+    $containerQueryExit = $LASTEXITCODE
+    Write-Log "REMAINING PROJECT CONTAINERS: $remainingContainers"
+    if ($containerQueryExit -ne 0 -or $remainingContainers -ne "") {
+        $script:hasErrors = $true
+        Write-Log "ERROR: Exact-project containers remain after cleanup."
+    }
+
+    Invoke-LoggedCommand "verify exact-project networks removed" {
+        docker network ls --filter "label=com.docker.compose.project=$composeProjectName" --format "{{.ID}}"
+    }
+    $remainingNetworks = (docker network ls --filter "label=com.docker.compose.project=$composeProjectName" --format "{{.ID}}" 2>&1 | Out-String).Trim()
+    $networkQueryExit = $LASTEXITCODE
+    Write-Log "REMAINING PROJECT NETWORKS: $remainingNetworks"
+    if ($networkQueryExit -ne 0 -or $remainingNetworks -ne "") {
+        $script:hasErrors = $true
+        Write-Log "ERROR: Exact-project networks remain after cleanup."
+    }
+
+    if (Test-Path -LiteralPath $clonePath) {
+        try {
+            Remove-Item -LiteralPath $clonePath -Recurse -Force -ErrorAction Stop
+        }
+        catch {
+            $script:hasErrors = $true
+            Write-Log "ERROR: Exact clone cleanup failed: $_"
+        }
+    }
+    if (Test-Path -LiteralPath $clonePath) {
+        $script:hasErrors = $true
+        Write-Log "ERROR: Exact clone path still exists after cleanup: $clonePath"
+    }
+    else {
+        Write-Log "EXACT CLONE PATH REMOVED: PASS"
+    }
+
+    if ($hadComposeProjectName) {
+        $env:COMPOSE_PROJECT_NAME = $previousComposeProjectName
+    }
+    else {
+        Remove-Item Env:COMPOSE_PROJECT_NAME -ErrorAction SilentlyContinue
+    }
+
+    $content = [System.IO.File]::ReadAllText($logPath).Replace("`r`n", "`n")
     $normalizedLines = $content.Split("`n") | ForEach-Object { $_.TrimEnd() }
-    
-    $dest = "$repoRoot\evidence\$Phase\final_clean_clone_execution.txt"
-    $destDir = Split-Path $dest
-    if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Force -Path $destDir | Out-Null }
-    
-    [System.IO.File]::WriteAllLines($dest, $normalizedLines, (New-Object System.Text.UTF8Encoding($false)))
-    Write-Output "Saved normalized log to $dest"
-
-    if ($global:hasErrors) {
-        Write-Output "Clean clone tests failed. Exit 1."
-        exit 1
-    } else {
-        Write-Output "Clean clone tests passed. Exit 0."
-        exit 0
+    $destination = Join-Path $repoRoot "evidence\$Phase\final_clean_clone_execution.txt"
+    $destinationDirectory = Split-Path $destination
+    if (-not (Test-Path -LiteralPath $destinationDirectory)) {
+        New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
     }
+    [System.IO.File]::WriteAllLines(
+        $destination,
+        $normalizedLines,
+        (New-Object System.Text.UTF8Encoding($false))
+    )
+    Write-Output "Saved normalized log to $destination"
+
+    if ($script:hasErrors) {
+        Write-Output "CLEAN CLONE HARNESS RESULT: FAIL"
+        exit 1
+    }
+
+    Write-Output "CLEAN CLONE HARNESS RESULT: PASS"
+    exit 0
 }

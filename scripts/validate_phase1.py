@@ -1,9 +1,33 @@
 import json
 import os
 import glob
+import re
+from pathlib import Path
 from decimal import Decimal, ROUND_HALF_UP
 
 import jsonschema
+
+HOLD_FINDINGS = {
+    "Currency Mismatch",
+    "Duplicate Billing",
+    "Math Error",
+    "Price Contradiction",
+    "Quantity Mismatch",
+    "Tax Rate Contradiction"
+}
+
+INVESTIGATE_FINDINGS = {
+    "Duplicate GRN Line ID",
+    "Duplicate Invoice Line ID",
+    "Duplicate PO Line ID",
+    "Missing GRN",
+    "Missing GRN Line ID",
+    "Missing PO",
+    "Missing PO Line ID",
+    "Missing Vendor Master",
+    "Unverified Bank Change",
+    "Vendor Identity Mismatch"
+}
 
 def validate_schemas():
     with open('benchmark/schemas/public_evidence_bundle.json') as f:
@@ -11,8 +35,8 @@ def validate_schemas():
     with open('benchmark/schemas/ground_truth.json') as f:
         gt_schema = json.load(f)
         
-    public_files = glob.glob('data/cases/public/*.json')
-    gt_files = glob.glob('data/cases/ground_truth/*.json')
+    public_files = sorted(glob.glob('data/cases/public/*.json'))
+    gt_files = sorted(glob.glob('data/cases/ground_truth/*.json'))
     
     for pf in public_files:
         with open(pf) as f:
@@ -22,27 +46,55 @@ def validate_schemas():
             jsonschema.validate(instance=json.load(f), schema=gt_schema)
 
 def validate_cases_count():
-    public_files = glob.glob('data/cases/public/*.json')
-    gt_files = glob.glob('data/cases/ground_truth/*.json')
+    public_files = sorted(glob.glob('data/cases/public/*.json'))
+    gt_files = sorted(glob.glob('data/cases/ground_truth/*.json'))
     assert len(public_files) == 5, f"Expected 5 public cases, found {len(public_files)}"
     assert len(gt_files) == 5, f"Expected 5 ground truth cases, found {len(gt_files)}"
 
-def test_leakage():
-    import re
-    public_files = glob.glob('data/cases/public/*.json')
+    public_names = {Path(path).name for path in public_files}
+    ground_truth_names = {Path(path).name for path in gt_files}
+    assert public_names == ground_truth_names, "Public and ground-truth case filenames do not match"
+
+    neutral_id_pattern = re.compile(r"^case_\d{3}$")
+    for public_path in public_files:
+        stem = Path(public_path).stem
+        assert neutral_id_pattern.fullmatch(stem), f"Non-neutral public filename: {public_path}"
+        ground_truth_path = Path('data/cases/ground_truth') / Path(public_path).name
+        with open(public_path, encoding='utf-8') as public_file:
+            public_data = json.load(public_file)
+        with open(ground_truth_path, encoding='utf-8') as ground_truth_file:
+            ground_truth_data = json.load(ground_truth_file)
+        assert public_data['case_id'] == stem, f"Public case_id does not match filename: {public_path}"
+        assert ground_truth_data['case_id'] == stem, f"Ground-truth case_id does not match filename: {ground_truth_path}"
+
+def validate_leakage():
+    public_files = sorted(glob.glob('data/cases/public/*.json'))
     
-    # Regex to match isolated words: PAY, HOLD, INVESTIGATE (not PAYMENT)
-    pattern = re.compile(r'\b(pay|hold|investigate)\b', re.IGNORECASE)
+    # Treat punctuation and underscores as separators, while allowing ordinary
+    # words such as "payment" that merely contain the letters "pay".
+    pattern = re.compile(r'(?<![a-z0-9])(pay|hold|investigate)(?![a-z0-9])', re.IGNORECASE)
     
+    answer_indicators = {
+        "answerkey",
+        "expectedfindings",
+        "expectedrecommendation",
+        "groundtruth",
+        "label"
+    }
+
+    def contains_answer_indicator(value):
+        normalized = re.sub(r"[^a-z0-9]+", "", str(value).lower())
+        return next((term for term in answer_indicators if term in normalized), None)
+
     def check_leakage(obj, filepath):
         if isinstance(obj, dict):
             for k, v in obj.items():
                 k_lower = str(k).lower()
                 if pattern.search(k_lower):
                     assert False, f"Leakage detected! Found exact recommendation in key '{k}' in {filepath}"
-                for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
-                    if term in k_lower:
-                        assert False, f"Leakage detected! Found '{term}' in key '{k}' in {filepath}"
+                indicator = contains_answer_indicator(k_lower)
+                if indicator:
+                    assert False, f"Leakage detected! Found answer indicator '{indicator}' in key '{k}' in {filepath}"
                 check_leakage(v, filepath)
         elif isinstance(obj, list):
             for item in obj:
@@ -51,13 +103,13 @@ def test_leakage():
             v_lower = obj.lower()
             if pattern.search(v_lower):
                 assert False, f"Leakage detected! Found exact recommendation '{obj}' in {filepath}"
-            for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
-                if term in v_lower:
-                    assert False, f"Leakage detected! Found '{term}' in {filepath}"
+            indicator = contains_answer_indicator(v_lower)
+            if indicator:
+                assert False, f"Leakage detected! Found answer indicator '{indicator}' in {filepath}"
                     
     for pf in public_files:
         pf_lower = pf.lower()
-        if "ground_truth" in pf_lower or "expected" in pf_lower or pattern.search(pf_lower):
+        if contains_answer_indicator(pf_lower) or pattern.search(pf_lower):
             assert False, f"Leakage in filename/path: {pf}"
             
         with open(pf) as f:
@@ -66,7 +118,7 @@ def test_leakage():
 
 def validate_synthetic_constraints():
     synthetic_keywords = ["SYNTHETIC", "FAKECORP", "MOCK", "PSEUDO", "TESTAMENT"]
-    public_files = glob.glob('data/cases/public/*.json')
+    public_files = sorted(glob.glob('data/cases/public/*.json'))
     for pf in public_files:
         with open(pf) as f:
             data = json.load(f)
@@ -167,11 +219,8 @@ class Phase1Oracle:
 
         # Recommendation logic
         # HOLD > INVESTIGATE > PAY
-        hold_findings = ["Duplicate Billing", "Quantity Mismatch", "Price Contradiction", "Math Error", "Currency Mismatch", "Tax Rate Contradiction"]
-        investigate_findings = ["Unverified Bank Change", "Vendor Identity Mismatch", "Missing Vendor Master", "Missing PO", "Missing GRN", "Duplicate Invoice Line ID", "Duplicate PO Line ID", "Duplicate GRN Line ID", "Missing PO Line ID", "Missing GRN Line ID"]
-        
-        has_hold = any(f in hold_findings for f in findings)
-        has_investigate = any(f in investigate_findings for f in findings)
+        has_hold = any(f in HOLD_FINDINGS for f in findings)
+        has_investigate = any(f in INVESTIGATE_FINDINGS for f in findings)
         
         if has_hold:
             rec = "HOLD"
@@ -186,18 +235,20 @@ class Phase1Oracle:
 
 def validate_oracle():
     oracle = Phase1Oracle()
-    public_files = glob.glob('data/cases/public/*.json')
+    public_files = sorted(glob.glob('data/cases/public/*.json'))
     
     print(f"{'Case ID':<35} | {'Derived Rec':<11} | {'Truth Rec':<11} | {'PASS':<5}")
     print("-" * 80)
     for pf in public_files:
-        with open(pf) as f:
+        with open(pf, encoding='utf-8') as f:
             public_data = json.load(f)
         case_id = public_data['case_id']
         
-        gt_path = pf.replace('public', 'ground_truth')
-        with open(gt_path) as f:
+        gt_path = Path(pf).parent.parent / 'ground_truth' / Path(pf).name
+        with open(gt_path, encoding='utf-8') as f:
             gt_data = json.load(f)
+
+        assert gt_data['case_id'] == case_id, f"Ground-truth case_id mismatch for {pf}"
             
         expected_rec = gt_data['expected_recommendation']
         expected_findings = sorted(gt_data['expected_findings'])
@@ -216,7 +267,7 @@ def main():
     print("[PASS] Case count validation")
     validate_schemas()
     print("[PASS] Schema validation")
-    test_leakage()
+    validate_leakage()
     print("[PASS] Leakage validation")
     validate_synthetic_constraints()
     print("[PASS] Synthetic data validation")

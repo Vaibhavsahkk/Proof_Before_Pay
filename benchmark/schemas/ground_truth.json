@@ -5,7 +5,8 @@
   "additionalProperties": false,
   "properties": {
     "case_id": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^case_\\d{3}$"
     },
     "expected_recommendation": {
       "type": "string",
@@ -18,8 +19,27 @@
     "expected_findings": {
       "type": "array",
       "items": {
-        "type": "string"
-      }
+        "type": "string",
+        "enum": [
+          "Currency Mismatch",
+          "Duplicate Billing",
+          "Duplicate GRN Line ID",
+          "Duplicate Invoice Line ID",
+          "Duplicate PO Line ID",
+          "Math Error",
+          "Missing GRN",
+          "Missing GRN Line ID",
+          "Missing PO",
+          "Missing PO Line ID",
+          "Missing Vendor Master",
+          "Price Contradiction",
+          "Quantity Mismatch",
+          "Tax Rate Contradiction",
+          "Unverified Bank Change",
+          "Vendor Identity Mismatch"
+        ]
+      },
+      "uniqueItems": true
     }
   },
   "required": [

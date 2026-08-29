@@ -11,6 +11,26 @@ def write_json(path, data):
         json.dump(data, f, indent=2)
 
 DECIMAL_PATTERN = "^-?\\d+\\.\\d{2}$"
+CASE_ID_PATTERN = "^case_\\d{3}$"
+CURRENCY_PATTERN = "^[A-Z]{3}$"
+FINDING_VOCABULARY = [
+    "Currency Mismatch",
+    "Duplicate Billing",
+    "Duplicate GRN Line ID",
+    "Duplicate Invoice Line ID",
+    "Duplicate PO Line ID",
+    "Math Error",
+    "Missing GRN",
+    "Missing GRN Line ID",
+    "Missing PO",
+    "Missing PO Line ID",
+    "Missing Vendor Master",
+    "Price Contradiction",
+    "Quantity Mismatch",
+    "Tax Rate Contradiction",
+    "Unverified Bank Change",
+    "Vendor Identity Mismatch"
+]
 
 def generate_schemas():
     # Public Evidence Bundle Schema
@@ -20,7 +40,7 @@ def generate_schemas():
         "type": "object",
         "additionalProperties": False,
         "properties": {
-            "case_id": {"type": "string"},
+            "case_id": {"type": "string", "pattern": CASE_ID_PATTERN},
             "invoice": {
                 "type": "object",
                 "additionalProperties": False,
@@ -29,7 +49,7 @@ def generate_schemas():
                     "vendor_name": {"type": "string"},
                     "vendor_tax_id": {"type": "string"},
                     "bank_account": {"type": "string"},
-                    "currency": {"type": "string", "enum": ["USD"]},
+                    "currency": {"type": "string", "pattern": CURRENCY_PATTERN},
                     "tax_rate_percent": {"type": "string", "pattern": DECIMAL_PATTERN},
                     "items": {
                         "type": "array",
@@ -58,7 +78,7 @@ def generate_schemas():
                 "additionalProperties": False,
                 "properties": {
                     "po_number": {"type": "string"},
-                    "currency": {"type": "string", "enum": ["USD"]},
+                    "currency": {"type": "string", "pattern": CURRENCY_PATTERN},
                     "tax_rate_percent": {"type": "string", "pattern": DECIMAL_PATTERN},
                     "items": {
                         "type": "array",
@@ -143,11 +163,12 @@ def generate_schemas():
         "type": "object",
         "additionalProperties": False,
         "properties": {
-            "case_id": {"type": "string"},
+            "case_id": {"type": "string", "pattern": CASE_ID_PATTERN},
             "expected_recommendation": {"type": "string", "enum": ["PAY", "HOLD", "INVESTIGATE"]},
             "expected_findings": {
                 "type": "array",
-                "items": {"type": "string"}
+                "items": {"type": "string", "enum": FINDING_VOCABULARY},
+                "uniqueItems": True
             }
         },
         "required": ["case_id", "expected_recommendation", "expected_findings"]
@@ -161,14 +182,18 @@ def generate_schemas():
         "type": "object",
         "additionalProperties": False,
         "properties": {
-            "case_id": {"type": "string"},
+            "case_id": {"type": "string", "pattern": CASE_ID_PATTERN},
             "recommendation": {"type": "string", "enum": ["PAY", "HOLD", "INVESTIGATE"]},
-            "findings": {"type": "array", "items": {"type": "string"}},
-            "evidence_references": {"type": "array", "items": {"type": "string"}},
-            "deterministic_calculation_references": {"type": "array", "items": {"type": "string"}},
-            "missing_evidence": {"type": "array", "items": {"type": "string"}},
-            "uncertainty": {"type": "string"},
-            "required_human_next_step": {"type": "string"}
+            "findings": {
+                "type": "array",
+                "items": {"type": "string", "enum": FINDING_VOCABULARY},
+                "uniqueItems": True
+            },
+            "evidence_references": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "deterministic_calculation_references": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "missing_evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "uncertainty": {"type": "string", "minLength": 1},
+            "required_human_next_step": {"type": "string", "minLength": 1}
         },
         "required": [
             "case_id", "recommendation", "findings", "evidence_references",

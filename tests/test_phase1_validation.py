@@ -4,7 +4,7 @@ import json
 from decimal import Decimal
 
 def test_leakage_validator_fails_on_leakage(tmp_path):
-    from scripts.validate_phase1 import test_leakage
+    from scripts.validate_phase1 import validate_leakage
     cases_dir = tmp_path / "data" / "cases" / "public"
     cases_dir.mkdir(parents=True)
     with open(cases_dir / "case_leak.json", "w") as f:
@@ -20,17 +20,17 @@ def test_leakage_validator_fails_on_leakage(tmp_path):
         import scripts.validate_phase1
         scripts.validate_phase1.glob.glob = mock_glob
         with pytest.raises(AssertionError) as exc:
-            test_leakage()
+            validate_leakage()
         assert "Leakage detected!" in str(exc.value)
     finally:
         scripts.validate_phase1.glob.glob = original_glob
 
 def test_leakage_validator_fails_on_key_leakage(tmp_path):
-    from scripts.validate_phase1 import test_leakage
+    from scripts.validate_phase1 import validate_leakage
     cases_dir = tmp_path / "data" / "cases" / "public"
     cases_dir.mkdir(parents=True)
     with open(cases_dir / "case_leak2.json", "w") as f:
-        f.write('{"expected_recommendation": "INV-1001"}')
+        f.write('{"answer_key": "INV-1001"}')
         
     import glob
     original_glob = glob.glob
@@ -42,13 +42,13 @@ def test_leakage_validator_fails_on_key_leakage(tmp_path):
         import scripts.validate_phase1
         scripts.validate_phase1.glob.glob = mock_glob
         with pytest.raises(AssertionError) as exc:
-            test_leakage()
+            validate_leakage()
         assert "Leakage detected!" in str(exc.value)
     finally:
         scripts.validate_phase1.glob.glob = original_glob
 
 def test_leakage_validator_fails_on_filename_leakage(tmp_path):
-    from scripts.validate_phase1 import test_leakage
+    from scripts.validate_phase1 import validate_leakage
     cases_dir = tmp_path / "data" / "cases" / "public"
     cases_dir.mkdir(parents=True)
     with open(cases_dir / "case_pay_something.json", "w") as f:
@@ -64,13 +64,13 @@ def test_leakage_validator_fails_on_filename_leakage(tmp_path):
         import scripts.validate_phase1
         scripts.validate_phase1.glob.glob = mock_glob
         with pytest.raises(AssertionError) as exc:
-            test_leakage()
+            validate_leakage()
         assert "Leakage in filename/path" in str(exc.value)
     finally:
         scripts.validate_phase1.glob.glob = original_glob
 
 def test_leakage_validator_fails_on_case_id_leakage(tmp_path):
-    from scripts.validate_phase1 import test_leakage
+    from scripts.validate_phase1 import validate_leakage
     cases_dir = tmp_path / "data" / "cases" / "public"
     cases_dir.mkdir(parents=True)
     with open(cases_dir / "case_001.json", "w") as f:
@@ -86,7 +86,7 @@ def test_leakage_validator_fails_on_case_id_leakage(tmp_path):
         import scripts.validate_phase1
         scripts.validate_phase1.glob.glob = mock_glob
         with pytest.raises(AssertionError) as exc:
-            test_leakage()
+            validate_leakage()
         assert "Leakage detected!" in str(exc.value)
     finally:
         scripts.validate_phase1.glob.glob = original_glob
@@ -197,6 +197,12 @@ def test_oracle_tax_hold():
     assert "Math Error" in findings
     assert "Tax Rate Contradiction" in findings
 
+    case = get_base_case()
+    case["invoice"]["currency"] = "EUR"
+    rec, findings = oracle.evaluate(case)
+    assert rec == "HOLD"
+    assert "Currency Mismatch" in findings
+
 def test_oracle_subtotal_total_hold():
     from scripts.validate_phase1 import Phase1Oracle
     oracle = Phase1Oracle()
@@ -229,6 +235,12 @@ def test_oracle_unverified_bank_change():
     oracle = Phase1Oracle()
     case = get_base_case()
     case["invoice"]["bank_account"] = "999"
+    rec, findings = oracle.evaluate(case)
+    assert rec == "INVESTIGATE"
+    assert "Unverified Bank Change" in findings
+
+    # An approved change with a mismatched old account is also unverified.
+    case["bank_change_evidence"] = {"old_bank_account": "wrong", "new_bank_account": "999", "approval_status": "APPROVED", "verified_by": "System"}
     rec, findings = oracle.evaluate(case)
     assert rec == "INVESTIGATE"
     assert "Unverified Bank Change" in findings
@@ -284,8 +296,16 @@ def test_oracle_duplicate_line_ids():
     assert rec == "INVESTIGATE"
     assert "Duplicate Invoice Line ID" in findings
 
+    case = get_base_case()
+    case["purchase_order"]["items"].append(dict(case["purchase_order"]["items"][0]))
+    case["goods_receipt"]["items"].append(dict(case["goods_receipt"]["items"][0]))
+    rec, findings = oracle.evaluate(case)
+    assert rec == "INVESTIGATE"
+    assert "Duplicate PO Line ID" in findings
+    assert "Duplicate GRN Line ID" in findings
+
 def test_schema_validator_fails_invalid_schema():
-    from scripts.validate_phase1 import validate_schemas
+    from scripts.validate_phase1 import HOLD_FINDINGS, INVESTIGATE_FINDINGS, validate_schemas
     import jsonschema
     with open('benchmark/schemas/public_evidence_bundle.json') as f:
         public_schema = json.load(f)
@@ -293,3 +313,16 @@ def test_schema_validator_fails_invalid_schema():
     invalid_data["invoice"]["tax_rate_percent"] = "0" # Invalid pattern
     with pytest.raises(jsonschema.exceptions.ValidationError):
         jsonschema.validate(instance=invalid_data, schema=public_schema)
+
+    invalid_data = get_base_case()
+    invalid_data["case_id"] = "case_pay"
+    with pytest.raises(jsonschema.exceptions.ValidationError):
+        jsonschema.validate(instance=invalid_data, schema=public_schema)
+
+    with open('benchmark/schemas/ground_truth.json') as f:
+        ground_truth_schema = json.load(f)
+    with open('benchmark/schemas/output_contract.json') as f:
+        output_schema = json.load(f)
+    expected_vocabulary = HOLD_FINDINGS | INVESTIGATE_FINDINGS
+    assert set(ground_truth_schema["properties"]["expected_findings"]["items"]["enum"]) == expected_vocabulary
+    assert set(output_schema["properties"]["findings"]["items"]["enum"]) == expected_vocabulary

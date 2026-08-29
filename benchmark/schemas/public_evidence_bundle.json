@@ -5,7 +5,8 @@
   "additionalProperties": false,
   "properties": {
     "case_id": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^case_\\d{3}$"
     },
     "invoice": {
       "type": "object",
@@ -25,9 +26,7 @@
         },
         "currency": {
           "type": "string",
-          "enum": [
-            "USD"
-          ]
+          "pattern": "^[A-Z]{3}$"
         },
         "tax_rate_percent": {
           "type": "string",
@@ -107,9 +106,7 @@
         },
         "currency": {
           "type": "string",
-          "enum": [
-            "USD"
-          ]
+          "pattern": "^[A-Z]{3}$"
         },
         "tax_rate_percent": {
           "type": "string",
