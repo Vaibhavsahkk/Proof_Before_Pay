@@ -421,11 +421,11 @@ if (-not $gitBashPath) {
         L ("Process exit : " + $posixPipeline.ExitCode)
         $posixPipeline.Output -split "`r?`n" | ForEach-Object { L "$_" }
         $posixCompletionMarker = ($posixPipeline.Output | Select-String "ALL VERIFICATION STEPS PASSED").Count -gt 0
-        $posixTestMarker = ($posixPipeline.Output | Select-String "16 passed").Count -gt 0
+        $posixTestMarker = ($posixPipeline.Output | Select-String "17 passed").Count -gt 0
         $testLPass = $posixPipeline.ExitCode -eq 0 -and $posixCompletionMarker -and $posixTestMarker
         L ("  process exit 0       : " + $(if ($posixPipeline.ExitCode -eq 0) { "PASS" } else { "FAIL" }))
         L ("  completion marker    : " + $(if ($posixCompletionMarker) { "PASS" } else { "FAIL" }))
-        L ("  current 16 tests     : " + $(if ($posixTestMarker) { "PASS" } else { "FAIL" }))
+        L ("  current 17 tests     : " + $(if ($posixTestMarker) { "PASS" } else { "FAIL" }))
         L ("TEST L WRAPPER: " + $(if ($testLPass) { "PASS" } else { "FAIL" }))
         if (-not $testLPass) { $overallPass = $false }
     } else {

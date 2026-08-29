@@ -23,7 +23,9 @@ class TraceLogger:
         re.compile(r'sk-[a-zA-Z0-9_\-\.]{20,}'),
         re.compile(r'Bearer\s+[a-zA-Z0-9\-\._~+/]+=*', re.IGNORECASE),
         re.compile(r'ghp_[a-zA-Z0-9]{36}'),
+        re.compile(r'github_pat_[a-zA-Z0-9_]{82}'),
         re.compile(r'AKIA[0-9A-Z]{16}'),
+        re.compile(r'AIza[a-zA-Z0-9_\-]{35}'),
     ]
 
     def __init__(self, log_dir: str = "traces/raw"):

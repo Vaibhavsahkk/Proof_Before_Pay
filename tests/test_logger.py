@@ -86,8 +86,8 @@ def test_safe_telemetry_preservation(temp_logger):
         tool="tool",
         input_data={"prompt_tokens": 150, "completion_tokens": 50, "latency": 1.2, "cost": 0.005, "some_secret": "hidden"},
         output_data={
-            "prompt_tokens": "sk-proj-malicious123", 
-            "cost": -1.5, 
+            "prompt_tokens": "sk-proj-malicious123",
+            "cost": -1.5,
             "latency": True,
             "completion_tokens": 5.5, # Should be integer
             "latency_ms": math.inf,
@@ -98,13 +98,13 @@ def test_safe_telemetry_preservation(temp_logger):
     )
     with open(temp_logger.log_file, "r", encoding="utf-8") as f:
         data = json.loads(f.readline())
-        
+
     assert data["input"]["prompt_tokens"] == 150
     assert data["input"]["completion_tokens"] == 50
     assert data["input"]["latency"] == 1.2
     assert data["input"]["cost"] == 0.005
     assert data["input"]["some_secret"] == "***REDACTED***"
-    
+
     # Assert invalid/malicious telemetry types are redacted
     assert data["output"]["prompt_tokens"] == "***REDACTED***"
     assert data["output"]["cost"] == "***REDACTED***"
@@ -173,3 +173,29 @@ def test_logger_write_failure(tmp_path):
                 result="SUCCESS"
             )
         assert "Failed to write trace event" in str(exc_info.value)
+
+def test_gemini_github_redaction(temp_logger):
+    fake_gemini = "AIzaSyFakeSyntheticGeminiKey0123456789A"
+    fake_github = "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"
+
+    event = temp_logger.log_event(
+        phase="phase_test",
+        agent="agent_test",
+        action="test",
+        tool="tool",
+        input_data={ "message": f"Hello, here is my key: {fake_gemini}" },
+        output_data={ "result": "Failed to auth" },
+        result="ERROR",
+        error=f"Failed with token {fake_github}"
+    )
+
+    with open(temp_logger.log_file, "r", encoding="utf-8") as f:
+        data = json.loads(f.readline())
+
+    assert fake_gemini not in data["input"]["message"]
+    assert "AIza" not in data["input"]["message"]
+    assert "***REDACTED***" in data["input"]["message"]
+
+    assert fake_github not in data["error"]
+    assert "github_pat_" not in data["error"]
+    assert "***REDACTED***" in data["error"]
