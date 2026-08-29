@@ -42,7 +42,7 @@ Run its retained checks with:
 
 ## Phase 1 deterministic checks
 
-The current tested Phase 1 candidate is `81258dab505429df34135a1fc72ea45527505510`.
+The current tested Phase 1 candidate is `43ba9356aaa110113e81a446cb701bee40f0fc39`.
 
 Generate and validate the frozen benchmark artifacts:
 
@@ -54,7 +54,7 @@ python scripts/verify_manifest.py
 python -m pytest tests/test_phase1_validation.py tests/test_manifest.py -q
 ```
 
-Expected focused result: 25 passed.
+Expected focused result: 29 passed.
 
 Run both complete Docker pipelines:
 
@@ -66,14 +66,14 @@ Run both complete Docker pipelines:
 ./verify.sh
 ```
 
-Expected full result in each pipeline: 42 passed, followed by `ALL VERIFICATION STEPS PASSED`.
+Expected full result in each pipeline: 46 passed, followed by `ALL VERIFICATION STEPS PASSED`. Each pipeline also proves that the runtime contains required public inputs, excludes evaluator/ground-truth artifacts, and rejects an injected ground-truth mount with scanner exit 1.
 
 ## Fresh-clone reproduction
 
 From the main workspace, execute the exact candidate SHA:
 
 ```powershell
-.\scripts\run_clean_clone_tests.ps1 -CandidateSha "81258dab505429df34135a1fc72ea45527505510" -Phase "phase_1"
+.\scripts\run_clean_clone_tests.ps1 -CandidateSha "43ba9356aaa110113e81a446cb701bee40f0fc39" -Phase "phase_1"
 ```
 
 Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and process exit 0. The harness first proves fail-closed behavior with a harmless forced failure, clones into a unique `%TEMP%` path, runs the strict validator, manifest verifier, focused suite, both Docker pipelines, Git hygiene checks, and clean-status check. It then removes only its exact Compose project and exact temporary clone.

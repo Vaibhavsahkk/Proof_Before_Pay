@@ -13,8 +13,8 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 ## Tested source state
 
 - Repository: `https://github.com/Vaibhavsahkk/Proof_Before_Pay.git`
-- Tested candidate commit: `81258dab505429df34135a1fc72ea45527505510`
-- Candidate commit check: `git show --check 81258dab505429df34135a1fc72ea45527505510` exited 0.
+- Tested candidate commit: `43ba9356aaa110113e81a446cb701bee40f0fc39`
+- Candidate commit check: `git show --check 43ba9356aaa110113e81a446cb701bee40f0fc39` exited 0.
 - Candidate was pushed before clean-clone verification.
 - Final evidence/docs commit and remote equality are recorded in the detached final provenance packet generated after this tracked packet is committed.
 
@@ -27,7 +27,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 | Strict versioned JSON schemas | PASS | `benchmark/schemas/*.json`; strict validator exit 0 |
 | Deterministic anomaly taxonomy and precedence | PASS | `benchmark/RULEBOOK.md`; oracle tests |
 | Six synthetic benchmark cases | PASS | `data/cases/public/`, `data/cases/ground_truth/` |
-| Neutral public filenames and case IDs | PASS | `case_001` through `case_005`; leakage tests |
+| Neutral public filenames and case IDs | PASS | `case_001` through `case_006`; leakage tests |
 | No answer leakage in public input | PASS | real-bundle validation plus adversarial value, key, filename/path, and case-ID tests |
 | Independent deterministic ground truth | PASS | six-case oracle matrix below |
 | Frozen benchmark integrity | PASS | SHA-256 manifest verifier and mutation tests |
@@ -40,11 +40,11 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 | Command/check | Observed result |
 | --- | --- |
-| `python scripts/validate_phase1.py` | exit 0; all five cases matched ground truth |
+| `python scripts/validate_phase1.py` | exit 0; all six cases matched ground truth |
 | `python scripts/verify_manifest.py` | exit 0 |
-| Focused Phase 1 pytest suite | exit 0; 25 passed |
-| `.\verify.ps1` in clean clone | exit 0; 42 passed |
-| `bash ./verify.sh` in clean clone | exit 0; 42 passed |
+| Focused Phase 1 pytest suite | exit 0; 29 passed |
+| `.\verify.ps1` in clean clone | exit 0; 46 passed; injected ground truth rejected with scanner exit 1 |
+| `bash ./verify.sh` in clean clone | exit 0; 46 passed; injected ground truth rejected with scanner exit 1 |
 | Harness forced-failure self-test | inner exit 7; harness exit 1; expected rejection |
 | `git diff --check` in clean clone | exit 0 |
 | `git diff --cached --check` in clean clone | exit 0 |
@@ -65,8 +65,8 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 ## Integrity hashes
 
-- `evidence/phase_1/SHA256_MANIFEST.txt` repository-normalized SHA-256: `53FF2EB0BD2EDA37986014AFDDC67DD0DAD67A5703D31CEA4BF4A1F08339FBBF`
-- `evidence/phase_1/final_clean_clone_execution.txt` repository-normalized SHA-256: `BFD282D862AD0ACEF3A644F777C212BCF779128FBDA9A1200585EA31E083335B`
+- `evidence/phase_1/SHA256_MANIFEST.txt` SHA-256: `01AD1525F5D7F16416FC62C8B348A719268DE6AF5136FEA5E80A82D7741419E4`
+- `evidence/phase_1/final_clean_clone_execution.txt` SHA-256: `218247B6DD0DCF1AE35614348396208CE8732022FB65B3C9FAB48A54112F195B`
 - The manifest lists every benchmark schema, public case, hidden ground-truth case, and the rulebook. Missing, extra, duplicate, malformed, or hash-mismatched entries fail verification.
 
 ## Evidence provenance
@@ -80,11 +80,12 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 - An earlier executor attempt used an out-of-scope global Docker container cleanup command. The monitor stopped that run and accepts none of its claimed results.
 - The replacement harness uses one unique Compose project, runs `down --remove-orphans` only for that exact project, verifies no matching containers or networks remain, and removes only its GUID-named `%TEMP%` clone.
-- Earlier commit `ee6f678c00b85356e19d9972ea3bf660b8c3e1c9` failed `git show --check`; candidate `81258dab505429df34135a1fc72ea45527505510` passes.
+- Earlier commits failed `git show --check`; corrective candidate `43ba9356aaa110113e81a446cb701bee40f0fc39` passes.
 
 ## Exact Phase 1 changed files
 
 - `DECISIONS.md`
+- `Dockerfile`
 - `REPRODUCE.md`
 - `STATUS.md`
 - `benchmark/README.md`
@@ -97,18 +98,14 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 - `data/cases/ground_truth/case_003.json`
 - `data/cases/ground_truth/case_004.json`
 - `data/cases/ground_truth/case_005.json`
+- `data/cases/ground_truth/case_006.json`
 - `data/cases/public/case_001.json`
 - `data/cases/public/case_002.json`
 - `data/cases/public/case_003.json`
 - `data/cases/public/case_004.json`
 - `data/cases/public/case_005.json`
 - `data/cases/public/case_006.json`
-- `data/cases/ground_truth/case_001.json`
-- `data/cases/ground_truth/case_002.json`
-- `data/cases/ground_truth/case_003.json`
-- `data/cases/ground_truth/case_004.json`
-- `data/cases/ground_truth/case_005.json`
-- `data/cases/ground_truth/case_006.json`
+- `docker-compose.yml`
 - `docs/PHASE_1_SCOPE.md`
 - `eval/EVAL_DESIGN.md`
 - `evidence/phase_1/SHA256_MANIFEST.txt`
@@ -122,6 +119,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 - `scripts/generate_phase1_data.py`
 - `scripts/run_clean_clone_tests.ps1`
 - `scripts/validate_phase1.py`
+- `scripts/verify_container_security.sh`
 - `scripts/verify_manifest.py`
 - `tests/test_manifest.py`
 - `tests/test_phase1_validation.py`
