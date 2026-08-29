@@ -64,7 +64,7 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 ## Integrity hashes
 
-- `evidence/phase_1/SHA256_MANIFEST.txt` SHA-256: `C5513F271E78CF0A78DCBC291EBC9F7B4184DFC4D70432A5986066FFAA6048AB`
+- `evidence/phase_1/SHA256_MANIFEST.txt` repository-normalized SHA-256: `53FF2EB0BD2EDA37986014AFDDC67DD0DAD67A5703D31CEA4BF4A1F08339FBBF`
 - `evidence/phase_1/final_clean_clone_execution.txt` repository-normalized SHA-256: `BFD282D862AD0ACEF3A644F777C212BCF779128FBDA9A1200585EA31E083335B`
 - The manifest lists every benchmark schema, public case, hidden ground-truth case, and the rulebook. Missing, extra, duplicate, malformed, or hash-mismatched entries fail verification.
 
