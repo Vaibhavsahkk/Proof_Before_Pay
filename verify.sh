@@ -79,16 +79,16 @@ docker compose -f docker-compose.yml build --no-cache
 echo "[PASS] Docker Build completed successfully."
 
 echo "============================================================"
-echo "STEP: Automated Test Suite Execution (Docker-driven)"
+echo "STEP: Evaluator Test Suite Execution (isolated Docker target)"
 echo "============================================================"
-echo "Running tests inside container..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt && python -m pytest -q" || { echo "[FAIL] Pytest execution failed."; exit 1; }
+echo "Running tests inside evaluator-only container..."
+docker compose -f docker-compose.yml run --rm phase1_verifier python -m pytest -q || { echo "[FAIL] Pytest execution failed."; exit 1; }
 
 echo "Running Phase 1 Schema Validator..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/validate_phase1.py" || { echo "[FAIL] Phase 1 Validator failed."; exit 1; }
+docker compose -f docker-compose.yml run --rm phase1_verifier python scripts/validate_phase1.py || { echo "[FAIL] Phase 1 Validator failed."; exit 1; }
 
 echo "Running Manifest Verification..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/verify_manifest.py" || { echo "[FAIL] Manifest Verification failed."; exit 1; }
+docker compose -f docker-compose.yml run --rm phase1_verifier python scripts/verify_manifest.py || { echo "[FAIL] Manifest Verification failed."; exit 1; }
 
 echo "[PASS] Automated Test Suite Execution completed successfully."
 
@@ -102,10 +102,31 @@ echo "============================================================"
 echo "STEP: Recursive Container Security Assertion"
 echo "============================================================"
 
+echo "Checking required public runtime inputs..."
+docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c \
+  "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json" \
+  || { echo "[FAIL] Agent runtime is missing required public inputs."; exit 1; }
+echo "[PASS] Required public runtime inputs are present."
+
 echo "Running forced-failure isolation test..."
-docker compose -f docker-compose.yml run --rm \
-  -v "$(pwd)/data/cases/ground_truth:/app/data/cases/ground_truth" \
-  --entrypoint sh micro1_app ./scripts/verify_container_security.sh > /dev/null 2>&1 && { echo "[FAIL] Isolation check failed to fail closed when ground_truth injected!"; exit 1; } || echo "[PASS] Forced-failure isolation check failed as expected."
+GROUND_TRUTH_PATH=$(cygpath -w "$(pwd)/data/cases/ground_truth" 2>/dev/null || printf '%s' "$(pwd)/data/cases/ground_truth")
+set +e
+FORCED_OUTPUT=$(MSYS_NO_PATHCONV=1 docker compose -f docker-compose.yml run --rm \
+  --volume "${GROUND_TRUTH_PATH}:/app/data/cases/ground_truth:ro" \
+  --entrypoint sh micro1_app ./scripts/verify_container_security.sh 2>&1)
+FORCED_EXIT=$?
+set -e
+printf '%s\n' "$FORCED_OUTPUT"
+echo "Forced-failure scanner exit code: $FORCED_EXIT"
+if [ "$FORCED_EXIT" -ne 1 ]; then
+    echo "[FAIL] Isolation check returned $FORCED_EXIT instead of the expected scanner exit 1."
+    exit 1
+fi
+if ! printf '%s\n' "$FORCED_OUTPUT" | grep -q "data/cases/ground_truth"; then
+    echo "[FAIL] Isolation check did not identify the injected ground-truth path."
+    exit 1
+fi
+echo "[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1."
 
 # Inspect the actual verification container, not merely the image.
 # We fail if any .env, .env.* (except .env.example), .git, __pycache__, .pytest_cache, .pyc, raw traces, or ground_truth are found.

@@ -23,8 +23,18 @@ OUTPUT=$(find "$SCAN_ROOT" \( \
     -path "*/trajectories/raw/*" -o \
     -path "*/data/cases/ground_truth" -o \
     -path "*/data/cases/ground_truth/*" -o \
-    -name "ground_truth.json" \
-\) -print 2>&1)
+    -path "*/evidence" -o \
+    -path "*/evidence/*" -o \
+    -path "*/reports" -o \
+    -path "*/reports/*" -o \
+    -path "*/tests" -o \
+    -path "*/tests/*" -o \
+    -name "ground_truth.json" -o \
+    -name "generate_phase1_data.py" -o \
+    -name "generate_manifest.py" -o \
+    -name "validate_phase1.py" -o \
+    -name "verify_manifest.py" \
+    \) -print 2>&1)
 FIND_EXIT=$?
 set -e
 
@@ -35,7 +45,7 @@ if [ "$FIND_EXIT" -ne 0 ]; then
 fi
 
 if [ -n "$OUTPUT" ]; then
-    printf "[FAIL] Found prohibited secret or artifact:\n"
+    printf "[FAIL] Found prohibited secret, answer key, or evaluator artifact:\n"
     printf "%s\n" "$OUTPUT"
     exit 1
 fi

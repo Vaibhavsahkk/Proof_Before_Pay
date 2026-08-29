@@ -10,4 +10,4 @@ The ground truth is derived deterministically from the [RULEBOOK.md](./RULEBOOK.
 See `eval/EVAL_DESIGN.md` for details on how we measure agent performance. Our primary metric is Exact Case-Level Recommendation Accuracy, ensuring the agent matches the required ground truth. 
 
 ## Synthetic Data Guarantee
-All data used in this benchmark is completely synthetic. There are 5 cases provided in `data/cases/public/` for the agent, and their true labels are available to the evaluator in `data/cases/ground_truth/`. Leakage between the public bundle and ground truth is strictly guarded against.
+All data used in this benchmark is completely synthetic. There are 6 cases provided in `data/cases/public/` for the agent, and their true labels are available only to the evaluator in `data/cases/ground_truth/`. The runtime and evaluator use separate Docker build targets so the agent image cannot read the answer key. Leakage between the public bundle and ground truth is strictly guarded against.

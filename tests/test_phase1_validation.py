@@ -2,6 +2,7 @@ import pytest
 import os
 import json
 from decimal import Decimal
+from pathlib import Path
 
 def test_leakage_validator_fails_on_leakage(tmp_path):
     from scripts.validate_phase1 import validate_leakage
@@ -197,6 +198,11 @@ def test_oracle_tax_hold():
     assert "Math Error" in findings
     assert "Tax Rate Contradiction" in findings
 
+
+def test_oracle_requires_exact_usd_currency():
+    from scripts.validate_phase1 import Phase1Oracle
+    oracle = Phase1Oracle()
+
     case = get_base_case()
     case["invoice"]["currency"] = "EUR"
     case["purchase_order"]["currency"] = "EUR"
@@ -212,7 +218,7 @@ def test_oracle_tax_hold():
     assert rec == "HOLD"
     assert "Invalid Currency" in findings
     assert "Currency Mismatch" in findings
-    
+
     case = get_base_case()
     case["invoice"]["currency"] = "USD"
     case["purchase_order"]["currency"] = "EUR"
@@ -220,6 +226,49 @@ def test_oracle_tax_hold():
     assert rec == "HOLD"
     assert "Invalid Currency" in findings
     assert "Currency Mismatch" in findings
+
+
+def test_currency_schema_rejects_missing_or_lowercase_currency():
+    import jsonschema
+
+    with open('benchmark/schemas/public_evidence_bundle.json') as schema_file:
+        public_schema = json.load(schema_file)
+
+    lowercase = get_base_case()
+    lowercase["invoice"]["currency"] = "usd"
+    with pytest.raises(jsonschema.exceptions.ValidationError):
+        jsonschema.validate(instance=lowercase, schema=public_schema)
+
+    missing = get_base_case()
+    del missing["invoice"]["currency"]
+    with pytest.raises(jsonschema.exceptions.ValidationError):
+        jsonschema.validate(instance=missing, schema=public_schema)
+
+
+def test_agent_runtime_uses_allowlisted_copy_and_separate_verifier_target():
+    dockerfile = Path("Dockerfile").read_text(encoding="utf-8")
+    compose = Path("docker-compose.yml").read_text(encoding="utf-8")
+
+    assert "COPY . ." not in dockerfile
+    assert "AS verifier" in dockerfile
+    assert "AS runtime" in dockerfile
+    assert "data/cases/public/" in dockerfile
+    assert "data/cases/ground_truth" not in dockerfile
+    assert "target: runtime" in compose
+    assert "target: verifier" in compose
+
+
+def test_challenging_case_exercises_hold_over_investigate_precedence():
+    from scripts.validate_phase1 import Phase1Oracle
+
+    public = json.loads(Path("data/cases/public/case_006.json").read_text(encoding="utf-8"))
+    truth = json.loads(Path("data/cases/ground_truth/case_006.json").read_text(encoding="utf-8"))
+    recommendation, findings = Phase1Oracle().evaluate(public)
+
+    assert recommendation == "HOLD"
+    assert findings == sorted(["Duplicate Billing", "Unverified Bank Change"])
+    assert recommendation == truth["expected_recommendation"]
+    assert findings == sorted(truth["expected_findings"])
 
 def test_oracle_subtotal_total_hold():
     from scripts.validate_phase1 import Phase1Oracle
@@ -338,12 +387,9 @@ def test_schema_validator_fails_invalid_schema():
         jsonschema.validate(instance=invalid_data, schema=public_schema)
 
     expected_vocabulary = HOLD_FINDINGS | INVESTIGATE_FINDINGS
-    try:
-        with open('benchmark/schemas/ground_truth.json') as f:
-            ground_truth_schema = json.load(f)
-        assert set(ground_truth_schema["properties"]["expected_findings"]["items"]["enum"]) == expected_vocabulary
-    except FileNotFoundError:
-        pass # Expected inside container
+    with open('benchmark/schemas/ground_truth.json') as f:
+        ground_truth_schema = json.load(f)
+    assert set(ground_truth_schema["properties"]["expected_findings"]["items"]["enum"]) == expected_vocabulary
 
     with open('benchmark/schemas/output_contract.json') as f:
         output_schema = json.load(f)

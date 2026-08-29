@@ -1,6 +1,16 @@
 services:
   micro1_app:
-    build: .
+    build:
+      context: .
+      target: runtime
     image: micro1-challenge-phase0:latest
     user: micro1user
     command: python -m src.main --smoke
+
+  phase1_verifier:
+    build:
+      context: .
+      target: verifier
+    image: micro1-challenge-phase1-verifier:latest
+    user: micro1user
+    command: python -m pytest -q

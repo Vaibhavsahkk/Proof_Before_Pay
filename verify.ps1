@@ -74,24 +74,24 @@ if ($LASTEXITCODE -ne 0) {
 Write-Output "[PASS] Docker Build completed successfully."
 
 Write-Output "============================================================"
-Write-Output "STEP: Automated Test Suite Execution (Docker-driven)"
+Write-Output "STEP: Evaluator Test Suite Execution (isolated Docker target)"
 Write-Output "============================================================"
-Write-Output "Running tests inside container..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt && python -m pytest -q"
+Write-Output "Running tests inside evaluator-only container..."
+docker compose -f docker-compose.yml run --rm phase1_verifier python -m pytest -q
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Pytest execution failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE
 }
 
 Write-Output "Running Phase 1 Schema Validator..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/validate_phase1.py"
+docker compose -f docker-compose.yml run --rm phase1_verifier python scripts/validate_phase1.py
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Phase 1 Validator failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE
 }
 
 Write-Output "Running Manifest Verification..."
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/verify_manifest.py"
+docker compose -f docker-compose.yml run --rm phase1_verifier python scripts/verify_manifest.py
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Manifest Verification failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE
@@ -113,13 +113,29 @@ Write-Output "============================================================"
 Write-Output "STEP: Recursive Container Security Assertion"
 Write-Output "============================================================"
 
+Write-Output "Checking required public runtime inputs..."
+docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json"
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "[FAIL] Agent runtime is missing required public inputs."
+    exit $LASTEXITCODE
+}
+Write-Output "[PASS] Required public runtime inputs are present."
+
 Write-Output "Running forced-failure isolation test..."
-docker compose -f docker-compose.yml run --rm -v "$((Get-Location).Path)/data/cases/ground_truth:/app/data/cases/ground_truth" --entrypoint sh micro1_app ./scripts/verify_container_security.sh > $null 2>&1
-if ($LASTEXITCODE -eq 0) {
-    Write-Error "[FAIL] Isolation check failed to fail closed when ground_truth injected!"
+$groundTruthPath = (Resolve-Path "data/cases/ground_truth").Path
+$forcedOutput = docker compose -f docker-compose.yml run --rm --volume "${groundTruthPath}:/app/data/cases/ground_truth:ro" --entrypoint sh micro1_app ./scripts/verify_container_security.sh 2>&1 | Out-String
+$forcedExit = $LASTEXITCODE
+Write-Output $forcedOutput.TrimEnd()
+Write-Output "Forced-failure scanner exit code: $forcedExit"
+if ($forcedExit -ne 1) {
+    Write-Error "[FAIL] Isolation check returned $forcedExit instead of the expected scanner exit 1."
     exit 1
 }
-Write-Output "[PASS] Forced-failure isolation check failed as expected."
+if ($forcedOutput -notmatch "data/cases/ground_truth") {
+    Write-Error "[FAIL] Isolation check did not identify the injected ground-truth path."
+    exit 1
+}
+Write-Output "[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1."
 
 docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app ./scripts/verify_container_security.sh
 if ($LASTEXITCODE -ne 0) {
@@ -127,7 +143,6 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 Write-Output "[PASS] Recursive Container Security Assertion completed successfully."
-
 
 Write-Output "************************************************************"
 Write-Output "ALL VERIFICATION STEPS PASSED"

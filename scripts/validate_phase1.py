@@ -42,20 +42,14 @@ def validate_schemas():
     for pf in public_files:
         with open(pf) as f:
             jsonschema.validate(instance=json.load(f), schema=public_schema)
-    
-    if len(gt_files) > 0:
-        for gf in gt_files:
-            with open(gf) as f:
-                jsonschema.validate(instance=json.load(f), schema=gt_schema)
+    for gf in gt_files:
+        with open(gf) as f:
+            jsonschema.validate(instance=json.load(f), schema=gt_schema)
 
 def validate_cases_count():
     public_files = sorted(glob.glob('data/cases/public/*.json'))
     gt_files = sorted(glob.glob('data/cases/ground_truth/*.json'))
     assert len(public_files) == 6, f"Expected 6 public cases, found {len(public_files)}"
-    
-    if len(gt_files) == 0:
-        return # Expected inside agent container
-        
     assert len(gt_files) == 6, f"Expected 6 ground truth cases, found {len(gt_files)}"
 
     public_names = {Path(path).name for path in public_files}
@@ -184,10 +178,10 @@ class Phase1Oracle:
                 findings.append("Currency Mismatch")
             if po['currency'] != "USD" and "Invalid Currency" not in findings:
                 findings.append("Invalid Currency")
-                
+
             if inv['tax_rate_percent'] != po['tax_rate_percent']:
                 findings.append("Tax Rate Contradiction")
-                
+
         if inv['currency'] != "USD" and "Invalid Currency" not in findings:
             findings.append("Invalid Currency")
                         
@@ -258,9 +252,6 @@ def validate_oracle():
         case_id = public_data['case_id']
         
         gt_path = Path(pf).parent.parent / 'ground_truth' / Path(pf).name
-        if not gt_path.exists():
-            continue # Expected inside container
-            
         with open(gt_path, encoding='utf-8') as f:
             gt_data = json.load(f)
 
