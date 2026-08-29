@@ -1,4 +1,4 @@
-﻿param (
+param (
     [Parameter(Mandatory=$true)]
     [string]$CandidateSha
 )
@@ -88,12 +88,14 @@ try {
     "`nCOMMAND: git diff --check (post-test dirty)" | Out-File -FilePath $outAudit -Append -Encoding utf8
     "EXIT CODE: $dirtyDiffExit" | Out-File -FilePath $outAudit -Append -Encoding utf8
     "OUTPUT:`n$dirtyDiffOut" | Out-File -FilePath $outAudit -Append -Encoding utf8
+    if ($dirtyDiffExit -ne 0) { Write-Output "Dirty diff failed"; exit 1 }
 
     $dirtyStatusOut = git status --short 2>&1 | Out-String
     $dirtyStatusExit = $LASTEXITCODE
     "`nCOMMAND: git status --short (post-test dirty)" | Out-File -FilePath $outAudit -Append -Encoding utf8
     "EXIT CODE: $dirtyStatusExit" | Out-File -FilePath $outAudit -Append -Encoding utf8
     "OUTPUT:`n$dirtyStatusOut" | Out-File -FilePath $outAudit -Append -Encoding utf8
+    if ($dirtyStatusExit -ne 0) { Write-Output "Dirty status failed"; exit 1 }
 
     Copy-Item "evidence\phase_0\adversarial_execution.txt" "$repoRoot\evidence\phase_0\clean_clone_adversarial_execution.txt" -Force
 
@@ -129,6 +131,8 @@ try {
         exit 1
     }
 
+    "`nCLEAN CLONE HARNESS RESULT: PASS" | Out-File -FilePath $outExe -Append -Encoding utf8
+    "`nPOST-TEST AUDIT RESULT: PASS" | Out-File -FilePath $outAudit -Append -Encoding utf8
     Write-Output "Clean clone tests completed."
 } finally {
     Set-Location $repoRoot

@@ -1,4 +1,4 @@
-﻿param (
+param (
     [Parameter(Mandatory=$true)]
     [string]$CandidateSha
 )
@@ -6,6 +6,17 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
 $evidenceDir = "$repoRoot\evidence\phase_0"
 $outProof = "$evidenceDir\FINAL_PHASE0_PROOF.txt"
+
+if ($CandidateSha.Length -ne 40 -or $CandidateSha -match "[^a-f0-9]") {
+    Write-Error "Invalid CandidateSha"
+    exit 1
+}
+
+$commitType = git cat-file -t $CandidateSha 2>&1 | Out-String
+if ($LASTEXITCODE -ne 0 -or $commitType.Trim() -ne "commit") {
+    Write-Error "Candidate SHA does not exist"
+    exit 1
+}
 
 $timestamp = (Get-Date).ToString("yyyy-MM-ddTHH:mm:sszzz")
 
@@ -38,6 +49,40 @@ if ($securityExit -ne 0) {
 $exeContent = Normalize-Content "$evidenceDir\clean_clone_execution.txt"
 $advContent = Normalize-Content "$evidenceDir\clean_clone_adversarial_execution.txt"
 $auditContent = Normalize-Content "$evidenceDir\clean_clone_post_test_audit.txt"
+
+# Validations
+$evidenceFiles = @($exeContent, $advContent, $auditContent)
+foreach ($file in $evidenceFiles) {
+    if ($file -notmatch [regex]::Escape("Tested Candidate SHA: $CandidateSha")) {
+        Write-Error "Candidate SHA mismatch in evidence file"
+        exit 1
+    }
+}
+
+if ($exeContent -notmatch "Note: switching to '$CandidateSha'") {
+    Write-Error "Recorded clean-clone HEAD does not match CandidateSha"
+    exit 1
+}
+
+if ($advContent -match [regex]::Escape("D:\MICRO.1")) {
+    Write-Error "Adversarial evidence ran in main repo"
+    exit 1
+}
+
+if (-not ($exeContent -match "CLEAN CLONE HARNESS RESULT: PASS")) { Write-Error "exeContent missing PASS marker"; exit 1 }
+if (-not ($auditContent -match "POST-TEST AUDIT RESULT: PASS")) { Write-Error "auditContent missing PASS marker"; exit 1 }
+if (-not ($advContent -match "HARNESS EXIT: 0")) { Write-Error "advContent missing PASS marker"; exit 1 }
+
+if ($exeContent -match "COMMAND: \.\\verify\.ps1[\r\n]+EXIT CODE: ([1-9][0-9]*)") { Write-Error "verify.ps1 exited non-zero"; exit 1 }
+if ($exeContent -match "COMMAND: bash \./verify\.sh[\r\n]+EXIT CODE: ([1-9][0-9]*)") { Write-Error "verify.sh exited non-zero"; exit 1 }
+
+if ($auditContent -match "COMMAND: git status --short \(post-test clean\)[\r\n]+EXIT CODE: [0-9]+[\r\n]+OUTPUT:[\r\n]+([^\r\n]+)") {
+    $matched = $matches[1]
+    if ($matched.Trim() -ne "") {
+        Write-Error "post-test final status is not empty"
+        exit 1
+    }
+}
 
 Set-Content -Path "$evidenceDir\clean_clone_execution.txt" -Value $exeContent -NoNewline -Encoding utf8
 Set-Content -Path "$evidenceDir\clean_clone_adversarial_execution.txt" -Value $advContent -NoNewline -Encoding utf8
