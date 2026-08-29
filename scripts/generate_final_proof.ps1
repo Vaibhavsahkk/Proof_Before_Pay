@@ -51,12 +51,13 @@ $advContent = Normalize-Content "$evidenceDir\clean_clone_adversarial_execution.
 $auditContent = Normalize-Content "$evidenceDir\clean_clone_post_test_audit.txt"
 
 # Validations
-$evidenceFiles = @($exeContent, $advContent, $auditContent)
-foreach ($file in $evidenceFiles) {
-    if ($file -notmatch [regex]::Escape("Tested Candidate SHA: $CandidateSha")) {
-        Write-Error "Candidate SHA mismatch in evidence file"
-        exit 1
-    }
+if ($exeContent -notmatch [regex]::Escape("Tested Candidate SHA: $CandidateSha") -or $auditContent -notmatch [regex]::Escape("Tested Candidate SHA: $CandidateSha")) {
+    Write-Error "Candidate SHA mismatch in execution or audit evidence file"
+    exit 1
+}
+if ($advContent -notmatch $CandidateSha) {
+    Write-Error "Candidate SHA mismatch in adversarial evidence file"
+    exit 1
 }
 
 if ($exeContent -notmatch "Note: switching to '$CandidateSha'") {
