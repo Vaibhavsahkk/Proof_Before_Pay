@@ -4,7 +4,7 @@
 
 Current phase: Phase 0 — Environment & Governance.
 
-Result: **PASS. Clean-clone execution verified successfully against the candidate SHA.
+Result: **READY FOR LOCAL CHATGPT RE-AUDIT**. Clean-clone execution verified successfully against the candidate SHA.
 
 ## Corrections implemented
 
@@ -45,7 +45,7 @@ Result: **PASS. Clean-clone execution verified successfully against the candidat
 ## Current raw evidence
 
 - `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `b767bae637c6955516f2140a11515d404601fdfc`. It is current and correct.
-- `evidence/phase_0/clean_clone_adversarial_execution.txt`: previous detailed adversarial output (SHA-256: `5C214B252441C6CC1FF699952C990B22D82E1D2B7181277F359EFB52F22E8BEB`). It is current and correct.
+- `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `6334C3A6C8F5730217EA2BF1B4D327EE485F00754C42018B1F7C57C25F904EFD`). It is current and correct.
 - `evidence/phase_0/clean_clone_post_test_audit.txt`: current post-test excerpt with provenance.
 - `evidence/phase_0/adversarial_execution.txt`: current local execution.
 - `evidence/phase_0/pipeline_execution.txt`: current local execution.
@@ -62,4 +62,4 @@ Result: **PASS. Clean-clone execution verified successfully against the candidat
 
 No external dependency blocker is recorded. All Phase 0 tests pass.
 
-**PASS. Clean-clone execution verified successfully against the candidate SHA.
+**READY FOR LOCAL CHATGPT RE-AUDIT**
