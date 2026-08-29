@@ -2,24 +2,18 @@
 ================================================================
 ADVERSARIAL EVIDENCE FILE
 ================================================================
-Timestamp : 2026-08-29T11:06:28+05:30
+Timestamp : 2026-08-29T11:30:01+05:30
 Workdir   : D:\MICRO.1
 Command    : git rev-parse HEAD
 Exit       : 0
-d1c598d707892e0c17912a8839fc040db34202ee
+b767bae637c6955516f2140a11515d404601fdfc
 Command    : git status --short
 Exit       : 0
- M README.md
- M REPRODUCE.md
  M STATUS.md
- M evidence/phase_0/adversarial_execution.txt
  M evidence/phase_0/clean_clone_adversarial_execution.txt
  M evidence/phase_0/clean_clone_execution.txt
  M evidence/phase_0/clean_clone_post_test_audit.txt
- M evidence/phase_0/pipeline_execution.txt
- M reports/phase_0_report.md
  M reports/phase_0_review_packet.md
-?? run_final_tests.ps1
 
 --- SHA-256 Hashes ---
 HASH EXIT 0: 5A201932D5F36766DE8AC6D951377CEF29EBEEDF40049FF7DEC845EE22AA0505  .dockerignore
@@ -33,7 +27,7 @@ HASH EXIT 0: 7234E2C6638FAE5386D5DD2523A66CBFF28F0FC830D7939B57E5A646226AB775  D
 HASH EXIT 0: 39E17CDB1B58FB4D1D19C7DD23EC8C37908E50CDFAD65283441B72E370E6B4DC  requirements.lock
 HASH EXIT 0: BCF401F37409F14EFBD7FA847B850ACCBC6739B3C298DAF7D531EA4F143E0AFF  requirements-dev.txt
 HASH EXIT 0: 9D92E53259EC33EF58E87C526B8F310DF7EAE0C18FD42CF78F534FB63A562BB0  scripts\verify_container_security.sh
-HASH EXIT 0: 99618575934015DAE170DBC68D56F5D9D57B86AEF4A39268D7B9E74258BEBE9E  scripts\run_adversarial_tests.ps1
+HASH EXIT 0: 8D558A8A9FF1BC5FC3B5A830A6FA68AA5850B5391FB565A9FC5EAAA21CF3EAEF  scripts\run_adversarial_tests.ps1
 HASH EXIT 0: 8D4EFA48AA5198FA5301EFA3AAB0E6144699809808E061AECABEC482D33B5AB4  src\main.py
 HASH EXIT 0: 721D0CDB6C9FACA048FEAED008E9138B64920C25BDB72B4AF0A222DA70C772EC  src\utils\human_checkpoint.py
 HASH EXIT 0: 7955B0AC7C86E0F69298BE23CC487194BF3926D5817557BE32F7E8456C5BA84B  src\utils\logger.py
@@ -46,7 +40,7 @@ HASH EXIT 0: DF17ACA6B5C832B982524AEBCA3ED1F3143B49491AAD8AC0767AEEC13E703D74  t
 TEST A: PowerShell Git negative-path test
 ================================================================
 Command      : powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File "verify.ps1"
-Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_a768f24d19a946debcd0dcd9858253c0
+Working dir  : C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_c1b69056a082468aac9999775eb11402
 Process exit : 128
 --- stdout/stderr ---
 Starting Micro1 Challenge Verification Pipeline (PowerShell)...
@@ -55,7 +49,7 @@ STEP: Git Tracked Traces Check
 ============================================================
 
 fatal: not a git repository (or any of the parent directories): .git
-C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_a768f24d19a946debcd0dcd9858253c0\verify.ps1 : [FAIL] Git command failed.
+C:\Users\vaibh\AppData\Local\Temp\micro1_nogit_c1b69056a082468aac9999775eb11402\verify.ps1 : [FAIL] Git command failed.
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
     + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,verify.ps1
 --- end ---
@@ -79,7 +73,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_58e9074eae984846a18e367b20fd3cde\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_417ea97d69af4e278c4c27cc6fe20e01\verify.ps1 : [FAIL] Found
 improperly tracked traces:
 traces/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -105,7 +99,7 @@ Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 STEP: Git Tracked Traces Check
 ============================================================
 
-C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_526011ff5e5d47ae923be5256ce2b4d6\verify.ps1 : [FAIL] Found
+C:\Users\vaibh\AppData\Local\Temp\micro1_trace_gate_3f65e3175c694d8785f933b9c0a45287\verify.ps1 : [FAIL] Found
 improperly tracked trajectories:
 trajectories/raw/README.md
     + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
@@ -176,21 +170,21 @@ Process exit : 0
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 11.05kB done
+#7 transferring context: 183.24kB 0.0s done
 #7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.223 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.301
-#9 1.301 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.301 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.4s
+#9 1.193 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.268
+#9 1.268 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.268 [notice] To update, run: pip install --upgrade pip
+#9 DONE 1.3s
 
 #10 [5/6] COPY . .
-#10 DONE 0.0s
+#10 DONE 0.1s
 
 #11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
 #11 DONE 0.3s
@@ -198,10 +192,10 @@ Process exit : 0
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.3s done
-#12 exporting manifest sha256:0cc7411a48ac5c44df1efa2c8623eb2057d15862f8414658a95cf7643b39bd4d 0.0s done
-#12 exporting config sha256:642ba82be5b0f5e5923fb122c9daeb6b0fbdfd9c24f0dc945ad3411aa9e8ba06 done
-#12 exporting attestation manifest sha256:705cadecee41692f6b1d45dac51c98fbf7880415b89fe5a5ef6362976fc82162 0.0s done
-#12 exporting manifest list sha256:30d4150e2b2fa8a04df3f037ed99d2660583bf61d57c56692ec8c5fe1ffb5891 done
+#12 exporting manifest sha256:5c492ddaa5661aa6d3ac33431322685dca5953d498e71677508e6fc5c825bc76 0.0s done
+#12 exporting config sha256:43f479ca46f4909de1516ae8426aec64e0737dad7a877fa1593ac31e080eee99 done
+#12 exporting attestation manifest sha256:53606552b79b9a309a4fd1dda157ed764c922a354c53e238fcd2c13599deb6fe 0.0s done
+#12 exporting manifest list sha256:068442d57bba2e4076c09b78b73c1e984add96fa5af2ba618954af6dc76f375d done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
@@ -354,36 +348,36 @@ STEP: Docker Build
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 3.93kB done
+#7 transferring context: 3.91kB done
 #7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.250 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.320
-#9 1.320 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.320 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.4s
+#9 1.189 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.267
+#9 1.267 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.267 [notice] To update, run: pip install --upgrade pip
+#9 DONE 1.3s
 
 #10 [5/6] COPY . .
 #10 DONE 0.0s
 
 #11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
-#11 DONE 0.3s
+#11 DONE 0.4s
 
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.4s done
-#12 exporting manifest sha256:74d2db7f383cdfd44615b73a5be633c1a15ac0751682e74b9b2c71ba962a9668 0.0s done
-#12 exporting config sha256:6ff1c70b28ec49663ec33ed9e71d5ec440ec7b3deaf76a1d54c1cfbc5f8ae8d5 done
-#12 exporting attestation manifest sha256:154685bcff4c159c4cb550688e4f09239cc137c08ced802ac8030b618594281a 0.0s done
-#12 exporting manifest list sha256:09f9975260ea2977f85a015737064a9469287981b59f029fb37b2ec25d58827d done
+#12 exporting manifest sha256:6fee01e3ff521f03f7329ae459ae049d7262b20fc81a68b283e070d86f171a37 done
+#12 exporting config sha256:06fd60f39af5de1635a3a6807fb9a95b3f91831dc8b8a52dcda3b36685c8a544 done
+#12 exporting attestation manifest sha256:62b68f83d38360b8ad2bb905309140b59c7d51282132a4765450cbdd5b8d13e2 0.0s done
+#12 exporting manifest list sha256:971d360a88c0b75c3d800ca0e6efbaba5d318c27be5610b496b9ec86dfae228b done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
-#12 DONE 0.7s
+#12 DONE 0.6s
 
 #13 resolving provenance for metadata file
 #13 DONE 0.0s
@@ -426,20 +420,20 @@ ALL VERIFICATION STEPS PASSED
 
  Image micro1-challenge-phase0:latest Building
  Image micro1-challenge-phase0:latest Built
-time="2026-08-29T11:06:39+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-65e39eaa208d Creating
- Container micro1-micro1_app-run-65e39eaa208d Created
+time="2026-08-29T11:30:11+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-5bd45f143f84 Creating
+ Container micro1-micro1_app-run-5bd45f143f84 Created
   WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: pip install --upgrade pip
-time="2026-08-29T11:06:41+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-c76790fe7d56 Creating
- Container micro1-micro1_app-run-c76790fe7d56 Created
-time="2026-08-29T11:06:42+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-0c31964e943e Creating
- Container micro1-micro1_app-run-0c31964e943e Created
+time="2026-08-29T11:30:13+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-62209a588c47 Creating
+ Container micro1-micro1_app-run-62209a588c47 Created
+time="2026-08-29T11:30:14+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-161a75196ff6 Creating
+ Container micro1-micro1_app-run-161a75196ff6 Created
   process exit 0       : PASS
   completion marker    : PASS
   current 17 tests     : PASS

@@ -1,23 +1,16 @@
 ================================================================
 POST-TEST AUDIT
 ================================================================
-
-COMMAND: git status --short (post-test dirty)
-EXIT CODE: 0
-OUTPUT:
- M evidence/phase_0/adversarial_execution.txt
-
+Timestamp: 2026-08-29T11:25:52+05:30
+Tested Candidate SHA: b767bae637c6955516f2140a11515d404601fdfc
+Clone Directory: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-final-0a20f6da1bf94c649bc00fd79bd66b00
 
 COMMAND: git diff --check (post-test dirty)
 EXIT CODE: 0
 OUTPUT:
 
 
-COMMAND: git status --short (after restore)
+COMMAND: git status --short (post-test dirty)
 EXIT CODE: 0
 OUTPUT:
-
-
-COMMAND: git diff --check (after restore)
-EXIT CODE: 0
-OUTPUT:
+ M evidence/phase_0/adversarial_execution.txt

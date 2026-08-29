@@ -34,18 +34,18 @@ STEP: Docker Build
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 69.65kB 0.0s done
+#7 transferring context: 25.79kB done
 #7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.282 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.346
-#9 1.346 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.346 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.4s
+#9 1.354 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.436
+#9 1.436 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.436 [notice] To update, run: pip install --upgrade pip
+#9 DONE 1.5s
 
 #10 [5/6] COPY . .
 #10 DONE 0.0s
@@ -56,14 +56,14 @@ STEP: Docker Build
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.4s done
-#12 exporting manifest sha256:4b7261608804f1d897de260c4cd25888c088a169dc9e8975024db1a6db71d81c 0.0s done
-#12 exporting config sha256:92cc48127ee157b53fa8ae24836bf63869c8396e334ab9bcc2521f1e20beac23 0.0s done
-#12 exporting attestation manifest sha256:efd246ee92384de1f8817b0409aff2cfb9f461385251b0c17f8d5af0b525085f 0.0s done
-#12 exporting manifest list sha256:525e19aa59d1e0fe3a62ba707f83ed7e1b2d0392ad099510c4c1832d11450e3e done
+#12 exporting manifest sha256:087dac750667cff9f6cf572cec9c18fbe4e6af8ca18cebb9e4bcacde496c10c7 done
+#12 exporting config sha256:21b066d357641b3c040ffb748916de73615e873a54f1b50c98532c756d88d249 done
+#12 exporting attestation manifest sha256:7ac8fa2e7b9a6b11c44b792edab93fba33f6efd5cc916c820c8c6798723b2be7 0.0s done
+#12 exporting manifest list sha256:65e51747bd7c377388889da5b0cb5f8957402468727ff64647c6345a4ce35ddb done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.2s done
-#12 DONE 0.7s
+#12 DONE 0.6s
 
 #13 resolving provenance for metadata file
 #13 DONE 0.0s
@@ -72,9 +72,9 @@ STEP: Docker Build
 ============================================================
 STEP: Automated Test Suite Execution (Docker-driven)
 ============================================================
-time="2026-08-29T11:06:21+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-a2534e7b3c04 Creating
- Container micro1-micro1_app-run-a2534e7b3c04 Created
+time="2026-08-29T11:30:28+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-53811c895c0c Creating
+ Container micro1-micro1_app-run-53811c895c0c Created
 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
@@ -100,18 +100,18 @@ System.Management.Automation.RemoteException
 ============================================================
 STEP: Smoke Execution
 ============================================================
-time="2026-08-29T11:06:23+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-5611412dab80 Creating
- Container micro1-micro1_app-run-5611412dab80 Created
+time="2026-08-29T11:30:29+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-989a4161181d Creating
+ Container micro1-micro1_app-run-989a4161181d Created
 Running smoke test...
 Smoke test complete. Check traces directory for output.
 [PASS] Smoke Execution completed successfully.
 ============================================================
 STEP: Recursive Container Security Assertion
 ============================================================
-time="2026-08-29T11:06:24+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
- Container micro1-micro1_app-run-c8fb29c7b104 Creating
- Container micro1-micro1_app-run-c8fb29c7b104 Created
+time="2026-08-29T11:30:30+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-01a76b7a9c38 Creating
+ Container micro1-micro1_app-run-01a76b7a9c38 Created
 Inspecting container filesystem for prohibited artifacts...
 [PASS] Container security assertion passed. No prohibited artifacts found.
 [PASS] Recursive Container Security Assertion completed successfully.
