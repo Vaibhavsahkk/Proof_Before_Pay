@@ -303,6 +303,11 @@ finally {
         Remove-Item Env:COMPOSE_PROJECT_NAME -ErrorAction SilentlyContinue
     }
 
+    $finalHarnessResult = if ($script:hasErrors) { "FAIL" } else { "PASS" }
+    $finalHarnessExitCode = if ($script:hasErrors) { 1 } else { 0 }
+    Write-Log "CLEAN CLONE HARNESS RESULT: $finalHarnessResult"
+    Write-Log "HARNESS EXIT CODE: $finalHarnessExitCode"
+
     $content = [System.IO.File]::ReadAllText($logPath).Replace("`r`n", "`n")
     $normalizedLines = $content.Split("`n") | ForEach-Object { $_.TrimEnd() }
     $normalizedContent = (($normalizedLines -join "`n").TrimEnd([char[]]@("`n"))) + "`n"
@@ -325,10 +330,8 @@ finally {
     Write-Output "Saved normalized log to $destination"
 
     if ($script:hasErrors) {
-        Write-Output "CLEAN CLONE HARNESS RESULT: FAIL"
         exit 1
     }
 
-    Write-Output "CLEAN CLONE HARNESS RESULT: PASS"
     exit 0
 }
