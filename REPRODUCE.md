@@ -12,7 +12,7 @@ No model API or `GEMINI_API_KEY` is required for Phase 0.
 
 ### 1. Clone the repository
 
-**VERIFIED:** repository URL is configured and clean clones successfully into Windows `%TEMP%` without filename limits. The tested candidate commit is `9783ac6f09fe869f195a061bfa7f83847a517f66`. Subsequent commits exist only to store executed test evidence without altering code.
+**VERIFIED:** repository URL is configured and clean clones successfully into Windows `%TEMP%` without filename limits. The tested candidate commit is `5383405083ea878aaf930988e8f05ce560c59be3`. Subsequent commits exist only to store executed test evidence without altering executable code.
 
 ```bash
 git clone https://github.com/Vaibhavsahkk/Proof_Before_Pay.git micro1-challenge

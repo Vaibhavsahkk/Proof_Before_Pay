@@ -46,6 +46,7 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 
 - `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on exact tested candidate SHA 5383405083ea878aaf930988e8f05ce560c59be3. Contains complete raw stdout/stderr for `verify.ps1` and `verify.sh`.
 - `evidence/phase_0/clean_clone_adversarial_execution.txt`: detailed adversarial test outputs and validations captured during the clean clone (SHA-256: E209844023B39B36387AADC3CE529EAC0E0FE1850B1D2F53DF8249FC74D67CEA).
+- `evidence/phase_0/clean_clone_post_test_audit.txt`: observed post-test dirty state caused by generated evidence, the restoration command, and the final empty clean-clone status.
 - `evidence/phase_0/adversarial_execution.txt`: earlier iteration harness output.
 - `evidence/phase_0/pipeline_execution.txt`: earlier iteration Windows pipeline attempt.
 
