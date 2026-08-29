@@ -76,11 +76,20 @@ Write-Output "[PASS] Docker Build completed successfully."
 Write-Output "============================================================"
 Write-Output "STEP: Automated Test Suite Execution (Docker-driven)"
 Write-Output "============================================================"
-docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt && python -m pytest -q"
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "[FAIL] Tests failed."
-    exit $LASTEXITCODE
+Write-Output "Running tests inside container..."
+$pytestExit = Run-DockerCommand -Command "python -m pytest -q"
+if ($pytestExit -ne 0) {
+    Write-Error "[FAIL] Pytest execution failed with exit code $pytestExit"
+    exit $pytestExit
 }
+
+Write-Output "Running Phase 1 Schema Validator..."
+$validatorExit = Run-DockerCommand -Command "python scripts/validate_phase1.py"
+if ($validatorExit -ne 0) {
+    Write-Error "[FAIL] Phase 1 Validator failed with exit code $validatorExit"
+    exit $validatorExit
+}
+
 Write-Output "[PASS] Automated Test Suite Execution completed successfully."
 
 Write-Output "============================================================"

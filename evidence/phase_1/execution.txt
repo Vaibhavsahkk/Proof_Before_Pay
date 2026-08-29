@@ -1,0 +1,388 @@
+﻿--- VALIDATE PHASE 1 ---
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+[PASS] Arithmetic validation
+ALL PHASE 1 VALIDATIONS PASSED
+--- PYTEST ---
+============================= test session starts =============================
+platform win32 -- Python 3.11.15, pytest-9.1.0, pluggy-1.6.0
+rootdir: D:\MICRO.1
+configfile: pytest.ini
+plugins: anyio-4.14.1, langsmith-0.11.1
+collected 2 items
+
+tests\test_phase1_validation.py ..                                       [100%]
+
+============================== 2 passed in 0.33s ==============================
+--- VERIFY PS1 ---
+Starting Micro1 Challenge Verification Pipeline (PowerShell)...
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+docker :  Image micro1-challenge-phase0:latest Building 
+At D:\MICRO.1\verify.ps1:69 char:1
++ docker compose -f docker-compose.yml build --no-cache
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image micro1-c...atest Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load local bake definitions
+#1 reading from stdin 526B done
+#1 DONE 0.0s
+
+#2 [internal] booting buildkit
+#2 pulling image moby/buildkit:buildx-stable-1
+#2 pulling image moby/buildkit:buildx-stable-1 21.0s done
+#2 creating container buildx_buildkit_default
+#2 creating container buildx_buildkit_default 3.3s done
+#2 DONE 24.3s
+
+#3 [internal] load build definition from Dockerfile
+#3 transferring dockerfile: 380B 0.0s done
+#3 DONE 0.1s
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#4 ...
+
+#5 [auth] library/python:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#4 DONE 2.7s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 187B 0.0s done
+#6 DONE 0.0s
+
+#7 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 0B / 12.12MB 0.2s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 0B / 29.79MB 0.2s
+#7 sha256:a0d8783128af79059fe015e6313ce9e8fd7856b194e57f2d3c909b12a593bd2f 0B / 1.29MB 0.2s
+#7 sha256:48579d87405c21ba2599e244fcf3a02e900dbf9b9103e4afd030fbe0c7f43b33 0B / 250B 0.2s
+#7 ...
+
+#8 [internal] load build context
+#8 transferring context: 5.64MB 0.5s done
+#8 DONE 0.6s
+
+#7 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 2.10MB / 12.12MB 0.6s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 3.15MB / 12.12MB 0.8s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 4.19MB / 12.12MB 0.9s
+#7 sha256:48579d87405c21ba2599e244fcf3a02e900dbf9b9103e4afd030fbe0c7f43b33 250B / 250B 0.8s done
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 5.24MB / 12.12MB 1.2s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 2.10MB / 29.79MB 1.2s
+#7 sha256:a0d8783128af79059fe015e6313ce9e8fd7856b194e57f2d3c909b12a593bd2f 1.29MB / 1.29MB 1.3s done
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 7.34MB / 12.12MB 1.5s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 8.39MB / 12.12MB 1.7s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 9.44MB / 12.12MB 1.8s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 10.49MB / 12.12MB 2.0s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 4.19MB / 29.79MB 1.8s
+#7 sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 12.12MB / 12.12MB 2.2s done
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 6.29MB / 29.79MB 2.1s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 8.39MB / 29.79MB 2.4s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 11.53MB / 29.79MB 2.7s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 14.68MB / 29.79MB 3.0s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 16.78MB / 29.79MB 3.2s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 19.92MB / 29.79MB 3.5s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 22.02MB / 29.79MB 3.6s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 24.12MB / 29.79MB 3.8s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 26.21MB / 29.79MB 3.9s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 28.31MB / 29.79MB 4.1s
+#7 sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 29.79MB / 29.79MB 4.2s done
+#7 extracting sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be
+#7 extracting sha256:6310eb16bf4251731feab01e8f633bf5e2d75a657ccad97f420b1f83cce457be 1.6s done
+#7 DONE 5.9s
+
+#7 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 extracting sha256:a0d8783128af79059fe015e6313ce9e8fd7856b194e57f2d3c909b12a593bd2f
+#7 extracting sha256:a0d8783128af79059fe015e6313ce9e8fd7856b194e57f2d3c909b12a593bd2f 0.2s done
+#7 DONE 6.2s
+
+#7 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 extracting sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad
+#7 extracting sha256:b79f58b3eb945fe861ace4fc38504483c5b100c794aa095b6c9f112ed9807aad 0.9s done
+#7 DONE 7.1s
+
+#7 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#7 extracting sha256:48579d87405c21ba2599e244fcf3a02e900dbf9b9103e4afd030fbe0c7f43b33 0.0s done
+#7 DONE 7.1s
+
+#9 [2/6] WORKDIR /app
+#9 DONE 0.2s
+
+#10 [3/6] COPY requirements.lock requirements.txt ./
+#10 DONE 0.0s
+
+#11 [4/6] RUN pip install --no-cache-dir -r requirements.lock
+#11 2.814 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#11 2.960 
+#11 2.960 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#11 2.960 [notice] To update, run: pip install --upgrade pip
+#11 DONE 3.1s
+
+#12 [5/6] COPY . .
+#12 DONE 0.1s
+
+#13 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
+#13 DONE 0.5s
+
+#14 exporting to oci image format
+#14 exporting layers
+#14 exporting layers 0.9s done
+#14 exporting manifest sha256:97c06b0895a7d8929b10bf0ebe2fc2bb654a65c06a1d987eb9da2358b30b8ace 0.0s done
+#14 exporting config sha256:f1e49163553c26cdb27b746237d78681a730f8b9bba81f59d7ecad5a9739b6fe 0.0s done
+#14 sending tarball
+#14 ...
+
+#15 importing to docker
+#15 DONE 0.0s
+
+#14 exporting to oci image format
+#14 sending tarball 4.7s done
+#14 DONE 5.6s
+
+#16 resolving provenance for metadata file
+#16 DONE 0.0s
+ Image micro1-challenge-phase0:latest Built 
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Automated Test Suite Execution (Docker-driven)
+============================================================
+docker : time="2026-08-29T15:22:02+05:30" level=warning msg="Found orphan containers 
+(micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, 
+micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you 
+can run this command with the --remove-orphans flag to clean it up."
+At D:\MICRO.1\verify.ps1:79 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip i ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (time="2026-08-2...o clean it up.":String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container micro1-micro1_app-run-3891b873f02f Creating 
+ Container micro1-micro1_app-run-3891b873f02f Created 
+Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+  Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+  Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Downloading packaging-24.1-py3-none-any.whl (53 kB)
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Installing collected packages: pluggy, packaging, iniconfig, pytest
+  WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+...................                                                      [100%]
+19 passed in 0.36s
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+docker : time="2026-08-29T15:22:06+05:30" level=warning msg="Found orphan containers 
+(micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, 
+micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you 
+can run this command with the --remove-orphans flag to clean it up."
+At D:\MICRO.1\verify.ps1:89 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (time="2026-08-2...o clean it up.":String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container micro1-micro1_app-run-b15cb3a0dd2a Creating 
+ Container micro1-micro1_app-run-b15cb3a0dd2a Created 
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+docker : time="2026-08-29T15:22:07+05:30" level=warning msg="Found orphan containers 
+(micro1-micro1_app-run-2fe76e3c6b37, micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, 
+micro1-micro1_app-run-0fd379d824cc) for this project. If you removed or renamed this service in your compose file, you 
+can run this command with the --remove-orphans flag to clean it up."
+At D:\MICRO.1\verify.ps1:99 char:1
++ docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (time="2026-08-2...o clean it up.":String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container micro1-micro1_app-run-1e28491ffeab Creating 
+ Container micro1-micro1_app-run-1e28491ffeab Created 
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
+--- VERIFY BASH ---
+Starting Micro1 Challenge Verification Pipeline (POSIX)...
+/c/Program Files/Docker/Docker/resources/bin/docker
+/mingw64/bin/git
+============================================================
+STEP: Git Tracked Traces Check
+============================================================
+[PASS] Git Tracked Traces Check completed successfully.
+============================================================
+STEP: Compose Config Isolation Check
+============================================================
+[PASS] Compose Config Isolation Check completed successfully.
+============================================================
+STEP: Docker Build
+============================================================
+bash.exe :  Image micro1-challenge-phase0:latest Building 
+At line:9 char:1
++ & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh 2>&1 | Out-File $ou ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image micro1-c...atest Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load local bake definitions
+#1 reading from stdin 526B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 380B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 187B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#5 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.1s done
+#5 DONE 0.1s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 215.43kB 0.1s done
+#7 DONE 0.1s
+
+#8 [3/6] COPY requirements.lock requirements.txt ./
+#8 DONE 0.1s
+
+#9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
+#9 3.467 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 3.589 
+#9 3.589 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 3.589 [notice] To update, run: pip install --upgrade pip
+#9 DONE 3.7s
+
+#10 [5/6] COPY . .
+#10 DONE 0.1s
+
+#11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
+#11 DONE 0.6s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.9s done
+#12 exporting manifest sha256:8c2d59d433eb035afff27edb4a9152c8b4f410478ffbddd2b8d0fa338c2f333d 0.0s done
+#12 exporting config sha256:76daa9c66d1d23217ab32912eb709859f3afc4f635394ae77c07f43d5d7f8d55 0.0s done
+#12 exporting attestation manifest sha256:029e3cb1f0e1f4a3195f130dadfae5a5a0d75e11ba5966a181f349c620b300f3 0.0s done
+#12 exporting manifest list sha256:e1c668bfc2fb3d9b9405e24afcb16c36c772cecd274c28ec2495a42bd714b1bb 0.0s done
+#12 naming to docker.io/library/micro1-challenge-phase0:latest
+#12 naming to docker.io/library/micro1-challenge-phase0:latest done
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest
+#12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.5s done
+#12 DONE 1.5s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image micro1-challenge-phase0:latest Built 
+[PASS] Docker Build completed successfully.
+============================================================
+STEP: Automated Test Suite Execution (Docker-driven)
+============================================================
+time="2026-08-29T15:22:18+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, 
+micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this 
+project. If you removed or renamed this service in your compose file, you can run this command with the 
+--remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-e821475746a3 Creating 
+ Container micro1-micro1_app-run-e821475746a3 Created 
+Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
+  Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
+  Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
+  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
+Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Downloading packaging-24.1-py3-none-any.whl (53 kB)
+Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+Installing collected packages: pluggy, packaging, iniconfig, pytest
+  WARNING: The scripts py.test and pytest are installed in '/home/micro1user/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed iniconfig-2.0.0 packaging-24.1 pluggy-1.5.0 pytest-8.3.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+...................                                                      [100%]
+19 passed in 0.38s
+[PASS] Automated Test Suite Execution completed successfully.
+============================================================
+STEP: Smoke Execution
+============================================================
+time="2026-08-29T15:22:22+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, 
+micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this 
+project. If you removed or renamed this service in your compose file, you can run this command with the 
+--remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-525171bab717 Creating 
+ Container micro1-micro1_app-run-525171bab717 Created 
+Running smoke test...
+Smoke test complete. Check traces directory for output.
+[PASS] Smoke Execution completed successfully.
+============================================================
+STEP: Recursive Container Security Assertion
+============================================================
+time="2026-08-29T15:22:23+05:30" level=warning msg="Found orphan containers (micro1-micro1_app-run-2fe76e3c6b37, 
+micro1-micro1_app-run-987035029da2, micro1-micro1_app-run-16d0486b8c0a, micro1-micro1_app-run-0fd379d824cc) for this 
+project. If you removed or renamed this service in your compose file, you can run this command with the 
+--remove-orphans flag to clean it up."
+ Container micro1-micro1_app-run-fc7cdfc71242 Creating 
+ Container micro1-micro1_app-run-fc7cdfc71242 Created 
+Inspecting container filesystem for prohibited artifacts...
+[PASS] Container security assertion passed. No prohibited artifacts found.
+[PASS] Recursive Container Security Assertion completed successfully.
+************************************************************
+ALL VERIFICATION STEPS PASSED
+************************************************************
+--- GIT STATUS & CHECKS ---
+ M DECISIONS.md
+ M STATUS.md
+?? benchmark/RULEBOOK.md
+?? benchmark/schemas/
+?? data/cases/
+?? docs/PHASE_1_SCOPE.md
+?? eval/EVAL_DESIGN.md
+?? evidence/phase_1/
+?? reports/phase_1_review_packet.md
+?? scripts/generate_phase1_data.py
+?? scripts/validate_phase1.py
+?? tests/test_phase1_validation.py

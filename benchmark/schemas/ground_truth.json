@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ground Truth V1",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "expected_recommendation": {
+      "type": "string",
+      "enum": [
+        "PAY",
+        "HOLD",
+        "INVESTIGATE"
+      ]
+    },
+    "expected_exception_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "case_id",
+    "expected_recommendation"
+  ]
+}

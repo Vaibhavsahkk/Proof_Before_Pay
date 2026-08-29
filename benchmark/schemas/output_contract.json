@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Output Contract V1",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": [
+        "PAY",
+        "HOLD",
+        "INVESTIGATE"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deterministic_calculation_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainty": {
+      "type": "string"
+    },
+    "required_human_next_step": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "recommendation",
+    "findings"
+  ]
+}

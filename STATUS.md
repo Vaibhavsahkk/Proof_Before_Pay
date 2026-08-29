@@ -1,7 +1,7 @@
 # Project Status
 
-Current phase: Phase 0 — Environment & Governance
-Phase status: READY FOR EXTERNAL CHATGPT REVIEW
+Current phase: Phase 1 — Problem Scope & Benchmark Design
+Phase status: IN PROGRESS
 Last completed task: Added fail-closed Phase 1 contamination evidence and isolated child PowerShell verifier execution.
 Current task: Final external Phase 0 review.
 Next task: Phase 1 remains unauthorized until formal Phase 0 approval.

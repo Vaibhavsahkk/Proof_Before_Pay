@@ -1,0 +1,55 @@
+{
+  "invoice": {
+    "invoice_number": "INV-1002",
+    "vendor_name": "FAKECORP INC",
+    "vendor_tax_id": "TX-8888",
+    "bank_account": "ACC-2222",
+    "currency": "USD",
+    "items": [
+      {
+        "item_id": "SERVICE-B",
+        "description": "Consulting",
+        "quantity": "10",
+        "unit_price": "100.00",
+        "line_total": "1000.00"
+      }
+    ],
+    "subtotal": "1000.00",
+    "tax": "0.00",
+    "total": "1000.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2002",
+    "items": [
+      {
+        "item_id": "SERVICE-B",
+        "quantity": "10",
+        "unit_price": "100.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3002",
+    "items": [
+      {
+        "item_id": "SERVICE-B",
+        "quantity_accepted": "10"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "FAKECORP INC",
+    "vendor_tax_id": "TX-8888",
+    "bank_account": "ACC-2222"
+  },
+  "prior_payment_history": [
+    {
+      "invoice_number": "INV-1002",
+      "vendor_tax_id": "TX-8888",
+      "amount": "1000.00",
+      "payment_date": "2025-01-15"
+    }
+  ],
+  "bank_change_evidence": null,
+  "case_id": "case_2_duplicate_hold"
+}

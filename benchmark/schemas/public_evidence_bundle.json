@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Public Evidence Bundle V1",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "invoice": {
+      "type": "object",
+      "properties": {
+        "invoice_number": {
+          "type": "string"
+        },
+        "vendor_name": {
+          "type": "string"
+        },
+        "vendor_tax_id": {
+          "type": "string"
+        },
+        "bank_account": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item_id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "string"
+              },
+              "unit_price": {
+                "type": "string"
+              },
+              "line_total": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "item_id",
+              "quantity",
+              "unit_price"
+            ]
+          }
+        },
+        "subtotal": {
+          "type": "string"
+        },
+        "tax": {
+          "type": "string"
+        },
+        "total": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "invoice_number",
+        "vendor_name",
+        "total"
+      ]
+    },
+    "purchase_order": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "goods_receipt": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "vendor_master": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "prior_payment_history": {
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "bank_change_evidence": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "case_id",
+    "invoice"
+  ]
+}
