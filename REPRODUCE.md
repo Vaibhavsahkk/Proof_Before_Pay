@@ -76,4 +76,22 @@ ALL VERIFICATION STEPS PASSED
 ************************************************************
 ```
 
-The current test tree contains 17 tests.
+The current test tree contains 19 tests.
+
+## Phase 1: Problem Scope & Benchmark Design
+
+### 1. Data Generation and Manifest
+The Phase 1 data is generated using the schema rules:
+```bash
+python scripts/generate_phase1_data.py
+python scripts/generate_manifest.py
+```
+
+### 2. Validation Execution
+To locally run the deterministic Phase 1 oracle, strict JSON schema validation, and leakage tests:
+```bash
+python scripts/validate_phase1.py
+pytest tests/test_phase1_validation.py
+pytest tests/test_manifest.py
+```
+This is also included by default when executing `./verify.sh` or `.\verify.ps1`.

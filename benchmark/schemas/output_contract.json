@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Output Contract V1",
+  "title": "Output Contract V1.1",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "case_id": {
       "type": "string"
@@ -48,6 +49,11 @@
   "required": [
     "case_id",
     "recommendation",
-    "findings"
+    "findings",
+    "evidence_references",
+    "deterministic_calculation_references",
+    "missing_evidence",
+    "uncertainty",
+    "required_human_next_step"
   ]
 }

@@ -87,6 +87,9 @@ docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --us
 echo "Running Phase 1 Schema Validator..."
 docker compose -f docker-compose.yml run --rm micro1_app sh -c "python scripts/validate_phase1.py" || { echo "[FAIL] Phase 1 Validator failed."; exit 1; }
 
+echo "Running Manifest Verification..."
+docker compose -f docker-compose.yml run --rm micro1_app sh -c "python scripts/verify_manifest.py" || { echo "[FAIL] Manifest Verification failed."; exit 1; }
+
 echo "[PASS] Automated Test Suite Execution completed successfully."
 
 echo "============================================================"

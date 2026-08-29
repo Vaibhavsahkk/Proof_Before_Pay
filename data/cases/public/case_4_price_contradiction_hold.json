@@ -5,6 +5,7 @@
     "vendor_tax_id": "TX-6666",
     "bank_account": "ACC-4444",
     "currency": "USD",
+    "tax_rate_percent": "10.00",
     "items": [
       {
         "item_id": "TECH-D",

@@ -5,6 +5,7 @@
     "vendor_tax_id": "TX-9999",
     "bank_account": "ACC-1111",
     "currency": "USD",
+    "tax_rate_percent": "10.00",
     "items": [
       {
         "item_id": "WIDGET-A",

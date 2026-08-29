@@ -5,6 +5,7 @@
     "vendor_tax_id": "TX-7777",
     "bank_account": "ACC-3333",
     "currency": "USD",
+    "tax_rate_percent": "10.00",
     "items": [
       {
         "item_id": "PART-C",

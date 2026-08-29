@@ -5,6 +5,7 @@
     "vendor_tax_id": "TX-8888",
     "bank_account": "ACC-2222",
     "currency": "USD",
+    "tax_rate_percent": "0.00",
     "items": [
       {
         "item_id": "SERVICE-B",

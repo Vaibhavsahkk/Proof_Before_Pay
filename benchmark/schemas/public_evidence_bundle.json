@@ -1,13 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Public Evidence Bundle V1",
+  "title": "Public Evidence Bundle V1.1",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "case_id": {
       "type": "string"
     },
     "invoice": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "invoice_number": {
           "type": "string"
@@ -22,12 +24,21 @@
           "type": "string"
         },
         "currency": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "USD"
+          ]
+        },
+        "tax_rate_percent": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d{2}$"
         },
         "items": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "item_id": {
                 "type": "string"
@@ -36,13 +47,79 @@
                 "type": "string"
               },
               "quantity": {
-                "type": "string"
+                "type": "string",
+                "pattern": "^\\d+$"
               },
               "unit_price": {
-                "type": "string"
+                "type": "string",
+                "pattern": "^-?\\d+\\.\\d{2}$"
               },
               "line_total": {
+                "type": "string",
+                "pattern": "^-?\\d+\\.\\d{2}$"
+              }
+            },
+            "required": [
+              "item_id",
+              "description",
+              "quantity",
+              "unit_price",
+              "line_total"
+            ]
+          }
+        },
+        "subtotal": {
+          "type": "string",
+          "pattern": "^-?\\d+\\.\\d{2}$"
+        },
+        "tax": {
+          "type": "string",
+          "pattern": "^-?\\d+\\.\\d{2}$"
+        },
+        "total": {
+          "type": "string",
+          "pattern": "^-?\\d+\\.\\d{2}$"
+        }
+      },
+      "required": [
+        "invoice_number",
+        "vendor_name",
+        "vendor_tax_id",
+        "bank_account",
+        "currency",
+        "tax_rate_percent",
+        "items",
+        "subtotal",
+        "tax",
+        "total"
+      ]
+    },
+    "purchase_order": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "po_number": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "item_id": {
                 "type": "string"
+              },
+              "quantity": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "unit_price": {
+                "type": "string",
+                "pattern": "^-?\\d+\\.\\d{2}$"
               }
             },
             "required": [
@@ -51,56 +128,134 @@
               "unit_price"
             ]
           }
-        },
-        "subtotal": {
-          "type": "string"
-        },
-        "tax": {
-          "type": "string"
-        },
-        "total": {
-          "type": "string"
         }
       },
       "required": [
-        "invoice_number",
-        "vendor_name",
-        "total"
-      ]
-    },
-    "purchase_order": {
-      "type": [
-        "object",
-        "null"
+        "po_number",
+        "items"
       ]
     },
     "goods_receipt": {
       "type": [
         "object",
         "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "grn_number": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "item_id": {
+                "type": "string"
+              },
+              "quantity_accepted": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              }
+            },
+            "required": [
+              "item_id",
+              "quantity_accepted"
+            ]
+          }
+        }
+      },
+      "required": [
+        "grn_number",
+        "items"
       ]
     },
     "vendor_master": {
       "type": [
         "object",
         "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "vendor_name": {
+          "type": "string"
+        },
+        "vendor_tax_id": {
+          "type": "string"
+        },
+        "bank_account": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor_name",
+        "vendor_tax_id",
+        "bank_account"
       ]
     },
     "prior_payment_history": {
       "type": [
         "array",
         "null"
-      ]
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "invoice_number": {
+            "type": "string"
+          },
+          "vendor_tax_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^-?\\d+\\.\\d{2}$"
+          },
+          "payment_date": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "invoice_number",
+          "vendor_tax_id",
+          "amount",
+          "payment_date"
+        ]
+      }
     },
     "bank_change_evidence": {
       "type": [
         "object",
         "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "old_bank_account": {
+          "type": "string"
+        },
+        "new_bank_account": {
+          "type": "string"
+        },
+        "authorized_by": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "old_bank_account",
+        "new_bank_account",
+        "authorized_by"
       ]
     }
   },
   "required": [
     "case_id",
-    "invoice"
+    "invoice",
+    "purchase_order",
+    "goods_receipt",
+    "vendor_master",
+    "prior_payment_history",
+    "bank_change_evidence"
   ]
 }

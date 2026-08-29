@@ -90,6 +90,13 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+Write-Output "Running Manifest Verification..."
+docker compose -f docker-compose.yml run --rm micro1_app python scripts/verify_manifest.py
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "[FAIL] Manifest Verification failed with exit code $LASTEXITCODE"
+    exit $LASTEXITCODE
+}
+
 Write-Output "[PASS] Automated Test Suite Execution completed successfully."
 
 Write-Output "============================================================"

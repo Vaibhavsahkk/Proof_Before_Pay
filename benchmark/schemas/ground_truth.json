@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Ground Truth V1",
+  "title": "Ground Truth V1.1",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "case_id": {
       "type": "string"
@@ -23,6 +24,7 @@
   },
   "required": [
     "case_id",
-    "expected_recommendation"
+    "expected_recommendation",
+    "expected_exception_name"
   ]
 }
