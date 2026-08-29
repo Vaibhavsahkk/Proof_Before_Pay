@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Ground Truth V1.1",
+  "title": "Ground Truth V1.2",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -15,16 +15,16 @@
         "INVESTIGATE"
       ]
     },
-    "expected_exception_name": {
-      "type": [
-        "string",
-        "null"
-      ]
+    "expected_findings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": [
     "case_id",
     "expected_recommendation",
-    "expected_exception_name"
+    "expected_findings"
   ]
 }

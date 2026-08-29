@@ -1,5 +1,7 @@
 {
   "expected_recommendation": "HOLD",
-  "expected_exception_name": "Price Contradiction",
+  "expected_findings": [
+    "Price Contradiction"
+  ],
   "case_id": "case_4_price_contradiction_hold"
 }

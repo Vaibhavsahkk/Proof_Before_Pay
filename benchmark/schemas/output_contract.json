@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Output Contract V1.1",
+  "title": "Output Contract V1.2",
   "type": "object",
   "additionalProperties": false,
   "properties": {

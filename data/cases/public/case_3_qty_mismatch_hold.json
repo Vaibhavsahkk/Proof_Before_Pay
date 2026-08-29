@@ -21,6 +21,8 @@
   },
   "purchase_order": {
     "po_number": "PO-2003",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
     "items": [
       {
         "item_id": "PART-C",

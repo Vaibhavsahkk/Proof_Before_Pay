@@ -1,5 +1,7 @@
 {
   "expected_recommendation": "HOLD",
-  "expected_exception_name": "Duplicate Billing",
+  "expected_findings": [
+    "Duplicate Billing"
+  ],
   "case_id": "case_2_duplicate_hold"
 }

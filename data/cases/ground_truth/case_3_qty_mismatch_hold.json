@@ -1,5 +1,7 @@
 {
   "expected_recommendation": "HOLD",
-  "expected_exception_name": "Quantity Mismatch",
+  "expected_findings": [
+    "Quantity Mismatch"
+  ],
   "case_id": "case_3_qty_mismatch_hold"
 }

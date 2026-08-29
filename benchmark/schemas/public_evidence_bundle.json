@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Public Evidence Bundle V1.1",
+  "title": "Public Evidence Bundle V1.2",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -31,7 +31,7 @@
         },
         "tax_rate_percent": {
           "type": "string",
-          "pattern": "^\\d+\\.\\d{2}$"
+          "pattern": "^-?\\d+\\.\\d{2}$"
         },
         "items": {
           "type": "array",
@@ -41,7 +41,8 @@
             "additionalProperties": false,
             "properties": {
               "item_id": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               "description": {
                 "type": "string"
@@ -104,6 +105,16 @@
         "po_number": {
           "type": "string"
         },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "USD"
+          ]
+        },
+        "tax_rate_percent": {
+          "type": "string",
+          "pattern": "^-?\\d+\\.\\d{2}$"
+        },
         "items": {
           "type": "array",
           "items": {
@@ -111,7 +122,8 @@
             "additionalProperties": false,
             "properties": {
               "item_id": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               "quantity": {
                 "type": "string",
@@ -132,6 +144,8 @@
       },
       "required": [
         "po_number",
+        "currency",
+        "tax_rate_percent",
         "items"
       ]
     },
@@ -152,7 +166,8 @@
             "additionalProperties": false,
             "properties": {
               "item_id": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               "quantity_accepted": {
                 "type": "string",
@@ -238,14 +253,24 @@
         "new_bank_account": {
           "type": "string"
         },
-        "authorized_by": {
-          "type": "string"
+        "approval_status": {
+          "type": "string",
+          "enum": [
+            "APPROVED",
+            "PENDING",
+            "REJECTED"
+          ]
+        },
+        "verified_by": {
+          "type": "string",
+          "minLength": 1
         }
       },
       "required": [
         "old_bank_account",
         "new_bank_account",
-        "authorized_by"
+        "approval_status",
+        "verified_by"
       ]
     }
   },

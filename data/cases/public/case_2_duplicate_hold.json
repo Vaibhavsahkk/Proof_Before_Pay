@@ -21,6 +21,8 @@
   },
   "purchase_order": {
     "po_number": "PO-2002",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
     "items": [
       {
         "item_id": "SERVICE-B",

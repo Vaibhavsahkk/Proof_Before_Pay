@@ -21,6 +21,8 @@
   },
   "purchase_order": {
     "po_number": "PO-2005",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
     "items": [
       {
         "item_id": "SERV-E",
@@ -44,6 +46,11 @@
     "bank_account": "ACC-5555"
   },
   "prior_payment_history": [],
-  "bank_change_evidence": null,
+  "bank_change_evidence": {
+    "old_bank_account": "ACC-5555",
+    "new_bank_account": "ACC-9999",
+    "approval_status": "PENDING",
+    "verified_by": "System"
+  },
   "case_id": "case_5_bank_change_investigate"
 }

@@ -21,6 +21,8 @@
   },
   "purchase_order": {
     "po_number": "PO-2004",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
     "items": [
       {
         "item_id": "TECH-D",
