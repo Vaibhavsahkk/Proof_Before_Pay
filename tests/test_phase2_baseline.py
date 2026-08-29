@@ -78,7 +78,7 @@ def test_import_without_key_does_not_create_client(monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     client = MagicMock()
     monkeypatch.setattr("google.genai.Client", client)
-    assert runner.MODEL_ID == "gemini-3.1-pro-preview"
+    assert runner.MODEL_ID == "gemini-3.6-flash"
     client.assert_not_called()
 
 

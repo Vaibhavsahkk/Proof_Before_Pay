@@ -22,7 +22,9 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
 ## Phase 2 Scaffold Audit
 
-- Gemini attempt 1: INVALID; six provider HTTP 404 responses for unavailable `gemini-2.5-pro`. No valid performance metric.
+- Gemini attempt 1: INVALID; six provider HTTP 404 responses for unavailable `gemini-2.5-pro`.
+- Gemini attempt 2: INVALID; six provider HTTP 429 responses because 3.1 Pro free-tier quota is zero.
+- `gemini-3.6-flash` health probe: exit 0 and returned model `gemini-3.6-flash`. No valid performance metric yet.
 - Model performance metrics: UNVERIFIED.
 - Corrected focused API-independent suite: 29 passed with deprecation warnings treated as errors.
 - Corrected PowerShell and Git Bash Docker pipelines: each passed on committed source `95cebd1` with 75 tests, manifest validation, credential isolation, runtime import, and ground-truth rejection.

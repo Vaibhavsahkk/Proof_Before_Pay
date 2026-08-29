@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-Phase 1 is externally approved. The API-independent Phase 2 scaffold passed an exact remote clean-clone gate on committed source `eac35cdb4994f917d76cde4a6ca1749957d65f3f`. The first real attempt was INVALID because `gemini-2.5-pro` returned provider HTTP 404 for all cases. No valid Phase 2 metric exists yet; the retry is pinned to `gemini-3.1-pro-preview`.
+Phase 1 is externally approved. The API-independent Phase 2 scaffold passed an exact remote clean-clone gate on committed source `eac35cdb4994f917d76cde4a6ca1749957d65f3f`. Attempts with unavailable 2.5 Pro and zero-quota 3.1 Pro are INVALID. No valid Phase 2 metric exists yet; the retry is pinned to successfully probed `gemini-3.6-flash`.
 
 ## Current Branch
 master

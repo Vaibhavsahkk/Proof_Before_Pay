@@ -43,9 +43,10 @@ External ChatGPT returned exactly `PHASE APPROVED — 100%` for Phase 1. Tested 
 
 ## Decision 008 — Phase 2 baseline model availability
 
-The baseline model is pinned to `gemini-3.1-pro-preview`.
+The baseline model is pinned to `gemini-3.6-flash`.
 
 - The first real run against `gemini-2.5-pro` returned provider HTTP 404 for all six cases and stated that the model was unavailable to new users.
-- A key-scoped model-list query confirmed that `gemini-3.1-pro-preview` supports `generateContent` for this account.
+- The next pinned `gemini-3.1-pro-preview` attempt reached the provider but returned HTTP 429 for all cases because this account's Pro free-tier quota is zero.
+- A minimal non-benchmark health probe to provider-recommended `gemini-3.6-flash` returned exit 0 and identified the returned model as `gemini-3.6-flash`.
 - A concrete model ID is used instead of the mutable `gemini-pro-latest` alias.
-- The failed run is retained at `evidence/phase_2/runs/run_20260829_151625_260ba740` and is INVALID operational evidence, not a performance result.
+- Both failed runs are retained under `evidence/phase_2/runs/` as INVALID operational evidence, not performance results.

@@ -23,4 +23,4 @@ Known documentation/usability issue; not a failure of the verified Git Bash pipe
 
 ## Phase 2 Provider Availability
 
-The first real baseline attempt used pinned `gemini-2.5-pro`, but the provider returned HTTP 404 for all six cases because that model is unavailable to new users. The run is preserved as INVALID evidence and must not be reported as performance. Decision 008 pins the retry to the listed, provider-supported concrete model `gemini-3.1-pro-preview`.
+The first real baseline attempt used 2.5 Pro, but the provider returned HTTP 404 for all six cases. The second used 3.1 Pro but returned HTTP 429 because the account's Pro free-tier quota is zero. Both runs are preserved as INVALID and must not be reported as performance. Decision 008 pins the retry to successfully probed `gemini-3.6-flash`.

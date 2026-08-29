@@ -8,7 +8,7 @@ Next task: Run the offline evaluator on the immutable real outputs. Phase 3+ rem
 
 Human actions required: None. The key is locally available through an ignored file and will only be loaded into the baseline process environment without being printed.
 
-A first Gemini request attempt was executed against `gemini-2.5-pro`; all six calls returned provider HTTP 404 because that model is unavailable to new users. The evaluator correctly marked the run INVALID. No valid Phase 2 performance metric exists yet.
+Two Gemini attempts are preserved as INVALID: `gemini-2.5-pro` returned HTTP 404 because it is unavailable to new users, and `gemini-3.1-pro-preview` returned HTTP 429 because the account's Pro free-tier quota is zero. A minimal `gemini-3.6-flash` health probe succeeded. No valid Phase 2 performance metric exists yet.
 
 ## Current verification summary
 
@@ -41,6 +41,7 @@ A first Gemini request attempt was executed against `gemini-2.5-pro`; all six ca
 - Phase 2 scaffold verification: `evidence/phase_2/scaffold_verify_powershell.txt` and `evidence/phase_2/scaffold_verify_git_bash.txt`.
 - Phase 2 scaffold clean-clone verification: `evidence/phase_2/scaffold_clean_clone_execution.txt` (normalized machine-captured log; SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`).
 - Failed provider-availability run: `evidence/phase_2/runs/run_20260829_151625_260ba740`; six `API_ERROR` results and evaluator status `INVALID`. Its numeric fields are not accepted as performance metrics.
+- Failed Pro-quota run: `evidence/phase_2/runs/run_20260829_152146_25ba3699`; six `API_ERROR` results and evaluator status `INVALID`. Its numeric fields are not accepted as performance metrics.
 
 ## Assumptions and risks
 

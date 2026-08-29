@@ -30,7 +30,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## What Is In Progress
 
-- Retrying and evaluating the real six-case Phase 2 Fair Baseline with pinned `gemini-3.1-pro-preview`; the earlier `gemini-2.5-pro` attempt is preserved as INVALID provider-availability evidence.
+- Retrying and evaluating the real six-case Phase 2 Fair Baseline with pinned `gemini-3.6-flash`; the earlier 2.5 Pro and 3.1 Pro attempts are preserved as INVALID evidence.
 
 ## What Is Not Complete
 

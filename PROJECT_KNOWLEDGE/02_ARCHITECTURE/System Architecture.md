@@ -21,7 +21,7 @@ flowchart TD
 ```
 
 ## Agent Architecture
-The Phase 2 baseline is intentionally one pinned `gemini-3.1-pro-preview` call per case, without agent tools. Its API-independent scaffold and clean-clone gate are verified. Phase 3+ architecture remains locked.
+The Phase 2 baseline is intentionally one pinned `gemini-3.6-flash` call per case, without agent tools. Its API-independent scaffold and clean-clone gate are verified. Phase 3+ architecture remains locked.
 
 ## Integrations
 - Docker Engine for containerized execution.

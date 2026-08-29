@@ -56,4 +56,15 @@ The first real six-case call used pinned `gemini-2.5-pro` from clean source `86b
 All six calls returned provider HTTP 404. The manifest recorded `PARTIAL_ERROR`; the offline evaluator wrote an `INVALID` report with 13 explicit invalid reasons. Secret-pattern scan found no credential material.
 
 ### Current Status
-The failed attempt is retained at `evidence/phase_2/runs/run_20260829_151625_260ba740` and is not a performance result. Provider evidence supports a retry using pinned `gemini-3.1-pro-preview`.
+The failed attempt is retained at `evidence/phase_2/runs/run_20260829_151625_260ba740` and is not a performance result.
+
+## 2026-08-29 - Phase 2 Baseline Attempt 2
+
+### What Changed
+The retry used pinned `gemini-3.1-pro-preview` from clean source `0c0569f8d0c630a91728fb0169be17afbd6b6e0c` with locked SDK `2.19.0`.
+
+### Verification
+All six calls returned HTTP 429 because the account's Pro free-tier request and input-token quotas are zero. The offline evaluator marked the run INVALID with 13 explicit reasons. A later minimal `gemini-3.6-flash` health probe returned exit 0.
+
+### Current Status
+Both failed attempts are preserved and excluded from performance reporting. The valid retry is pinned to `gemini-3.6-flash`.

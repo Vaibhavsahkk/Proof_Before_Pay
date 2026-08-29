@@ -82,13 +82,13 @@ Active. Phase 1 is externally approved, Phase 2 Fair Baseline is active, and Pha
 2026-08-29
 
 ### Decision
-Pin the valid baseline retry to `gemini-3.1-pro-preview` rather than a mutable `latest` alias.
+Pin the valid baseline retry to `gemini-3.6-flash` rather than a mutable `latest` alias.
 
 ### Reason
-The first real attempt observed provider HTTP 404 for all six `gemini-2.5-pro` calls, and the provider response recommended `gemini-3.1-pro-preview`. A key-scoped model listing also observed `generateContent` support for the replacement.
+The first real attempt observed provider HTTP 404 for all six 2.5 Pro calls. The next 3.1 Pro attempt observed HTTP 429 because this account's Pro free-tier quota is zero. A minimal non-benchmark health probe to provider-recommended `gemini-3.6-flash` returned exit 0 and the exact expected model identifier.
 
 ### Current Status
 Active. The failed attempt is retained as INVALID operational evidence and is not a performance result.
 
 ### Evidence
-`DECISIONS.md` and `evidence/phase_2/runs/run_20260829_151625_260ba740/`.
+`DECISIONS.md` and the two INVALID run directories under `evidence/phase_2/runs/`.

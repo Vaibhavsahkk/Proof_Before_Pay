@@ -105,6 +105,6 @@ Run the exact remote clean-clone scaffold gate with:
 
 Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and exit 0. This gate verifies the candidate commit, frozen manifest, 29 focused Phase 2 tests, the exact missing-key rejection, both 75-test Docker pipelines, clean post-test Git state, and exact-project cleanup. Its current evidence is the normalized machine-captured log `evidence/phase_2/scaffold_clean_clone_execution.txt` with SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`; it is not represented as byte-for-byte terminal capture.
 
-The first real attempt against `gemini-2.5-pro` is preserved as INVALID provider-availability evidence. The valid retry is pinned to `gemini-3.1-pro-preview`. Supply `GEMINI_API_KEY` only through the process environment; never paste it into chat, source files, logs, or evidence.
+The 2.5 Pro provider-availability attempt and 3.1 Pro zero-quota attempt are preserved as INVALID operational evidence. The valid retry is pinned to successfully probed `gemini-3.6-flash`. Supply `GEMINI_API_KEY` only through the process environment; never paste it into chat, source files, logs, or evidence.
 
 Do not run global Docker prune commands for this workflow.
