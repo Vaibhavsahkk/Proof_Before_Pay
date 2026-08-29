@@ -306,22 +306,31 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
             ),
             encoding="utf-8",
         )
+        baseline_output = valid_output(case_id, "PAY")
+        full_request = f"Stable synthetic prompt for {case_id}"
+        usage_metadata = {
+            "prompt_token_count": 10,
+            "candidates_token_count": 5,
+            "total_token_count": 15,
+        }
         wrapper = {
             "case_id": case_id,
-            "baseline_output": valid_output(case_id, "PAY"),
-            "raw_response": json.dumps(valid_output(case_id, "PAY")),
+            "baseline_output": baseline_output,
+            "raw_response": json.dumps(baseline_output),
             "metadata": {
                 "status": "SUCCESS",
                 "provider": "google",
                 "requested_model": runner.MODEL_ID,
+                "returned_model": runner.MODEL_ID,
+                "sdk_version": "test-sdk",
                 "settings": dict(runner.GENERATION_SETTINGS),
                 "input_sha256": runner.compute_file_sha256(public_path),
                 "runtime_seconds": 1.0,
-                "usage_metadata": {
-                    "prompt_token_count": 10,
-                    "candidates_token_count": 5,
-                    "total_token_count": 15,
-                },
+                "usage_metadata": usage_metadata,
+                "retry_policy": "transient_only",
+                "attempt_count": 1,
+                "full_request": full_request,
+                "rendered_prompt_sha256": runner.compute_sha256(full_request),
             },
         }
         output_path = run_dir / f"{case_id}.json"
@@ -333,6 +342,8 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
                 "output_file": output_path.name,
                 "output_sha256": output_hash,
                 "status": "SUCCESS",
+                "returned_model": runner.MODEL_ID,
+                "usage_metadata": usage_metadata,
             }
         )
 
@@ -360,7 +371,11 @@ def prepare_evaluation_run(monkeypatch, tmp_path):
             "runner_sha256": runner.compute_file_sha256(evaluator.RUNNER_PATH),
         },
         "settings": dict(runner.GENERATION_SETTINGS),
-        "retry_policy": {"maximum_attempts": 3},
+        "retry_policy": {
+            "maximum_attempts": runner.MAX_ATTEMPTS,
+            "retryable_http_codes": [429, 500, 502, 503, 504],
+            "backoff_seconds": [1, 2],
+        },
         "expected_case_ids": list(runner.EXPECTED_CASE_IDS),
         "cases": records,
         "overall_status": "SUCCESS",
@@ -418,6 +433,50 @@ def test_evaluator_rejects_output_case_id_mismatch(monkeypatch, tmp_path):
 
     rewrite_case_and_hash(run_dir, "case_001", mutate)
     with pytest.raises(evaluator.EvaluationError, match="Baseline output case_id mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_raw_response_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    rewrite_case_and_hash(
+        run_dir,
+        "case_001",
+        lambda value: value.update(raw_response=json.dumps(valid_output("case_001", "HOLD"))),
+    )
+    with pytest.raises(evaluator.EvaluationError, match="Raw response mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_rendered_prompt_hash_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+
+    def mutate(value):
+        value["metadata"]["rendered_prompt_sha256"] = "0" * 64
+
+    rewrite_case_and_hash(run_dir, "case_001", mutate)
+    with pytest.raises(evaluator.EvaluationError, match="Rendered prompt hash mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_returned_model_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+
+    def mutate(value):
+        value["metadata"]["returned_model"] = "different-model"
+
+    rewrite_case_and_hash(run_dir, "case_001", mutate)
+    with pytest.raises(evaluator.EvaluationError, match="Wrapper returned model mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_usage_metadata_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+
+    def mutate(value):
+        value["metadata"]["usage_metadata"]["prompt_token_count"] += 1
+
+    rewrite_case_and_hash(run_dir, "case_001", mutate)
+    with pytest.raises(evaluator.EvaluationError, match="Wrapper usage metadata mismatch"):
         evaluator.evaluate_baseline(str(run_dir))
 
 
@@ -483,6 +542,31 @@ def test_evaluator_refuses_to_overwrite_report(monkeypatch, tmp_path):
     evaluator.evaluate_baseline(str(run_dir))
     with pytest.raises(evaluator.EvaluationError, match="already exists"):
         evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_existing_report_verification_is_deterministic(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    expected_report = evaluator.evaluate_baseline(str(run_dir))
+    source_files = {
+        "baseline/prompt_v1.txt": evaluator.PROMPT_PATH,
+        "benchmark/RULEBOOK.md": evaluator.RULEBOOK_PATH,
+        "benchmark/schemas/output_contract.json": evaluator.SCHEMA_PATH,
+        "baseline/run_baseline.py": evaluator.RUNNER_PATH,
+    }
+
+    def fake_git_show(command, **_kwargs):
+        repository_path = command[-1].split(":", maxsplit=1)[1]
+        return MagicMock(stdout=source_files[repository_path].read_bytes())
+
+    monkeypatch.setattr(evaluator.subprocess, "run", fake_git_show)
+    assert evaluator.verify_existing_report(str(run_dir)) == expected_report
+
+    report_path = run_dir / "evaluation_report.json"
+    tampered_report = json.loads(report_path.read_text(encoding="utf-8"))
+    tampered_report["metrics"]["unsafe_pay_count"] = 0
+    report_path.write_text(json.dumps(tampered_report), encoding="utf-8")
+    with pytest.raises(evaluator.EvaluationError, match="deterministic re-evaluation"):
+        evaluator.verify_existing_report(str(run_dir))
 
 
 def test_phase_1_manifest_canonical_hash_is_exact_and_verifies():

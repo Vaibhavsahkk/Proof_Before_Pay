@@ -1,6 +1,9 @@
 import argparse
 import json
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from jsonschema import ValidationError, validate
@@ -8,6 +11,7 @@ from jsonschema import ValidationError, validate
 from baseline.run_baseline import (
     EXPECTED_CASE_IDS,
     GENERATION_SETTINGS,
+    MAX_ATTEMPTS,
     MODEL_ID,
     PROMPT_PATH,
     RULEBOOK_PATH,
@@ -67,6 +71,13 @@ def validate_manifest(manifest: dict, run_path: Path) -> dict:
         raise EvaluationError("Manifest provider or requested model does not match the baseline")
     if manifest["settings"] != GENERATION_SETTINGS:
         raise EvaluationError("Manifest generation settings do not match the baseline")
+    expected_retry_policy = {
+        "maximum_attempts": MAX_ATTEMPTS,
+        "retryable_http_codes": [429, 500, 502, 503, 504],
+        "backoff_seconds": [1, 2],
+    }
+    if manifest["retry_policy"] != expected_retry_policy:
+        raise EvaluationError("Manifest retry policy does not match the baseline")
     source = manifest["source"]
     if not isinstance(source, dict):
         raise EvaluationError("Manifest source must be an object")
@@ -103,9 +114,11 @@ def validate_manifest(manifest: dict, run_path: Path) -> dict:
         expected_file = f"{case_id}.json"
         if record.get("output_file") != expected_file:
             raise EvaluationError(f"Manifest output filename mismatch for {case_id}")
-        for field in ("input_sha256", "output_sha256", "status"):
+        for field in ("input_sha256", "output_sha256", "status", "returned_model"):
             if not isinstance(record.get(field), str) or not record[field]:
                 raise EvaluationError(f"Manifest {case_id} missing {field}")
+        if not isinstance(record.get("usage_metadata"), dict) or not record["usage_metadata"]:
+            raise EvaluationError(f"Manifest {case_id} missing usage_metadata")
         records[case_id] = record
 
     if tuple(sorted(records)) != EXPECTED_CASE_IDS:
@@ -187,6 +200,26 @@ def evaluate_baseline(run_dir: str) -> dict:
             raise EvaluationError(f"Wrapper requested model mismatch for {case_id}")
         if metadata.get("settings") != manifest["settings"]:
             raise EvaluationError(f"Wrapper settings mismatch for {case_id}")
+        if metadata.get("sdk_version") != manifest["sdk_version"]:
+            raise EvaluationError(f"Wrapper SDK version mismatch for {case_id}")
+        if metadata.get("returned_model") != record["returned_model"]:
+            raise EvaluationError(f"Wrapper returned model mismatch for {case_id}")
+        if metadata.get("usage_metadata") != record["usage_metadata"]:
+            raise EvaluationError(f"Wrapper usage metadata mismatch for {case_id}")
+        if metadata.get("retry_policy") != "transient_only":
+            raise EvaluationError(f"Wrapper retry policy mismatch for {case_id}")
+        attempt_count = metadata.get("attempt_count")
+        if (
+            not isinstance(attempt_count, int)
+            or isinstance(attempt_count, bool)
+            or not 1 <= attempt_count <= MAX_ATTEMPTS
+        ):
+            raise EvaluationError(f"Wrapper attempt count is invalid for {case_id}")
+        full_request = metadata.get("full_request")
+        if not isinstance(full_request, str) or not full_request:
+            raise EvaluationError(f"Wrapper full request is missing for {case_id}")
+        if metadata.get("rendered_prompt_sha256") != compute_sha256(full_request):
+            raise EvaluationError(f"Rendered prompt hash mismatch for {case_id}")
 
         baseline_output = out_data.get("baseline_output")
         schema_valid = False
@@ -202,6 +235,17 @@ def evaluate_baseline(run_dir: str) -> dict:
                 invalid_reasons.append(f"{case_id}:SCHEMA_INVALID:{exc.message}")
         else:
             invalid_reasons.append(f"{case_id}:NO_VALID_OUTPUT_OBJECT")
+
+        raw_response = out_data.get("raw_response")
+        if status == "SUCCESS":
+            if not isinstance(raw_response, str):
+                raise EvaluationError(f"Raw response is missing for {case_id}")
+            try:
+                parsed_raw_response = json.loads(raw_response)
+            except json.JSONDecodeError as exc:
+                raise EvaluationError(f"Raw response is not valid JSON for {case_id}") from exc
+            if parsed_raw_response != baseline_output:
+                raise EvaluationError(f"Raw response mismatch for {case_id}")
 
         if status != "SUCCESS":
             invalid_reasons.append(f"{case_id}:STATUS_{status}")
@@ -307,15 +351,73 @@ def evaluate_baseline(run_dir: str) -> dict:
     return report
 
 
+def verify_existing_report(run_dir: str) -> dict:
+    run_path = Path(run_dir)
+    report_path = run_path / "evaluation_report.json"
+    if not report_path.is_file():
+        raise EvaluationError(f"Evaluation report not found: {report_path}")
+    existing_report = read_json(report_path)
+
+    manifest = read_json(run_path / "run_manifest.json")
+    source_sha = manifest.get("source", {}).get("commit_sha")
+    if not isinstance(source_sha, str) or len(source_sha) != 40:
+        raise EvaluationError("Manifest source commit SHA is invalid")
+    source_artifacts = {
+        "prompt_template_sha256": "baseline/prompt_v1.txt",
+        "rulebook_sha256": "benchmark/RULEBOOK.md",
+        "output_schema_sha256": "benchmark/schemas/output_contract.json",
+        "runner_sha256": "baseline/run_baseline.py",
+    }
+    for hash_name, repository_path in source_artifacts.items():
+        try:
+            result = subprocess.run(
+                ["git", "show", f"{source_sha}:{repository_path}"],
+                cwd=BASE_DIR,
+                capture_output=True,
+                check=True,
+                timeout=10,
+            )
+        except (OSError, subprocess.SubprocessError) as exc:
+            raise EvaluationError(
+                f"Cannot read {repository_path} from source commit {source_sha}"
+            ) from exc
+        actual_hash = compute_sha256(result.stdout.decode("utf-8"))
+        if manifest.get("hashes", {}).get(hash_name) != actual_hash:
+            raise EvaluationError(
+                f"Source commit artifact hash mismatch for {repository_path}"
+            )
+
+    with tempfile.TemporaryDirectory(prefix="phase2-evaluation-verify-") as temp_dir:
+        temp_run = Path(temp_dir) / run_path.name
+        temp_run.mkdir()
+        shutil.copy2(run_path / "run_manifest.json", temp_run / "run_manifest.json")
+        for case_id in EXPECTED_CASE_IDS:
+            shutil.copy2(run_path / f"{case_id}.json", temp_run / f"{case_id}.json")
+        regenerated_report = evaluate_baseline(str(temp_run))
+
+    if existing_report != regenerated_report:
+        raise EvaluationError("Existing evaluation report does not match deterministic re-evaluation")
+    return existing_report
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "run_dir",
         help="Run directory containing baseline outputs and run_manifest.json",
     )
+    parser.add_argument(
+        "--verify-existing",
+        action="store_true",
+        help="Recompute and compare an existing evaluation report without modifying the run",
+    )
     args = parser.parse_args(argv)
     try:
-        report = evaluate_baseline(args.run_dir)
+        report = (
+            verify_existing_report(args.run_dir)
+            if args.verify_existing
+            else evaluate_baseline(args.run_dir)
+        )
     except EvaluationError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
