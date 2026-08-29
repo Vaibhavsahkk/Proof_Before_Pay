@@ -3,7 +3,7 @@ param (
     [string]$CandidateSha,
 
     [Parameter(Mandatory = $false)]
-    [ValidateSet("phase_0", "phase_1")]
+    [ValidateSet("phase_0", "phase_1", "phase_2")]
     [string]$Phase = "phase_1",
 
     [Parameter(Mandatory = $false)]
@@ -50,7 +50,8 @@ function Invoke-LoggedCommand {
     param(
         [string]$Name,
         [scriptblock]$Command,
-        [int]$ExpectedExit = 0
+        [int]$ExpectedExit = 0,
+        [string]$RequiredOutputLine = ""
     )
 
     Write-Log ""
@@ -60,16 +61,23 @@ function Invoke-LoggedCommand {
     Write-Log "========================================"
 
     try {
-        $output = & $Command *>&1
+        $output = @(& $Command *>&1)
         $exitCode = $LASTEXITCODE
+        $renderedOutput = @()
         foreach ($line in $output) {
             if ($null -ne $line) {
-                Write-Log $line.ToString()
+                $renderedLine = $line.ToString()
+                $renderedOutput += $renderedLine
+                Write-Log $renderedLine
             }
         }
         Write-Log "EXIT CODE: $exitCode"
         if ($exitCode -ne $ExpectedExit) {
             Write-Log "ERROR: Expected exit $ExpectedExit but observed $exitCode."
+            $script:hasErrors = $true
+        }
+        if ($RequiredOutputLine -ne "" -and $RequiredOutputLine -notin $renderedOutput) {
+            Write-Log "ERROR: Required output line was not observed: $RequiredOutputLine"
             $script:hasErrors = $true
         }
     }
@@ -118,6 +126,13 @@ try {
         throw "Cloned HEAD does not exactly match CandidateSha."
     }
 
+    Invoke-LoggedCommand "git show --check candidate" {
+        git show --check --oneline --no-renames $CandidateSha
+    }
+    if ($script:hasErrors) {
+        throw "Candidate commit whitespace validation failed."
+    }
+
     if ($Phase -eq "phase_1") {
         Invoke-LoggedCommand "python scripts/validate_phase1.py" {
             python scripts/validate_phase1.py
@@ -140,12 +155,38 @@ try {
             throw "Focused Phase 1 tests failed."
         }
     }
-    else {
+    elseif ($Phase -eq "phase_0") {
         Invoke-LoggedCommand ".\scripts\run_adversarial_tests.ps1" {
             & powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -File ".\scripts\run_adversarial_tests.ps1"
         }
         if ($script:hasErrors) {
             throw "Phase 0 adversarial tests failed."
+        }
+    }
+    else {
+        Invoke-LoggedCommand "python scripts/verify_manifest.py" {
+            python scripts/verify_manifest.py
+        }
+        if ($script:hasErrors) {
+            throw "Manifest verifier failed."
+        }
+
+        Invoke-LoggedCommand "pytest focused Phase 2 suite" {
+            python -m pytest tests/test_phase2_baseline.py -q
+        }
+        if ($script:hasErrors) {
+            throw "Focused Phase 2 tests failed."
+        }
+
+        Invoke-LoggedCommand "missing-key baseline rejection" {
+            & powershell.exe -NonInteractive -NoProfile -Command @'
+Remove-Item Env:\GEMINI_API_KEY -ErrorAction SilentlyContinue
+python -m baseline.run_baseline
+exit $LASTEXITCODE
+'@
+        } -ExpectedExit 1 -RequiredOutputLine "Error: GEMINI_API_KEY environment variable is not set."
+        if ($script:hasErrors) {
+            throw "Missing-key baseline rejection failed."
         }
     }
 
@@ -232,16 +273,22 @@ finally {
         Write-Log "ERROR: Exact-project networks remain after cleanup."
     }
 
-    if (Test-Path -LiteralPath $clonePath) {
+    $tempRoot = [System.IO.Path]::GetFullPath($env:TEMP).TrimEnd('\') + '\'
+    $resolvedClonePath = [System.IO.Path]::GetFullPath($clonePath)
+    if (-not $resolvedClonePath.StartsWith($tempRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        $script:hasErrors = $true
+        Write-Log "ERROR: Refusing cleanup outside the validated TEMP root: $resolvedClonePath"
+    }
+    elseif (Test-Path -LiteralPath $resolvedClonePath) {
         try {
-            Remove-Item -LiteralPath $clonePath -Recurse -Force -ErrorAction Stop
+            Remove-Item -LiteralPath $resolvedClonePath -Recurse -Force -ErrorAction Stop
         }
         catch {
             $script:hasErrors = $true
             Write-Log "ERROR: Exact clone cleanup failed: $_"
         }
     }
-    if (Test-Path -LiteralPath $clonePath) {
+    if (Test-Path -LiteralPath $resolvedClonePath) {
         $script:hasErrors = $true
         Write-Log "ERROR: Exact clone path still exists after cleanup: $clonePath"
     }
@@ -259,7 +306,13 @@ finally {
     $content = [System.IO.File]::ReadAllText($logPath).Replace("`r`n", "`n")
     $normalizedLines = $content.Split("`n") | ForEach-Object { $_.TrimEnd() }
     $normalizedContent = (($normalizedLines -join "`n").TrimEnd([char[]]@("`n"))) + "`n"
-    $destination = Join-Path $repoRoot "evidence\$Phase\final_clean_clone_execution.txt"
+    $evidenceName = if ($Phase -eq "phase_2") {
+        "scaffold_clean_clone_execution.txt"
+    }
+    else {
+        "final_clean_clone_execution.txt"
+    }
+    $destination = Join-Path $repoRoot "evidence\$Phase\$evidenceName"
     $destinationDirectory = Split-Path $destination
     if (-not (Test-Path -LiteralPath $destinationDirectory)) {
         New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
