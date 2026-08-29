@@ -188,6 +188,34 @@ exit $LASTEXITCODE
         if ($script:hasErrors) {
             throw "Missing-key baseline rejection failed."
         }
+
+        $validRunCandidates = @()
+        Get-ChildItem -LiteralPath "evidence\phase_2\runs" -Directory | ForEach-Object {
+            $reportPath = Join-Path $_.FullName "evaluation_report.json"
+            if (Test-Path -LiteralPath $reportPath) {
+                try {
+                    $report = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json
+                    if ($report.evaluation_status -eq "VALID") {
+                        $validRunCandidates += $_.Name
+                    }
+                }
+                catch {
+                    $script:hasErrors = $true
+                    Write-Log "ERROR: Cannot parse evaluation report at $reportPath"
+                }
+            }
+        }
+        if ($script:hasErrors -or $validRunCandidates.Count -ne 1) {
+            throw "Expected exactly one committed VALID Phase 2 baseline run; found $($validRunCandidates.Count)."
+        }
+        $validRunPath = "evidence/phase_2/runs/$($validRunCandidates[0])"
+        Write-Log "OBSERVED VALID BASELINE RUN: $validRunPath"
+        Invoke-LoggedCommand "verify committed Phase 2 evaluation report" {
+            python -m eval.evaluate_baseline $validRunPath --verify-existing
+        }
+        if ($script:hasErrors) {
+            throw "Committed Phase 2 evaluation report verification failed."
+        }
     }
 
     Invoke-LoggedCommand ".\verify.ps1" {
@@ -311,12 +339,7 @@ finally {
     $content = [System.IO.File]::ReadAllText($logPath).Replace("`r`n", "`n")
     $normalizedLines = $content.Split("`n") | ForEach-Object { $_.TrimEnd() }
     $normalizedContent = (($normalizedLines -join "`n").TrimEnd([char[]]@("`n"))) + "`n"
-    $evidenceName = if ($Phase -eq "phase_2") {
-        "scaffold_clean_clone_execution.txt"
-    }
-    else {
-        "final_clean_clone_execution.txt"
-    }
+    $evidenceName = "final_clean_clone_execution.txt"
     $destination = Join-Path $repoRoot "evidence\$Phase\$evidenceName"
     $destinationDirectory = Split-Path $destination
     if (-not (Test-Path -LiteralPath $destinationDirectory)) {
