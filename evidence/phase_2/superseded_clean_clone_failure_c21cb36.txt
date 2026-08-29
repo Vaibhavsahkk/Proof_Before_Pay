@@ -1,0 +1,107 @@
+--- CLEAN CLONE EXECUTION (phase_2) ---
+CANDIDATE SHA: c21cb36a9662c748efd4222e49605d0ecff93cd1
+COMPOSE PROJECT: pbp_clone_094b990a
+CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-82a8b1205eac4dba9ced59da2051d883
+
+========================================
+COMMAND: fail-closed harness self-test
+EXPECTED EXIT CODE: 1
+========================================
+FAIL-CLOSED SELF-TEST INNER EXIT: 7
+FAIL-CLOSED SELF-TEST RESULT: EXPECTED FAILURE
+EXIT CODE: 1
+
+========================================
+COMMAND: git clone
+EXPECTED EXIT CODE: 0
+========================================
+Cloning into 'C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-82a8b1205eac4dba9ced59da2051d883'...
+EXIT CODE: 0
+
+========================================
+COMMAND: git checkout c21cb36a9662c748efd4222e49605d0ecff93cd1
+EXPECTED EXIT CODE: 0
+========================================
+Note: switching to 'c21cb36a9662c748efd4222e49605d0ecff93cd1'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at c21cb36 test(phase2): verify committed baseline
+EXIT CODE: 0
+OBSERVED CLONED HEAD: c21cb36a9662c748efd4222e49605d0ecff93cd1
+GIT REV-PARSE EXIT CODE: 0
+
+========================================
+COMMAND: git show --check candidate
+EXPECTED EXIT CODE: 0
+========================================
+c21cb36 test(phase2): verify committed baseline
+EXIT CODE: 0
+
+========================================
+COMMAND: python scripts/verify_manifest.py
+EXPECTED EXIT CODE: 0
+========================================
+Manifest verification passed.
+EXIT CODE: 0
+
+========================================
+COMMAND: pytest focused Phase 2 suite
+EXPECTED EXIT CODE: 0
+========================================
+..................................                                       [100%]
+34 passed in 1.46s
+EXIT CODE: 0
+
+========================================
+COMMAND: missing-key baseline rejection
+EXPECTED EXIT CODE: 1
+========================================
+Error: GEMINI_API_KEY environment variable is not set.
+EXIT CODE: 1
+OBSERVED VALID BASELINE RUN: evidence/phase_2/runs/run_20260829_152514_caab4d45
+
+========================================
+COMMAND: verify committed Phase 2 evaluation report
+EXPECTED EXIT CODE: 0
+========================================
+Error: Input hash mismatch for case_001
+EXIT CODE: 1
+ERROR: Expected exit 0 but observed 1.
+HARNESS ABORTED: Committed Phase 2 evaluation report verification failed.
+
+========================================
+COMMAND: exact-project docker compose down --remove-orphans
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+
+========================================
+COMMAND: verify exact-project containers removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT CONTAINERS:
+
+========================================
+COMMAND: verify exact-project networks removed
+EXPECTED EXIT CODE: 0
+========================================
+EXIT CODE: 0
+REMAINING PROJECT NETWORKS:
+EXACT CLONE PATH REMOVED: PASS
+CLEAN CLONE HARNESS RESULT: FAIL
+HARNESS EXIT CODE: 1
