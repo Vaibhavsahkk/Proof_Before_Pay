@@ -258,14 +258,15 @@ finally {
 
     $content = [System.IO.File]::ReadAllText($logPath).Replace("`r`n", "`n")
     $normalizedLines = $content.Split("`n") | ForEach-Object { $_.TrimEnd() }
+    $normalizedContent = (($normalizedLines -join "`n").TrimEnd([char[]]@("`n"))) + "`n"
     $destination = Join-Path $repoRoot "evidence\$Phase\final_clean_clone_execution.txt"
     $destinationDirectory = Split-Path $destination
     if (-not (Test-Path -LiteralPath $destinationDirectory)) {
         New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
     }
-    [System.IO.File]::WriteAllLines(
+    [System.IO.File]::WriteAllText(
         $destination,
-        $normalizedLines,
+        $normalizedContent,
         (New-Object System.Text.UTF8Encoding($false))
     )
     Write-Output "Saved normalized log to $destination"
