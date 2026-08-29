@@ -20,6 +20,74 @@ if ($LASTEXITCODE -ne 0 -or $commitType.Trim() -ne "commit") {
 
 $timestamp = (Get-Date).ToString("yyyy-MM-ddTHH:mm:sszzz")
 
+# Audit the exact candidate tree for Phase 1 contamination. Planning documents may
+# describe later phases, but the candidate must not contain active implementation.
+$phaseScopeCommand = "git ls-tree -r --name-only $CandidateSha -- agent baseline benchmark data eval"
+$phaseScopeLines = & git ls-tree -r --name-only $CandidateSha -- agent baseline benchmark data eval 2>&1
+$phaseScopeExit = $LASTEXITCODE
+$phaseScopeOutput = $phaseScopeLines | Out-String
+if ($phaseScopeExit -ne 0) {
+    Write-Error "Phase-boundary tree inspection failed with exit code $phaseScopeExit"
+    exit 1
+}
+
+$expectedPhaseScopeFiles = @(
+    "agent/README.md",
+    "baseline/README.md",
+    "benchmark/README.md",
+    "data/README.md",
+    "eval/README.md"
+)
+$actualPhaseScopeFiles = @($phaseScopeLines | ForEach-Object { $_.ToString().Trim() } | Where-Object { $_ })
+$phaseScopeDifference = Compare-Object -ReferenceObject $expectedPhaseScopeFiles -DifferenceObject $actualPhaseScopeFiles
+if ($phaseScopeDifference) {
+    Write-Error "Phase 1 implementation directory contents differ from the approved Phase 0 placeholder allowlist"
+    exit 1
+}
+
+$candidateTreeCommand = "git ls-tree -r --name-only $CandidateSha"
+$candidateTreeLines = & git ls-tree -r --name-only $CandidateSha 2>&1
+$candidateTreeExit = $LASTEXITCODE
+if ($candidateTreeExit -ne 0) {
+    Write-Error "Candidate tree inspection failed with exit code $candidateTreeExit"
+    exit 1
+}
+
+$codeExtensions = @(".py", ".js", ".jsx", ".ts", ".tsx", ".java", ".go", ".rs", ".cs", ".c", ".cc", ".cpp", ".h", ".hpp", ".rb", ".php", ".sql", ".ipynb")
+$candidateCodeFiles = @(
+    $candidateTreeLines |
+        ForEach-Object { $_.ToString().Trim() } |
+        Where-Object { $_ -and ($codeExtensions -contains [System.IO.Path]::GetExtension($_).ToLowerInvariant()) }
+)
+$expectedPhase0CodeFiles = @(
+    "src/main.py",
+    "src/utils/human_checkpoint.py",
+    "src/utils/logger.py",
+    "tests/test_environment.py",
+    "tests/test_human_checkpoint.py",
+    "tests/test_logger.py"
+)
+$codeFileDifference = Compare-Object -ReferenceObject $expectedPhase0CodeFiles -DifferenceObject $candidateCodeFiles
+if ($codeFileDifference) {
+    Write-Error "Candidate contains an unapproved executable/code file or is missing an approved Phase 0 code file"
+    exit 1
+}
+$candidateCodeOutput = ($candidateCodeFiles -join "`n") + "`n"
+
+$forbiddenPattern = '(invoice|supplier|vendor|purchase[ _-]?order|goods[ _-]?receipt|\bgrn\b|fraud|bank[ _-]?detail|duplicate[ _-]?bill|ground[ _-]?truth|benchmark[ _-]?case|payment[ _-]?execution)'
+$phaseContentCommand = "git grep -n -I -E `"$forbiddenPattern`" $CandidateSha -- src/main.py src/utils/human_checkpoint.py src/utils/logger.py"
+$phaseContentLines = & git grep -n -I -E $forbiddenPattern $CandidateSha -- src/main.py src/utils/human_checkpoint.py src/utils/logger.py 2>&1
+$phaseContentExit = $LASTEXITCODE
+$phaseContentOutput = $phaseContentLines | Out-String
+if ($phaseContentExit -eq 0) {
+    Write-Error "Candidate contains active project-domain terms in implementation scope: $phaseContentOutput"
+    exit 1
+}
+if ($phaseContentExit -ne 1) {
+    Write-Error "Phase-boundary content search failed with exit code $phaseContentExit"
+    exit 1
+}
+
 function Normalize-Content {
     param([string]$path)
     if (-not (Test-Path $path)) {
@@ -112,7 +180,26 @@ $auditContent +
 "`n================================================================`n" +
 "4. CONTAINER SECURITY VERIFICATION`n" +
 "================================================================`n" +
-$securityOutput.TrimEnd("`r","`n"," ") + "`n"
+$securityOutput.TrimEnd("`r","`n"," ") +
+"`n`n================================================================`n" +
+"5. PHASE 1 CONTAMINATION AUDIT`n" +
+"================================================================`n" +
+"TESTED SOURCE SHA: $CandidateSha`n" +
+"COMMAND: $phaseScopeCommand`n" +
+"EXIT CODE: $phaseScopeExit`n" +
+"OUTPUT:`n$phaseScopeOutput" +
+"ASSERTION: Only approved Phase 0 placeholder README files are present in agent/baseline/benchmark/data/eval.`n" +
+"RESULT: PASS`n`n" +
+"COMMAND: $candidateTreeCommand | filter executable/code extensions`n" +
+"EXIT CODE: $candidateTreeExit`n" +
+"OUTPUT:`n$candidateCodeOutput" +
+"ASSERTION: The candidate contains only the approved Phase 0 scaffold and utility test code files.`n" +
+"RESULT: PASS`n`n" +
+"COMMAND: $phaseContentCommand`n" +
+"EXIT CODE: $phaseContentExit (expected: 1 means no matches)`n" +
+"OUTPUT:`n$phaseContentOutput" +
+"ASSERTION: No active AP/invoice/supplier/fraud/benchmark/ground-truth/payment-execution domain logic was found in the candidate implementation scope.`n" +
+"PHASE 1 CONTAMINATION AUDIT RESULT: PASS`n"
 
 $proofContent = $proofContent -replace "`r`n", "`n"
 $proofContent = $proofContent -replace "[ \t]+`n", "`n"
