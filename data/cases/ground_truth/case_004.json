@@ -1,7 +1,7 @@
 {
   "expected_recommendation": "HOLD",
   "expected_findings": [
-    "Quantity Mismatch"
+    "Price Contradiction"
   ],
-  "case_id": "case_3_qty_mismatch_hold"
+  "case_id": "case_004"
 }

@@ -76,7 +76,7 @@ ALL VERIFICATION STEPS PASSED
 ************************************************************
 ```
 
-The current test tree contains 25 tests.
+The current test tree contains 42 tests in the full Docker pipeline, including 25 focused Phase 1 tests.
 
 ## Phase 1: Problem Scope & Benchmark Design
 

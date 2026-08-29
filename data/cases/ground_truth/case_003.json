@@ -1,7 +1,7 @@
 {
   "expected_recommendation": "HOLD",
   "expected_findings": [
-    "Duplicate Billing"
+    "Quantity Mismatch"
   ],
-  "case_id": "case_2_duplicate_hold"
+  "case_id": "case_003"
 }

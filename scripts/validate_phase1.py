@@ -28,13 +28,17 @@ def validate_cases_count():
     assert len(gt_files) == 5, f"Expected 5 ground truth cases, found {len(gt_files)}"
 
 def test_leakage():
+    import re
     public_files = glob.glob('data/cases/public/*.json')
+    
+    # Regex to match isolated words: PAY, HOLD, INVESTIGATE (not PAYMENT)
+    pattern = re.compile(r'\b(pay|hold|investigate)\b', re.IGNORECASE)
     
     def check_leakage(obj, filepath):
         if isinstance(obj, dict):
             for k, v in obj.items():
                 k_lower = str(k).lower()
-                if k_lower in ["pay", "hold", "investigate"]:
+                if pattern.search(k_lower):
                     assert False, f"Leakage detected! Found exact recommendation in key '{k}' in {filepath}"
                 for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
                     if term in k_lower:
@@ -45,7 +49,7 @@ def test_leakage():
                 check_leakage(item, filepath)
         elif isinstance(obj, str):
             v_lower = obj.lower()
-            if v_lower in ["pay", "hold", "investigate"]:
+            if pattern.search(v_lower):
                 assert False, f"Leakage detected! Found exact recommendation '{obj}' in {filepath}"
             for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
                 if term in v_lower:
@@ -53,7 +57,7 @@ def test_leakage():
                     
     for pf in public_files:
         pf_lower = pf.lower()
-        if "ground_truth" in pf_lower or "expected" in pf_lower:
+        if "ground_truth" in pf_lower or "expected" in pf_lower or pattern.search(pf_lower):
             assert False, f"Leakage in filename/path: {pf}"
             
         with open(pf) as f:

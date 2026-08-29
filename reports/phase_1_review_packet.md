@@ -33,4 +33,25 @@
 5. Verify `evidence/phase_1` matches generated checksums.
 
 ## Exact Changed Files
-See `git ls-files` and `git diff` output in the final clean clone execution log.
+- `scripts/run_clean_clone_tests.ps1`
+- `scripts/verify_manifest.py`
+- `tests/test_manifest.py`
+- `scripts/validate_phase1.py`
+- `scripts/generate_phase1_data.py`
+- `tests/test_phase1_validation.py`
+- `benchmark/schemas/public_evidence_bundle.json`
+- `benchmark/schemas/ground_truth.json`
+- `benchmark/schemas/output_contract.json`
+- `data/cases/public/case_001.json`
+- `data/cases/public/case_002.json`
+- `data/cases/public/case_003.json`
+- `data/cases/public/case_004.json`
+- `data/cases/public/case_005.json`
+- `data/cases/ground_truth/case_001.json`
+- `data/cases/ground_truth/case_002.json`
+- `data/cases/ground_truth/case_003.json`
+- `data/cases/ground_truth/case_004.json`
+- `data/cases/ground_truth/case_005.json`
+- `STATUS.md`
+- `REPRODUCE.md`
+- `reports/phase_1_review_packet.md`

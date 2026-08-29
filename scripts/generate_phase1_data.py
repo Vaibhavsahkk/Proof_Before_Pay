@@ -182,7 +182,7 @@ def generate_cases():
     cases = []
     # Case 1: Clean Full Match => PAY
     cases.append({
-        "id": "case_1_pay",
+        "id": "case_001",
         "truth": {"expected_recommendation": "PAY", "expected_findings": []},
         "public": {
             "invoice": {
@@ -200,7 +200,7 @@ def generate_cases():
 
     # Case 2: Exact duplicate => HOLD
     cases.append({
-        "id": "case_2_duplicate_hold",
+        "id": "case_002",
         "truth": {"expected_recommendation": "HOLD", "expected_findings": ["Duplicate Billing"]},
         "public": {
             "invoice": {
@@ -218,7 +218,7 @@ def generate_cases():
 
     # Case 3: Invoice quantity exceeds accepted GRN quantity => HOLD
     cases.append({
-        "id": "case_3_qty_mismatch_hold",
+        "id": "case_003",
         "truth": {"expected_recommendation": "HOLD", "expected_findings": ["Quantity Mismatch"]},
         "public": {
             "invoice": {
@@ -236,7 +236,7 @@ def generate_cases():
 
     # Case 4: Material price contradiction => HOLD
     cases.append({
-        "id": "case_4_price_contradiction_hold",
+        "id": "case_004",
         "truth": {"expected_recommendation": "HOLD", "expected_findings": ["Price Contradiction"]},
         "public": {
             "invoice": {
@@ -254,7 +254,7 @@ def generate_cases():
 
     # Case 5: Payment detail change with incomplete/ambiguous verification => INVESTIGATE
     cases.append({
-        "id": "case_5_bank_change_investigate",
+        "id": "case_005",
         "truth": {"expected_recommendation": "INVESTIGATE", "expected_findings": ["Unverified Bank Change"]},
         "public": {
             "invoice": {

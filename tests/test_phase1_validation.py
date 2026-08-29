@@ -47,6 +47,50 @@ def test_leakage_validator_fails_on_key_leakage(tmp_path):
     finally:
         scripts.validate_phase1.glob.glob = original_glob
 
+def test_leakage_validator_fails_on_filename_leakage(tmp_path):
+    from scripts.validate_phase1 import test_leakage
+    cases_dir = tmp_path / "data" / "cases" / "public"
+    cases_dir.mkdir(parents=True)
+    with open(cases_dir / "case_pay_something.json", "w") as f:
+        f.write('{"invoice_number": "INV-1001"}')
+        
+    import glob
+    original_glob = glob.glob
+    def mock_glob(pattern):
+        if pattern == 'data/cases/public/*.json': return [str(cases_dir / "case_pay_something.json")]
+        return []
+    
+    try:
+        import scripts.validate_phase1
+        scripts.validate_phase1.glob.glob = mock_glob
+        with pytest.raises(AssertionError) as exc:
+            test_leakage()
+        assert "Leakage in filename/path" in str(exc.value)
+    finally:
+        scripts.validate_phase1.glob.glob = original_glob
+
+def test_leakage_validator_fails_on_case_id_leakage(tmp_path):
+    from scripts.validate_phase1 import test_leakage
+    cases_dir = tmp_path / "data" / "cases" / "public"
+    cases_dir.mkdir(parents=True)
+    with open(cases_dir / "case_001.json", "w") as f:
+        f.write('{"case_id": "case_pay"}')
+        
+    import glob
+    original_glob = glob.glob
+    def mock_glob(pattern):
+        if pattern == 'data/cases/public/*.json': return [str(cases_dir / "case_001.json")]
+        return []
+    
+    try:
+        import scripts.validate_phase1
+        scripts.validate_phase1.glob.glob = mock_glob
+        with pytest.raises(AssertionError) as exc:
+            test_leakage()
+        assert "Leakage detected!" in str(exc.value)
+    finally:
+        scripts.validate_phase1.glob.glob = original_glob
+
 def test_oracle_mutation_rejection(tmp_path):
     from scripts.validate_phase1 import validate_oracle
     public_dir = tmp_path / "data" / "cases" / "public"
