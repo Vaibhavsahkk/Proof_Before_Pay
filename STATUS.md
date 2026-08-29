@@ -17,7 +17,7 @@ None.
 - Automated test suite: PASS. The 17-test suite completed successfully inside Docker.
 - Docker build, smoke execution, and container security runtime checks: PASS.
 - Compose isolation: PASS; host API key names and harmless sentinel values were absent from resolved config.
-- Clean-clone reproduction: PASS at tested candidate `e007a401d4e9a723ae8c8345a204a6bdabaca1ea`.
+- Clean-clone reproduction: PASS at tested candidate `cb8a9ff6e80e14e9c8adbab219c6deb2bacf36e9`.
 - Post-test clean-clone worktree audit: PASS. The excerpt correctly contains provenance fields.
 - Staged-state verification: PASS; it must be repeated for the final correction commit.
 - Security scanner/CVE status: previous filename/path scanner runtime is PASS. No CVE remediation claim is made.

@@ -31,7 +31,7 @@ These are the recorded tested versions, not minimum-version claims.
 
 ### 1. Clone the repository
 
-**VERIFIED:** repository URL is configured and clean clones successfully into Windows `%TEMP%` without filename limits. The tested candidate commit is `e007a401d4e9a723ae8c8345a204a6bdabaca1ea`. Subsequent commits exist only to store executed test evidence without altering executable code.
+**VERIFIED:** repository URL is configured and clean clones successfully into Windows `%TEMP%` without filename limits. The tested candidate commit is `cb8a9ff6e80e14e9c8adbab219c6deb2bacf36e9`. Subsequent commits exist only to store executed test evidence without altering executable code.
 
 ```bash
 git clone https://github.com/Vaibhavsahkk/Proof_Before_Pay.git micro1-challenge

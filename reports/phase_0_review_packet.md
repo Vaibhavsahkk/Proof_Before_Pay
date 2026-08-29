@@ -44,7 +44,7 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Clean-clone execution verified su
 
 ## Current raw evidence
 
-- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `e007a401d4e9a723ae8c8345a204a6bdabaca1ea`. It is current and correct.
+- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `cb8a9ff6e80e14e9c8adbab219c6deb2bacf36e9`. It is current and correct.
 - `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `D9F187A9DE78511DA030EF4B63F308C79CE1376E4761309247F5B10EB72F9AE7`). It is current and correct.
 - `evidence/phase_0/clean_clone_post_test_audit.txt`: current post-test excerpt with provenance.
 - `evidence/phase_0/adversarial_execution.txt`: current local execution.
