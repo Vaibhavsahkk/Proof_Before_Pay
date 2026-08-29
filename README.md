@@ -30,7 +30,7 @@ The `verify.ps1` (PowerShell) and `verify.sh` (POSIX) scripts execute a 6-step a
 1. Git tracked-traces check (fails immediately if git is not available or not a repository)
 2. Compose isolation check (fails if host bind mounts or API keys appear in resolved config)
 3. Docker build (no-cache, pinned digest)
-4. Test suite (16 tests inside container)
+4. Test suite (17 tests inside container)
 5. Smoke execution
 6. Container security assertion (filename-based scan inside the container filesystem)
 
@@ -46,10 +46,14 @@ The verification pipeline succeeds. See `evidence/phase_0/pipeline_execution.txt
 ```bash
 ./verify.sh
 ```
-The complete Git Bash pipeline passed with exit 0 and 16 tests passing. It is recorded as Test L in `evidence/phase_0/adversarial_execution.txt`.
+The complete Git Bash pipeline passed with exit 0 and 17 tests passing. It is recorded as Test L in `evidence/phase_0/adversarial_execution.txt`.
 
-### Clean-Clone Reproduction — UNVERIFIED
-No remote repository URL exists. `git remote -v` returns no entries.
+### Clean-Clone Reproduction — VERIFIED
+Repository URL: `https://github.com/Vaibhavsahkk/Proof_Before_Pay.git`
+
+The clean-clone process is verified in a fresh Windows `%TEMP%` path. All Phase 0 tests passed successfully. See current evidence in `evidence/phase_0/clean_clone_execution.txt`.
+
+Phase 1 remains unauthorized.
 
 ### Expected Successful Final Output
 ```

@@ -36,8 +36,8 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 | Manual unsafe-UI/audit-write failure check | PASS; action returned `False` and audit error was reported |
 | Adversarial harness overall | PASS, exit 0; build precondition and Tests A-L passed |
 | Current `verify.ps1` pipeline | PASS, exit 0 |
-| Current 16-test suite | PASS, exit 0 |
-| Full `verify.sh` pipeline | PASS, exit 0; 16 tests passed |
+| Current 17-test suite | PASS, exit 0 |
+| Full `verify.sh` pipeline | PASS, exit 0; 17 tests passed |
 | Clean-clone reproduction | PASS, exit 0 on clone and all tests |
 | Explicit `git add` of reviewed files | PASS, exit 0 |
 | Staged diff `git diff --cached --check` | PASS, exit 0 |

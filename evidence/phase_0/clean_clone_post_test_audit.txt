@@ -1,35 +1,23 @@
 ================================================================
-POST-TEST CLEAN-CLONE WORKTREE AUDIT
+POST-TEST AUDIT
 ================================================================
-Timestamp: 2026-08-29T05:48:28.1789319+05:30
-Clone Directory: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clean-clone-bd33f42f33fd47d3bcd4b0de4a33e53e
 
-COMMAND: git rev-parse HEAD
-EXIT CODE: 0
-OUTPUT:
-5383405083ea878aaf930988e8f05ce560c59be3
-
-COMMAND: git status --short (after test execution, before restoring generated evidence)
+COMMAND: git status --short (post-test dirty)
 EXIT CODE: 0
 OUTPUT:
  M evidence/phase_0/adversarial_execution.txt
 
-COMMAND: git diff --check (after test execution)
+
+COMMAND: git diff --check (post-test dirty)
 EXIT CODE: 0
 OUTPUT:
 
-OBSERVATION: The adversarial harness rewrote its tracked evidence file during execution. Its complete generated text was preserved in evidence/phase_0/clean_clone_adversarial_execution.txt before restoration.
 
-COMMAND: git restore -- evidence/phase_0/adversarial_execution.txt evidence/phase_0/pipeline_execution.txt
+COMMAND: git status --short (after restore)
 EXIT CODE: 0
 OUTPUT:
 
-COMMAND: git status --short (after restoring generated evidence)
+
+COMMAND: git diff --check (after restore)
 EXIT CODE: 0
 OUTPUT:
-
-COMMAND: git diff --check (after restoring generated evidence)
-EXIT CODE: 0
-OUTPUT:
-
-RESULT: The disposable clean clone returned to a clean worktree after its generated evidence had been preserved.
