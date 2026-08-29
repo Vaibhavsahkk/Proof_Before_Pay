@@ -42,11 +42,13 @@ The `verify.ps1` (PowerShell) and `verify.sh` (POSIX) scripts execute a 6-step a
 ```
 The verification pipeline succeeds. See `evidence/phase_0/pipeline_execution.txt`.
 
-### POSIX (macOS/Linux or Git Bash) — VERIFIED
+### Git Bash on Windows — VERIFIED
 ```bash
 ./verify.sh
 ```
 The complete Git Bash pipeline passed with exit 0 and 17 tests passing. It is recorded as Test L in `evidence/phase_0/adversarial_execution.txt`.
+
+Native macOS/Linux execution has not been independently recorded; do not treat the Git Bash result as proof for every POSIX host.
 
 ### Clean-Clone Reproduction — VERIFIED
 Repository URL: `https://github.com/Vaibhavsahkk/Proof_Before_Pay.git`

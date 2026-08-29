@@ -1,5 +1,7 @@
 # **THE MICRO1 FRONTIER ENGINEERING CHALLENGE WINNING BLUEPRINT**
 
+> **ADVISORY / HISTORICAL RESEARCH ONLY:** This document contains speculative and potentially outdated research. It is not a source of truth, an approved implementation plan, evidence of competitor behavior, or authorization for later-phase work. The official rules, locked problem, `STATUS.md`, `PLAN.md`, and `DECISIONS.md` override every claim or recommendation below.
+
 ## **Executive Conclusion**
 
 The micro1 Frontier Engineering Challenge 2026 represents a distinct departure from traditional, feature-shipping hackathons. An analysis of the organizational footprint of micro1, an AI data lab heavily invested in evaluating frontier models and agentic workflows, reveals that the competitive environment is deliberately designed to source engineering talent capable of building high-signal, reproducible, and deeply verifiable AI systems1. The competition does not merely evaluate the final functional output of a software project. Instead, it rigorously evaluates the trajectory of how the coding agent reached that output1. Participants must submit a simple baseline solution alongside an advanced solution, demonstrating a measurable, non-cosmetic improvement in reliability, capability, coverage, efficiency, or quality1.  

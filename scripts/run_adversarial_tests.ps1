@@ -355,8 +355,39 @@ $stageOutput | ForEach-Object { L "$_" }
 L "Command      : git ls-files --eol -- verify.sh scripts/verify_container_security.sh scripts/PHASE_GATE.sh .gitattributes"
 L ("Process exit : " + $eolExit)
 $eolOutput | ForEach-Object { L "$_" }
-$allExecutable = ($stageOutput | Select-String "^100755").Count -eq 3
-$allLf = ($eolOutput | Select-String "eol=lf").Count -eq 4
+$expectedExecutableFiles = @(
+    "verify.sh",
+    "scripts/verify_container_security.sh",
+    "scripts/PHASE_GATE.sh"
+)
+$expectedLfFiles = @(
+    ".gitattributes",
+    "verify.sh",
+    "scripts/verify_container_security.sh",
+    "scripts/PHASE_GATE.sh"
+)
+
+$allExecutable = $true
+foreach ($expectedFile in $expectedExecutableFiles) {
+    $escapedFile = [regex]::Escape($expectedFile)
+    $matchingStageLines = @($stageOutput | Where-Object { $_ -match "^100755\s+[0-9a-f]{40}\s+0\s+$escapedFile$" })
+    if ($matchingStageLines.Count -ne 1) {
+        $allExecutable = $false
+        L ("  executable mode missing: " + $expectedFile)
+    }
+}
+
+$allLf = $true
+foreach ($expectedFile in $expectedLfFiles) {
+    $escapedFile = [regex]::Escape($expectedFile)
+    $matchingEolLines = @($eolOutput | Where-Object {
+        $_ -match "^i/lf\s+w/lf\s+attr/text(?:=auto)? eol=lf\s+$escapedFile$"
+    })
+    if ($matchingEolLines.Count -ne 1) {
+        $allLf = $false
+        L ("  exact LF state missing: " + $expectedFile)
+    }
+}
 $testJPass = $stageExit -eq 0 -and $eolExit -eq 0 -and $allExecutable -and $allLf
 L ("TEST J WRAPPER: " + $(if ($testJPass) { "PASS" } else { "FAIL" }))
 if (-not $testJPass) { $overallPass = $false }

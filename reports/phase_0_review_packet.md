@@ -4,7 +4,7 @@
 
 Current phase: Phase 0 — Environment & Governance.
 
-Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX validation now pass with current evidence. Clean-clone reproduction is verified using the configured repository URL. Phase 1 remains unauthorized.
+Result: **REVALIDATION REQUIRED**. The prior Docker-backed PowerShell, Git Bash, and clean-clone runs passed, but a stricter LF assertion and evidence-provenance corrections require a new clean-clone execution. Native macOS/Linux execution is not claimed. Phase 1 remains unauthorized.
 
 ## Corrections implemented
 
@@ -14,13 +14,13 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 - `scripts/run_adversarial_tests.ps1` captures real child-process exits, restores all sentinel environment variables, writes normalized UTF-8/LF evidence, removes its newly created temporary repositories, and records hashes plus Git state.
 - `.gitattributes` fixes LF endings for shell scripts, PowerShell scripts, and Phase 0 text evidence.
 - `src/utils/human_checkpoint.py` no longer silently hides an audit-log failure after unsafe approval text is rejected; it reports the failure and remains fail-closed.
-- `tests/test_human_checkpoint.py` adds a regression test for that audit-log failure path. The current test count is 16.
+- `tests/test_human_checkpoint.py` adds a regression test for that audit-log failure path. The current test count is 17.
 - Gemini remains a conditional later-phase provider only. No model API is required or authorized in Phase 0, and no API key is forwarded through Compose.
 - Modified `verify.sh` and `verify.ps1` to use a relative path (`./scripts/verify_container_security.sh`) to prevent MSYS2 path conversion issues inside Git Bash.
 - Resolved 218-character filename issue breaking default Windows git clones by renaming the image to `sources/hackathon_announcement.png`.
 - Captured missing adversarial raw evidence. Created `evidence/phase_0/clean_clone_adversarial_execution.txt` from a true `%TEMP%` clean clone and recorded its exact hash relation.
 
-## Commands actually run in the current correction pass
+## Previous tested-candidate command results
 
 | Command/check | Observed result |
 |---|---|
@@ -37,16 +37,16 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 | Adversarial harness overall | PASS, exit 0; build precondition and Tests A-L passed |
 | Current `verify.ps1` pipeline | PASS, exit 0 |
 | Current 17-test suite | PASS, exit 0 |
-| Full `verify.sh` pipeline | PASS, exit 0; 17 tests passed |
+| Full `verify.sh` pipeline under Git Bash on Windows | PASS, exit 0; 17 tests passed |
 | Clean-clone reproduction | PASS, exit 0 on clone and all tests |
 | Explicit `git add` of reviewed files | PASS, exit 0 |
 | Staged diff `git diff --cached --check` | PASS, exit 0 |
 
 ## Current raw evidence
 
-- `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on exact tested candidate SHA 5383405083ea878aaf930988e8f05ce560c59be3. Contains complete raw stdout/stderr for `verify.ps1` and `verify.sh`.
-- `evidence/phase_0/clean_clone_adversarial_execution.txt`: detailed adversarial test outputs and validations captured during the clean clone (SHA-256: E209844023B39B36387AADC3CE529EAC0E0FE1850B1D2F53DF8249FC74D67CEA).
-- `evidence/phase_0/clean_clone_post_test_audit.txt`: observed post-test dirty state caused by generated evidence, the restoration command, and the final empty clean-clone status.
+- `evidence/phase_0/clean_clone_execution.txt`: previous clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `d1c598d707892e0c17912a8839fc040db34202ee`. It must be regenerated after the current harness correction.
+- `evidence/phase_0/clean_clone_adversarial_execution.txt`: previous detailed adversarial output (SHA-256: `5C214B252441C6CC1FF699952C990B22D82E1D2B7181277F359EFB52F22E8BEB`). It must be regenerated after the current harness correction.
+- `evidence/phase_0/clean_clone_post_test_audit.txt`: legacy post-test excerpt. It is not accepted as standalone gate evidence because it lacks timestamp, repository URL, clone directory, and tested-SHA fields; regenerate it from execution.
 - `evidence/phase_0/adversarial_execution.txt`: earlier iteration harness output.
 - `evidence/phase_0/pipeline_execution.txt`: earlier iteration Windows pipeline attempt.
 
@@ -60,6 +60,6 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 
 ## Blockers and required human actions
 
-None.
+No external dependency blocker is recorded. Full clean-clone revalidation is still required before this packet can be submitted for external review.
 
-**READY FOR EXTERNAL CHATGPT REVIEW**
+**REVALIDATION REQUIRED — DO NOT START PHASE 1**

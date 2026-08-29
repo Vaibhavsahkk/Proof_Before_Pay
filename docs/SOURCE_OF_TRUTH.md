@@ -6,6 +6,8 @@
 4. **Current engineering state:** `STATUS.md` plus executable artifacts in the repository.
 5. **Research/analysis files:** all other files under `sources/` are advisory research. They can contain outdated, speculative, or conflicting recommendations and must never override the official rules or the locked decision without a new human/ChatGPT decision.
 
+The legacy file `sources/micro1_hackathon_winning_strategy_advisory.md` is advisory research. Its title is historical; none of its predictions, competitor claims, phase labels, or architecture suggestions are approved project decisions.
+
 When sources conflict:
 - do not silently reconcile
 - preserve the conflict
