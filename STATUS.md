@@ -1,7 +1,7 @@
 # Project Status
 
 Current phase: Phase 0 — Environment & Governance
-Phase status: READY FOR LOCAL CHATGPT RE-AUDIT
+Phase status: READY FOR EXTERNAL CHATGPT REVIEW
 Last completed task: Corrected the Phase 0 LF assertion and governance/documentation inconsistencies found by local audit.
 Current task: Generate final evidence and packet.
 Next task: Phase 1 remains unauthorized until formal Phase 0 approval.

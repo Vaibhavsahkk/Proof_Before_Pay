@@ -4,7 +4,7 @@
 
 Current phase: Phase 0 — Environment & Governance.
 
-Result: **READY FOR LOCAL CHATGPT RE-AUDIT**. Clean-clone execution verified successfully against the candidate SHA.
+Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Clean-clone execution verified successfully against the candidate SHA.
 
 ## Corrections implemented
 
@@ -62,4 +62,4 @@ Result: **READY FOR LOCAL CHATGPT RE-AUDIT**. Clean-clone execution verified suc
 
 No external dependency blocker is recorded. All Phase 0 tests pass.
 
-**READY FOR LOCAL CHATGPT RE-AUDIT**
+**READY FOR EXTERNAL CHATGPT REVIEW**
