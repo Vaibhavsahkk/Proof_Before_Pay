@@ -4,7 +4,7 @@
 
 Date: 2026-08-29
 
-Last committed Phase 2 scaffold before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`
+Corrected Phase 2 scaffold candidate: `95cebd1`
 
 Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
@@ -23,7 +23,7 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 - Actual Gemini execution: NOT RUN.
 - Model performance metrics: UNVERIFIED.
 - Corrected focused API-independent suite: 29 passed with deprecation warnings treated as errors.
-- Corrected PowerShell and Git Bash Docker pipelines: each passed before commit with 73 tests at that checkpoint; final clean-commit reruns remain required.
+- Corrected PowerShell and Git Bash Docker pipelines: each passed on committed source `95cebd1` with 75 tests, manifest validation, credential isolation, runtime import, and ground-truth rejection.
 - Phase 3+ remains locked.
 
 ## Current Evidence Files
@@ -31,6 +31,8 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 - `evidence/phase_1/final_clean_clone_execution.txt`
 - `evidence/phase_1/SHA256_MANIFEST.txt`
 - `reports/phase_1_review_packet.md`
+- `evidence/phase_2/scaffold_verify_powershell.txt`
+- `evidence/phase_2/scaffold_verify_git_bash.txt`
 
 Historical `superseded_` logs are retained but are not current decision evidence.
 

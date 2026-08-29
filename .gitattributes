@@ -3,3 +3,4 @@
 *.sh text eol=lf
 *.ps1 text eol=lf
 evidence/**/*.txt text eol=lf
+evidence/phase_2/scaffold_verify_*.txt binary

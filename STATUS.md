@@ -2,20 +2,20 @@
 
 Current phase: Phase 2 - Fair Baseline
 Phase status: ACTIVE
-Last completed task: Phase 1 externally approved.
-Current task: Independently verify and harden the API-independent Phase 2 baseline scaffold.
-Next task: None. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
+Last completed task: Phase 2 API-independent scaffold hardened and verified at `95cebd1`.
+Current task: Prepare the real six-case Gemini baseline run from a clean committed source state.
+Next task: Run the offline evaluator on the immutable real outputs. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
 Human actions required:
-None.
+Set `GEMINI_API_KEY` locally as an environment variable without placing it in chat, source files, logs, or evidence.
 
 No Gemini request has been executed and no Phase 2 performance metric exists.
 
 ## Current verification summary
 
 - Phase 2 focused API-independent suite: PASS, 29 meaningful tests, exit 0; no Gemini call.
-- Corrected full PowerShell Docker pipeline: PASS before commit, 73 tests at that checkpoint; final clean-commit rerun pending.
-- Corrected full Git Bash Docker pipeline: PASS before commit, 73 tests at that checkpoint; final clean-commit rerun pending.
+- Corrected full PowerShell Docker pipeline on committed source `95cebd1`: PASS, 75 tests, exit 0.
+- Corrected full Git Bash Docker pipeline on committed source `95cebd1`: PASS, 75 tests, exit 0.
 
 - Strict Phase 1 validator: PASS, exit 0.
 - SHA-256 manifest verifier: PASS, exit 0.
@@ -38,6 +38,7 @@ No Gemini request has been executed and no Phase 2 performance metric exists.
 - Current decision evidence: `evidence/phase_1/final_clean_clone_execution.txt`.
 - Benchmark integrity manifest: `evidence/phase_1/SHA256_MANIFEST.txt`.
 - Earlier Phase 1 logs are retained with `superseded_` filenames and are not used as current proof.
+- Phase 2 scaffold verification: `evidence/phase_2/scaffold_verify_powershell.txt` and `evidence/phase_2/scaffold_verify_git_bash.txt`.
 
 ## Assumptions and risks
 
