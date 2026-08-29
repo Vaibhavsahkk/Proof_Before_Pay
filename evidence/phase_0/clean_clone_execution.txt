@@ -24,7 +24,7 @@ OUTPUT: (no output)
 
 COMMAND: git status --short
 EXIT CODE: 0
-OUTPUT: 
+OUTPUT:
  M evidence/phase_0/adversarial_execution.txt
  M evidence/phase_0/pipeline_execution.txt
 
