@@ -1,5 +1,5 @@
 ﻿--- FINAL PHASE 1 CLEAN CLONE EXECUTION ---
-CANDIDATE SHA: e626d6e8a9e84fa7a88f31156dd0d55e17708d56
+CANDIDATE SHA: 3f777e048ae3acf76a12e4493c7a1947d20b6239
 --- VALIDATE PHASE 1 ---
 Starting Phase 1 Validation...
 [PASS] Case count validation
@@ -20,7 +20,7 @@ Hash mismatch for benchmark/schemas/ground_truth.json: expected 48A51D66B944D741
 --- PYTEST ---
 ============================= test session starts =============================
 platform win32 -- Python 3.11.15, pytest-9.1.0, pluggy-1.6.0
-rootdir: C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc82
+rootdir: C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1
 configfile: pytest.ini
 plugins: anyio-4.14.1, langsmith-0.11.1
 collected 6 items
@@ -28,7 +28,7 @@ collected 6 items
 tests\test_phase1_validation.py .....                                    [ 83%]
 tests\test_manifest.py .                                                 [100%]
 
-============================== 6 passed in 0.24s ==============================
+============================== 6 passed in 0.16s ==============================
 --- VERIFY PS1 ---
 Starting Micro1 Challenge Verification Pipeline (PowerShell)...
 ============================================================
@@ -43,24 +43,25 @@ STEP: Compose Config Isolation Check
 STEP: Docker Build
 ============================================================
 docker :  Image micro1-challenge-phase0:latest Building 
-At C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc82\verify.ps1:69 char:1
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1:69 char:1
 + docker compose -f docker-compose.yml build --no-cache
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ( Image micro1-c...atest Building :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
 #1 [internal] load local bake definitions
-#1 reading from stdin 710B done
+#1 reading from stdin 713B done
 #1 DONE 0.0s
 
 #2 [internal] load build definition from Dockerfile
-#2 transferring dockerfile: 380B 0.0s done
+#2 transferring dockerfile: 380B done
 #2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
 #3 DONE 0.1s
 
 #4 [internal] load .dockerignore
+#4 transferring context:
 #4 transferring context: 187B done
 #4 DONE 0.0s
 
@@ -72,36 +73,36 @@ At C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc8
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 5.69MB 0.4s done
-#7 DONE 0.4s
+#7 transferring context: 5.69MB 0.3s done
+#7 DONE 0.3s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 2.338 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 2.655 
-#9 2.655 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 2.655 [notice] To update, run: pip install --upgrade pip
-#9 DONE 2.8s
+#9 2.172 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 2.257 
+#9 2.257 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 2.257 [notice] To update, run: pip install --upgrade pip
+#9 DONE 2.4s
 
 #10 [5/6] COPY . .
 #10 DONE 0.1s
 
 #11 [6/6] RUN useradd -m micro1user && chown -R micro1user:micro1user /app
-#11 DONE 0.4s
+#11 DONE 0.5s
 
 #12 exporting to image
 #12 exporting layers
-#12 exporting layers 0.5s done
-#12 exporting manifest sha256:c3f44f4fb923ed50de3046c6d0f55efee5b860de22376703aa1e0e6b8d23d7f9 0.0s done
-#12 exporting config sha256:882ac65f23a10bd9002931b7a20f2fe6a8da4fc0c60c08706b1d036562026221 0.0s done
-#12 exporting attestation manifest sha256:0fd8371094d46c11391f5401b316e6cb6c88e593fc4c7c3eeedbfc96b9b2ea7c 0.0s done
-#12 exporting manifest list sha256:0eb6b9c8564f99c76dd3f24b9b662efb4c8542c227d6a7145bcaf6a482e8715b 0.0s done
+#12 exporting layers 0.4s done
+#12 exporting manifest sha256:9a5a311998d0065b17bff28c07235aa09f625223dfcc47b2514efeee9a97cca3 0.0s done
+#12 exporting config sha256:ecade0d76759f51202305a7b47071529620fd73bf1a26bdd653ded710e246695 0.0s done
+#12 exporting attestation manifest sha256:7186fd85b129b773ee36be0089457992900d5f3b4b571365aa1ceb86c9e8cce9 0.0s done
+#12 exporting manifest list sha256:0fccd2cbd66d05c301b220670eb6c62dd2b16bda5bee0bcfe8312453dff77e2d 0.0s done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.3s done
-#12 DONE 0.9s
+#12 DONE 0.8s
 
 #13 resolving provenance for metadata file
 #13 DONE 0.0s
@@ -111,16 +112,16 @@ At C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc8
 STEP: Automated Test Suite Execution (Docker-driven)
 ============================================================
 Running tests inside container...
-docker :  Network phase1final-10cf1c120a3d4ae1b94614236181fc82_default Creating 
-At C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc82\verify.ps1:80 char:1
+docker :  Network phase1final2-a7af43082a8a4593b3e8bb2209592da1_default Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1:80 char:1
 + docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip i ...
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ( Network phase1...fault Creating :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
- Network phase1final-10cf1c120a3d4ae1b94614236181fc82_default Created 
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-7a010d9e1643 Creating 
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-7a010d9e1643 Created 
+ Network phase1final2-a7af43082a8a4593b3e8bb2209592da1_default Created 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ff8596418b56 Creating 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ff8596418b56 Created 
 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
@@ -161,23 +162,43 @@ Successfully installed attrs-26.1.0 iniconfig-2.0.0 jsonschema-4.23.0 jsonschema
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: pip install --upgrade pip
 .......................                                                  [100%]
-23 passed in 0.31s
+23 passed in 0.30s
 Running Phase 1 Schema Validator...
-docker :  Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-b3efdb0eb421 Creating 
-At C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc82\verify.ps1:87 char:1
-+ docker compose -f docker-compose.yml run --rm micro1_app python scrip ...
+docker :  Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-75795810967b Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1:87 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip i ...
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ( Container phas...eb421 Creating :String) [], RemoteException
+    + CategoryInfo          : NotSpecified: ( Container phas...0967b Creating :String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-b3efdb0eb421 Created 
-Traceback (most recent call last):
-  File "/app/scripts/validate_phase1.py", line 6, in <module>
-    import jsonschema
-ModuleNotFoundError: No module named 'jsonschema'
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-75795810967b Created 
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+Case ID                             | Derived         | Ground Truth    | PASS 
+--------------------------------------------------------------------------------
+case_4_price_contradiction_hold     | HOLD            | HOLD            | True 
+case_5_bank_change_investigate      | INVESTIGATE     | INVESTIGATE     | True 
+case_3_qty_mismatch_hold            | HOLD            | HOLD            | True 
+case_1_pay                          | PAY             | PAY             | True 
+case_2_duplicate_hold               | HOLD            | HOLD            | True 
+[PASS] Oracle ground truth validation
+ALL PHASE 1 VALIDATIONS PASSED
+Running Manifest Verification...
+docker :  Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ac89adfbd811 Creating 
+At C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1:94 char:1
++ docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip i ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container phas...bd811 Creating :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ac89adfbd811 Created 
+Hash mismatch for benchmark/schemas/ground_truth.json: expected 48A51D66B944D7418D67B3338D105753F736B4AEC27A520F87EA235B97ED6E48, got 269E6E425F39A0131A7CCE9077695EF2D070C4F4A49EB7FB777665C321266E81
 
-C:\Users\vaibh\AppData\Local\Temp\Phase1Final-10cf1c120a3d4ae1b94614236181fc82\verify.ps1 : [FAIL] Phase 1 Validator 
-failed with exit code 1
+C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1 : [FAIL] Manifest 
+Verification failed with exit code 1
 At line:22 char:1
 + .\verify.ps1 2>&1 | Out-File $out -Append -Encoding utf8
 + ~~~~~~~~~~~~~~~~~
@@ -207,7 +228,7 @@ At line:24 char:1
     + FullyQualifiedErrorId : NativeCommandError
  
 #1 [internal] load local bake definitions
-#1 reading from stdin 710B done
+#1 reading from stdin 713B done
 #1 DONE 0.0s
 
 #2 [internal] load build definition from Dockerfile
@@ -229,18 +250,18 @@ At line:24 char:1
 #6 CACHED
 
 #7 [internal] load build context
-#7 transferring context: 17.79kB 0.0s done
-#7 DONE 0.1s
+#7 transferring context: 18.61kB 0.0s done
+#7 DONE 0.0s
 
 #8 [3/6] COPY requirements.lock requirements.txt ./
 #8 DONE 0.0s
 
 #9 [4/6] RUN pip install --no-cache-dir -r requirements.lock
-#9 1.614 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#9 1.715 
-#9 1.715 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#9 1.715 [notice] To update, run: pip install --upgrade pip
-#9 DONE 1.8s
+#9 1.645 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 1.804 
+#9 1.804 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 1.804 [notice] To update, run: pip install --upgrade pip
+#9 DONE 2.0s
 
 #10 [5/6] COPY . .
 #10 DONE 0.1s
@@ -251,10 +272,10 @@ At line:24 char:1
 #12 exporting to image
 #12 exporting layers
 #12 exporting layers 0.4s done
-#12 exporting manifest sha256:8d535ca250a0ecc6d6367a8d30e63eae3460f3273e94db33cb112b856cdb7bb2 0.0s done
-#12 exporting config sha256:6e65996c49b7f20b59e5dcb12e3cf8aacca67c764cef236d7c99eefed5ad2c98 0.0s done
-#12 exporting attestation manifest sha256:a9a4866319e5fbb26f4ef5ff2483e74e650e313ba74ad5064c288d3babbcbd93 0.0s done
-#12 exporting manifest list sha256:ab66307c6b827a76672a599be989793c7df1181cca8b326709557e2b321da239 0.0s done
+#12 exporting manifest sha256:c155dbbbad344acca1b80d775127c21ed6e2d886c84277419e8632ecad49ce25 0.0s done
+#12 exporting config sha256:e7a2585109ea41412e800a53ecc5668b0b334b335ce489c4efba45c23c5ea6c1 0.0s done
+#12 exporting attestation manifest sha256:c0edf3177927f222fa5476c932c18f724e8bfcd702c7d0b394fe105fa8c1889e 0.0s done
+#12 exporting manifest list sha256:080d0ec478755ac186356b616e7359561aaf7cff36792fb3021c741ef6724a7f 0.0s done
 #12 naming to docker.io/library/micro1-challenge-phase0:latest done
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest
 #12 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.3s done
@@ -268,8 +289,8 @@ At line:24 char:1
 STEP: Automated Test Suite Execution (Docker-driven)
 ============================================================
 Running tests inside container...
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-9254e4e1ec69 Creating 
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-9254e4e1ec69 Created 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-e516a8d63e38 Creating 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-e516a8d63e38 Created 
 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
@@ -310,15 +331,107 @@ Successfully installed attrs-26.1.0 iniconfig-2.0.0 jsonschema-4.23.0 jsonschema
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: pip install --upgrade pip
 .......................                                                  [100%]
-23 passed in 0.27s
+23 passed in 0.25s
 Running Phase 1 Schema Validator...
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-bf1a522cb573 Creating 
- Container phase1final-10cf1c120a3d4ae1b94614236181fc82-micro1_app-run-bf1a522cb573 Created 
-Traceback (most recent call last):
-  File "/app/scripts/validate_phase1.py", line 6, in <module>
-    import jsonschema
-ModuleNotFoundError: No module named 'jsonschema'
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-6e591c2d1a37 Creating 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-6e591c2d1a37 Created 
+Starting Phase 1 Validation...
+[PASS] Case count validation
+[PASS] Schema validation
+[PASS] Leakage validation
+[PASS] Synthetic data validation
+Case ID                             | Derived         | Ground Truth    | PASS 
+--------------------------------------------------------------------------------
+case_4_price_contradiction_hold     | HOLD            | HOLD            | True 
+case_5_bank_change_investigate      | INVESTIGATE     | INVESTIGATE     | True 
+case_3_qty_mismatch_hold            | HOLD            | HOLD            | True 
+case_1_pay                          | PAY             | PAY             | True 
+case_2_duplicate_hold               | HOLD            | HOLD            | True 
+[PASS] Oracle ground truth validation
+ALL PHASE 1 VALIDATIONS PASSED
+Running Manifest Verification...
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-53a2c32c8ebc Creating 
+ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-53a2c32c8ebc Created 
+Hash mismatch for benchmark/schemas/ground_truth.json: expected 48A51D66B944D7418D67B3338D105753F736B4AEC27A520F87EA235B97ED6E48, got 269E6E425F39A0131A7CCE9077695EF2D070C4F4A49EB7FB777665C321266E81
 
-[FAIL] Phase 1 Validator failed.
+[FAIL] Manifest Verification failed.
 --- GIT STATUS & DIFF ---
-?? evidence/phase_1/final_clean_clone_execution.txt
+ M evidence/phase_1/final_clean_clone_execution.txt
+git : warning: in the working copy of 'evidence/phase_1/final_clean_clone_execution.txt', CRLF will be replaced by LF 
+the next time Git touches it
+At line:27 char:1
++ git diff --check 2>&1 | Out-File $out -Append -Encoding utf8
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+evidence/phase_1/final_clean_clone_execution.txt:84: trailing whitespace.
++#9 2.257 
+evidence/phase_1/final_clean_clone_execution.txt:115: trailing whitespace.
++docker :  Network phase1final2-a7af43082a8a4593b3e8bb2209592da1_default Creating 
+evidence/phase_1/final_clean_clone_execution.txt:122: trailing whitespace.
++ Network phase1final2-a7af43082a8a4593b3e8bb2209592da1_default Created 
+evidence/phase_1/final_clean_clone_execution.txt:123: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ff8596418b56 Creating 
+evidence/phase_1/final_clean_clone_execution.txt:124: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ff8596418b56 Created 
+evidence/phase_1/final_clean_clone_execution.txt:167: trailing whitespace.
++docker :  Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-75795810967b Creating 
+evidence/phase_1/final_clean_clone_execution.txt:174: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-75795810967b Created 
+evidence/phase_1/final_clean_clone_execution.txt:180: trailing whitespace.
++Case ID                             | Derived         | Ground Truth    | PASS 
+evidence/phase_1/final_clean_clone_execution.txt:182: trailing whitespace.
++case_4_price_contradiction_hold     | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:183: trailing whitespace.
++case_5_bank_change_investigate      | INVESTIGATE     | INVESTIGATE     | True 
+evidence/phase_1/final_clean_clone_execution.txt:184: trailing whitespace.
++case_3_qty_mismatch_hold            | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:185: trailing whitespace.
++case_1_pay                          | PAY             | PAY             | True 
+evidence/phase_1/final_clean_clone_execution.txt:186: trailing whitespace.
++case_2_duplicate_hold               | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:190: trailing whitespace.
++docker :  Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ac89adfbd811 Creating 
+evidence/phase_1/final_clean_clone_execution.txt:196: trailing whitespace.
++ 
+evidence/phase_1/final_clean_clone_execution.txt:197: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-ac89adfbd811 Created 
+evidence/phase_1/final_clean_clone_execution.txt:200: trailing whitespace.
++C:\Users\vaibh\AppData\Local\Temp\Phase1Final2-a7af43082a8a4593b3e8bb2209592da1\verify.ps1 : [FAIL] Manifest 
+evidence/phase_1/final_clean_clone_execution.txt:261: trailing whitespace.
++#9 1.804 
+evidence/phase_1/final_clean_clone_execution.txt:292: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-e516a8d63e38 Creating 
+evidence/phase_1/final_clean_clone_execution.txt:293: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-e516a8d63e38 Created 
+evidence/phase_1/final_clean_clone_execution.txt:336: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-6e591c2d1a37 Creating 
+evidence/phase_1/final_clean_clone_execution.txt:337: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-6e591c2d1a37 Created 
+evidence/phase_1/final_clean_clone_execution.txt:343: trailing whitespace.
++Case ID                             | Derived         | Ground Truth    | PASS 
+evidence/phase_1/final_clean_clone_execution.txt:345: trailing whitespace.
++case_4_price_contradiction_hold     | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:346: trailing whitespace.
++case_5_bank_change_investigate      | INVESTIGATE     | INVESTIGATE     | True 
+evidence/phase_1/final_clean_clone_execution.txt:347: trailing whitespace.
++case_3_qty_mismatch_hold            | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:348: trailing whitespace.
++case_1_pay                          | PAY             | PAY             | True 
+evidence/phase_1/final_clean_clone_execution.txt:349: trailing whitespace.
++case_2_duplicate_hold               | HOLD            | HOLD            | True 
+evidence/phase_1/final_clean_clone_execution.txt:353: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-53a2c32c8ebc Creating 
+evidence/phase_1/final_clean_clone_execution.txt:354: trailing whitespace.
++ Container phase1final2-a7af43082a8a4593b3e8bb2209592da1-micro1_app-run-53a2c32c8ebc Created 
+git : From https://github.com/Vaibhavsahkk/Proof_Before_Pay
+At line:29 char:1
++ git fetch origin master 2>&1 | Out-File $out -Append -Encoding utf8
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (From https://gi...roof_Before_Pay:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ * branch            master     -> FETCH_HEAD
+3f777e048ae3acf76a12e4493c7a1947d20b6239
+3f777e048ae3acf76a12e4493c7a1947d20b6239

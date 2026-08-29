@@ -3,9 +3,9 @@ import glob
 
 def hash_file(filepath):
     sha256 = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            sha256.update(chunk)
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read().replace("\r\n", "\n")
+        sha256.update(content.encode('utf-8'))
     return sha256.hexdigest().upper()
 
 def generate_manifest():
