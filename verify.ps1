@@ -84,14 +84,14 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Output "Running Phase 1 Schema Validator..."
-docker compose -f docker-compose.yml run --rm micro1_app python scripts/validate_phase1.py
+docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/validate_phase1.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Phase 1 Validator failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE
 }
 
 Write-Output "Running Manifest Verification..."
-docker compose -f docker-compose.yml run --rm micro1_app python scripts/verify_manifest.py
+docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt > /dev/null 2>&1 && python scripts/verify_manifest.py"
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Manifest Verification failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE
