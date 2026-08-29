@@ -76,7 +76,7 @@ ALL VERIFICATION STEPS PASSED
 ************************************************************
 ```
 
-The current test tree contains 19 tests.
+The current test tree contains 25 tests.
 
 ## Phase 1: Problem Scope & Benchmark Design
 

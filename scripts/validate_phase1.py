@@ -29,7 +29,6 @@ def validate_cases_count():
 
 def test_leakage():
     public_files = glob.glob('data/cases/public/*.json')
-    forbidden_terms = ["pay", "hold", "investigate", "expected_recommendation", "ground_truth", "expected_exception_name"]
     
     def check_leakage(obj, filepath):
         if isinstance(obj, dict):
@@ -37,7 +36,7 @@ def test_leakage():
                 k_lower = str(k).lower()
                 if k_lower in ["pay", "hold", "investigate"]:
                     assert False, f"Leakage detected! Found exact recommendation in key '{k}' in {filepath}"
-                for term in ["expected_recommendation", "ground_truth", "expected_exception_name", "answer-key", "label"]:
+                for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
                     if term in k_lower:
                         assert False, f"Leakage detected! Found '{term}' in key '{k}' in {filepath}"
                 check_leakage(v, filepath)
@@ -48,12 +47,11 @@ def test_leakage():
             v_lower = obj.lower()
             if v_lower in ["pay", "hold", "investigate"]:
                 assert False, f"Leakage detected! Found exact recommendation '{obj}' in {filepath}"
-            for term in ["expected_recommendation", "ground_truth", "expected_exception_name", "answer-key", "label"]:
+            for term in ["expected_recommendation", "ground_truth", "expected_findings", "answer-key", "label"]:
                 if term in v_lower:
                     assert False, f"Leakage detected! Found '{term}' in {filepath}"
                     
     for pf in public_files:
-        # Also check path
         pf_lower = pf.lower()
         if "ground_truth" in pf_lower or "expected" in pf_lower:
             assert False, f"Leakage in filename/path: {pf}"
@@ -80,73 +78,113 @@ class Phase1Oracle:
         history = case_data.get('prior_payment_history') or []
         bank_change = case_data.get('bank_change_evidence')
         
+        findings = []
+        
+        # Uniqueness checks
+        inv_item_ids = [i['item_id'] for i in inv['items']]
+        if len(inv_item_ids) != len(set(inv_item_ids)):
+            findings.append("Duplicate Invoice Line ID")
+        
         # 1. HOLD Conditions
-        # Duplicate Invoice
         for h in history:
             if h['invoice_number'] == inv['invoice_number'] and h['vendor_tax_id'] == inv['vendor_tax_id'] and h['amount'] == inv['total']:
-                return "HOLD", "Duplicate Billing"
+                findings.append("Duplicate Billing")
+                break
                 
-        # GRN Quantity Mismatch
         if grn:
+            grn_item_ids = [i['item_id'] for i in grn['items']]
+            if len(grn_item_ids) != len(set(grn_item_ids)):
+                findings.append("Duplicate GRN Line ID")
+                
             for inv_item in inv['items']:
                 grn_item = next((i for i in grn['items'] if i['item_id'] == inv_item['item_id']), None)
                 if grn_item:
                     if Decimal(inv_item['quantity']) > Decimal(grn_item['quantity_accepted']):
-                        return "HOLD", "Quantity Mismatch"
-        
-        # PO Price Contradiction
+                        findings.append("Quantity Mismatch")
+                else:
+                    findings.append("Missing GRN Line ID")
+                    
         if po:
+            po_item_ids = [i['item_id'] for i in po['items']]
+            if len(po_item_ids) != len(set(po_item_ids)):
+                findings.append("Duplicate PO Line ID")
+                
             for inv_item in inv['items']:
                 po_item = next((i for i in po['items'] if i['item_id'] == inv_item['item_id']), None)
                 if po_item:
                     if abs(Decimal(inv_item['unit_price']) - Decimal(po_item['unit_price'])) > Decimal('0.01'):
-                        return "HOLD", "Price Contradiction"
+                        findings.append("Price Contradiction")
+                else:
+                    findings.append("Missing PO Line ID")
+                    
+            if inv['currency'] != po['currency']:
+                findings.append("Currency Mismatch")
+            if inv['tax_rate_percent'] != po['tax_rate_percent']:
+                findings.append("Tax Rate Contradiction")
                         
-        # Check math
+        # Math Error
         calculated_subtotal = Decimal('0.00')
         for item in inv['items']:
             qty = Decimal(item['quantity'])
             price = Decimal(item['unit_price'])
             line_total = (qty * price).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             if abs(line_total - Decimal(item['line_total'])) > Decimal('0.01'):
-                return "HOLD", "Math Error"
+                if "Math Error" not in findings: findings.append("Math Error")
             calculated_subtotal += line_total
             
         if abs(calculated_subtotal - Decimal(inv['subtotal'])) > Decimal('0.01'):
-            return "HOLD", "Math Error"
+            if "Math Error" not in findings: findings.append("Math Error")
             
-        tax_rate = Decimal(inv['tax_rate_percent']) / Decimal('100')
+        # Use authoritative tax from PO if exists, else Invoice
+        authoritative_tax_rate = po['tax_rate_percent'] if po else inv['tax_rate_percent']
+        tax_rate = Decimal(authoritative_tax_rate) / Decimal('100')
         expected_tax = (calculated_subtotal * tax_rate).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         if abs(expected_tax - Decimal(inv['tax'])) > Decimal('0.01'):
-            return "HOLD", "Math Error"
+            if "Math Error" not in findings: findings.append("Math Error")
             
         expected_total = calculated_subtotal + Decimal(inv['tax'])
         if abs(expected_total - Decimal(inv['total'])) > Decimal('0.01'):
-            return "HOLD", "Math Error"
+            if "Math Error" not in findings: findings.append("Math Error")
 
         # 2. INVESTIGATE Conditions
         if vm:
             if inv['bank_account'] != vm['bank_account']:
-                if not bank_change or bank_change['new_bank_account'] != inv['bank_account']:
-                    return "INVESTIGATE", "Unverified Bank Change"
+                if not bank_change or bank_change['new_bank_account'] != inv['bank_account'] or bank_change['old_bank_account'] != vm['bank_account'] or bank_change['approval_status'] != "APPROVED":
+                    findings.append("Unverified Bank Change")
             if inv['vendor_name'] != vm['vendor_name'] or inv['vendor_tax_id'] != vm['vendor_tax_id']:
-                return "INVESTIGATE", "Vendor Identity Mismatch"
+                findings.append("Vendor Identity Mismatch")
         else:
-            return "INVESTIGATE", "Missing Vendor Master"
+            findings.append("Missing Vendor Master")
             
         if not po:
-            return "INVESTIGATE", "Missing PO"
+            findings.append("Missing PO")
         if not grn:
-            return "INVESTIGATE", "Missing GRN"
+            findings.append("Missing GRN")
 
-        # 3. PAY Condition
-        return "PAY", None
+        # Recommendation logic
+        # HOLD > INVESTIGATE > PAY
+        hold_findings = ["Duplicate Billing", "Quantity Mismatch", "Price Contradiction", "Math Error", "Currency Mismatch", "Tax Rate Contradiction"]
+        investigate_findings = ["Unverified Bank Change", "Vendor Identity Mismatch", "Missing Vendor Master", "Missing PO", "Missing GRN", "Duplicate Invoice Line ID", "Duplicate PO Line ID", "Duplicate GRN Line ID", "Missing PO Line ID", "Missing GRN Line ID"]
+        
+        has_hold = any(f in hold_findings for f in findings)
+        has_investigate = any(f in investigate_findings for f in findings)
+        
+        if has_hold:
+            rec = "HOLD"
+        elif has_investigate:
+            rec = "INVESTIGATE"
+        else:
+            rec = "PAY"
+            
+        # Ensure deterministic order
+        findings = sorted(list(set(findings)))
+        return rec, findings
 
 def validate_oracle():
     oracle = Phase1Oracle()
     public_files = glob.glob('data/cases/public/*.json')
     
-    print(f"{'Case ID':<35} | {'Derived':<15} | {'Ground Truth':<15} | {'PASS':<5}")
+    print(f"{'Case ID':<35} | {'Derived Rec':<11} | {'Truth Rec':<11} | {'PASS':<5}")
     print("-" * 80)
     for pf in public_files:
         with open(pf) as f:
@@ -158,15 +196,15 @@ def validate_oracle():
             gt_data = json.load(f)
             
         expected_rec = gt_data['expected_recommendation']
-        expected_exc = gt_data['expected_exception_name']
+        expected_findings = sorted(gt_data['expected_findings'])
         
-        derived_rec, derived_exc = oracle.evaluate(public_data)
+        derived_rec, derived_findings = oracle.evaluate(public_data)
         
-        passed = (derived_rec == expected_rec) and (derived_exc == expected_exc)
-        print(f"{case_id:<35} | {derived_rec:<15} | {expected_rec:<15} | {str(passed):<5}")
+        passed = (derived_rec == expected_rec) and (derived_findings == expected_findings)
+        print(f"{case_id:<35} | {derived_rec:<11} | {expected_rec:<11} | {str(passed):<5}")
         
         if not passed:
-            assert False, f"Oracle mismatch for {case_id}: Derived ({derived_rec}, {derived_exc}) != Expected ({expected_rec}, {expected_exc})"
+            assert False, f"Oracle mismatch for {case_id}: Derived ({derived_rec}, {derived_findings}) != Expected ({expected_rec}, {expected_findings})"
 
 def main():
     print("Starting Phase 1 Validation...")

@@ -8,7 +8,7 @@
 | Strict Ground-truth rulebook | PASS | `benchmark/RULEBOOK.md` |
 | Five synthetic cases | PASS | `data/cases/public/` and `data/cases/ground_truth/` |
 | Leakage-safe structure | PASS | `scripts/validate_phase1.py` and `tests/test_phase1_validation.py` |
-| Oracle / Deterministic validation | PASS | `scripts/validate_phase1.py` |
+| Oracle / Deterministic validation | PASS | `scripts/validate_phase1.py` (Full derived matrix and findings list) |
 | Manifest verification | PASS | `scripts/verify_manifest.py` and `tests/test_manifest.py` |
 | Evaluation design | PASS | `eval/EVAL_DESIGN.md` |
 | Evidence & governance | PASS | This document and `evidence/phase_1/final_clean_clone_execution.txt` |
