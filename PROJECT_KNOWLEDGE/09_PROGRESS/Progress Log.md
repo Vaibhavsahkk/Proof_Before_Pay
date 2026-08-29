@@ -46,3 +46,14 @@ The exact remote candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f` passed 29 
 
 ### Current Status
 Phase 2 remains ACTIVE. Real Gemini baseline NOT RUN. Human-only local key setup is the sole current blocker. Phase 3+ remains locked.
+
+## 2026-08-29 - Phase 2 Baseline Attempt 1
+
+### What Changed
+The first real six-case call used pinned `gemini-2.5-pro` from clean source `86bf958716628e952462a1141ab6fbab699e454f`.
+
+### Verification
+All six calls returned provider HTTP 404. The manifest recorded `PARTIAL_ERROR`; the offline evaluator wrote an `INVALID` report with 13 explicit invalid reasons. Secret-pattern scan found no credential material.
+
+### Current Status
+The failed attempt is retained at `evidence/phase_2/runs/run_20260829_151625_260ba740` and is not a performance result. Provider evidence supports a retry using pinned `gemini-3.1-pro-preview`.

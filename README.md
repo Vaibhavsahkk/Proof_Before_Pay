@@ -20,7 +20,7 @@ Phase 1 is externally approved.
 
 Phase 2 - Fair Baseline - is the only active phase. Phase 3+ remains locked.
 
-The repository contains the frozen benchmark and an API-independent Phase 2 baseline/evaluator scaffold. The scaffold is being verified; no real Gemini baseline run or Phase 2 metric is claimed yet.
+The repository contains the frozen benchmark and a verified API-independent Phase 2 baseline/evaluator scaffold. One real provider-availability attempt failed and is preserved as INVALID evidence; no valid Gemini baseline metric is claimed yet.
 
 ## Source of Truth
 

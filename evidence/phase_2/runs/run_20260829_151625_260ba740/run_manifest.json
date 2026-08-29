@@ -1,0 +1,131 @@
+{
+  "cases": [
+    {
+      "case_id": "case_001",
+      "input_sha256": "2E4E54C77D9FFE90A560CFAB077268B91384EA304E41D5230ADB52D39B90013F",
+      "output_file": "case_001.json",
+      "output_sha256": "9980AC2E985C0A0C357F4AFFEA85EEE5D54193E925A1CCFD95BCCF63A338F014",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    },
+    {
+      "case_id": "case_002",
+      "input_sha256": "378A3C86096EE479B831E1FE7FC471863098C464C63F390E5E17D475C28D8D73",
+      "output_file": "case_002.json",
+      "output_sha256": "DEF514F7F59ABC48B243947C49753E3AE25C2ED75B60F09BC62F521E3C89D8C8",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    },
+    {
+      "case_id": "case_003",
+      "input_sha256": "9668D1B450C801A8BBDA9DF428007099D0F84599FA2FE3E65CA07B88F04573C7",
+      "output_file": "case_003.json",
+      "output_sha256": "E3C1078CF129AA7917B73ACC15A6708E40FDF7C22D72970ADA2666491238ADAF",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    },
+    {
+      "case_id": "case_004",
+      "input_sha256": "9286FC26B2042AE308E63E0D62AFB15EBEC28B2623997BFE556EE50B03ED2176",
+      "output_file": "case_004.json",
+      "output_sha256": "E93EDC3132208FA01150392172323EFEB58852174EF461C8D378B92BF61BBBB7",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    },
+    {
+      "case_id": "case_005",
+      "input_sha256": "A204ABC2DBA941BAEF2415C3707E061EF2609DC6DB6A73A8ABE1962E8019E08F",
+      "output_file": "case_005.json",
+      "output_sha256": "1D44524C799B115DC6338F8A55131793951FEFB8AD1A92D69202666D384E6C0D",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    },
+    {
+      "case_id": "case_006",
+      "input_sha256": "EBA5FD4A7DDED3DE39DB1B6B7C9C3A323F89E2242D69C3C9CB20EFA0FB38E6C1",
+      "output_file": "case_006.json",
+      "output_sha256": "15FB010583168E9393D2EEB9504F97196BCBEB8E9E856C1AC6585D15A1400BDD",
+      "returned_model": "NOT_RETURNED",
+      "status": "API_ERROR",
+      "usage_metadata": {
+        "candidates_token_count": "NOT_RETURNED",
+        "prompt_token_count": "NOT_RETURNED",
+        "total_token_count": "NOT_RETURNED"
+      }
+    }
+  ],
+  "command": "python -m baseline.run_baseline",
+  "end_time_utc": "2026-08-29T15:16:26.861390Z",
+  "expected_case_ids": [
+    "case_001",
+    "case_002",
+    "case_003",
+    "case_004",
+    "case_005",
+    "case_006"
+  ],
+  "hashes": {
+    "output_schema_sha256": "5403A7EA41D8EED47F1B8EEFB70288FA6922165C8738537907132345339EF29B",
+    "prompt_template_sha256": "CA0A31712B6058EE0CFEE0A510740581D6880B0F652F4D9D8AC161FAC8445FD3",
+    "rulebook_sha256": "FC7951A514997275B75D59C8CFBB34064C778F8FAD158C571CD6CAFF0BEF8CEF",
+    "runner_sha256": "6D5B13210497566B511F8CBE12DFD1FAA10B5C023F51BDD4BEECF678E1C79D26"
+  },
+  "manifest_schema_version": "phase2-baseline-run-v1",
+  "overall_status": "PARTIAL_ERROR",
+  "provider": "google",
+  "python_version": "3.11.15",
+  "requested_model": "gemini-2.5-pro",
+  "retry_policy": {
+    "backoff_seconds": [
+      1,
+      2
+    ],
+    "maximum_attempts": 3,
+    "retryable_http_codes": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ]
+  },
+  "run_id": "run_20260829_151625_260ba740",
+  "sdk_version": "2.20.0",
+  "settings": {
+    "max_output_tokens": 4096,
+    "response_mime_type": "application/json",
+    "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+    "temperature": 0.0,
+    "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+  },
+  "source": {
+    "commit_sha": "86bf958716628e952462a1141ab6fbab699e454f",
+    "working_tree_dirty": false
+  },
+  "start_time_utc": "2026-08-29T15:16:25.189812Z"
+}

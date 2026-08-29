@@ -41,7 +41,7 @@ Winning is the goal, not a guaranteed result. Every strategic choice must improv
 
 ## Next Authorized Action
 
-After the human supplies `GEMINI_API_KEY` locally, run the smallest fair Phase 2 baseline using real Gemini outputs. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
+Run the valid six-case retry with pinned `gemini-3.1-pro-preview`, then evaluate and independently audit it. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
 
 ## Links
 

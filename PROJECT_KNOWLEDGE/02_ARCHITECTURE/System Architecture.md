@@ -21,11 +21,11 @@ flowchart TD
 ```
 
 ## Agent Architecture
-The Phase 2 baseline is intentionally a single model call per case, without agent tools. Its corrected scaffold is under independent verification. Phase 3+ architecture remains locked.
+The Phase 2 baseline is intentionally one pinned `gemini-3.1-pro-preview` call per case, without agent tools. Its API-independent scaffold and clean-clone gate are verified. Phase 3+ architecture remains locked.
 
 ## Integrations
 - Docker Engine for containerized execution.
-- Gemini is the selected Phase 2 provider. No real API execution or metric is recorded yet.
+- Gemini is the selected Phase 2 provider. The first real attempt is recorded as INVALID provider-availability evidence; no valid performance metric exists yet.
 
 ## Unknowns
 - Exact LLM provider and agent framework for Phase 4.

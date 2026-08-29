@@ -30,7 +30,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## What Is In Progress
 
-- Waiting for human-only local `GEMINI_API_KEY` setup, then executing and evaluating the real six-case Phase 2 Fair Baseline.
+- Retrying and evaluating the real six-case Phase 2 Fair Baseline with pinned `gemini-3.1-pro-preview`; the earlier `gemini-2.5-pro` attempt is preserved as INVALID provider-availability evidence.
 
 ## What Is Not Complete
 

@@ -3,13 +3,12 @@
 Current phase: Phase 2 - Fair Baseline
 Phase status: ACTIVE
 Last completed task: Phase 2 API-independent scaffold clean-clone verification passed at `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
-Current task: Await the human-only local Gemini credential setup, then run the real six-case baseline from a clean committed source state.
+Current task: Re-run the real six-case baseline with the provider-supported pinned model from a clean committed source state.
 Next task: Run the offline evaluator on the immutable real outputs. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
-Human actions required:
-Set `GEMINI_API_KEY` locally as an environment variable without placing it in chat, source files, logs, or evidence.
+Human actions required: None. The key is locally available through an ignored file and will only be loaded into the baseline process environment without being printed.
 
-No Gemini request has been executed and no Phase 2 performance metric exists.
+A first Gemini request attempt was executed against `gemini-2.5-pro`; all six calls returned provider HTTP 404 because that model is unavailable to new users. The evaluator correctly marked the run INVALID. No valid Phase 2 performance metric exists yet.
 
 ## Current verification summary
 
@@ -41,6 +40,7 @@ No Gemini request has been executed and no Phase 2 performance metric exists.
 - Earlier Phase 1 logs are retained with `superseded_` filenames and are not used as current proof.
 - Phase 2 scaffold verification: `evidence/phase_2/scaffold_verify_powershell.txt` and `evidence/phase_2/scaffold_verify_git_bash.txt`.
 - Phase 2 scaffold clean-clone verification: `evidence/phase_2/scaffold_clean_clone_execution.txt` (normalized machine-captured log; SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`).
+- Failed provider-availability run: `evidence/phase_2/runs/run_20260829_151625_260ba740`; six `API_ERROR` results and evaluator status `INVALID`. Its numeric fields are not accepted as performance metrics.
 
 ## Assumptions and risks
 

@@ -21,6 +21,6 @@ Known documentation/usability issue; not a failure of the verified Git Bash pipe
 - No vulnerability/CVE scanner has been run; no remediation claim is made.
 - The actual Gemini baseline has not run, so Phase 2 metrics remain unverified.
 
-## Active Human-Only Dependency
+## Phase 2 Provider Availability
 
-The API-independent scaffold is verified. The real Phase 2 baseline now requires the human to set `GEMINI_API_KEY` locally. The key must never be pasted into chat, source files, logs, or evidence.
+The first real baseline attempt used pinned `gemini-2.5-pro`, but the provider returned HTTP 404 for all six cases because that model is unavailable to new users. The run is preserved as INVALID evidence and must not be reported as performance. Decision 008 pins the retry to the listed, provider-supported concrete model `gemini-3.1-pro-preview`.

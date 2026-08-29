@@ -73,3 +73,22 @@ Active. Phase 1 is externally approved, Phase 2 Fair Baseline is active, and Pha
 
 ### Evidence
 `PLAN.md`, `STATUS.md`, `DECISIONS.md`.
+
+---
+
+## Phase 2 Baseline Model Availability
+
+### Date
+2026-08-29
+
+### Decision
+Pin the valid baseline retry to `gemini-3.1-pro-preview` rather than a mutable `latest` alias.
+
+### Reason
+The first real attempt observed provider HTTP 404 for all six `gemini-2.5-pro` calls, and the provider response recommended `gemini-3.1-pro-preview`. A key-scoped model listing also observed `generateContent` support for the replacement.
+
+### Current Status
+Active. The failed attempt is retained as INVALID operational evidence and is not a performance result.
+
+### Evidence
+`DECISIONS.md` and `evidence/phase_2/runs/run_20260829_151625_260ba740/`.

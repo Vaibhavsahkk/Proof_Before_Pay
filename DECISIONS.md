@@ -40,3 +40,12 @@ External ChatGPT returned the exact verdict `PHASE APPROVED — 100%`. Tested Ph
 
 ## Decision 007 — Phase 1 Approval
 External ChatGPT returned exactly `PHASE APPROVED — 100%` for Phase 1. Tested Phase 1 candidate: 43ba9356aaa110113e81a446cb701bee40f0fc39. Evidence snapshot: adf9a1c1032df5679717acf8691691decc638f49. Phase 2 Fair Baseline is authorized. Phase 3+ remains locked.
+
+## Decision 008 — Phase 2 baseline model availability
+
+The baseline model is pinned to `gemini-3.1-pro-preview`.
+
+- The first real run against `gemini-2.5-pro` returned provider HTTP 404 for all six cases and stated that the model was unavailable to new users.
+- A key-scoped model-list query confirmed that `gemini-3.1-pro-preview` supports `generateContent` for this account.
+- A concrete model ID is used instead of the mutable `gemini-pro-latest` alias.
+- The failed run is retained at `evidence/phase_2/runs/run_20260829_151625_260ba740` and is INVALID operational evidence, not a performance result.
