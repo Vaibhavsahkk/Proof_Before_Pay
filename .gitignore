@@ -27,3 +27,7 @@ trajectories/raw/
 # Logs
 *.log
 .DS_Store
+
+# Obsidian local UI state; project knowledge notes remain versionable.
+PROJECT_KNOWLEDGE/.obsidian/
+PROJECT_KNOWLEDGE/.trash/

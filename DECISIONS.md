@@ -37,3 +37,6 @@ If a model API becomes necessary in a later approved phase, the Gemini API will 
 
 ## Decision 006 — Phase 0 Approval
 External ChatGPT returned the exact verdict `PHASE APPROVED — 100%`. Tested Phase 0 candidate: 49358817c8481ca0bf3eaa6b5b1d2ddaa015cf96. Phase 1 authorized.
+
+## Decision 007 — Phase 1 Approval
+External ChatGPT returned exactly `PHASE APPROVED — 100%` for Phase 1. Tested Phase 1 candidate: 43ba9356aaa110113e81a446cb701bee40f0fc39. Evidence snapshot: adf9a1c1032df5679717acf8691691decc638f49. Phase 2 Fair Baseline is authorized. Phase 3+ remains locked.

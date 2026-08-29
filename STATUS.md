@@ -1,10 +1,10 @@
 # Project Status
 
-Current phase: Phase 1 - Problem Scope & Benchmark Design
-Phase status: READY FOR EXTERNAL CHATGPT REVIEW
-Last completed task: Independent clean-clone verification of candidate `43ba9356aaa110113e81a446cb701bee40f0fc39`.
-Current task: External ChatGPT Phase 1 gate review.
-Next task: None. Phase 2 remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
+Current phase: Phase 2 - Fair Baseline
+Phase status: ACTIVE
+Last completed task: Phase 1 externally approved.
+Current task: Implement and run the smallest fair Phase 2 baseline.
+Next task: None. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
 Human actions required:
 None.
@@ -38,4 +38,4 @@ None.
 - No Gemini or other model API is needed or authorized in Phase 1.
 - Native macOS/Linux execution is unverified; the POSIX script was executed through Git Bash on Windows.
 - No vulnerability/CVE scanner was run, and no vulnerability-remediation claim is made.
-- Phase 2 baseline or agent implementation does not exist and remains locked.
+- No Phase 3+ agent architecture is authorized. Phase 2 is Fair Baseline only.

@@ -6,7 +6,7 @@
 - Docker Desktop or Docker Engine with Docker Compose v2
 - Git
 - PowerShell on Windows
-- Git Bash or Bash for `verify.sh`
+- Git Bash for the verified Windows `verify.sh` run; native macOS/Linux Bash remains unverified
 - Approximate Phase 1 verification runtime: 1-2 minutes after dependencies are available
 - API/service cost for Phases 0 and 1: $0
 
@@ -25,6 +25,12 @@ Observed on the Windows verification host on 2026-08-29:
 
 These are recorded tested versions, not minimum-version claims. Native macOS/Linux execution remains unverified.
 
+On this Windows host, a bare `bash` command launched from PowerShell resolves to WSL, not Git Bash. Either run `./verify.sh` from an already-open Git Bash shell or invoke the verified executable explicitly:
+
+```powershell
+& 'C:\Program Files\Git\bin\bash.exe' ./verify.sh
+```
+
 ## Phase 0
 
 Phase 0 was externally approved. Its tested candidate was `49358817c8481ca0bf3eaa6b5b1d2ddaa015cf96`; later commits store evidence and authorized Phase 1 work.
@@ -42,7 +48,7 @@ Run its retained checks with:
 
 ## Phase 1 deterministic checks
 
-The current tested Phase 1 candidate is `43ba9356aaa110113e81a446cb701bee40f0fc39`.
+Phase 1 was externally approved. The tested candidate was `43ba9356aaa110113e81a446cb701bee40f0fc39`.
 
 Generate and validate the frozen benchmark artifacts:
 

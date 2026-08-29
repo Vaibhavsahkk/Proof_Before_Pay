@@ -15,7 +15,7 @@ Read:
 9. the relevant sections of `sources/Idea to work.txt`
 
 ## Current authorization
-Phase 0 ONLY unless the external ChatGPT gate has explicitly approved the current phase.
+Phase 0 is externally approved. Phase 1 is the only authorized implementation scope. Phase 2 remains locked until External ChatGPT approves Phase 1 with the exact verdict `PHASE APPROVED — 100%`.
 
 ## Rules
 - Never guess.
