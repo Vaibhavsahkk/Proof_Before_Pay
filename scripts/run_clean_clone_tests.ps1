@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Continue'
-$candidateSha = "e007a401d4e9a723ae8c8345a204a6bdabaca1ea"
+$candidateSha = git rev-parse HEAD 2>&1 | Out-String
+$candidateSha = $candidateSha.Trim()
 
 $clonePath = Join-Path $env:TEMP ("ProofBeforePay-final-" + [guid]::NewGuid().ToString("N"))
 Write-Output "Clone path: $clonePath"
@@ -44,6 +45,11 @@ if ($cloneExit -ne 0) {
 }
 
 Set-Location $clonePath
+
+Add-Content -Path $outExe -Value "`nCOMMAND: git checkout $candidateSha"
+$checkoutOut = git checkout $candidateSha 2>&1 | Out-String
+Add-Content -Path $outExe -Value "EXIT CODE: $LASTEXITCODE"
+Add-Content -Path $outExe -Value "OUTPUT:`n$checkoutOut"
 
 Add-Content -Path $outExe -Value "`nCOMMAND: git rev-parse HEAD"
 $sha = git rev-parse HEAD 2>&1 | Out-String
@@ -96,7 +102,6 @@ $cleanStatus = git status --short 2>&1 | Out-String
 Add-Content -Path $outAudit -Value "EXIT CODE: $LASTEXITCODE"
 Add-Content -Path $outAudit -Value "OUTPUT:`n$cleanStatus"
 
-# Copy adversarial generated evidence
 Copy-Item "evidence\phase_0\adversarial_execution.txt" "D:\MICRO.1\evidence\phase_0\clean_clone_adversarial_execution.txt" -Force
 
 Write-Output "Clean clone tests completed."
