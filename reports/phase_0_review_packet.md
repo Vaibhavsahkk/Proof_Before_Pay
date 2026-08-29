@@ -18,6 +18,7 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 - Gemini remains a conditional later-phase provider only. No model API is required or authorized in Phase 0, and no API key is forwarded through Compose.
 - Modified `verify.sh` and `verify.ps1` to use a relative path (`./scripts/verify_container_security.sh`) to prevent MSYS2 path conversion issues inside Git Bash.
 - Resolved 218-character filename issue breaking default Windows git clones by renaming the image to `sources/hackathon_announcement.png`.
+- Captured missing adversarial raw evidence. Created `evidence/phase_0/clean_clone_adversarial_execution.txt` from a true `%TEMP%` clean clone and recorded its exact hash relation.
 
 ## Commands actually run in the current correction pass
 
@@ -43,9 +44,10 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Docker-backed Windows and POSIX v
 
 ## Current raw evidence
 
-- `evidence/phase_0/adversarial_execution.txt`: current harness output. Current-image build and Tests A-L pass; harness exit 0.
-- `evidence/phase_0/pipeline_execution.txt`: current Windows pipeline attempt. Git, Compose, Docker Build, Pytest, and Security scan all pass; process exit 0.
-- `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on exact tested candidate SHA 9783ac6f09fe869f195a061bfa7f83847a517f66. The subsequent final evidence commit adds this documentation without changing executable code.
+- `evidence/phase_0/clean_clone_execution.txt`: clean-clone validation log verifying the clone at https://github.com/Vaibhavsahkk/Proof_Before_Pay.git on exact tested candidate SHA 5383405083ea878aaf930988e8f05ce560c59be3. Contains complete raw stdout/stderr for `verify.ps1` and `verify.sh`.
+- `evidence/phase_0/clean_clone_adversarial_execution.txt`: detailed adversarial test outputs and validations captured during the clean clone (SHA-256: E209844023B39B36387AADC3CE529EAC0E0FE1850B1D2F53DF8249FC74D67CEA).
+- `evidence/phase_0/adversarial_execution.txt`: earlier iteration harness output.
+- `evidence/phase_0/pipeline_execution.txt`: earlier iteration Windows pipeline attempt.
 
 ## Assumptions
 
