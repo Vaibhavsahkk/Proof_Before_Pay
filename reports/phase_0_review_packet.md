@@ -19,6 +19,9 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Clean-clone execution verified su
 - Modified `verify.sh` and `verify.ps1` to use a relative path (`./scripts/verify_container_security.sh`) to prevent MSYS2 path conversion issues inside Git Bash.
 - Resolved 218-character filename issue breaking default Windows git clones by renaming the image to `sources/hackathon_announcement.png`.
 - Captured missing adversarial raw evidence. Created `evidence/phase_0/clean_clone_adversarial_execution.txt` from a true `%TEMP%` clean clone and recorded its exact hash relation.
+- `scripts/generate_final_proof.ps1` now audits the exact candidate tree and fails closed if future-phase directories contain anything beyond approved placeholders, if unapproved code files exist, or if production source contains Phase 1 domain logic.
+- `scripts/run_clean_clone_tests.ps1` launches PowerShell verifiers as child processes so their exit statements cannot terminate the parent harness before final evidence and PASS markers are recorded.
+- `.dockerignore` excludes `tmp/` so retained local audit clones cannot enter the container image.
 
 ## Current tested-candidate command results
 
@@ -39,16 +42,17 @@ Result: **READY FOR EXTERNAL CHATGPT REVIEW**. Clean-clone execution verified su
 | Current 17-test suite | PASS, exit 0 |
 | Full `verify.sh` pipeline under Git Bash on Windows | PASS, exit 0; 17 tests passed |
 | Clean-clone reproduction | PASS, exit 0 on clone and all tests |
+| Phase 1 contamination audit | PASS against exact tested candidate; placeholder allowlist, code-file allowlist, and production-source content scan all passed |
 | Explicit `git add` of reviewed files | PASS, exit 0 |
 | Staged diff `git diff --cached --check` | PASS, exit 0 |
 
 ## Current raw evidence
 
-- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `e53b5f6601d2ff50ce98f047fbadba3a62e51aca`. It is current and correct.
-- `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `EF02B97A6D593BB5B8955632BDF088F1DBC980A0215B4D4B9C0D4ACD2838E145`). It is current and correct.
+- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `49358817c8481ca0bf3eaa6b5b1d2ddaa015cf96`. It is current and correct.
+- `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `7020AD0A92CCD2A6E974D97095C35B5CB4E065E797749AE543526467F93E473D`). It is current and correct.
 - `evidence/phase_0/clean_clone_post_test_audit.txt`: current post-test excerpt with provenance.
-- `evidence/phase_0/adversarial_execution.txt`: current local execution.
-- `evidence/phase_0/pipeline_execution.txt`: current local execution.
+- `evidence/phase_0/adversarial_execution.txt`: historical local execution; not used as the current clean-clone decision artifact.
+- `evidence/phase_0/pipeline_execution.txt`: historical local execution; not used as the current clean-clone decision artifact.
 
 ## Assumptions
 
