@@ -65,8 +65,9 @@ Phase 2 remains unauthorized until the exact approval verdict is received.
 
 ## Integrity hashes
 
-- `evidence/phase_1/SHA256_MANIFEST.txt` SHA-256: `01AD1525F5D7F16416FC62C8B348A719268DE6AF5136FEA5E80A82D7741419E4`
+- `evidence/phase_1/SHA256_MANIFEST.txt` exact Git-blob/archive SHA-256: `EEF0BDF46D385F9BC47E14AF4E188DACE2B2E03B9510793E62D04706E03DAABE`
 - `evidence/phase_1/final_clean_clone_execution.txt` SHA-256: `218247B6DD0DCF1AE35614348396208CE8732022FB65B3C9FAB48A54112F195B`
+- The Windows working-tree copy of `SHA256_MANIFEST.txt` uses CRLF and hashes to `01AD1525F5D7F16416FC62C8B348A719268DE6AF5136FEA5E80A82D7741419E4`; that host-specific hash is not the immutable Git/archive provenance hash.
 - The manifest lists every benchmark schema, public case, hidden ground-truth case, and the rulebook. Missing, extra, duplicate, malformed, or hash-mismatched entries fail verification.
 
 ## Evidence provenance
