@@ -44,8 +44,8 @@ Result: **READY FOR LOCAL CHATGPT RE-AUDIT**. Clean-clone execution verified suc
 
 ## Current raw evidence
 
-- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `b767bae637c6955516f2140a11515d404601fdfc`. It is current and correct.
-- `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `6334C3A6C8F5730217EA2BF1B4D327EE485F00754C42018B1F7C57C25F904EFD`). It is current and correct.
+- `evidence/phase_0/clean_clone_execution.txt`: current clean-clone validation log for https://github.com/Vaibhavsahkk/Proof_Before_Pay.git at tested candidate `e007a401d4e9a723ae8c8345a204a6bdabaca1ea`. It is current and correct.
+- `evidence/phase_0/clean_clone_adversarial_execution.txt`: current detailed adversarial output (SHA-256: `D9F187A9DE78511DA030EF4B63F308C79CE1376E4761309247F5B10EB72F9AE7`). It is current and correct.
 - `evidence/phase_0/clean_clone_post_test_audit.txt`: current post-test excerpt with provenance.
 - `evidence/phase_0/adversarial_execution.txt`: current local execution.
 - `evidence/phase_0/pipeline_execution.txt`: current local execution.
