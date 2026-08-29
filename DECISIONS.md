@@ -59,3 +59,7 @@ Phase 2 run manifests use schema `phase2-baseline-run-v2` and hash UTF-8 input t
 - The affected v1 run is preserved as superseded evidence and is not used for the gate decision.
 - The accepted v2 run was generated from clean source commit `7512b9eace0e43045a406bc7cf46d76e1eb21ea7` and verified from a fresh clone.
 - This decision changes evidence portability only; it does not change benchmark cases or ground truth.
+
+## Decision 010 — Phase 2 Remediation
+
+External ChatGPT returned exactly `PHASE FAIL` for Phase 2. The baseline achieved 100% Exact Case-Level Recommendation Accuracy on the six frozen cases, meaning the maximum final-agent score is also 100% (zero measurable improvement). Phase 2 is now ACTIVE in remediation. We will design a remediation plan (`docs/PHASE_2_REMEDIATION_PLAN.md`) to expand the benchmark and/or amend the primary metric, without altering existing immutable evidence or ground truth. Phase 3+ remains locked.

@@ -11,7 +11,7 @@
 
 - Phase 0 governance and reproduction evidence: complete and externally approved.
 - Phase 1 benchmark/review packet: complete and externally approved.
-- Phase 2 baseline: ready for external review.
+- Phase 2 baseline: active in remediation following an external `PHASE FAIL` verdict.
 - Agent implementation, final evaluation, final improvement changelog, final video, and final submission audit: not started because later phases are locked.
 
 ## Submission Safety

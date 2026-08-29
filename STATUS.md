@@ -1,10 +1,10 @@
 # Project Status
 
 Current phase: Phase 2 - Fair Baseline
-Phase status: READY FOR EXTERNAL CHATGPT REVIEW
-Last completed task: Exact remote clean-clone verification passed for candidate `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`.
-Current task: External ChatGPT Phase 2 gate review.
-Next task: None authorized. Phase 3 remains locked unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
+Phase status: ACTIVE in remediation (PHASE FAIL from External ChatGPT)
+Last completed task: Received PHASE FAIL verdict from External ChatGPT due to 100% baseline accuracy leaving no room for measurable improvement.
+Current task: Document and execute Phase 2 remediation plan (docs/PHASE_2_REMEDIATION_PLAN.md).
+Next task: Expand benchmark and/or amend metrics as per remediation plan. Phase 3 remains locked unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
 Human actions required: None.
 

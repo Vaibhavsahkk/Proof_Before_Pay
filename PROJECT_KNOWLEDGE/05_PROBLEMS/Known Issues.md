@@ -2,7 +2,7 @@
 
 ## Active Gate State
 
-Phase 1 is externally approved. Phase 2 Fair Baseline is ready for external review. Phase 3+ remains locked.
+Phase 1 is externally approved. Phase 2 is ACTIVE in remediation following an external `PHASE FAIL` verdict. Phase 3+ remains locked.
 
 ## Environment-Specific Shell Invocation
 

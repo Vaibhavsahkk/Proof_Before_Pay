@@ -78,4 +78,15 @@ The first successful Flash run exposed a clean-clone failure because v1 hashed r
 Run `run_20260829_154058_02e9416b` completed six successful calls and evaluated VALID. Independent recomputation confirmed 100% exact recommendations, findings, and schema validity; unsafe PAY 0/5; no common secret patterns. Exact remote candidate `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c` passed 35 focused tests, committed-report verification, both 81-test Docker pipelines, clean Git state, and scoped cleanup.
 
 ### Current Status
-Phase 2 is READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ remains locked.
+Phase 2 was READY FOR EXTERNAL CHATGPT REVIEW. Phase 3+ remains locked.
+
+## 2026-08-29 - Phase 2 External Review and Remediation
+
+### What Changed
+External ChatGPT returned a `PHASE FAIL` verdict for Phase 2. The baseline achieved 100% Exact Case-Level Recommendation Accuracy on the frozen six-case benchmark, leaving no headroom to measure future agentic improvements (a mandatory hackathon scorecard item). Created `docs/PHASE_2_REMEDIATION_PLAN.md` mandating the expansion of the benchmark to 10 cases while keeping existing Phase 0/1 artifacts strictly frozen.
+
+### Verification
+Local inspection of the external gatekeeper verdict. The failure is recognized as a benchmark-design and experimental-validity blocker.
+
+### Current Status
+Phase 2 is ACTIVE in remediation. Phase 3+ remains strictly locked until Phase 2 is fully remediated, verified locally, and re-approved by External ChatGPT.

@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-Phase 1 is externally approved. Phase 2 has one accepted portable `gemini-3.6-flash` run with a VALID deterministic evaluation and an exact remote clean-clone PASS. Phase 2 is ready for external review, not approved. Phase 3+ remains locked.
+Phase 1 is externally approved. Phase 2 received a `PHASE FAIL` verdict from External ChatGPT due to 100% baseline accuracy leaving no headroom for agentic improvement. Phase 2 is currently ACTIVE in remediation. Phase 3+ remains strictly locked.
 
 ## Current Branch
 master
@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Phase 2 contains a baseline and fail-closed offline evaluator (6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved). Accepted run `run_20260829_154058_02e9416b` scored 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY on this benchmark. Phase 3+ is unauthorized and LOCKED.
+Phase 1 benchmark design currently has 6 frozen synthetic cases (`case_001` to `case_006`). Phase 2 baseline scored 100% accuracy on these cases, leading to a `PHASE FAIL` gate verdict. A remediation plan (`docs/PHASE_2_REMEDIATION_PLAN.md`) mandates expanding the benchmark to 10 cases without modifying existing immutable artifacts. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
@@ -37,7 +37,7 @@ Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`
 - Default Docker Compose configuration does not forward model credentials.
 
 ## Not Completed
-- Phase 2: External gate review.
+- Phase 2: Remediation (4 new cases), new baseline run, and external re-approval.
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
@@ -56,7 +56,7 @@ Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`
 - A bare `bash ./verify.sh` launched from PowerShell resolves to WSL on this host and failed before test execution; the documented Git Bash execution passes.
 
 ## Current Priorities
-Stop execution and obtain external Phase 2 review. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
+Execute the Phase 2 Remediation Plan by creating 4 new cases, verifying them, running the baseline again, and obtaining a new external Phase 2 review. Do not start Phase 3 until `PHASE APPROVED — 100%` is given for Phase 2.
 
 ## Important Files
 [[Important Files]]
