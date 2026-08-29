@@ -2,7 +2,7 @@
 
 ## Active Gate State
 
-Phase 1 is technically ready for external review but is not approved. Phase 2 remains locked.
+Phase 1 is externally approved. Phase 2 Fair Baseline is active. Phase 3+ remains locked.
 
 ## Environment-Specific Shell Invocation
 
@@ -19,4 +19,4 @@ Known documentation/usability issue; not a failure of the verified Git Bash pipe
 
 - Native macOS/Linux execution is unverified.
 - No vulnerability/CVE scanner has been run; no remediation claim is made.
-- Remote `git ls-remote` did not return within the local audit timeout. Local `HEAD` and the existing `origin/master` tracking ref both equal `adf9a1c1032df5679717acf8691691decc638f49`.
+- The actual Gemini baseline has not run, so Phase 2 metrics remain unverified.

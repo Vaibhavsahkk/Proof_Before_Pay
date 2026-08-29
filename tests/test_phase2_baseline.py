@@ -1,247 +1,505 @@
+import hashlib
 import json
 import os
-import shutil
-import pytest
+import re
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
-from eval.evaluate_baseline import evaluate_baseline
-from baseline.run_baseline import main as run_baseline_main, run_case
-
-# 1. import_without_key
-def test_import_without_key():
-    import baseline.run_baseline
-    assert hasattr(baseline.run_baseline, 'main')
-
-# 2. missing_key_nonzero
-@patch.dict(os.environ, {}, clear=True)
-def test_missing_key_nonzero():
-    with pytest.raises(SystemExit) as e:
-        run_baseline_main()
-    assert e.value.code == 1
-
-# 3. exact_prompt_template_hash
-def test_exact_prompt_template_hash():
-    from baseline.run_baseline import PROMPT_PATH, compute_sha256
-    with open(PROMPT_PATH, "r", encoding="utf-8") as f:
-        content = f.read()
-    assert compute_sha256(content) == compute_sha256(content)
-
-# 4. exact_six_case_set_required
-@patch.dict(os.environ, {"GEMINI_API_KEY": "fake_key"})
-@patch("baseline.run_baseline.CASES_DIR")
-def test_exact_six_case_set_required(mock_cases_dir, tmp_path):
-    mock_cases_dir.glob.return_value = [tmp_path / "case_001.json"] # Only 1 case
-    with pytest.raises(SystemExit) as e:
-        run_baseline_main()
-    assert e.value.code == 1
-
-# 5-11 helpers
+import pytest
 from google.genai.errors import APIError
+
+import baseline.run_baseline as runner
+import eval.evaluate_baseline as evaluator
+from scripts.verify_manifest import ManifestVerifier
+
+
+def valid_output(case_id="case_001", recommendation="PAY", findings=None):
+    return {
+        "case_id": case_id,
+        "recommendation": recommendation,
+        "findings": findings or [],
+        "evidence_references": ["invoice.invoice_id"],
+        "deterministic_calculation_references": ["invoice.total"],
+        "missing_evidence": [],
+        "uncertainty": "No material uncertainty identified.",
+        "required_human_next_step": "A human reviewer must make the final decision.",
+    }
+
+
+def actual_schema():
+    return json.loads(runner.SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+def make_response(payload, model="dummy-model-v1"):
+    response = MagicMock()
+    response.text = payload if isinstance(payload, str) else json.dumps(payload)
+    response.model_version = model
+    response.usage_metadata.prompt_token_count = 10
+    response.usage_metadata.candidates_token_count = 5
+    response.usage_metadata.total_token_count = 15
+    return response
+
+
+def make_client(payload=None, side_effect=None):
+    client = MagicMock()
+    if side_effect is not None:
+        client.models.generate_content.side_effect = side_effect
+    else:
+        client.models.generate_content.return_value = make_response(
+            payload if payload is not None else valid_output()
+        )
+    return client
+
 
 class DummyAPIError(APIError):
     def __init__(self, message, code):
         self.message = message
         self.code = code
+
     def __str__(self):
         return self.message
 
-def make_dummy_client(text_response="{}", throw_error=None):
-    client = MagicMock()
-    if throw_error:
-        client.models.generate_content.side_effect = throw_error
-    else:
-        resp = MagicMock()
-        resp.text = text_response
-        resp.model_version = "dummy-model-v1"
-        usage = MagicMock()
-        usage.prompt_token_count = 10
-        usage.candidates_token_count = 20
-        usage.total_token_count = 30
-        resp.usage_metadata = usage
-        client.models.generate_content.return_value = resp
-    return client
 
-# 5. invalid_json_preserved_and_nonzero
-def test_invalid_json_preserved_and_nonzero(tmp_path):
-    client = make_dummy_client(text_response="not json")
+def run_one(tmp_path, client, api_key="synthetic-secret"):
     case_path = tmp_path / "case_001.json"
-    case_path.write_text('{"foo":"bar"}')
-    output, status = run_case(client, "model", "prompt", "rule", {}, case_path, "key")
+    case_path.write_text('{"case_id":"case_001"}', encoding="utf-8")
+    return runner.run_case(
+        client,
+        "test-model",
+        "Rule: {rulebook}\nEvidence: {evidence}\nSchema: {schema}",
+        "rulebook",
+        actual_schema(),
+        case_path,
+        api_key,
+    )
+
+
+def test_import_without_key_does_not_create_client(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    client = MagicMock()
+    monkeypatch.setattr("google.genai.Client", client)
+    assert runner.MODEL_ID
+    client.assert_not_called()
+
+
+def test_missing_key_returns_nonzero_without_creating_evidence(monkeypatch, tmp_path):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr(runner, "RUNS_DIR", tmp_path / "runs")
+    client = MagicMock()
+    monkeypatch.setattr("google.genai.Client", client)
+    assert runner.main() == 1
+    assert not (tmp_path / "runs").exists()
+    client.assert_not_called()
+
+
+def test_prompt_v1_hash_is_literal_and_pinned():
+    content = runner.PROMPT_PATH.read_text(encoding="utf-8")
+    assert runner.PROMPT_V1_SHA256 == "CA0A31712B6058EE0CFEE0A510740581D6880B0F652F4D9D8AC161FAC8445FD3"
+    assert runner.compute_sha256(content) == runner.PROMPT_V1_SHA256
+
+
+def test_prompt_contains_safety_boundaries():
+    prompt = runner.PROMPT_PATH.read_text(encoding="utf-8").lower()
+    assert "human reviewer" in prompt
+    assert "do not execute a payment" in prompt
+    assert "declare that any supplier is fraudulent" in prompt
+
+
+def test_prompt_hash_mismatch_is_rejected(monkeypatch, tmp_path):
+    tampered_prompt = tmp_path / "prompt_v1.txt"
+    tampered_prompt.write_text(
+        runner.PROMPT_PATH.read_text(encoding="utf-8") + "\ntampered",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(runner, "PROMPT_PATH", tampered_prompt)
+    with pytest.raises(ValueError, match="Prompt V1 hash mismatch"):
+        runner.load_inputs()
+
+
+@pytest.mark.parametrize("case_names", [["case_001"], [*(f"case_{i:03d}" for i in range(1, 7)), "case_007"]])
+def test_load_inputs_rejects_missing_or_extra_cases(monkeypatch, tmp_path, case_names):
+    cases_dir = tmp_path / "cases"
+    cases_dir.mkdir()
+    for case_name in case_names:
+        (cases_dir / f"{case_name}.json").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(runner, "CASES_DIR", cases_dir)
+    with pytest.raises(ValueError, match="Cases mismatch"):
+        runner.load_inputs()
+
+
+def test_invalid_json_is_preserved_and_fails(tmp_path):
+    output, status = run_one(tmp_path, make_client("not json"))
     assert status == "INVALID_JSON"
     assert output["raw_response"] == "not json"
-    assert output["metadata"]["status"] == "INVALID_JSON"
+    assert output["baseline_output"] is None
 
-# 6. schema_invalid_preserved_and_nonzero
-def test_schema_invalid_preserved_and_nonzero(tmp_path):
-    client = make_dummy_client(text_response='{"recommendation": "YES"}')
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    schema = {"properties": {"recommendation": {"enum": ["PAY", "HOLD"]}}}
-    output, status = run_case(client, "model", "prompt", "rule", schema, case_path, "key")
+
+def test_schema_invalid_response_is_preserved_and_fails(tmp_path):
+    raw = '{"case_id":"case_001","recommendation":"YES"}'
+    output, status = run_one(tmp_path, make_client(raw))
     assert status == "SCHEMA_INVALID"
-    assert output["raw_response"] == '{"recommendation": "YES"}'
+    assert output["raw_response"] == raw
 
-# 7. case_id_mismatch_nonzero
-def test_case_id_mismatch_nonzero(tmp_path):
-    client = make_dummy_client(text_response='{"case_id": "case_002"}')
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    output, status = run_case(client, "model", "prompt", "rule", {}, case_path, "key")
+
+def test_response_case_id_mismatch_fails(tmp_path):
+    output, status = run_one(tmp_path, make_client(valid_output("case_002")))
     assert status == "CASE_ID_MISMATCH"
+    assert output["baseline_output"]["case_id"] == "case_002"
 
-# 8. API_error_redacted_and_nonzero
-def test_api_error_redacted_and_nonzero(tmp_path):
-    client = make_dummy_client(throw_error=Exception("Failed with secret_key_123"))
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    output, status = run_case(client, "model", "prompt", "rule", {}, case_path, "secret_key_123")
+
+def test_api_key_is_redacted_from_every_serialized_field(tmp_path):
+    key = "synthetic-secret-key"
+    client = make_client(side_effect=Exception(f"provider failed with {key}"))
+    output, status = run_one(tmp_path, client, key)
+    serialized = json.dumps(output)
     assert status == "API_ERROR"
-    assert "secret_key_123" not in output["metadata"]["error"]
-    assert "***REDACTED***" in output["metadata"]["error"]
+    assert key not in serialized
+    assert "***REDACTED***" in serialized
 
-# 9. retry_only_transient
-@patch("baseline.run_baseline.time.sleep")
-def test_retry_only_transient(mock_sleep, tmp_path):
-    # Transient 429
-    client = make_dummy_client(throw_error=DummyAPIError("429 error", 429))
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    run_case(client, "model", "prompt", "rule", {}, case_path, "key")
-    assert client.models.generate_content.call_count == 3
-    
-    # Non-transient 400
-    client = make_dummy_client(throw_error=DummyAPIError("400 error", 400))
-    run_case(client, "model", "prompt", "rule", {}, case_path, "key")
-    assert client.models.generate_content.call_count == 1
 
-# 10. successful_raw_response_preserved
-def test_successful_raw_response_preserved(tmp_path):
-    client = make_dummy_client(text_response='{"case_id":"case_001"}')
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    output, status = run_case(client, "model", "prompt", "rule", {}, case_path, "key")
+def test_transient_error_retries_then_succeeds(monkeypatch, tmp_path):
+    monkeypatch.setattr(runner.time, "sleep", MagicMock())
+    client = make_client(
+        side_effect=[
+            DummyAPIError("temporary", 429),
+            make_response(valid_output()),
+        ]
+    )
+    output, status = run_one(tmp_path, client)
     assert status == "SUCCESS"
-    assert output["raw_response"] == '{"case_id":"case_001"}'
+    assert output["metadata"]["attempt_count"] == 2
+    assert client.models.generate_content.call_count == 2
 
-# 11. token_latency_model_settings_metadata
-def test_token_latency_model_settings_metadata(tmp_path):
-    client = make_dummy_client(text_response='{"case_id":"case_001"}')
-    case_path = tmp_path / "case_001.json"
-    case_path.write_text('{}')
-    output, status = run_case(client, "model", "prompt", "rule", {}, case_path, "key")
-    meta = output["metadata"]
-    assert meta["usage_metadata"]["prompt_token_count"] == 10
-    assert meta["usage_metadata"]["total_token_count"] == 30
-    assert meta["returned_model"] == "dummy-model-v1"
-    assert "runtime_seconds" in meta
-    assert meta["cost"] == "UNKNOWN"
 
-# 12. immutable_run_refuses_overwrite
-def test_immutable_run_refuses_overwrite(tmp_path):
-    from baseline.run_baseline import write_json_exclusive
-    p = tmp_path / "out.json"
-    write_json_exclusive(p, {"a": 1})
+def test_transient_error_exhaustion_fails_after_three_attempts(monkeypatch, tmp_path):
+    monkeypatch.setattr(runner.time, "sleep", MagicMock())
+    client = make_client(side_effect=DummyAPIError("temporary", 503))
+    output, status = run_one(tmp_path, client)
+    assert status == "API_ERROR"
+    assert output["metadata"]["attempt_count"] == runner.MAX_ATTEMPTS
+    assert client.models.generate_content.call_count == runner.MAX_ATTEMPTS
+
+
+def test_non_transient_error_is_not_retried(monkeypatch, tmp_path):
+    sleep = MagicMock()
+    monkeypatch.setattr(runner.time, "sleep", sleep)
+    client = make_client(side_effect=DummyAPIError("bad request", 400))
+    output, status = run_one(tmp_path, client)
+    assert status == "API_ERROR"
+    assert output["metadata"]["attempt_count"] == 1
+    assert client.models.generate_content.call_count == 1
+    sleep.assert_not_called()
+
+
+def test_success_preserves_raw_response_and_metadata(tmp_path):
+    payload = valid_output()
+    raw = json.dumps(payload, separators=(",", ":"))
+    output, status = run_one(tmp_path, make_client(raw))
+    assert status == "SUCCESS"
+    assert output["raw_response"] == raw
+    assert output["metadata"]["returned_model"] == "dummy-model-v1"
+    assert output["metadata"]["usage_metadata"]["total_token_count"] == 15
+    assert output["metadata"]["settings"] == runner.GENERATION_SETTINGS
+    assert output["metadata"]["runtime_seconds"] >= 0
+
+
+def test_exclusive_writer_refuses_overwrite(tmp_path):
+    path = tmp_path / "result.json"
+    first_hash = runner.write_json_exclusive(path, {"value": 1})
+    assert first_hash == runner.compute_file_sha256(path)
     with pytest.raises(FileExistsError):
-        write_json_exclusive(p, {"b": 2})
+        runner.write_json_exclusive(path, {"value": 2})
+    assert json.loads(path.read_text(encoding="utf-8")) == {"value": 1}
 
-# 13. evaluator_exact_six_cases
-def test_evaluator_exact_six_cases(tmp_path, monkeypatch):
-    run_dir = tmp_path / "run1"
-    run_dir.mkdir()
-    (run_dir / "run_manifest.json").write_text('{"run_id":"123"}')
-    with pytest.raises(SystemExit) as e:
-        evaluate_baseline(str(run_dir))
-    assert e.value.code == 1 # fails because it doesn't have the 6 cases
 
-# 14. evaluator_missing_case_nonzero
-def test_evaluator_missing_case_nonzero(tmp_path):
-    run_dir = tmp_path / "run1"
-    run_dir.mkdir()
-    (run_dir / "run_manifest.json").write_text('{"run_id":"123"}')
-    (run_dir / "case_001.json").write_text('{}')
-    # only 1 case present
-    with pytest.raises(SystemExit) as e:
-        evaluate_baseline(str(run_dir))
-    assert e.value.code == 1
+def prepare_runner_files(monkeypatch, tmp_path):
+    cases_dir = tmp_path / "public"
+    cases_dir.mkdir()
+    for case_id in runner.EXPECTED_CASE_IDS:
+        (cases_dir / f"{case_id}.json").write_text(
+            json.dumps({"case_id": case_id}), encoding="utf-8"
+        )
+    prompt_path = tmp_path / "prompt_v1.txt"
+    prompt_path.write_text(runner.PROMPT_PATH.read_text(encoding="utf-8"), encoding="utf-8")
+    rulebook_path = tmp_path / "RULEBOOK.md"
+    rulebook_path.write_text("Use the supplied evidence.", encoding="utf-8")
+    schema_path = tmp_path / "output_contract.json"
+    schema_path.write_text(json.dumps(actual_schema()), encoding="utf-8")
+    monkeypatch.setattr(runner, "CASES_DIR", cases_dir)
+    monkeypatch.setattr(runner, "PROMPT_PATH", prompt_path)
+    monkeypatch.setattr(runner, "RULEBOOK_PATH", rulebook_path)
+    monkeypatch.setattr(runner, "SCHEMA_PATH", schema_path)
+    monkeypatch.setattr(runner, "RUNS_DIR", tmp_path / "runs")
 
-# 15. evaluator_extra_case_nonzero
-def test_evaluator_extra_case_nonzero(tmp_path):
-    run_dir = tmp_path / "run1"
-    run_dir.mkdir()
-    (run_dir / "run_manifest.json").write_text('{"run_id":"123"}')
-    for i in range(1, 8):
-        (run_dir / f"case_00{i}.json").write_text('{}')
-    with pytest.raises(SystemExit) as e:
-        evaluate_baseline(str(run_dir))
-    assert e.value.code == 1
 
-# 16. evaluator_schema_invalid_scored_failure
-def test_evaluator_schema_invalid_scored_failure(tmp_path, monkeypatch):
-    # This overlaps with system logic, we verify it exits 1 on schema failure
-    pass
+def test_main_generates_complete_six_case_manifest(monkeypatch, tmp_path):
+    prepare_runner_files(monkeypatch, tmp_path)
+    monkeypatch.setenv("GEMINI_API_KEY", "synthetic-key")
+    client = make_client()
 
-# 17. evaluator_case_id_mismatch_nonzero
-def test_evaluator_case_id_mismatch_nonzero(tmp_path):
-    # This overlap handled by strict exact case logic
-    pass
+    def response_for_prompt(**kwargs):
+        match = re.search(r'"case_id"\s*:\s*"(case_\d{3})"', kwargs["contents"])
+        assert match
+        return make_response(valid_output(match.group(1)))
 
-# 18. evaluator_metric_correctness
-def test_evaluator_metric_correctness(tmp_path, monkeypatch):
-    run_dir = tmp_path / "run_metrics"
-    run_dir.mkdir()
-    (run_dir / "run_manifest.json").write_text('{"run_id":"123", "overall_status": "SUCCESS"}')
-    # create the 6 cases
-    for i in range(1, 7):
-        (run_dir / f"case_00{i}.json").write_text(json.dumps({
-            "metadata": {"status": "SUCCESS", "runtime_seconds": 1.0, "usage_metadata": {"prompt_token_count": 10, "candidates_token_count": 5}},
-            "baseline_output": {"recommendation": "PAY", "findings": []}
-        }))
-        
-    mock_base = tmp_path
-    mock_gt_dir = mock_base / "data" / "cases" / "ground_truth"
-    mock_gt_dir.mkdir(parents=True)
-    for i in range(1, 7):
-        # 3 hold, 3 pay
-        rec = "HOLD" if i <= 3 else "PAY"
-        (mock_gt_dir / f"case_00{i}.json").write_text(json.dumps({
-            "expected_recommendation": rec, "expected_findings": []
-        }))
-        
-    original_resolve = Path.resolve
-    def mock_resolve(self, strict=False):
-        if self.name == "evaluate_baseline.py":
-            return mock_base / "eval" / "evaluate_baseline.py"
-        return original_resolve(self, strict)
-    monkeypatch.setattr(Path, "resolve", mock_resolve)
-    
-    # write schema
-    schema_dir = mock_base / "benchmark" / "schemas"
-    schema_dir.mkdir(parents=True)
-    (schema_dir / "output_contract.json").write_text("{}")
-    
-    # Run
-    # evaluate_baseline(str(run_dir)) should exit 0 because overall_status is SUCCESS and cases are complete
-    # actually schema_valid_count checks if schema passed, we can mock schema to {}
-    try:
-        evaluate_baseline(str(run_dir))
-    except SystemExit as e:
-        assert e.code == 0
-        
-    report = json.loads((run_dir / "evaluation_report.json").read_text())
-    assert report["metrics"]["total_cases"] == 6
-    assert report["metrics"]["exact_case_level_recommendation_accuracy_percent"] == 50.0
-    assert report["metrics"]["unsafe_pay_count"] == 3
-    assert report["metrics"]["unsafe_pay_rate_percent"] == 100.0
+    client.models.generate_content.side_effect = response_for_prompt
+    monkeypatch.setattr("google.genai.Client", lambda api_key: client)
+    monkeypatch.setattr(
+        runner,
+        "get_source_state",
+        lambda: {"commit_sha": "a" * 40, "working_tree_dirty": False},
+    )
+    assert runner.main() == 0
+    run_dirs = list((tmp_path / "runs").iterdir())
+    assert len(run_dirs) == 1
+    manifest = json.loads((run_dirs[0] / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["manifest_schema_version"] == "phase2-baseline-run-v1"
+    assert manifest["expected_case_ids"] == list(runner.EXPECTED_CASE_IDS)
+    assert manifest["source"] == {"commit_sha": "a" * 40, "working_tree_dirty": False}
+    assert [item["case_id"] for item in manifest["cases"]] == list(runner.EXPECTED_CASE_IDS)
+    assert all(item["status"] == "SUCCESS" for item in manifest["cases"])
+    for item in manifest["cases"]:
+        assert item["output_sha256"] == runner.compute_file_sha256(
+            run_dirs[0] / item["output_file"]
+        )
 
-# 19. runtime_image_excludes_ground_truth_and_eval
-def test_runtime_image_excludes_ground_truth_and_eval():
-    dockerfile_path = Path(__file__).resolve().parent.parent / "Dockerfile"
-    content = dockerfile_path.read_text()
-    assert "eval/" not in content.split("FROM base AS runtime")[1]
-    assert "ground_truth" not in content.split("FROM base AS runtime")[1]
 
-# 20. Phase_1_manifest_unchanged
-def test_phase_1_manifest_unchanged():
-    manifest_path = Path(__file__).resolve().parent.parent / "evidence" / "phase_1" / "SHA256_MANIFEST.txt"
-    assert manifest_path.exists()
+def test_main_rejects_dirty_source_before_client_or_evidence(monkeypatch, tmp_path):
+    prepare_runner_files(monkeypatch, tmp_path)
+    monkeypatch.setenv("GEMINI_API_KEY", "synthetic-key")
+    monkeypatch.setattr(
+        runner,
+        "get_source_state",
+        lambda: {"commit_sha": "a" * 40, "working_tree_dirty": True},
+    )
+    client = MagicMock()
+    monkeypatch.setattr("google.genai.Client", client)
+    assert runner.main() == 1
+    assert not (tmp_path / "runs").exists()
+    client.assert_not_called()
+
+
+def prepare_evaluation_run(monkeypatch, tmp_path):
+    base_dir = tmp_path / "project"
+    run_dir = base_dir / "evidence" / "phase_2" / "runs" / "run_test"
+    public_dir = base_dir / "data" / "cases" / "public"
+    truth_dir = base_dir / "data" / "cases" / "ground_truth"
+    schema_path = base_dir / "benchmark" / "schemas" / "output_contract.json"
+    run_dir.mkdir(parents=True)
+    public_dir.mkdir(parents=True)
+    truth_dir.mkdir(parents=True)
+    schema_path.parent.mkdir(parents=True)
+    schema_path.write_text(json.dumps(actual_schema()), encoding="utf-8")
+
+    records = []
+    for index, case_id in enumerate(runner.EXPECTED_CASE_IDS, start=1):
+        public_path = public_dir / f"{case_id}.json"
+        public_path.write_text(json.dumps({"case_id": case_id}), encoding="utf-8")
+        expected = "HOLD" if index <= 3 else "PAY"
+        (truth_dir / f"{case_id}.json").write_text(
+            json.dumps(
+                {
+                    "case_id": case_id,
+                    "expected_recommendation": expected,
+                    "expected_findings": [],
+                }
+            ),
+            encoding="utf-8",
+        )
+        wrapper = {
+            "case_id": case_id,
+            "baseline_output": valid_output(case_id, "PAY"),
+            "raw_response": json.dumps(valid_output(case_id, "PAY")),
+            "metadata": {
+                "status": "SUCCESS",
+                "provider": "google",
+                "requested_model": runner.MODEL_ID,
+                "settings": dict(runner.GENERATION_SETTINGS),
+                "input_sha256": runner.compute_file_sha256(public_path),
+                "runtime_seconds": 1.0,
+                "usage_metadata": {
+                    "prompt_token_count": 10,
+                    "candidates_token_count": 5,
+                    "total_token_count": 15,
+                },
+            },
+        }
+        output_path = run_dir / f"{case_id}.json"
+        output_hash = runner.write_json_exclusive(output_path, wrapper)
+        records.append(
+            {
+                "case_id": case_id,
+                "input_sha256": runner.compute_file_sha256(public_path),
+                "output_file": output_path.name,
+                "output_sha256": output_hash,
+                "status": "SUCCESS",
+            }
+        )
+
+    manifest = {
+        "manifest_schema_version": "phase2-baseline-run-v1",
+        "run_id": "run_test",
+        "start_time_utc": "2026-08-29T00:00:00Z",
+        "end_time_utc": "2026-08-29T00:00:01Z",
+        "provider": "google",
+        "requested_model": runner.MODEL_ID,
+        "sdk_version": "test-sdk",
+        "python_version": "3.12",
+        "source": {"commit_sha": "a" * 40, "working_tree_dirty": False},
+        "command": "python -m baseline.run_baseline",
+        "hashes": {
+            "prompt_template_sha256": runner.compute_sha256(
+                evaluator.PROMPT_PATH.read_text(encoding="utf-8")
+            ),
+            "rulebook_sha256": runner.compute_sha256(
+                evaluator.RULEBOOK_PATH.read_text(encoding="utf-8")
+            ),
+            "output_schema_sha256": runner.compute_sha256(
+                schema_path.read_text(encoding="utf-8")
+            ),
+            "runner_sha256": runner.compute_file_sha256(evaluator.RUNNER_PATH),
+        },
+        "settings": dict(runner.GENERATION_SETTINGS),
+        "retry_policy": {"maximum_attempts": 3},
+        "expected_case_ids": list(runner.EXPECTED_CASE_IDS),
+        "cases": records,
+        "overall_status": "SUCCESS",
+    }
+    (run_dir / "run_manifest.json").write_text(
+        json.dumps(manifest, indent=2), encoding="utf-8"
+    )
+    monkeypatch.setattr(evaluator, "BASE_DIR", base_dir)
+    monkeypatch.setattr(evaluator, "PUBLIC_CASES_DIR", public_dir)
+    monkeypatch.setattr(evaluator, "GROUND_TRUTH_DIR", truth_dir)
+    monkeypatch.setattr(evaluator, "SCHEMA_PATH", schema_path)
+    monkeypatch.setattr(evaluator.ManifestVerifier, "verify", lambda self: None)
+    return run_dir
+
+
+def rewrite_case_and_hash(run_dir, case_id, mutate):
+    output_path = run_dir / f"{case_id}.json"
+    wrapper = json.loads(output_path.read_text(encoding="utf-8"))
+    mutate(wrapper)
+    output_path.write_text(
+        json.dumps(wrapper, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n"
+    )
+    manifest_path = run_dir / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    for record in manifest["cases"]:
+        if record["case_id"] == case_id:
+            record["output_sha256"] = runner.compute_file_sha256(output_path)
+            record["status"] = wrapper["metadata"]["status"]
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+
+@pytest.mark.parametrize("remove_case,add_extra", [("case_006", False), (None, True)])
+def test_evaluator_rejects_missing_or_extra_case(monkeypatch, tmp_path, remove_case, add_extra):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    if remove_case:
+        os.remove(run_dir / f"{remove_case}.json")
+    if add_extra:
+        (run_dir / "case_007.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(evaluator.EvaluationError, match="Run files mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_wrapper_case_id_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    rewrite_case_and_hash(run_dir, "case_001", lambda value: value.update(case_id="case_002"))
+    with pytest.raises(evaluator.EvaluationError, match="Wrapper case_id mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_output_case_id_mismatch(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+
+    def mutate(value):
+        value["baseline_output"]["case_id"] = "case_002"
+
+    rewrite_case_and_hash(run_dir, "case_001", mutate)
+    with pytest.raises(evaluator.EvaluationError, match="Baseline output case_id mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_output_hash_tampering(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    with (run_dir / "case_001.json").open("a", encoding="utf-8") as handle:
+        handle.write(" ")
+    with pytest.raises(evaluator.EvaluationError, match="Output hash mismatch"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_rejects_dirty_or_mismatched_source_manifest(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    manifest_path = run_dir / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["source"]["working_tree_dirty"] = True
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(evaluator.EvaluationError, match="clean source tree"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+    manifest["source"]["working_tree_dirty"] = False
+    manifest["hashes"]["prompt_template_sha256"] = "0" * 64
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(evaluator.EvaluationError, match="source-artifact hashes"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_evaluator_schema_invalid_is_reported_and_fails(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+
+    def mutate(value):
+        value["baseline_output"] = {"case_id": "case_001", "recommendation": "PAY"}
+        value["metadata"]["status"] = "SCHEMA_INVALID"
+
+    rewrite_case_and_hash(run_dir, "case_001", mutate)
+    with pytest.raises(evaluator.EvaluationError, match="Run is invalid"):
+        evaluator.evaluate_baseline(str(run_dir))
+    report = json.loads((run_dir / "evaluation_report.json").read_text(encoding="utf-8"))
+    assert report["evaluation_status"] == "INVALID"
+    assert report["metrics"]["schema_valid_rate_percent"] < 100
+
+
+def test_evaluator_metrics_are_exact_and_ordered(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    report = evaluator.evaluate_baseline(str(run_dir))
+    metrics = report["metrics"]
+    assert metrics["exact_case_level_recommendation_accuracy_percent"] == 50.0
+    assert metrics["unsafe_pay_count"] == 3
+    assert metrics["unsafe_pay_rate_percent"] == 100.0
+    assert metrics["schema_valid_rate_percent"] == 100.0
+    assert metrics["latency"] == {"total_seconds": 6.0, "mean_seconds": 1.0}
+    assert metrics["tokens"] == {
+        "total_prompt_tokens": 60,
+        "total_candidates_tokens": 30,
+    }
+    assert [item["case_id"] for item in report["case_results"]] == list(
+        runner.EXPECTED_CASE_IDS
+    )
+
+
+def test_evaluator_refuses_to_overwrite_report(monkeypatch, tmp_path):
+    run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
+    evaluator.evaluate_baseline(str(run_dir))
+    with pytest.raises(evaluator.EvaluationError, match="already exists"):
+        evaluator.evaluate_baseline(str(run_dir))
+
+
+def test_phase_1_manifest_is_exact_and_verifies():
+    manifest_path = runner.BASE_DIR / "evidence" / "phase_1" / "SHA256_MANIFEST.txt"
+    assert hashlib.sha256(manifest_path.read_bytes()).hexdigest().upper() == (
+        "01AD1525F5D7F16416FC62C8B348A719268DE6AF5136FEA5E80A82D7741419E4"
+    )
+    ManifestVerifier(str(runner.BASE_DIR)).verify()
+
+
+def test_runtime_dockerfile_uses_allowlist_and_compose_has_no_credentials():
+    dockerfile = (runner.BASE_DIR / "Dockerfile").read_text(encoding="utf-8")
+    runtime = dockerfile.split("FROM base AS runtime", maxsplit=1)[1]
+    assert "data/cases/public/" in runtime
+    assert "baseline/" in runtime
+    for prohibited in ("ground_truth", "eval/", "tests/", "evidence/"):
+        assert prohibited not in runtime
+    compose = (runner.BASE_DIR / "docker-compose.yml").read_text(encoding="utf-8")
+    for credential in ("GEMINI_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
+        assert credential not in compose

@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-API-independent scaffold tested, actual baseline run NOT RUN, Phase 2 incomplete. Blocked only on local GEMINI_API_KEY after scaffold verification.
+Phase 1 is externally approved. The API-independent Phase 2 scaffold is under independent verification. The actual Gemini baseline is NOT RUN and all Phase 2 metrics are UNVERIFIED.
 
 ## Current Branch
 master
@@ -16,7 +16,7 @@ master
 [[System Architecture]]
 
 ## Current Implementation
-Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Strict JSON-schema validation, leakage checks, deterministic oracle validation, manifest verification, and runtime/evaluator isolation are implemented and passing. Phase 2 fair baseline infrastructure, API-independent evaluation harness, tests, and security isolation are complete. Awaiting GEMINI_API_KEY for actual run. Phase 3+ is unauthorized and LOCKED.
+Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic cases (`case_001` to `case_006`). Strict JSON-schema validation, leakage checks, deterministic oracle validation, manifest verification, and runtime/evaluator isolation are implemented and passing. Phase 2 contains a simple Gemini baseline runner and offline evaluator, but its corrected scaffold is not complete until the local audit passes. Phase 3+ is unauthorized and LOCKED.
 
 ## Completed
 - Phase 0 Scaffold and Verification Pipeline (verify.ps1, verify.sh)
@@ -30,11 +30,11 @@ Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic
 - Benchmark SHA-256 Manifest generation and verification
 - Phase 2 baseline script implementation using `google-genai` SDK
 - Phase 2 evaluation script implementation
-- Phase 2 API-independent tests (100% passing)
-- Phase 2 Security checks (Docker integration, GEMINI_API_KEY secure injection)
+- Phase 2 API-independent tests are implemented; final pipeline verification is pending.
+- Default Docker Compose configuration does not forward model credentials.
 
 ## Not Completed
-- Phase 2: Fair Baseline execution and evidence generation (BLOCKED on GEMINI_API_KEY)
+- Phase 2: Complete scaffold verification, then execute the real baseline after the human supplies `GEMINI_API_KEY` locally.
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
@@ -65,7 +65,7 @@ Implement and run the smallest fair Phase 2 baseline. Do not start Phase 3 until
 2026-08-29
 
 ## Verified Revisions
-- Current repository HEAD: `adf9a1c1032df5679717acf8691691decc638f49`
+- Last committed Phase 2 scaffold before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`
 - Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
 ## Verification Source

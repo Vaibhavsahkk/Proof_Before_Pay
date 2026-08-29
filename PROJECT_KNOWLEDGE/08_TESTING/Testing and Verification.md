@@ -4,7 +4,7 @@
 
 Date: 2026-08-29
 
-Repository HEAD: `adf9a1c1032df5679717acf8691691decc638f49`
+Last committed Phase 2 scaffold before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`
 
 Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
@@ -17,6 +17,14 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 | `C:\Program Files\Git\bin\bash.exe ./verify.sh` | Exit 0; 46 passed; runtime isolation checks passed |
 | Bare `bash ./verify.sh` from PowerShell | Exit 1 under WSL; not accepted as passing evidence |
 | Vault secret-pattern scan | Exit 0; no matching secret material |
+
+## Phase 2 Scaffold Audit
+
+- Actual Gemini execution: NOT RUN.
+- Model performance metrics: UNVERIFIED.
+- Corrected focused API-independent suite: 29 passed with deprecation warnings treated as errors.
+- Corrected PowerShell and Git Bash Docker pipelines: each passed before commit with 73 tests at that checkpoint; final clean-commit reruns remain required.
+- Phase 3+ remains locked.
 
 ## Current Evidence Files
 

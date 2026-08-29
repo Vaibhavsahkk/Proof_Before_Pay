@@ -69,7 +69,7 @@ No work may proceed to a subsequent phase until External ChatGPT returns the exa
 Preserve scope, evidence quality, and auditability.
 
 ### Current Status
-Active. Phase 1 is awaiting external review; Phase 2 is locked.
+Active. Phase 1 is externally approved, Phase 2 Fair Baseline is active, and Phase 3+ is locked.
 
 ### Evidence
 `PLAN.md`, `STATUS.md`, `DECISIONS.md`.

@@ -10,7 +10,7 @@
 - Approximate Phase 1 verification runtime: 1-2 minutes after dependencies are available
 - API/service cost for Phases 0 and 1: $0
 
-No model API or `GEMINI_API_KEY` is required for Phase 0 or Phase 1.
+No model API or `GEMINI_API_KEY` is required for Phase 0, Phase 1, or Phase 2 scaffold verification.
 
 ## Tested toolchain
 
@@ -85,5 +85,18 @@ From the main workspace, execute the exact candidate SHA:
 Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and process exit 0. The harness first proves fail-closed behavior with a harmless forced failure, clones into a unique `%TEMP%` path, runs the strict validator, manifest verifier, focused suite, both Docker pipelines, Git hygiene checks, and clean-status check. It then removes only its exact Compose project and exact temporary clone.
 
 Current raw evidence: `evidence/phase_1/final_clean_clone_execution.txt`.
+
+## Phase 2 API-independent verification
+
+These commands do not call Gemini:
+
+```powershell
+python -m pytest -q tests/test_phase2_baseline.py
+python scripts/verify_manifest.py
+.\verify.ps1
+& 'C:\Program Files\Git\bin\bash.exe' ./verify.sh
+```
+
+The actual baseline remains NOT RUN until the scaffold is independently accepted and a human supplies `GEMINI_API_KEY` through a local environment variable. Never paste the key into chat, source files, logs, or evidence.
 
 Do not run global Docker prune commands for this workflow.

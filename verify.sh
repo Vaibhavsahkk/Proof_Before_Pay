@@ -15,6 +15,17 @@ if ! command -v git; then
 fi
 
 echo "============================================================"
+echo "STEP: Git Whitespace Integrity"
+echo "============================================================"
+git diff --check HEAD || { echo "[FAIL] Working-tree or staged diff contains whitespace errors."; exit 1; }
+if [ -z "$(git status --porcelain)" ]; then
+    git show --check --oneline HEAD >/dev/null || { echo "[FAIL] HEAD contains whitespace errors."; exit 1; }
+else
+    echo "[INFO] HEAD check deferred until the corrected working tree is committed."
+fi
+echo "[PASS] Git whitespace integrity checks passed."
+
+echo "============================================================"
 echo "STEP: Git Tracked Traces Check"
 echo "============================================================"
 # Enforce trace allowlisting: Fail if any trace outside traces/sanitized/** is tracked.
@@ -57,7 +68,10 @@ echo "[PASS] Git Tracked Traces Check completed successfully."
 echo "============================================================"
 echo "STEP: Compose Config Isolation Check"
 echo "============================================================"
-CONFIG_OUT=$(docker compose -f docker-compose.yml config)
+CONFIG_OUT=$(OPENAI_API_KEY=SENTINEL_OPENAI_API_KEY \
+    ANTHROPIC_API_KEY=SENTINEL_ANTHROPIC_API_KEY \
+    GEMINI_API_KEY=SENTINEL_GEMINI_API_KEY \
+    docker compose -f docker-compose.yml config)
 if echo "$CONFIG_OUT" | grep -q "/app/src"; then
     echo "[FAIL] Found unexpected bind mounts in docker-compose.yml."
     exit 1
@@ -68,6 +82,10 @@ if echo "$CONFIG_OUT" | grep -q "type: bind"; then
 fi
 if echo "$CONFIG_OUT" | grep -qE "OPENAI_API_KEY|ANTHROPIC_API_KEY|GEMINI_API_KEY"; then
     echo "[FAIL] Found unexpected API key credentials forwarded in docker-compose.yml."
+    exit 1
+fi
+if echo "$CONFIG_OUT" | grep -qE "SENTINEL_OPENAI_API_KEY|SENTINEL_ANTHROPIC_API_KEY|SENTINEL_GEMINI_API_KEY"; then
+    echo "[FAIL] Found an unexpected provider credential sentinel in docker-compose.yml."
     exit 1
 fi
 echo "[PASS] Compose Config Isolation Check completed successfully."
@@ -102,11 +120,19 @@ echo "============================================================"
 echo "STEP: Recursive Container Security Assertion"
 echo "============================================================"
 
-echo "Checking required public runtime inputs..."
+echo "Checking required public runtime inputs and API-free baseline import..."
 docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c \
-  "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json" \
+  "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json && test -f /app/baseline/prompt_v1.txt && test -f /app/baseline/run_baseline.py && python -c 'import baseline.run_baseline'" \
   || { echo "[FAIL] Agent runtime is missing required public inputs."; exit 1; }
 echo "[PASS] Required public runtime inputs are present."
+
+IMAGE_ENVIRONMENT=$(docker image inspect micro1-challenge-phase0:latest --format '{{json .Config.Env}}') \
+  || { echo "[FAIL] Runtime image inspection failed."; exit 1; }
+if printf '%s\n' "$IMAGE_ENVIRONMENT" | grep -qE "OPENAI_API_KEY|ANTHROPIC_API_KEY|GEMINI_API_KEY"; then
+    echo "[FAIL] Runtime image configuration contains a provider credential name."
+    exit 1
+fi
+echo "[PASS] Runtime image configuration contains no provider credentials."
 
 echo "Running forced-failure isolation test..."
 GROUND_TRUTH_PATH=$(cygpath -w "$(pwd)/data/cases/ground_truth" 2>/dev/null || printf '%s' "$(pwd)/data/cases/ground_truth")

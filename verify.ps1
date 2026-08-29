@@ -13,6 +13,33 @@ if (-not (Get-Command "git")) {
 }
 
 Write-Output "============================================================"
+Write-Output "STEP: Git Whitespace Integrity"
+Write-Output "============================================================"
+$workingTreeCheck = git diff --check HEAD 2>&1 | Out-String
+if ($LASTEXITCODE -ne 0) {
+    Write-Output $workingTreeCheck.TrimEnd()
+    Write-Error "[FAIL] Working-tree or staged diff contains whitespace errors."
+    exit 1
+}
+$treeState = git status --porcelain
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "[FAIL] Git status failed."
+    exit $LASTEXITCODE
+}
+if (-not $treeState) {
+    $committedCheck = git show --check --oneline HEAD 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output $committedCheck.TrimEnd()
+        Write-Error "[FAIL] HEAD contains whitespace errors."
+        exit 1
+    }
+}
+else {
+    Write-Output "[INFO] HEAD check deferred until the corrected working tree is committed."
+}
+Write-Output "[PASS] Git whitespace integrity checks passed."
+
+Write-Output "============================================================"
 Write-Output "STEP: Git Tracked Traces Check"
 Write-Output "============================================================"
 $trackedTraces = git ls-files "traces/"
@@ -48,18 +75,34 @@ Write-Output "[PASS] Git Tracked Traces Check completed successfully."
 Write-Output "============================================================"
 Write-Output "STEP: Compose Config Isolation Check"
 Write-Output "============================================================"
-$configOut = docker compose -f docker-compose.yml config | Out-String
-if ($LASTEXITCODE -ne 0) {
+$credentialNames = @("OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY")
+$savedCredentials = @{}
+foreach ($name in $credentialNames) {
+    $savedCredentials[$name] = [Environment]::GetEnvironmentVariable($name, "Process")
+    [Environment]::SetEnvironmentVariable($name, "SENTINEL_$name", "Process")
+}
+try {
+    $configOut = docker compose -f docker-compose.yml config | Out-String
+    $configExit = $LASTEXITCODE
+}
+finally {
+    foreach ($name in $credentialNames) {
+        [Environment]::SetEnvironmentVariable($name, $savedCredentials[$name], "Process")
+    }
+}
+if ($configExit -ne 0) {
     Write-Error "[FAIL] Docker compose config failed."
-    exit $LASTEXITCODE
+    exit $configExit
 }
 if ($configOut -match "/app/src" -or $configOut -match "type: bind") {
     Write-Error "[FAIL] Found unexpected bind mounts in docker-compose.yml."
     exit 1
 }
-if ($configOut -match "OPENAI_API_KEY" -or $configOut -match "ANTHROPIC_API_KEY" -or $configOut -match "GEMINI_API_KEY") {
-    Write-Error "[FAIL] Found unexpected API key credentials forwarded in docker-compose.yml."
-    exit 1
+foreach ($name in $credentialNames) {
+    if ($configOut -match [regex]::Escape($name) -or $configOut -match [regex]::Escape("SENTINEL_$name")) {
+        Write-Error "[FAIL] Found unexpected provider credential forwarding in docker-compose.yml."
+        exit 1
+    }
 }
 Write-Output "[PASS] Compose Config Isolation Check completed successfully."
 
@@ -113,13 +156,26 @@ Write-Output "============================================================"
 Write-Output "STEP: Recursive Container Security Assertion"
 Write-Output "============================================================"
 
-Write-Output "Checking required public runtime inputs..."
-docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json"
+Write-Output "Checking required public runtime inputs and API-free baseline import..."
+docker compose -f docker-compose.yml run --rm --entrypoint sh micro1_app -c "test -d /app/data/cases/public && test -f /app/benchmark/RULEBOOK.md && test -f /app/benchmark/schemas/public_evidence_bundle.json && test -f /app/benchmark/schemas/output_contract.json && test -f /app/baseline/prompt_v1.txt && test -f /app/baseline/run_baseline.py && python -c 'import baseline.run_baseline'"
 if ($LASTEXITCODE -ne 0) {
     Write-Error "[FAIL] Agent runtime is missing required public inputs."
     exit $LASTEXITCODE
 }
 Write-Output "[PASS] Required public runtime inputs are present."
+
+$imageEnvironment = docker image inspect micro1-challenge-phase0:latest --format '{{json .Config.Env}}' | Out-String
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "[FAIL] Runtime image inspection failed."
+    exit $LASTEXITCODE
+}
+foreach ($name in $credentialNames) {
+    if ($imageEnvironment -match [regex]::Escape($name)) {
+        Write-Error "[FAIL] Runtime image configuration contains a provider credential name."
+        exit 1
+    }
+}
+Write-Output "[PASS] Runtime image configuration contains no provider credentials."
 
 Write-Output "Running forced-failure isolation test..."
 $groundTruthPath = (Resolve-Path "data/cases/ground_truth").Path

@@ -3,13 +3,19 @@
 Current phase: Phase 2 - Fair Baseline
 Phase status: ACTIVE
 Last completed task: Phase 1 externally approved.
-Current task: Implement and run the smallest fair Phase 2 baseline.
+Current task: Independently verify and harden the API-independent Phase 2 baseline scaffold.
 Next task: None. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
 Human actions required:
 None.
 
+No Gemini request has been executed and no Phase 2 performance metric exists.
+
 ## Current verification summary
+
+- Phase 2 focused API-independent suite: PASS, 29 meaningful tests, exit 0; no Gemini call.
+- Corrected full PowerShell Docker pipeline: PASS before commit, 73 tests at that checkpoint; final clean-commit rerun pending.
+- Corrected full Git Bash Docker pipeline: PASS before commit, 73 tests at that checkpoint; final clean-commit rerun pending.
 
 - Strict Phase 1 validator: PASS, exit 0.
 - SHA-256 manifest verifier: PASS, exit 0.
@@ -39,3 +45,4 @@ None.
 - Native macOS/Linux execution is unverified; the POSIX script was executed through Git Bash on Windows.
 - No vulnerability/CVE scanner was run, and no vulnerability-remediation claim is made.
 - No Phase 3+ agent architecture is authorized. Phase 2 is Fair Baseline only.
+- Actual Gemini baseline: NOT RUN. Phase 2 performance metrics: UNVERIFIED.

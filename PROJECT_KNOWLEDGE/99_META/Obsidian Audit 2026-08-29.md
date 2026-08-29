@@ -1,5 +1,7 @@
 # Obsidian Audit - 2026-08-29
 
+> Historical snapshot. Gate-state statements below describe the time of this audit and are superseded by `00_HOME/Current Project State.md`, `STATUS.md`, and `DECISIONS.md`.
+
 ## Post-Fix Verdict
 
 - Obsidian setup status: PASS.
@@ -46,5 +48,5 @@
 
 - Native macOS/Linux execution remains unverified.
 - No vulnerability/CVE scanner has been run.
-- External ChatGPT has not approved Phase 1.
+- At the time of this historical audit, External ChatGPT had not approved Phase 1. Phase 1 was approved later.
 - Knowledge changes are intentionally not committed automatically; Git review is required before the executor commits them.

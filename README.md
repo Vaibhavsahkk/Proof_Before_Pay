@@ -20,7 +20,7 @@ Phase 1 is externally approved.
 
 Phase 2 - Fair Baseline - is the only active phase. Phase 3+ remains locked.
 
-The current repository implements the benchmark, deterministic oracle, validation, evidence, and isolated runtime/verifier infrastructure, and will now implement the fair baseline.
+The repository contains the frozen benchmark and an API-independent Phase 2 baseline/evaluator scaffold. The scaffold is being verified; no real Gemini baseline run or Phase 2 metric is claimed yet.
 
 ## Source of Truth
 
@@ -48,7 +48,7 @@ The Dockerfile uses separate targets:
 - PowerShell on Windows.
 - Git Bash for the verified Windows POSIX-like pipeline.
 
-No model API or API key is required for Phase 0 or Phase 1.
+No model API or API key is required for Phase 0, Phase 1, or the API-independent Phase 2 verification. A real Phase 2 baseline run will require `GEMINI_API_KEY` supplied only through the local environment.
 
 ## Verification
 
@@ -70,7 +70,7 @@ From PowerShell, explicitly invoke Git Bash to avoid accidentally selecting WSL:
 & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh
 ```
 
-Expected full result for each verified pipeline: 46 tests pass, followed by `ALL VERIFICATION STEPS PASSED`. The pipelines also validate schemas, oracle results, the frozen manifest, smoke execution, runtime inputs, non-root execution, and ground-truth/evaluator isolation.
+The full result is accepted only when every collected test passes, the command exits 0, and `ALL VERIFICATION STEPS PASSED` is printed. The pipelines also validate schemas, oracle results, the frozen manifest, smoke execution, runtime inputs, non-root execution, credential isolation, and ground-truth/evaluator isolation.
 
 Focused deterministic checks:
 
@@ -91,6 +91,8 @@ See `REPRODUCE.md` for the clean-clone workflow and tested toolchain. Native mac
 - `reports/phase_1_review_packet.md`
 
 Historical files prefixed with `superseded_` are retained for audit history and are not current decision evidence.
+
+Phase 2 model outputs and metrics do not exist yet. Files under `evidence/phase_2/runs/` are valid evidence only when produced by the real runner from a clean committed source state and accepted by the evaluator.
 
 ## Development Mode
 
