@@ -21,7 +21,7 @@ flowchart TD
 ```
 
 ## Agent Architecture
-The Phase 2 baseline is intentionally one pinned `gemini-3.6-flash` call per case, without agent tools. Its accepted six-case run and clean-clone gate are verified. Phase 3+ architecture remains locked.
+The Phase 2 baseline is intentionally 6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; only final successful raw responses preserved; no tools. Its accepted six-case run and clean-clone gate are verified. Phase 3+ architecture remains locked.
 
 ## Integrations
 - Docker Engine for containerized execution.

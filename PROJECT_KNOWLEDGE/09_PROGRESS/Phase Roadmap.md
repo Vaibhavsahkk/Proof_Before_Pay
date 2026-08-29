@@ -18,7 +18,7 @@ Current evidence: 6 synthetic cases, deterministic oracle, manifest verifier, 29
 
 Status: READY FOR EXTERNAL CHATGPT REVIEW.
 
-After approval only: record exact provider/model/version, prompt, tools, settings, raw outputs, evaluator outputs, runtime, and cost. Use the frozen Phase 1 cases without changes.
+Observed completed Phase 2 facts: recorded exact provider/model/version, prompt, tools, settings, raw outputs, evaluator outputs, runtime, and cost. Used the frozen Phase 1 cases without changes.
 
 ## Phase 3 - Failure Analysis
 

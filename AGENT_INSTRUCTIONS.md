@@ -15,7 +15,7 @@ Read:
 9. the relevant sections of `sources/Idea to work.txt`
 
 ## Current authorization
-Phase 0 is externally approved. Phase 1 is the only authorized implementation scope. Phase 2 remains locked until External ChatGPT approves Phase 1 with the exact verdict `PHASE APPROVED — 100%`.
+Phase 0 and Phase 1 externally approved; Phase 2 Fair Baseline is the only current authorized phase and is READY FOR EXTERNAL CHATGPT REVIEW; Phase 3+ locked until exact external Phase 2 approval.
 
 ## Rules
 - Never guess.
