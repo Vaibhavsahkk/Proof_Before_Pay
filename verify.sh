@@ -82,10 +82,10 @@ echo "============================================================"
 echo "STEP: Automated Test Suite Execution (Docker-driven)"
 echo "============================================================"
 echo "Running tests inside container..."
-docker compose -f docker-compose.yml run --rm micro1_app pytest || { echo "[FAIL] Pytest execution failed."; exit 1; }
+docker compose -f docker-compose.yml run --rm micro1_app sh -c "pip install --user -r requirements-dev.txt && python -m pytest -q" || { echo "[FAIL] Pytest execution failed."; exit 1; }
 
 echo "Running Phase 1 Schema Validator..."
-docker compose -f docker-compose.yml run --rm micro1_app python scripts/validate_phase1.py || { echo "[FAIL] Phase 1 Validator failed."; exit 1; }
+docker compose -f docker-compose.yml run --rm micro1_app sh -c "python scripts/validate_phase1.py" || { echo "[FAIL] Phase 1 Validator failed."; exit 1; }
 
 echo "[PASS] Automated Test Suite Execution completed successfully."
 

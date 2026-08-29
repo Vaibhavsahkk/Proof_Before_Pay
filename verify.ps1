@@ -77,7 +77,7 @@ Write-Output "============================================================"
 Write-Output "STEP: Automated Test Suite Execution (Docker-driven)"
 Write-Output "============================================================"
 Write-Output "Running tests inside container..."
-$pytestExit = Run-DockerCommand -Command "python -m pytest -q"
+$pytestExit = Run-DockerCommand -Command "sh -c `"pip install --user -r requirements-dev.txt && python -m pytest -q`""
 if ($pytestExit -ne 0) {
     Write-Error "[FAIL] Pytest execution failed with exit code $pytestExit"
     exit $pytestExit
