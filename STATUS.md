@@ -2,8 +2,8 @@
 
 Current phase: Phase 2 - Fair Baseline
 Phase status: ACTIVE
-Last completed task: Phase 2 API-independent scaffold hardened and verified at `95cebd1`.
-Current task: Prepare the real six-case Gemini baseline run from a clean committed source state.
+Last completed task: Phase 2 API-independent scaffold clean-clone verification passed at `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
+Current task: Await the human-only local Gemini credential setup, then run the real six-case baseline from a clean committed source state.
 Next task: Run the offline evaluator on the immutable real outputs. Phase 3+ remains unauthorized unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
 
 Human actions required:
@@ -16,6 +16,7 @@ No Gemini request has been executed and no Phase 2 performance metric exists.
 - Phase 2 focused API-independent suite: PASS, 29 meaningful tests, exit 0; no Gemini call.
 - Corrected full PowerShell Docker pipeline on committed source `95cebd1`: PASS, 75 tests, exit 0.
 - Corrected full Git Bash Docker pipeline on committed source `95cebd1`: PASS, 75 tests, exit 0.
+- Phase 2 remote clean-clone gate on exact candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f`: PASS; 29 focused tests and both 75-test Docker pipelines passed, missing-key rejection produced its exact expected message and exit 1, candidate whitespace validation passed, post-test Git status was empty, and scoped cleanup passed.
 
 - Strict Phase 1 validator: PASS, exit 0.
 - SHA-256 manifest verifier: PASS, exit 0.
@@ -39,6 +40,7 @@ No Gemini request has been executed and no Phase 2 performance metric exists.
 - Benchmark integrity manifest: `evidence/phase_1/SHA256_MANIFEST.txt`.
 - Earlier Phase 1 logs are retained with `superseded_` filenames and are not used as current proof.
 - Phase 2 scaffold verification: `evidence/phase_2/scaffold_verify_powershell.txt` and `evidence/phase_2/scaffold_verify_git_bash.txt`.
+- Phase 2 scaffold clean-clone verification: `evidence/phase_2/scaffold_clean_clone_execution.txt` (normalized machine-captured log; SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`).
 
 ## Assumptions and risks
 

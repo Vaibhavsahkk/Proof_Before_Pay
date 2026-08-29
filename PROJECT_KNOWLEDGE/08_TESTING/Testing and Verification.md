@@ -4,7 +4,9 @@
 
 Date: 2026-08-29
 
-Corrected Phase 2 scaffold candidate: `95cebd1`
+Corrected Phase 2 scaffold code candidate: `95cebd1`
+
+Phase 2 exact remote clean-clone candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`
 
 Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
@@ -24,6 +26,7 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 - Model performance metrics: UNVERIFIED.
 - Corrected focused API-independent suite: 29 passed with deprecation warnings treated as errors.
 - Corrected PowerShell and Git Bash Docker pipelines: each passed on committed source `95cebd1` with 75 tests, manifest validation, credential isolation, runtime import, and ground-truth rejection.
+- Exact remote clean clone: PASS on `eac35cdb4994f917d76cde4a6ca1749957d65f3f`; 29 focused tests, both 75-test Docker pipelines, exact missing-key rejection, clean Git state, and scoped cleanup passed.
 - Phase 3+ remains locked.
 
 ## Current Evidence Files
@@ -33,6 +36,7 @@ Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 - `reports/phase_1_review_packet.md`
 - `evidence/phase_2/scaffold_verify_powershell.txt`
 - `evidence/phase_2/scaffold_verify_git_bash.txt`
+- `evidence/phase_2/scaffold_clean_clone_execution.txt` (normalized machine-captured log)
 
 Historical `superseded_` logs are retained but are not current decision evidence.
 

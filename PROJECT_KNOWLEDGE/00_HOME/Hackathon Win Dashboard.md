@@ -15,7 +15,7 @@ Winning is the goal, not a guaranteed result. Every strategic choice must improv
 - Phase 2: ACTIVE.
 - Phase 3 and later: locked.
 - Approved Phase 1 candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`.
-- Phase 2 scaffold revision before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`.
+- Phase 2 clean-clone scaffold candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
 
 ## Official 100-Point Scorecard
 
@@ -41,7 +41,7 @@ Winning is the goal, not a guaranteed result. Every strategic choice must improv
 
 ## Next Authorized Action
 
-Finish independent scaffold verification, then run the smallest fair Phase 2 baseline using real Gemini outputs. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
+After the human supplies `GEMINI_API_KEY` locally, run the smallest fair Phase 2 baseline using real Gemini outputs. Do not start Phase 3 unless the exact approval verdict is received for Phase 2.
 
 ## Links
 

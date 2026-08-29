@@ -7,7 +7,7 @@ Proof Before Pay (micro1 Agentic Workflows Hackathon 2026)
 An evidence-driven pre-payment exception investigator for small businesses. It gathers and reconciles evidence from supplier invoices, purchase orders, goods receipt records, and vendor master records to produce an evidence-linked PAY / HOLD / INVESTIGATE recommendation for a human reviewer.
 
 ## Current Status
-Phase 1 is externally approved. The API-independent Phase 2 scaffold passed the local verification suite on committed source `95cebd1`. The actual Gemini baseline is NOT RUN and all Phase 2 metrics are UNVERIFIED.
+Phase 1 is externally approved. The API-independent Phase 2 scaffold passed an exact remote clean-clone gate on committed source `eac35cdb4994f917d76cde4a6ca1749957d65f3f`. The actual Gemini baseline is NOT RUN and all Phase 2 metrics are UNVERIFIED.
 
 ## Current Branch
 master
@@ -32,10 +32,11 @@ Phase 1 is externally approved. Phase 1 benchmark design has exactly 6 synthetic
 - Phase 2 evaluation script implementation
 - Phase 2 API-independent focused suite passed 29 meaningful tests.
 - PowerShell and Git Bash Docker pipelines each passed 75 tests on committed source `95cebd1`.
+- Exact remote clean-clone Phase 2 scaffold gate passed on `eac35cdb4994f917d76cde4a6ca1749957d65f3f`; its normalized machine log is `evidence/phase_2/scaffold_clean_clone_execution.txt`.
 - Default Docker Compose configuration does not forward model credentials.
 
 ## Not Completed
-- Phase 2: Complete scaffold verification, then execute the real baseline after the human supplies `GEMINI_API_KEY` locally.
+- Phase 2: Execute the real baseline after the human supplies `GEMINI_API_KEY` locally.
 - Phase 3: Failure Analysis
 - Phase 4: Minimal Agent V1
 - Phase 5: Memory / History / Human Review
@@ -67,6 +68,7 @@ Implement and run the smallest fair Phase 2 baseline. Do not start Phase 3 until
 
 ## Verified Revisions
 - Last committed Phase 2 scaffold before current remediation: `5e9b18f4e4bdbbef8633e4e12f8f1fa8ec441f6d`
+- Phase 2 clean-clone scaffold candidate: `eac35cdb4994f917d76cde4a6ca1749957d65f3f`
 - Phase 1 tested candidate: `43ba9356aaa110113e81a446cb701bee40f0fc39`
 
 ## Verification Source

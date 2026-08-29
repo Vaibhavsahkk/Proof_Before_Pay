@@ -35,3 +35,14 @@ Obsidian displayed the project vault and folders. Repository code and both verif
 
 ### Current Status
 Vault usable; knowledge notes corrected pending Git review/commit by the executor.
+
+## 2026-08-29 - Phase 2 Scaffold Clean-Clone Gate
+
+### What Changed
+The clean-clone harness gained a Phase 2 path, exact candidate whitespace validation, exact missing-key output validation, credential-preserving child-process isolation, and scoped temporary cleanup. A cross-platform manifest hash test was corrected to pin canonical Git/archive bytes instead of a Windows CRLF worktree representation.
+
+### Verification
+The exact remote candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f` passed 29 focused Phase 2 tests, both 75-test Docker pipelines, missing-key rejection, clean post-test Git state, and cleanup. Evidence: `evidence/phase_2/scaffold_clean_clone_execution.txt`.
+
+### Current Status
+Phase 2 remains ACTIVE. Real Gemini baseline NOT RUN. Human-only local key setup is the sole current blocker. Phase 3+ remains locked.

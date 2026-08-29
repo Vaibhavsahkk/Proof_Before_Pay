@@ -97,6 +97,14 @@ python scripts/verify_manifest.py
 & 'C:\Program Files\Git\bin\bash.exe' ./verify.sh
 ```
 
+Run the exact remote clean-clone scaffold gate with:
+
+```powershell
+.\scripts\run_clean_clone_tests.ps1 -CandidateSha "eac35cdb4994f917d76cde4a6ca1749957d65f3f" -Phase "phase_2"
+```
+
+Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and exit 0. This gate verifies the candidate commit, frozen manifest, 29 focused Phase 2 tests, the exact missing-key rejection, both 75-test Docker pipelines, clean post-test Git state, and exact-project cleanup. Its current evidence is the normalized machine-captured log `evidence/phase_2/scaffold_clean_clone_execution.txt` with SHA-256 `71F2DFE5230C36F5C6F93E107BF2E5E01F65C549D8ACF6B85C3B89D784E32483`; it is not represented as byte-for-byte terminal capture.
+
 The actual baseline remains NOT RUN until the scaffold is independently accepted and a human supplies `GEMINI_API_KEY` through a local environment variable. Never paste the key into chat, source files, logs, or evidence.
 
 Do not run global Docker prune commands for this workflow.

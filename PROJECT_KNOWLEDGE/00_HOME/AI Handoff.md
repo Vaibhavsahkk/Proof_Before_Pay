@@ -30,7 +30,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## What Is In Progress
 
-- Implementing the Phase 2 Fair Baseline.
+- Waiting for human-only local `GEMINI_API_KEY` setup, then executing and evaluating the real six-case Phase 2 Fair Baseline.
 
 ## What Is Not Complete
 
@@ -38,7 +38,7 @@ Hackathon Phase 1 (Problem Scope & Benchmark Design) is APPROVED. Phase 2 (Fair 
 
 ## Known Problems
 
-- No known validation failure in tested candidate `43ba9356aaa110113e81a446cb701bee40f0fc39`.
+- No known validation failure in Phase 2 scaffold candidate `eac35cdb4994f917d76cde4a6ca1749957d65f3f`.
 - External approval for Phase 1 has been received.
 - Native macOS/Linux execution remains unverified. Git Bash on Windows is the verified POSIX-like environment.
 
