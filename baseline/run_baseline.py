@@ -20,7 +20,7 @@ SCHEMA_PATH = BASE_DIR / "benchmark" / "schemas" / "output_contract.json"
 RUNS_DIR = BASE_DIR / "evidence" / "phase_2" / "runs"
 PROMPT_PATH = Path(__file__).resolve().parent / "prompt_v1.txt"
 
-EXPECTED_CASE_IDS = tuple(f"case_{number:03d}" for number in range(1, 7))
+EXPECTED_CASE_IDS = tuple(f"case_{number:03d}" for number in range(1, 13))
 PROMPT_V1_SHA256 = "CA0A31712B6058EE0CFEE0A510740581D6880B0F652F4D9D8AC161FAC8445FD3"
 MODEL_ID = "gemini-3.6-flash"
 MAX_ATTEMPTS = 3

@@ -127,7 +127,7 @@ def test_prompt_hash_mismatch_is_rejected(monkeypatch, tmp_path):
         runner.load_inputs()
 
 
-@pytest.mark.parametrize("case_names", [["case_001"], [*(f"case_{i:03d}" for i in range(1, 7)), "case_007"]])
+@pytest.mark.parametrize("case_names", [["case_001"], [*(f"case_{i:03d}" for i in range(1, 13)), "case_013"]])
 def test_load_inputs_rejects_missing_or_extra_cases(monkeypatch, tmp_path, case_names):
     cases_dir = tmp_path / "cases"
     cases_dir.mkdir()
@@ -243,7 +243,7 @@ def prepare_runner_files(monkeypatch, tmp_path):
     monkeypatch.setattr(runner, "RUNS_DIR", tmp_path / "runs")
 
 
-def test_main_generates_complete_six_case_manifest(monkeypatch, tmp_path):
+def test_main_generates_complete_twelve_case_manifest(monkeypatch, tmp_path):
     prepare_runner_files(monkeypatch, tmp_path)
     monkeypatch.setenv("GEMINI_API_KEY", "synthetic-key")
     client = make_client()
@@ -421,13 +421,13 @@ def rewrite_case_and_hash(run_dir, case_id, mutate):
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
-@pytest.mark.parametrize("remove_case,add_extra", [("case_006", False), (None, True)])
+@pytest.mark.parametrize("remove_case,add_extra", [("case_012", False), (None, True)])
 def test_evaluator_rejects_missing_or_extra_case(monkeypatch, tmp_path, remove_case, add_extra):
     run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
     if remove_case:
         os.remove(run_dir / f"{remove_case}.json")
     if add_extra:
-        (run_dir / "case_007.json").write_text("{}", encoding="utf-8")
+        (run_dir / "case_013.json").write_text("{}", encoding="utf-8")
     with pytest.raises(evaluator.EvaluationError, match="Run files mismatch"):
         evaluator.evaluate_baseline(str(run_dir))
 
@@ -537,14 +537,14 @@ def test_evaluator_metrics_are_exact_and_ordered(monkeypatch, tmp_path):
     run_dir = prepare_evaluation_run(monkeypatch, tmp_path)
     report = evaluator.evaluate_baseline(str(run_dir))
     metrics = report["metrics"]
-    assert metrics["exact_case_level_recommendation_accuracy_percent"] == 50.0
+    assert metrics["exact_case_level_recommendation_accuracy_percent"] == 75.0
     assert metrics["unsafe_pay_count"] == 3
     assert metrics["unsafe_pay_rate_percent"] == 100.0
     assert metrics["schema_valid_rate_percent"] == 100.0
-    assert metrics["latency"] == {"total_seconds": 6.0, "mean_seconds": 1.0}
+    assert metrics["latency"] == {"total_seconds": 12.0, "mean_seconds": 1.0}
     assert metrics["tokens"] == {
-        "total_prompt_tokens": 60,
-        "total_candidates_tokens": 30,
+        "total_prompt_tokens": 120,
+        "total_candidates_tokens": 60,
     }
     assert [item["case_id"] for item in report["case_results"]] == list(
         runner.EXPECTED_CASE_IDS
@@ -587,7 +587,7 @@ def test_phase_1_manifest_canonical_hash_is_exact_and_verifies():
     manifest_path = runner.BASE_DIR / "evidence" / "phase_1" / "SHA256_MANIFEST.txt"
     canonical_bytes = manifest_path.read_bytes().replace(b"\r\n", b"\n")
     assert hashlib.sha256(canonical_bytes).hexdigest().upper() == (
-        "EEF0BDF46D385F9BC47E14AF4E188DACE2B2E03B9510793E62D04706E03DAABE"
+        "5DAB766BB230306632666261DA85A725E9C80CC7687006AA9F69EB0B1C6F3C23"
     )
     ManifestVerifier(str(runner.BASE_DIR)).verify()
 
