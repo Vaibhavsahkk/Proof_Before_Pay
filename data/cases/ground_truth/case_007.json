@@ -1,0 +1,7 @@
+{
+  "expected_recommendation": "HOLD",
+  "expected_findings": [
+    "Math Error"
+  ],
+  "case_id": "case_007"
+}

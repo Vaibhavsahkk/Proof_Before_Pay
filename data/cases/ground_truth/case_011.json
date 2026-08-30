@@ -1,0 +1,7 @@
+{
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Missing Vendor Master"
+  ],
+  "case_id": "case_011"
+}

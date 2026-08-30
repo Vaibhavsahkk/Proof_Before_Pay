@@ -1,0 +1,7 @@
+{
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Vendor Identity Mismatch"
+  ],
+  "case_id": "case_009"
+}

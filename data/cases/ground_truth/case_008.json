@@ -1,0 +1,8 @@
+{
+  "expected_recommendation": "HOLD",
+  "expected_findings": [
+    "Currency Mismatch",
+    "Invalid Currency"
+  ],
+  "case_id": "case_008"
+}

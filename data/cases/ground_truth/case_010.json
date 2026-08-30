@@ -1,0 +1,7 @@
+{
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Missing PO Line ID"
+  ],
+  "case_id": "case_010"
+}

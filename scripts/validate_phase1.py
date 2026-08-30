@@ -49,8 +49,8 @@ def validate_schemas():
 def validate_cases_count():
     public_files = sorted(glob.glob('data/cases/public/*.json'))
     gt_files = sorted(glob.glob('data/cases/ground_truth/*.json'))
-    assert len(public_files) == 6, f"Expected 6 public cases, found {len(public_files)}"
-    assert len(gt_files) == 6, f"Expected 6 ground truth cases, found {len(gt_files)}"
+    assert len(public_files) == 12, f"Expected 12 public cases, found {len(public_files)}"
+    assert len(gt_files) == 12, f"Expected 12 ground truth cases, found {len(gt_files)}"
 
     public_names = {Path(path).name for path in public_files}
     ground_truth_names = {Path(path).name for path in gt_files}
