@@ -121,3 +121,35 @@ python -m eval.evaluate_baseline evidence/phase_2/runs/<new_run_id>
 The accepted run is pinned to `gemini-3.6-flash`. The two provider failures and the CRLF-dependent v1 run are preserved but excluded from decision metrics. Never paste the API key into chat, source files, logs, or evidence.
 
 Do not run global Docker prune commands for this workflow.
+
+## Phase 4.3 Demo Hardening and Reproducibility
+
+The final end-to-end agentic workflow is invoked via the `src.main` entry point. It requires `GEMINI_API_KEY` to be set in the local environment and executes the Orchestrator over the specified AP evidence bundle.
+
+### Running the Demo
+
+To run a specific evidence bundle, use the `--file` flag:
+
+```powershell
+python -m src.main --file data/cases/public/case_001.json
+```
+
+Or on Linux/Git Bash:
+
+```bash
+python -m src.main --file data/cases/public/case_001.json
+```
+
+The output provides a structured, human-readable review panel, clearly summarizing extracted facts, identified anomalies, execution traces, and the automated "Demo Mode Action" (which translates the agent's final decision into a workflow action such as proceeding with automated clearing or halting for human review).
+
+### Traces and Auditing
+
+Every run generates a secure trace file (e.g., `traces/raw/trace_*.jsonl`). These traces are scrubbed of any sensitive information (e.g., API keys) and contain a detailed, step-by-step audit of the LLM interactions and deterministic tool outputs used during the run.
+
+### Testing Phase 4
+
+Verify the final implementation regressions and end-to-end functionality via:
+
+```powershell
+python -m pytest tests/test_phase4_1_e2e.py -v
+```

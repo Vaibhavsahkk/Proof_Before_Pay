@@ -1,0 +1,270 @@
+{
+  "case_001": {
+    "case_id": "case_001",
+    "recommendation": "PAY",
+    "findings": [],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "No material uncertainty identified.",
+    "required_human_next_step": "A human reviewer must make the final decision to approve the PAY recommendation."
+  },
+  "case_002": {
+    "case_id": "case_002",
+    "recommendation": "HOLD",
+    "findings": [
+      "Duplicate Billing"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "prior_payment_history"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The automated system detected a potential duplicate billing event due to matching invoice parameters (such as vendor, amount, or invoice number), but cannot definitively confirm whether this represents a legitimate separate transaction, a system glitch, or an unintentional double-submission.",
+    "required_human_next_step": "Compare this payment request against historical vendor payments for identical dates, invoice numbers, or amounts, and contact the submitting department or vendor to verify if this is a unique, authorized charge prior to releasing payment."
+  },
+  "case_003": {
+    "case_id": "case_003",
+    "recommendation": "HOLD",
+    "findings": [
+      "Quantity Mismatch"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "There is a discrepancy between the quantity of items billed in the payment request and the quantity specified in the corresponding purchase order or receiving report.",
+    "required_human_next_step": "Compare the invoice against the purchase order and goods receipt note (GRN), and contact the receiving department to confirm the actual quantity delivered before approving the payment."
+  },
+  "case_004": {
+    "case_id": "case_004",
+    "recommendation": "HOLD",
+    "findings": [
+      "Price Contradiction"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "There is a discrepancy between the price requested for payment and the reference price specified in the associated purchase order, contract, or standard line-item pricing.",
+    "required_human_next_step": "Cross-reference the payment request line items against the original purchase order and vendor contract terms, and contact the issuing department to clarify the discrepancy before approving the transaction."
+  },
+  "case_005": {
+    "case_id": "case_005",
+    "recommendation": "INVESTIGATE",
+    "findings": [
+      "Unverified Bank Change"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "bank_change_evidence"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The payment request incorporates updated banking details that have not undergone formal authentication, posing a risk of fraudulent fund diversion or unauthorized account modification.",
+    "required_human_next_step": "Conduct an out-of-band verification by contacting the payee directly via a trusted, previously recorded phone number to confirm the authenticity of the new bank account details before approving the transaction."
+  },
+  "case_006": {
+    "case_id": "case_006",
+    "recommendation": "HOLD",
+    "findings": [
+      "Duplicate Billing",
+      "Unverified Bank Change"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "prior_payment_history",
+      "bank_change_evidence"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The payment request presents a potential fraud or operational risk due to a possible repeated charge combined with an unconfirmed modification to the payee's banking details.",
+    "required_human_next_step": "Review historical invoices to verify if this bill was previously settled, and perform an out-of-band callback to the vendor's officially known contact to validate the new bank account details prior to releasing funds."
+  },
+  "case_007": {
+    "case_id": "case_007",
+    "recommendation": "HOLD",
+    "findings": [
+      "Math Error"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The calculated totals, line items, taxes, or discounts on the payment request do not match, creating uncertainty regarding whether this is a simple clerical mistake or deliberate amount manipulation.",
+    "required_human_next_step": "Manually recalculate all line items, tax rates, and discounts against the original invoice/supporting documentation to identify the specific calculation discrepancy and update or reject the request accordingly."
+  },
+  "case_008": {
+    "case_id": "case_008",
+    "recommendation": "HOLD",
+    "findings": [
+      "Currency Mismatch",
+      "Invalid Currency"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The automated system detected an unformatted or invalid currency code alongside a mismatch between the currency specified in the payment request and the primary currency of the associated account or invoice.",
+    "required_human_next_step": "Review the original invoice or supporting documentation to confirm the correct transaction currency, then update the request details or contact the initiator to resolve the discrepancy before re-submitting."
+  },
+  "case_009": {
+    "case_id": "case_009",
+    "recommendation": "INVESTIGATE",
+    "findings": [
+      "Vendor Identity Mismatch"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The payment details provided do not match the registered vendor identity in the master database, raising concerns about potential fraudulent invoice submission, unauthorized account changes, or misdirected funds.",
+    "required_human_next_step": "Cross-reference the submitted tax ID, banking details, and business name with the verified master vendor record, and contact the vendor directly using a trusted, pre-established phone number to confirm the payment request."
+  },
+  "case_010": {
+    "case_id": "case_010",
+    "recommendation": "INVESTIGATE",
+    "findings": [
+      "Missing PO Line ID"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "The payment request is missing a Purchase Order (PO) Line ID, making it unclear which specific item, service, or budget line from the approved PO this invoice should be billed against.",
+    "required_human_next_step": "Cross-reference the invoice line items with the original Purchase Order to identify the correct PO Line ID, update the transaction record, or contact the billing department/vendor for clarification before approving."
+  },
+  "case_011": {
+    "case_id": "case_011",
+    "recommendation": "INVESTIGATE",
+    "findings": [
+      "Missing Vendor Master"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [
+      "Missing Vendor Master"
+    ],
+    "uncertainty": "The payment request references a vendor that is not registered in the approved Vendor Master Database. It is unclear whether this is due to a data entry error, an un-onboarded legitimate vendor, or a potential fraudulent payment attempt.",
+    "required_human_next_step": "Inspect supporting documents (such as invoices or contracts) to verify the vendor's identity, confirm whether formal vendor onboarding is required, or correct the vendor identifier on the request before proceeding."
+  },
+  "case_012": {
+    "case_id": "case_012",
+    "recommendation": "PAY",
+    "findings": [],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "bank_change_evidence"
+    ],
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.sum_values",
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "missing_evidence": [],
+    "uncertainty": "No material uncertainty identified.",
+    "required_human_next_step": "A human reviewer must make the final decision to approve the PAY recommendation."
+  }
+}
