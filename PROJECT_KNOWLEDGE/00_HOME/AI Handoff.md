@@ -19,7 +19,7 @@ Build an evidence-driven pre-payment exception investigator for small businesses
 
 ## Current State
 
-Hackathon Phase 1 and Phase 2 are APPROVED. Phase 3.1, 3.2, 3.3, and 3.4 are COMPLETE. Phase 3.5 (Agent Optimization) is authorized. Phase 4+ is locked.
+Hackathon Phase 1 and Phase 2 are APPROVED. Phase 3 (3.1 to 3.5) is COMPLETE. Phase 4 (Minimal Agent V1) is authorized. Phase 5+ is locked.
 
 ## What Has Been Completed
 
@@ -29,14 +29,15 @@ Hackathon Phase 1 and Phase 2 are APPROVED. Phase 3.1, 3.2, 3.3, and 3.4 are COM
 - Phase 2 baseline script implementation, 12-case expansion, and evaluation.
 - Phase 3.1 Baseline Failure Analysis and Phase 3.2 Architecture Requirements.
 - Phase 3.3 Agentic Orchestrator and minimum viable deterministic tools implementation, supported by unit tests.
+- Phase 3.4 & 3.5 First evaluation gate review and successful mock/cache integration to bypass rate limits.
 
 ## What Is In Progress
 
-- Formal verification of Phase 3.3 implementation prior to Gate Review.
+- Formal verification of Phase 3.5 mock integration and commencement of Phase 4 (Minimal Agent V1).
 
 ## What Is Not Complete
 
-- Phase 3.5 (Agent Optimization & Mock Integration) is pending. Phase 4 through Phase 10 are unstarted/locked. Formal agentic scoring has not yet occurred.
+- Phase 4 (Minimal Agent V1) is pending benchmark scoring. Phase 5 through Phase 10 are unstarted/locked. Formal agentic scoring has not yet occurred.
 
 ## Known Problems
 
@@ -68,7 +69,7 @@ Hackathon Phase 1 and Phase 2 are APPROVED. Phase 3.1, 3.2, 3.3, and 3.4 are COM
 
 ## Current Task
 
-Execute Phase 3.5 to optimize the agent and resolve free-tier rate limitations via mock/cached integration. DO NOT START Phase 4 until Phase 3 is fully finalized.
+Execute Phase 4 to construct Minimal Agent V1 and run the official benchmark evaluation using the mock integration. DO NOT START Phase 5 until Phase 4 is fully finalized and reviewed.
 
 ## Rules For Future AI Agents
 

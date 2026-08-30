@@ -1,0 +1,4 @@
+{
+  "uncertainty": "There is a discrepancy between the price requested for payment and the reference price specified in the associated purchase order, contract, or standard line-item pricing.",
+  "required_human_next_step": "Cross-reference the payment request line items against the original purchase order and vendor contract terms, and contact the issuing department to clarify the discrepancy before approving the transaction."
+}

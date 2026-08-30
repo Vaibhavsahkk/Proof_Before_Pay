@@ -1,0 +1,56 @@
+{
+  "case_id": "case_005",
+  "invoice": {
+    "invoice_number": "INV-1005",
+    "vendor_name": "TESTAMENT SERVICES",
+    "vendor_tax_id": "TX-5555",
+    "bank_account": "ACC-9999",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SERV-E",
+        "description": "Cleaning",
+        "quantity": "1",
+        "unit_price": "200.00",
+        "line_total": "200.00"
+      }
+    ],
+    "subtotal": "200.00",
+    "tax": "0.00",
+    "total": "200.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2005",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SERV-E",
+        "quantity": "1",
+        "unit_price": "200.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3005",
+    "items": [
+      {
+        "item_id": "SERV-E",
+        "quantity_accepted": "1"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "TESTAMENT SERVICES",
+    "vendor_tax_id": "TX-5555",
+    "bank_account": "ACC-5555"
+  },
+  "prior_payment_history": [],
+  "bank_change_evidence": {
+    "old_bank_account": "ACC-5555",
+    "new_bank_account": "ACC-9999",
+    "approval_status": "PENDING",
+    "verified_by": "System"
+  }
+}

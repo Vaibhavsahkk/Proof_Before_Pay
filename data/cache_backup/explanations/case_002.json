@@ -1,0 +1,4 @@
+{
+  "uncertainty": "System identified 1 anomalies: Duplicate Billing",
+  "required_human_next_step": "Human investigation required to clear anomalies before payment."
+}

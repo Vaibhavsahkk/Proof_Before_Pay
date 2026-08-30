@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request is missing a Purchase Order (PO) Line ID, making it unclear which specific item, service, or budget line from the approved PO this invoice should be billed against.",
+  "required_human_next_step": "Cross-reference the invoice line items with the original Purchase Order to identify the correct PO Line ID, update the transaction record, or contact the billing department/vendor for clarification before approving."
+}

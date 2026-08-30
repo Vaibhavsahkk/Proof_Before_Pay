@@ -1,0 +1,4 @@
+{
+  "uncertainty": "There is a discrepancy between the quantity of items billed in the payment request and the quantity specified in the corresponding purchase order or receiving report.",
+  "required_human_next_step": "Compare the invoice against the purchase order and goods receipt note (GRN), and contact the receiving department to confirm the actual quantity delivered before approving the payment."
+}

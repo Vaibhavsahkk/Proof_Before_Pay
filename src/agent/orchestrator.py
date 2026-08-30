@@ -24,12 +24,12 @@ class AgentOrchestrator:
         try:
             # 1. OBSERVE & EXTRACT
             self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, None, "STARTED")
-            extracted_data = self.extractor.extract_evidence(raw_evidence)
+            extracted_data = self.extractor.extract_evidence(case_id, raw_evidence)
             self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, extracted_data, "SUCCESS")
             
             # 2. VERIFY (Deterministic checks)
             self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, None, "STARTED")
-            anomalies = self._run_deterministic_verification(extracted_data)
+            anomalies, calculation_refs = self._run_deterministic_verification(extracted_data)
             self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, anomalies, "SUCCESS")
 
             # 3. APPLY RULES
@@ -39,17 +39,25 @@ class AgentOrchestrator:
 
             # 4. EXPLAIN
             self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], None, "STARTED")
-            uncertainty, next_step = self.extractor.generate_explanation(rule_result["findings"])
+            uncertainty, next_step = self.extractor.generate_explanation(case_id, rule_result["findings"])
             self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], {"uncertainty": uncertainty, "next_step": next_step}, "SUCCESS")
             
-            # 5. ASSEMBLE OUTPUT
+            evidence_refs = []
+            for doc in ["invoice", "purchase_order", "goods_receipt", "vendor_master", "prior_payment_history", "bank_change_evidence"]:
+                if extracted_data.get(doc):
+                    evidence_refs.append(doc)
+
+            missing_docs_set = {"Missing PO", "Missing GRN", "Missing Vendor Master"}
+            missing_evidence = [f for f in rule_result["findings"] if f in missing_docs_set]
+
+
             output = {
                 "case_id": case_id,
                 "recommendation": rule_result["recommendation"],
                 "findings": rule_result["findings"],
-                "evidence_references": ["invoice", "purchase_order", "goods_receipt", "vendor_master", "prior_payment_history", "bank_change_evidence"],
-                "deterministic_calculation_references": ["calculator.check_equality", "calculator.multiply", "calculator.sum_values"],
-                "missing_evidence": [a for a in rule_result["findings"] if "Missing" in a],
+                "evidence_references": evidence_refs,
+                "deterministic_calculation_references": list(set(calculation_refs)),
+                "missing_evidence": missing_evidence,
                 "uncertainty": uncertainty,
                 "required_human_next_step": next_step
             }
@@ -88,8 +96,9 @@ class AgentOrchestrator:
                 "required_human_next_step": "Human review required due to system error."
             }
 
-    def _run_deterministic_verification(self, data: Dict[str, Any]) -> List[str]:
+    def _run_deterministic_verification(self, data: Dict[str, Any]) -> tuple[List[str], List[str]]:
         anomalies = []
+        calc_refs = []
         inv = data.get("invoice", {})
         po = data.get("purchase_order")
         grn = data.get("goods_receipt")
@@ -125,6 +134,7 @@ class AgentOrchestrator:
                 if EqualityChecker.is_exact_match(past.get("vendor_tax_id"), inv.get("vendor_tax_id")) and \
                    EqualityChecker.is_exact_match(past.get("invoice_number"), inv.get("invoice_number")):
                     try:
+                        calc_refs.append("calculator.check_equality")
                         if DecimalCalculator.check_equality(past.get("amount"), inv.get("total")):
                             anomalies.append("Duplicate Billing")
                     except CalculatorError:
@@ -172,6 +182,8 @@ class AgentOrchestrator:
                 line_total = item.get("line_total")
                 
                 # Math Error: qty * price != line_total
+                calc_refs.append("calculator.multiply")
+                calc_refs.append("calculator.check_equality")
                 if not DecimalCalculator.check_equality(DecimalCalculator.multiply(qty, price), line_total):
                     anomalies.append("Math Error")
                 
@@ -180,25 +192,33 @@ class AgentOrchestrator:
                 if item_id not in po_dict:
                     anomalies.append("Missing PO Line ID")
                 else:
+                    calc_refs.append("calculator.check_equality")
                     if not DecimalCalculator.check_equality(price, po_dict[item_id].get("unit_price")):
                         anomalies.append("Price Contradiction")
 
                 if item_id not in grn_dict:
                     anomalies.append("Missing GRN Line ID")
                 else:
+                    # Quantity mismatch uses numeric comparison
                     if DecimalCalculator._to_decimal(qty) > DecimalCalculator._to_decimal(grn_dict[item_id].get("quantity_accepted")):
                         anomalies.append("Quantity Mismatch")
 
             # Math Error: sum(line_totals) != subtotal
+            calc_refs.append("calculator.sum_values")
+            calc_refs.append("calculator.check_equality")
             if not DecimalCalculator.check_equality(DecimalCalculator.sum_values(line_totals), inv.get("subtotal")):
                 anomalies.append("Math Error")
 
             # Math Error: subtotal * tax_rate != tax
+            calc_refs.append("calculator.calculate_tax")
+            calc_refs.append("calculator.check_equality")
             expected_tax = DecimalCalculator.calculate_tax(inv.get("subtotal"), inv.get("tax_rate_percent"))
             if not DecimalCalculator.check_equality(expected_tax, inv.get("tax")):
                 anomalies.append("Math Error")
 
             # Math Error: subtotal + tax != total
+            calc_refs.append("calculator.sum_values")
+            calc_refs.append("calculator.check_equality")
             if not DecimalCalculator.check_equality(DecimalCalculator.sum_values([inv.get("subtotal"), inv.get("tax")]), inv.get("total")):
                 anomalies.append("Math Error")
                 
@@ -206,4 +226,4 @@ class AgentOrchestrator:
             self.logger.log_event("verify", "orchestrator", "calc", "calculator", None, str(e), "ERROR")
             anomalies.append("Math Error")
 
-        return anomalies
+        return anomalies, calc_refs

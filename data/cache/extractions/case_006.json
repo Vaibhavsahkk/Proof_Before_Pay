@@ -1,0 +1,63 @@
+{
+  "case_id": "case_006",
+  "invoice": {
+    "invoice_number": "INV-1006",
+    "vendor_name": "TESTAMENT TECHNOLOGIES",
+    "vendor_tax_id": "TX-4444",
+    "bank_account": "ACC-9999",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SOFT-1",
+        "description": "License",
+        "quantity": "1",
+        "unit_price": "5000.00",
+        "line_total": "5000.00"
+      }
+    ],
+    "subtotal": "5000.00",
+    "tax": "0.00",
+    "total": "5000.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2006",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SOFT-1",
+        "quantity": "1",
+        "unit_price": "5000.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3006",
+    "items": [
+      {
+        "item_id": "SOFT-1",
+        "quantity_accepted": "1"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "TESTAMENT TECHNOLOGIES",
+    "vendor_tax_id": "TX-4444",
+    "bank_account": "ACC-5555"
+  },
+  "prior_payment_history": [
+    {
+      "invoice_number": "INV-1006",
+      "vendor_tax_id": "TX-4444",
+      "amount": "5000.00",
+      "payment_date": "2025-02-01"
+    }
+  ],
+  "bank_change_evidence": {
+    "old_bank_account": "ACC-5555",
+    "new_bank_account": "ACC-9999",
+    "approval_status": "PENDING",
+    "verified_by": "System"
+  }
+}

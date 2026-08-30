@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request references a vendor that is not registered in the approved Vendor Master Database. It is unclear whether this is due to a data entry error, an un-onboarded legitimate vendor, or a potential fraudulent payment attempt.",
+  "required_human_next_step": "Inspect supporting documents (such as invoices or contracts) to verify the vendor's identity, confirm whether formal vendor onboarding is required, or correct the vendor identifier on the request before proceeding."
+}

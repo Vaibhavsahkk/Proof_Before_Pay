@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment details provided do not match the registered vendor identity in the master database, raising concerns about potential fraudulent invoice submission, unauthorized account changes, or misdirected funds.",
+  "required_human_next_step": "Cross-reference the submitted tax ID, banking details, and business name with the verified master vendor record, and contact the vendor directly using a trusted, pre-established phone number to confirm the payment request."
+}

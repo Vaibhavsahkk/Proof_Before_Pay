@@ -1,0 +1,10 @@
+{
+  "metrics": {
+    "total_cases": 12,
+    "exact_case_level_recommendation_accuracy_percent": 100.0,
+    "findings_correctness_percent": 100.0,
+    "unsafe_pay_rate_percent": 0.0,
+    "unsafe_pay_count": 0,
+    "total_non_pay_cases": 10
+  }
+}

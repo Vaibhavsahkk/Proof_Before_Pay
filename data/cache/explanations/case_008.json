@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The automated system detected an unformatted or invalid currency code alongside a mismatch between the currency specified in the payment request and the primary currency of the associated account or invoice.",
+  "required_human_next_step": "Review the original invoice or supporting documentation to confirm the correct transaction currency, then update the request details or contact the initiator to resolve the discrepancy before re-submitting."
+}

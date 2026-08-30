@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The calculated totals, line items, taxes, or discounts on the payment request do not match, creating uncertainty regarding whether this is a simple clerical mistake or deliberate amount manipulation.",
+  "required_human_next_step": "Manually recalculate all line items, tax rates, and discounts against the original invoice/supporting documentation to identify the specific calculation discrepancy and update or reject the request accordingly."
+}

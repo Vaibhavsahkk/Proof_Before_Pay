@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request presents a potential fraud or operational risk due to a possible repeated charge combined with an unconfirmed modification to the payee's banking details.",
+  "required_human_next_step": "Review historical invoices to verify if this bill was previously settled, and perform an out-of-band callback to the vendor's officially known contact to validate the new bank account details prior to releasing funds."
+}

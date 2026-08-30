@@ -1,0 +1,4 @@
+{
+  "uncertainty": "System identified 1 anomalies: Missing PO Line ID",
+  "required_human_next_step": "Human investigation required to clear anomalies before payment."
+}

@@ -10,8 +10,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -33,8 +33,8 @@
       "prior_payment_history"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -55,8 +55,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -77,8 +77,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -100,8 +100,8 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -125,8 +125,8 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -147,8 +147,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -170,8 +170,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -192,8 +192,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -214,8 +214,8 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -235,8 +235,8 @@
       "goods_receipt"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],
@@ -258,8 +258,8 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
       "calculator.check_equality",
+      "calculator.sum_values",
       "calculator.calculate_tax",
       "calculator.multiply"
     ],

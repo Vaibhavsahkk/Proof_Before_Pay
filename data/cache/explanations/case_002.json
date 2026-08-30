@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The automated system detected a potential duplicate billing event due to matching invoice parameters (such as vendor, amount, or invoice number), but cannot definitively confirm whether this represents a legitimate separate transaction, a system glitch, or an unintentional double-submission.",
+  "required_human_next_step": "Compare this payment request against historical vendor payments for identical dates, invoice numbers, or amounts, and contact the submitting department or vendor to verify if this is a unique, authorized charge prior to releasing payment."
+}

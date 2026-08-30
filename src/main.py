@@ -3,11 +3,13 @@ import os
 import glob
 import json
 import time
+from dotenv import load_dotenv
 from src.utils.logger import TraceLogger
 from src.utils.human_checkpoint import request_human_approval
 from src.agent.orchestrator import AgentOrchestrator
 
 def main():
+    load_dotenv()
     parser = argparse.ArgumentParser(description="micro1 Hackathon Agent Scaffold")
     parser.add_argument("--smoke", action="store_true", help="Run a smoke test")
     parser.add_argument("--run-all", action="store_true", help="Run the agent on all public cases")
@@ -47,8 +49,7 @@ def main():
             results[case_id] = result
             print(f"Result for {case_id}: {result['recommendation']} - {result['findings']}")
             if i < len(case_files) - 1:
-                print("Sleeping for 35 seconds to respect rate limits...")
-                time.sleep(35)
+                pass
             
         os.makedirs("reports", exist_ok=True)
         with open("reports/phase_3_3_results.json", "w", encoding="utf-8") as f:

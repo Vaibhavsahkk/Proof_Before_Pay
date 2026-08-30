@@ -1,0 +1,51 @@
+{
+  "invoice": {
+    "invoice_number": "INV-1003",
+    "vendor_name": "MOCK SUPPLIES LTD",
+    "vendor_tax_id": "TX-7777",
+    "bank_account": "ACC-3333",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "PART-C",
+        "description": "Metal Part",
+        "quantity": "500",
+        "unit_price": "2.00",
+        "line_total": "1000.00"
+      }
+    ],
+    "subtotal": "1000.00",
+    "tax": "100.00",
+    "total": "1100.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2003",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "PART-C",
+        "quantity": "500",
+        "unit_price": "2.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3003",
+    "items": [
+      {
+        "item_id": "PART-C",
+        "quantity_accepted": "450"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "MOCK SUPPLIES LTD",
+    "vendor_tax_id": "TX-7777",
+    "bank_account": "ACC-3333"
+  },
+  "prior_payment_history": [],
+  "bank_change_evidence": null,
+  "case_id": "case_003"
+}

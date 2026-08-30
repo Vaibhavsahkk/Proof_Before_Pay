@@ -1,0 +1,51 @@
+{
+  "invoice": {
+    "invoice_number": "INV-1001",
+    "vendor_name": "SYNTHETIC WIDGETS LLC",
+    "vendor_tax_id": "TX-9999",
+    "bank_account": "ACC-1111",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "WIDGET-A",
+        "description": "Standard Widget",
+        "quantity": "100",
+        "unit_price": "5.50",
+        "line_total": "550.00"
+      }
+    ],
+    "subtotal": "550.00",
+    "tax": "55.00",
+    "total": "605.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2001",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "WIDGET-A",
+        "quantity": "100",
+        "unit_price": "5.50"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3001",
+    "items": [
+      {
+        "item_id": "WIDGET-A",
+        "quantity_accepted": "100"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "SYNTHETIC WIDGETS LLC",
+    "vendor_tax_id": "TX-9999",
+    "bank_account": "ACC-1111"
+  },
+  "prior_payment_history": [],
+  "bank_change_evidence": null,
+  "case_id": "case_001"
+}

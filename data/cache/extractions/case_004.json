@@ -1,0 +1,51 @@
+{
+  "case_id": "case_004",
+  "invoice": {
+    "invoice_number": "INV-1004",
+    "vendor_name": "PSEUDO TECHNOLOGIES",
+    "vendor_tax_id": "TX-6666",
+    "bank_account": "ACC-4444",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "TECH-D",
+        "description": "Server Rack",
+        "quantity": "5",
+        "unit_price": "5000.00",
+        "line_total": "25000.00"
+      }
+    ],
+    "subtotal": "25000.00",
+    "tax": "2500.00",
+    "total": "27500.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-2004",
+    "currency": "USD",
+    "tax_rate_percent": "10.00",
+    "items": [
+      {
+        "item_id": "TECH-D",
+        "quantity": "5",
+        "unit_price": "4000.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-3004",
+    "items": [
+      {
+        "item_id": "TECH-D",
+        "quantity_accepted": "5"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "PSEUDO TECHNOLOGIES",
+    "vendor_tax_id": "TX-6666",
+    "bank_account": "ACC-4444"
+  },
+  "prior_payment_history": [],
+  "bank_change_evidence": null
+}

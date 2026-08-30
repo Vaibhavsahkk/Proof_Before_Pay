@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request incorporates updated banking details that have not undergone formal authentication, posing a risk of fraudulent fund diversion or unauthorized account modification.",
+  "required_human_next_step": "Conduct an out-of-band verification by contacting the payee directly via a trusted, previously recorded phone number to confirm the authenticity of the new bank account details before approving the transaction."
+}
