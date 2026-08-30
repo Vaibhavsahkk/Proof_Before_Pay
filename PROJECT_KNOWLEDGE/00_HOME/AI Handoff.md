@@ -19,29 +19,28 @@ Build an evidence-driven pre-payment exception investigator for small businesses
 
 ## Current State
 
-Hackathon Phase 1 is APPROVED. Phase 2 is ACTIVE in remediation following a PHASE FAIL verdict. Phase 3+ is locked.
+Hackathon Phase 1 and Phase 2 are APPROVED. Phase 3.1, 3.2, and 3.3 are COMPLETE. Phase 3.4 (Gate Review) is pending. Phase 4+ is locked.
 
 ## What Has Been Completed
 
 - Phase 0 Infrastructure and Governance
 - Dockerized verification pipelines (`verify.ps1`, `verify.sh`)
-- Phase 1 benchmark schemas, data generation, and deterministic ground-truth oracle validation (6 synthetic cases).
-- Container isolation and security assertion tests.
-- Portable six-case `gemini-3.6-flash` baseline run and deterministic evaluation.
-- Exact remote clean-clone verification of the accepted Phase 2 evidence.
+- Phase 1 benchmark schemas, data generation, and deterministic ground-truth oracle validation.
+- Phase 2 baseline script implementation, 12-case expansion, and evaluation.
+- Phase 3.1 Baseline Failure Analysis and Phase 3.2 Architecture Requirements.
+- Phase 3.3 Agentic Orchestrator and minimum viable deterministic tools implementation, supported by unit tests.
 
 ## What Is In Progress
 
-- External ChatGPT review of `reports/phase_2_review_packet.md`.
+- Formal verification of Phase 3.3 implementation prior to Gate Review.
 
 ## What Is Not Complete
 
-- Phase 3 through Phase 10 are unstarted/locked. No agent logic exists yet.
+- Phase 4 through Phase 10 are unstarted/locked. Formal agentic scoring has not yet occurred.
 
 ## Known Problems
 
-- No known validation failure in Phase 2 candidate `1ffb2281ff79e69d84439ab9c9ad87e853cf6e2c`.
-- External approval for Phase 1 has been received.
+- Hackathon environment API rate limits (`429 RESOURCE_EXHAUSTED`) on free tier restrict full batch processing; system correctly handles this by failing closed to `INVESTIGATE`.
 - Native macOS/Linux execution remains unverified. Git Bash on Windows is the verified POSIX-like environment.
 
 ## Important Decisions
@@ -69,7 +68,7 @@ Hackathon Phase 1 is APPROVED. Phase 2 is ACTIVE in remediation following a PHAS
 
 ## Current Task
 
-Stop implementation and request the Phase 2 external gate verdict. DO NOT START Phase 3 until the exact verdict `PHASE APPROVED — 100%` is returned.
+Stop implementation and request the Phase 3.4 external gate verdict. DO NOT START Phase 4 until the exact verdict `PHASE APPROVED — 100%` is returned for Phase 3.
 
 ## Rules For Future AI Agents
 
