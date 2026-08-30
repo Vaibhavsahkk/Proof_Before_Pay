@@ -1,0 +1,54 @@
+{
+  "baseline_output": {
+    "case_id": "case_010",
+    "deterministic_calculation_references": [
+      "100 * 5.50 = 550.00",
+      "10 * 10.00 = 100.00",
+      "550.00 + 100.00 = 650.00",
+      "650.00 * (10.00 / 100) = 65.00",
+      "650.00 + 65.00 = 715.00"
+    ],
+    "evidence_references": [
+      "invoice.items[1].item_id",
+      "purchase_order.items"
+    ],
+    "findings": [
+      "Missing PO Line ID"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify why line item WIDGET-EXTRA is billed on invoice INV-2001 but missing from purchase order PO-3001.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_010",
+  "metadata": {
+    "attempt_count": 1,
+    "cost": "UNKNOWN",
+    "error": null,
+    "full_request": "You are a simple evidence-review baseline for supplier invoices.\nAnalyze only the supplied public evidence bundle and rulebook. Do not use external tools, hidden data, or unstated facts.\nReturn a PAY, HOLD, or INVESTIGATE recommendation for a human reviewer. The recommendation is advisory: do not execute a payment, issue payment instructions, change bank details, or declare that any supplier is fraudulent.\n\n### Rulebook\n# GROUND-TRUTH RULEBOOK (Version 1.2)\n\n## Recommendation Precedence\nDeterministic precedence for resolving multiple conditions (first match wins):\n1. **HOLD** (Highest)\n2. **INVESTIGATE**\n3. **PAY** (Lowest - requires all checks to pass)\n\n## HOLD Conditions\n- **Duplicate Billing**: Exact match of `vendor_tax_id`, `invoice_number`, and total `amount` in `prior_payment_history`.\n- **Quantity Mismatch**: Any invoice item's `quantity` is greater than the accepted `quantity_accepted` in the GRN (matched by exact `item_id`).\n- **Price Contradiction**: Any invoice item's `unit_price` differs from the PO's `unit_price` by more than 0.01 (matched by exact `item_id`).\n- **Currency Mismatch**: Invoice `currency` differs from PO `currency`.\n- **Invalid Currency**: Invoice or PO `currency` is not exactly `USD`.\n- **Tax Rate Contradiction**: Invoice `tax_rate_percent` differs from PO `tax_rate_percent`.\n- **Math Error**:\n  - `quantity * unit_price` differs from `line_total` by > 0.01.\n  - Sum of `line_total`s differs from `subtotal` by > 0.01.\n  - `subtotal * (tax_rate_percent / 100)` differs from `tax` by > 0.01.\n  - `subtotal + tax` differs from `total` by > 0.01.\n\n## INVESTIGATE Conditions\n- **Missing Vendor Master**: The `vendor_master` object is null.\n- **Vendor Identity Mismatch**: Invoice `vendor_name` or `vendor_tax_id` does not exactly match the Vendor Master Record.\n- **Unverified Bank Change**: Invoice `bank_account` differs from Vendor Master `bank_account`, unless all three verification conditions hold: `old_bank_account` matches the Vendor Master account, `new_bank_account` matches the Invoice account, and `approval_status` is exactly `APPROVED`.\n- **Missing PO**: The `purchase_order` object is null.\n- **Missing GRN**: The `goods_receipt` object is null.\n- **Duplicate Line ID**: Duplicate `item_id` values in the Invoice, PO, or GRN.\n- **Missing PO Line ID**: An invoice `item_id` has no matching PO line.\n- **Missing GRN Line ID**: An invoice `item_id` has no matching GRN line.\n\n## PAY Conditions\n- All required evidence is present.\n- Identities are consistent.\n- Math checks pass exactly (with rounding tolerance).\n- No HOLD or INVESTIGATE conditions triggered.\n\n## Unambiguous Execution Rules\n1. **Line Matching**: Match by exact string `item_id`. Duplicate IDs and missing PO/GRN line matches produce the INVESTIGATE findings listed above.\n2. **Currency**: Must be exactly \"USD\".\n3. **Decimal Rules**: All math must use exact Decimal arithmetic with `ROUND_HALF_UP` and a scale of 2 (0.01). Tolerance for matching is strictly `<= 0.01`.\n4. **Vocabulary**: Recommendations are strictly advisory. Never label a supplier \"fraudulent\" or \"fraud\". Use the exact exception names provided above.\n\n\n### Evidence Bundle\n{\n  \"invoice\": {\n    \"invoice_number\": \"INV-2001\",\n    \"vendor_name\": \"SYNTHETIC WIDGETS LLC\",\n    \"vendor_tax_id\": \"TX-9999\",\n    \"bank_account\": \"ACC-1111\",\n    \"currency\": \"USD\",\n    \"tax_rate_percent\": \"10.00\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"description\": \"Standard Widget\",\n        \"quantity\": \"100\",\n        \"unit_price\": \"5.50\",\n        \"line_total\": \"550.00\"\n      },\n      {\n        \"item_id\": \"WIDGET-EXTRA\",\n        \"description\": \"Extra Widget\",\n        \"quantity\": \"10\",\n        \"unit_price\": \"10.00\",\n        \"line_total\": \"100.00\"\n      }\n    ],\n    \"subtotal\": \"650.00\",\n    \"tax\": \"65.00\",\n    \"total\": \"715.00\"\n  },\n  \"purchase_order\": {\n    \"po_number\": \"PO-3001\",\n    \"currency\": \"USD\",\n    \"tax_rate_percent\": \"10.00\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"quantity\": \"100\",\n        \"unit_price\": \"5.50\"\n      }\n    ]\n  },\n  \"goods_receipt\": {\n    \"grn_number\": \"GRN-4001\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"quantity_accepted\": \"100\"\n      },\n      {\n        \"item_id\": \"WIDGET-EXTRA\",\n        \"quantity_accepted\": \"10\"\n      }\n    ]\n  },\n  \"vendor_master\": {\n    \"vendor_name\": \"SYNTHETIC WIDGETS LLC\",\n    \"vendor_tax_id\": \"TX-9999\",\n    \"bank_account\": \"ACC-1111\"\n  },\n  \"prior_payment_history\": [],\n  \"bank_change_evidence\": null,\n  \"case_id\": \"case_010\"\n}\n\n### Output Format\nProvide your output as a JSON object adhering exactly to this schema:\n{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"case_id\": {\n      \"pattern\": \"^case_\\\\d{3}$\",\n      \"type\": \"string\"\n    },\n    \"deterministic_calculation_references\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"evidence_references\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"findings\": {\n      \"items\": {\n        \"enum\": [\n          \"Currency Mismatch\",\n          \"Invalid Currency\",\n          \"Duplicate Billing\",\n          \"Duplicate GRN Line ID\",\n          \"Duplicate Invoice Line ID\",\n          \"Duplicate PO Line ID\",\n          \"Math Error\",\n          \"Missing GRN\",\n          \"Missing GRN Line ID\",\n          \"Missing PO\",\n          \"Missing PO Line ID\",\n          \"Missing Vendor Master\",\n          \"Price Contradiction\",\n          \"Quantity Mismatch\",\n          \"Tax Rate Contradiction\",\n          \"Unverified Bank Change\",\n          \"Vendor Identity Mismatch\"\n        ],\n        \"type\": \"string\"\n      },\n      \"type\": \"array\",\n      \"uniqueItems\": true\n    },\n    \"missing_evidence\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"recommendation\": {\n      \"enum\": [\n        \"PAY\",\n        \"HOLD\",\n        \"INVESTIGATE\"\n      ],\n      \"type\": \"string\"\n    },\n    \"required_human_next_step\": {\n      \"minLength\": 1,\n      \"type\": \"string\"\n    },\n    \"uncertainty\": {\n      \"minLength\": 1,\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"case_id\",\n    \"recommendation\",\n    \"findings\",\n    \"evidence_references\",\n    \"deterministic_calculation_references\",\n    \"missing_evidence\",\n    \"uncertainty\",\n    \"required_human_next_step\"\n  ],\n  \"title\": \"Output Contract V1.2\",\n  \"type\": \"object\"\n}\n",
+    "input_hash_mode": "utf8-text-normalized-lf",
+    "input_sha256": "07329DAB9874CA0D420DFF432B147EC82C3A37F07C1FBE0BAEF361237EAEE208",
+    "provider": "google",
+    "rendered_prompt_sha256": "2817864972E9C30545AC2F8301A498FA354497EDF1DC7DD6FB930C66E497712C",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 9.760227499999928,
+    "sdk_version": "2.20.0",
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-30T09:12:15.007611Z",
+    "usage_metadata": {
+      "candidates_token_count": 274,
+      "prompt_token_count": 2015,
+      "total_token_count": 3648
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_010\",\n  \"deterministic_calculation_references\": [\n    \"100 * 5.50 = 550.00\",\n    \"10 * 10.00 = 100.00\",\n    \"550.00 + 100.00 = 650.00\",\n    \"650.00 * (10.00 / 100) = 65.00\",\n    \"650.00 + 65.00 = 715.00\"\n  ],\n  \"evidence_references\": [\n    \"invoice.items[1].item_id\",\n    \"purchase_order.items\"\n  ],\n  \"findings\": [\n    \"Missing PO Line ID\"\n  ],\n  \"missing_evidence\": [],\n  \"recommendation\": \"INVESTIGATE\",\n  \"required_human_next_step\": \"Verify why line item WIDGET-EXTRA is billed on invoice INV-2001 but missing from purchase order PO-3001.\",\n  \"uncertainty\": \"None\"\n}"
+}

@@ -1,0 +1,53 @@
+{
+  "baseline_output": {
+    "case_id": "case_007",
+    "deterministic_calculation_references": [
+      "100 * 5.50 = 550.00, which differs from line_total 600.00 by 50.00 (tolerance 0.01)",
+      "sum(line_total) = 600.00, which differs from subtotal 550.00 by 50.00 (tolerance 0.01)"
+    ],
+    "evidence_references": [
+      "invoice.items[0].quantity",
+      "invoice.items[0].unit_price",
+      "invoice.items[0].line_total",
+      "invoice.subtotal"
+    ],
+    "findings": [
+      "Math Error"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Contact vendor to request a corrected invoice rectifying the line total and subtotal calculation errors.",
+    "uncertainty": "None. Evidence contains deterministic calculation errors."
+  },
+  "case_id": "case_007",
+  "metadata": {
+    "attempt_count": 1,
+    "cost": "UNKNOWN",
+    "error": null,
+    "full_request": "You are a simple evidence-review baseline for supplier invoices.\nAnalyze only the supplied public evidence bundle and rulebook. Do not use external tools, hidden data, or unstated facts.\nReturn a PAY, HOLD, or INVESTIGATE recommendation for a human reviewer. The recommendation is advisory: do not execute a payment, issue payment instructions, change bank details, or declare that any supplier is fraudulent.\n\n### Rulebook\n# GROUND-TRUTH RULEBOOK (Version 1.2)\n\n## Recommendation Precedence\nDeterministic precedence for resolving multiple conditions (first match wins):\n1. **HOLD** (Highest)\n2. **INVESTIGATE**\n3. **PAY** (Lowest - requires all checks to pass)\n\n## HOLD Conditions\n- **Duplicate Billing**: Exact match of `vendor_tax_id`, `invoice_number`, and total `amount` in `prior_payment_history`.\n- **Quantity Mismatch**: Any invoice item's `quantity` is greater than the accepted `quantity_accepted` in the GRN (matched by exact `item_id`).\n- **Price Contradiction**: Any invoice item's `unit_price` differs from the PO's `unit_price` by more than 0.01 (matched by exact `item_id`).\n- **Currency Mismatch**: Invoice `currency` differs from PO `currency`.\n- **Invalid Currency**: Invoice or PO `currency` is not exactly `USD`.\n- **Tax Rate Contradiction**: Invoice `tax_rate_percent` differs from PO `tax_rate_percent`.\n- **Math Error**:\n  - `quantity * unit_price` differs from `line_total` by > 0.01.\n  - Sum of `line_total`s differs from `subtotal` by > 0.01.\n  - `subtotal * (tax_rate_percent / 100)` differs from `tax` by > 0.01.\n  - `subtotal + tax` differs from `total` by > 0.01.\n\n## INVESTIGATE Conditions\n- **Missing Vendor Master**: The `vendor_master` object is null.\n- **Vendor Identity Mismatch**: Invoice `vendor_name` or `vendor_tax_id` does not exactly match the Vendor Master Record.\n- **Unverified Bank Change**: Invoice `bank_account` differs from Vendor Master `bank_account`, unless all three verification conditions hold: `old_bank_account` matches the Vendor Master account, `new_bank_account` matches the Invoice account, and `approval_status` is exactly `APPROVED`.\n- **Missing PO**: The `purchase_order` object is null.\n- **Missing GRN**: The `goods_receipt` object is null.\n- **Duplicate Line ID**: Duplicate `item_id` values in the Invoice, PO, or GRN.\n- **Missing PO Line ID**: An invoice `item_id` has no matching PO line.\n- **Missing GRN Line ID**: An invoice `item_id` has no matching GRN line.\n\n## PAY Conditions\n- All required evidence is present.\n- Identities are consistent.\n- Math checks pass exactly (with rounding tolerance).\n- No HOLD or INVESTIGATE conditions triggered.\n\n## Unambiguous Execution Rules\n1. **Line Matching**: Match by exact string `item_id`. Duplicate IDs and missing PO/GRN line matches produce the INVESTIGATE findings listed above.\n2. **Currency**: Must be exactly \"USD\".\n3. **Decimal Rules**: All math must use exact Decimal arithmetic with `ROUND_HALF_UP` and a scale of 2 (0.01). Tolerance for matching is strictly `<= 0.01`.\n4. **Vocabulary**: Recommendations are strictly advisory. Never label a supplier \"fraudulent\" or \"fraud\". Use the exact exception names provided above.\n\n\n### Evidence Bundle\n{\n  \"invoice\": {\n    \"invoice_number\": \"INV-2001\",\n    \"vendor_name\": \"SYNTHETIC WIDGETS LLC\",\n    \"vendor_tax_id\": \"TX-9999\",\n    \"bank_account\": \"ACC-1111\",\n    \"currency\": \"USD\",\n    \"tax_rate_percent\": \"10.00\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"description\": \"Standard Widget\",\n        \"quantity\": \"100\",\n        \"unit_price\": \"5.50\",\n        \"line_total\": \"600.00\"\n      }\n    ],\n    \"subtotal\": \"550.00\",\n    \"tax\": \"55.00\",\n    \"total\": \"605.00\"\n  },\n  \"purchase_order\": {\n    \"po_number\": \"PO-3001\",\n    \"currency\": \"USD\",\n    \"tax_rate_percent\": \"10.00\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"quantity\": \"100\",\n        \"unit_price\": \"5.50\"\n      }\n    ]\n  },\n  \"goods_receipt\": {\n    \"grn_number\": \"GRN-4001\",\n    \"items\": [\n      {\n        \"item_id\": \"WIDGET-A\",\n        \"quantity_accepted\": \"100\"\n      }\n    ]\n  },\n  \"vendor_master\": {\n    \"vendor_name\": \"SYNTHETIC WIDGETS LLC\",\n    \"vendor_tax_id\": \"TX-9999\",\n    \"bank_account\": \"ACC-1111\"\n  },\n  \"prior_payment_history\": [],\n  \"bank_change_evidence\": null,\n  \"case_id\": \"case_007\"\n}\n\n### Output Format\nProvide your output as a JSON object adhering exactly to this schema:\n{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"case_id\": {\n      \"pattern\": \"^case_\\\\d{3}$\",\n      \"type\": \"string\"\n    },\n    \"deterministic_calculation_references\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"evidence_references\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"findings\": {\n      \"items\": {\n        \"enum\": [\n          \"Currency Mismatch\",\n          \"Invalid Currency\",\n          \"Duplicate Billing\",\n          \"Duplicate GRN Line ID\",\n          \"Duplicate Invoice Line ID\",\n          \"Duplicate PO Line ID\",\n          \"Math Error\",\n          \"Missing GRN\",\n          \"Missing GRN Line ID\",\n          \"Missing PO\",\n          \"Missing PO Line ID\",\n          \"Missing Vendor Master\",\n          \"Price Contradiction\",\n          \"Quantity Mismatch\",\n          \"Tax Rate Contradiction\",\n          \"Unverified Bank Change\",\n          \"Vendor Identity Mismatch\"\n        ],\n        \"type\": \"string\"\n      },\n      \"type\": \"array\",\n      \"uniqueItems\": true\n    },\n    \"missing_evidence\": {\n      \"items\": {\n        \"minLength\": 1,\n        \"type\": \"string\"\n      },\n      \"type\": \"array\"\n    },\n    \"recommendation\": {\n      \"enum\": [\n        \"PAY\",\n        \"HOLD\",\n        \"INVESTIGATE\"\n      ],\n      \"type\": \"string\"\n    },\n    \"required_human_next_step\": {\n      \"minLength\": 1,\n      \"type\": \"string\"\n    },\n    \"uncertainty\": {\n      \"minLength\": 1,\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"case_id\",\n    \"recommendation\",\n    \"findings\",\n    \"evidence_references\",\n    \"deterministic_calculation_references\",\n    \"missing_evidence\",\n    \"uncertainty\",\n    \"required_human_next_step\"\n  ],\n  \"title\": \"Output Contract V1.2\",\n  \"type\": \"object\"\n}\n",
+    "input_hash_mode": "utf8-text-normalized-lf",
+    "input_sha256": "465F2AC03AC2825DBF068C29BCAB96C813B1B4B1E3F86766139D793AC8CC6A62",
+    "provider": "google",
+    "rendered_prompt_sha256": "50FD9E6CAD4E2E7BA54B7DCD00261BEA812793992C2E8D63777000D0A3A7CEA1",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 7.662490199999866,
+    "sdk_version": "2.20.0",
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-30T09:11:45.880905Z",
+    "usage_metadata": {
+      "candidates_token_count": 257,
+      "prompt_token_count": 1917,
+      "total_token_count": 3311
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_007\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Math Error\"\n  ],\n  \"evidence_references\": [\n    \"invoice.items[0].quantity\",\n    \"invoice.items[0].unit_price\",\n    \"invoice.items[0].line_total\",\n    \"invoice.subtotal\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"100 * 5.50 = 550.00, which differs from line_total 600.00 by 50.00 (tolerance 0.01)\",\n    \"sum(line_total) = 600.00, which differs from subtotal 550.00 by 50.00 (tolerance 0.01)\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None. Evidence contains deterministic calculation errors.\",\n  \"required_human_next_step\": \"Contact vendor to request a corrected invoice rectifying the line total and subtotal calculation errors.\"\n}"
+}
