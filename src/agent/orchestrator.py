@@ -22,9 +22,12 @@ class AgentOrchestrator:
         CHECK COMPLETENESS -> EXPLAIN -> HUMAN ESCALATION.
         """
         try:
+            self.last_extracted_data = None
+            
             # 1. OBSERVE & EXTRACT
             self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, None, "STARTED")
             extracted_data = self.extractor.extract_evidence(case_id, raw_evidence)
+            self.last_extracted_data = extracted_data
             self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, extracted_data, "SUCCESS")
             
             # 2. VERIFY (Deterministic checks)
