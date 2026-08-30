@@ -35,7 +35,7 @@ def generate_phase2_cases():
 
     # case_008: Currency Mismatch
     c8 = get_base()
-    c8["purchase_order"]["currency"] = "EUR" 
+    c8["purchase_order"]["currency"] = "EUR"
     # Since Invoice is USD and PO is EUR, we trigger both Currency Mismatch and Invalid Currency
     cases.append({
         "id": "case_008",

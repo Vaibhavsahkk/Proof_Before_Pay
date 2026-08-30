@@ -1,7 +1,7 @@
 --- CLEAN CLONE EXECUTION (phase_1) ---
-CANDIDATE SHA: 43ba9356aaa110113e81a446cb701bee40f0fc39
-COMPOSE PROJECT: pbp_clone_3db409e1
-CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-e608f3dd5dca46eaa851852edaa53bad
+CANDIDATE SHA: e167f35118557d617ba720463a37a631d37fa691
+COMPOSE PROJECT: pbp_clone_4f652aad
+CLONE PATH: C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-524461acbd714758993cd2223e706198
 
 ========================================
 COMMAND: fail-closed harness self-test
@@ -15,645 +15,89 @@ EXIT CODE: 1
 COMMAND: git clone
 EXPECTED EXIT CODE: 0
 ========================================
-Cloning into 'C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-e608f3dd5dca46eaa851852edaa53bad'...
+Cloning into 'C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-524461acbd714758993cd2223e706198'...
 EXIT CODE: 0
 
 ========================================
-COMMAND: git checkout 43ba9356aaa110113e81a446cb701bee40f0fc39
+COMMAND: git checkout e167f35118557d617ba720463a37a631d37fa691
 EXPECTED EXIT CODE: 0
 ========================================
-Note: switching to '43ba9356aaa110113e81a446cb701bee40f0fc39'.
-
+Note: switching to 'e167f35118557d617ba720463a37a631d37fa691'.
+System.Management.Automation.RemoteException
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
 state without impacting any branches by switching back to a branch.
-
+System.Management.Automation.RemoteException
 If you want to create a new branch to retain commits you create, you may
 do so (now or later) by using -c with the switch command. Example:
-
+System.Management.Automation.RemoteException
   git switch -c <new-branch-name>
-
+System.Management.Automation.RemoteException
 Or undo this operation with:
-
+System.Management.Automation.RemoteException
   git switch -
-
+System.Management.Automation.RemoteException
 Turn off this advice by setting config variable advice.detachedHead to false
-
-HEAD is now at 43ba935 fix(evidence): normalize clean-clone log
+System.Management.Automation.RemoteException
+HEAD is now at e167f35 Phase 2.2 Benchmark Coverage Expansion
 EXIT CODE: 0
-OBSERVED CLONED HEAD: 43ba9356aaa110113e81a446cb701bee40f0fc39
+OBSERVED CLONED HEAD: e167f35118557d617ba720463a37a631d37fa691
 GIT REV-PARSE EXIT CODE: 0
 
 ========================================
-COMMAND: python scripts/validate_phase1.py
+COMMAND: git show --check candidate
 EXPECTED EXIT CODE: 0
 ========================================
-Starting Phase 1 Validation...
-[PASS] Case count validation
-[PASS] Schema validation
-[PASS] Leakage validation
-[PASS] Synthetic data validation
-Case ID                             | Derived Rec | Truth Rec   | PASS
---------------------------------------------------------------------------------
-case_001                            | PAY         | PAY         | True
-case_002                            | HOLD        | HOLD        | True
-case_003                            | HOLD        | HOLD        | True
-case_004                            | HOLD        | HOLD        | True
-case_005                            | INVESTIGATE | INVESTIGATE | True
-case_006                            | HOLD        | HOLD        | True
-[PASS] Oracle ground truth validation
-ALL PHASE 1 VALIDATIONS PASSED
-EXIT CODE: 0
-
-========================================
-COMMAND: python scripts/verify_manifest.py
-EXPECTED EXIT CODE: 0
-========================================
-Manifest verification passed.
-EXIT CODE: 0
-
-========================================
-COMMAND: pytest focused Phase 1 suite
-EXPECTED EXIT CODE: 0
-========================================
-.............................                                            [100%]
-29 passed in 0.32s
-EXIT CODE: 0
-
-========================================
-COMMAND: .\verify.ps1
-EXPECTED EXIT CODE: 0
-========================================
-Starting Micro1 Challenge Verification Pipeline (PowerShell)...
-============================================================
-STEP: Git Tracked Traces Check
-============================================================
-[PASS] Git Tracked Traces Check completed successfully.
-============================================================
-STEP: Compose Config Isolation Check
-============================================================
-[PASS] Compose Config Isolation Check completed successfully.
-============================================================
-STEP: Docker Build
-============================================================
- Image micro1-challenge-phase0:latest Building
- Image micro1-challenge-phase1-verifier:latest Building
-#1 [internal] load local bake definitions
-#1 reading from stdin 1.40kB done
-#1 DONE 0.0s
-
-#2 [phase1_verifier internal] load build definition from Dockerfile
-#2 transferring dockerfile: 1.75kB 0.0s done
-#2 DONE 0.0s
-
-#3 [phase1_verifier internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
-#3 DONE 0.0s
-
-#4 [phase1_verifier internal] load .dockerignore
-#4 transferring context:
-#4 transferring context: 187B done
-#4 DONE 0.1s
-
-#5 [phase1_verifier base 1/5] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
-#5 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
-#5 DONE 0.0s
-
-#6 [micro1_app base 2/5] WORKDIR /app
-#6 CACHED
-
-#7 [micro1_app internal] load build context
-#7 transferring context: 31.91kB 0.0s done
-#7 DONE 0.1s
-
-#8 [micro1_app base 3/5] COPY requirements.lock requirements.txt ./
-#8 DONE 0.0s
-
-#9 [phase1_verifier internal] load build context
-#9 transferring context: 151.31kB 0.1s done
-#9 DONE 0.1s
-
-#8 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
-#8 DONE 0.0s
-
-#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#10 1.587 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#10 1.675
-#10 1.675 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#10 1.675 [notice] To update, run: pip install --upgrade pip
-#10 DONE 1.8s
-
-#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#10 DONE 1.8s
-
-#11 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#11 DONE 0.3s
-
-#11 [micro1_app base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#11 DONE 0.3s
-
-#12 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
-#12 CACHED
-
-#13 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#13 CACHED
-
-#14 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#14 CACHED
-
-#15 [phase1_verifier verifier 1/9] COPY requirements-dev.txt ./
-#15 DONE 0.1s
-
-#16 [micro1_app runtime 1/5] COPY --chown=micro1user:micro1user src/ ./src/
-#16 DONE 0.1s
-
-#17 [micro1_app runtime 2/5] COPY --chown=micro1user:micro1user benchmark/RULEBOOK.md ./benchmark/RULEBOOK.md
-#17 DONE 0.1s
-
-#18 [phase1_verifier verifier 2/9] RUN pip install --no-cache-dir -r requirements-dev.txt
-#18 ...
-
-#19 [micro1_app runtime 3/5] COPY --chown=micro1user:micro1user benchmark/schemas/public_evidence_bundle.json benchmark/schemas/output_contract.json ./benchmark/schemas/
-#19 DONE 0.1s
-
-#20 [micro1_app runtime 4/5] COPY --chown=micro1user:micro1user data/cases/public/ ./data/cases/public/
-#20 DONE 0.0s
-
-#21 [micro1_app runtime 5/5] COPY --chown=micro1user:micro1user scripts/verify_container_security.sh ./scripts/verify_container_security.sh
-#21 DONE 0.0s
-
-#22 [micro1_app] exporting to image
-#22 exporting layers
-#22 exporting layers 0.5s done
-#22 exporting manifest sha256:ac4be14723319e54a91a4f21aa39af1a1424b1158c0d2ffe8b74c7411e7e7826 0.0s done
-#22 exporting config sha256:681c1a3a60bd9474e6d9de3b8752bcb5b4657064b51da2b0a26140e636d49817 0.0s done
-#22 exporting attestation manifest sha256:879416491717656a4043f71ef537f861ce6e8f86cd940e2b058cc64102a2d0ec 0.0s done
-#22 exporting manifest list sha256:2438d538da8fb8d815f9b664fbd63e18421c0d7709ad6620ecfd0ca6f769810e 0.0s done
-#22 naming to docker.io/library/micro1-challenge-phase0:latest done
-#22 unpacking to docker.io/library/micro1-challenge-phase0:latest
-#22 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.3s done
-#22 DONE 0.9s
-
-#23 [micro1_app] resolving provenance for metadata file
-#23 DONE 0.0s
-
-#18 [phase1_verifier verifier 2/9] RUN pip install --no-cache-dir -r requirements-dev.txt
-#18 0.723 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
-#18 0.785   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
-#18 0.803 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
-#18 0.816   Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
-#18 0.840 Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
-#18 0.851   Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
-#18 0.868 Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
-#18 0.876   Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
-#18 0.908 Collecting jsonschema==4.23.0 (from -r requirements-dev.txt (line 6))
-#18 0.916   Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
-#18 0.943 Collecting attrs>=22.2.0 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#18 0.961   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
-#18 0.981 Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#18 0.990   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
-#18 1.021 Collecting referencing>=0.28.4 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#18 1.031   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
-#18 1.454 Collecting rpds-py>=0.7.1 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#18 1.475   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
-#18 1.526 Collecting typing-extensions>=4.4.0 (from referencing>=0.28.4->jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#18 1.537   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
-#18 1.579 Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
-#18 1.687 Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-#18 1.695 Downloading packaging-24.1-py3-none-any.whl (53 kB)
-#18 1.748 Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
-#18 1.779 Downloading jsonschema-4.23.0-py3-none-any.whl (88 kB)
-#18 1.812 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
-#18 1.841 Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
-#18 1.874 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
-#18 1.898 Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
-#18 1.982 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
-#18 2.008 Installing collected packages: typing-extensions, rpds-py, pluggy, packaging, iniconfig, attrs, referencing, pytest, jsonschema-specifications, jsonschema
-#18 2.539 Successfully installed attrs-26.1.0 iniconfig-2.0.0 jsonschema-4.23.0 jsonschema-specifications-2025.9.1 packaging-24.1 pluggy-1.5.0 pytest-8.3.2 referencing-0.37.0 rpds-py-2026.6.3 typing-extensions-4.16.0
-#18 2.540 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#18 2.631
-#18 2.631 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#18 2.631 [notice] To update, run: pip install --upgrade pip
-#18 DONE 2.8s
-
-#24 [phase1_verifier verifier 3/9] COPY --chown=micro1user:micro1user src/ ./src/
-#24 DONE 0.0s
-
-#25 [phase1_verifier verifier 4/9] COPY --chown=micro1user:micro1user tests/ ./tests/
-#25 DONE 0.0s
-
-#26 [phase1_verifier verifier 5/9] COPY --chown=micro1user:micro1user scripts/ ./scripts/
-#26 DONE 0.0s
-
-#27 [phase1_verifier verifier 6/9] COPY --chown=micro1user:micro1user benchmark/ ./benchmark/
-#27 DONE 0.0s
-
-#28 [phase1_verifier verifier 7/9] COPY --chown=micro1user:micro1user data/ ./data/
-#28 DONE 0.0s
-
-#29 [phase1_verifier verifier 8/9] COPY --chown=micro1user:micro1user evidence/phase_1/SHA256_MANIFEST.txt ./evidence/phase_1/SHA256_MANIFEST.txt
-#29 DONE 0.0s
-
-#30 [phase1_verifier verifier 9/9] COPY --chown=micro1user:micro1user pytest.ini Dockerfile .dockerignore docker-compose.yml ./
-#30 DONE 0.1s
-
-#31 [phase1_verifier] exporting to image
-#31 exporting layers 0.4s done
-#31 exporting manifest sha256:b3746f63405d3a24280d4665fb673d777a0d307ae0203b57119096516e844701 0.0s done
-#31 exporting config sha256:ed5224d1f6ce1160d1b3d3b35edd313170388ed263b8e45d13814cbd0c29a709 done
-#31 exporting attestation manifest sha256:56e20b60bb0fecf0f3b5296b5a69cbc1d9065dc772ae183e83b864723c02bba1 0.0s done
-#31 exporting manifest list sha256:4fb1b4fbc96a4ad1ecc5ca64d6d4d8bf2da3fb35697df5a65a50c6990e08d0fe 0.0s done
-#31 naming to docker.io/library/micro1-challenge-phase1-verifier:latest done
-#31 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest
-#31 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest 0.3s done
-#31 DONE 0.7s
-
-#32 [phase1_verifier] resolving provenance for metadata file
-#32 DONE 0.0s
- Image micro1-challenge-phase0:latest Built
- Image micro1-challenge-phase1-verifier:latest Built
-[PASS] Docker Build completed successfully.
-============================================================
-STEP: Evaluator Test Suite Execution (isolated Docker target)
-============================================================
-Running tests inside evaluator-only container...
- Network pbp_clone_3db409e1_default Creating
- Network pbp_clone_3db409e1_default Created
- Container pbp_clone_3db409e1-phase1_verifier-run-70cd3c969810 Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-70cd3c969810 Created
-..............................................                           [100%]
-46 passed in 0.32s
-Running Phase 1 Schema Validator...
- Container pbp_clone_3db409e1-phase1_verifier-run-ead567a3e0e5 Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-ead567a3e0e5 Created
-Starting Phase 1 Validation...
-[PASS] Case count validation
-[PASS] Schema validation
-[PASS] Leakage validation
-[PASS] Synthetic data validation
-Case ID                             | Derived Rec | Truth Rec   | PASS
---------------------------------------------------------------------------------
-case_001                            | PAY         | PAY         | True
-case_002                            | HOLD        | HOLD        | True
-case_003                            | HOLD        | HOLD        | True
-case_004                            | HOLD        | HOLD        | True
-case_005                            | INVESTIGATE | INVESTIGATE | True
-case_006                            | HOLD        | HOLD        | True
-[PASS] Oracle ground truth validation
-ALL PHASE 1 VALIDATIONS PASSED
-Running Manifest Verification...
- Container pbp_clone_3db409e1-phase1_verifier-run-860b5dd2ce3d Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-860b5dd2ce3d Created
-Manifest verification passed.
-[PASS] Automated Test Suite Execution completed successfully.
-============================================================
-STEP: Smoke Execution
-============================================================
- Container pbp_clone_3db409e1-micro1_app-run-391997e02c66 Creating
- Container pbp_clone_3db409e1-micro1_app-run-391997e02c66 Created
-Running smoke test...
-Smoke test complete. Check traces directory for output.
-[PASS] Smoke Execution completed successfully.
-============================================================
-STEP: Recursive Container Security Assertion
-============================================================
-Checking required public runtime inputs...
- Container pbp_clone_3db409e1-micro1_app-run-27b67d226330 Creating
- Container pbp_clone_3db409e1-micro1_app-run-27b67d226330 Created
-[PASS] Required public runtime inputs are present.
-Running forced-failure isolation test...
-docker :  Container pbp_clone_3db409e1-micro1_app-run-a4350d098e48 Creating
-At C:\Users\vaibh\AppData\Local\Temp\ProofBeforePay-clone-e608f3dd5dca46eaa851852edaa53bad\verify.ps1:126 char:17
-+ ... cedOutput = docker compose -f docker-compose.yml run --rm --volume "$ ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ( Container pbp_...98e48 Creating :String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-
- Container pbp_clone_3db409e1-micro1_app-run-a4350d098e48 Created
-Inspecting container filesystem for prohibited artifacts...
-[FAIL] Found prohibited secret, answer key, or evaluator artifact:
-/app/data/cases/ground_truth
-/app/data/cases/ground_truth/case_001.json
-/app/data/cases/ground_truth/case_002.json
-/app/data/cases/ground_truth/case_003.json
-/app/data/cases/ground_truth/case_004.json
-/app/data/cases/ground_truth/case_005.json
-/app/data/cases/ground_truth/case_006.json
-Forced-failure scanner exit code: 1
-[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1.
- Container pbp_clone_3db409e1-micro1_app-run-b96105f9481e Creating
- Container pbp_clone_3db409e1-micro1_app-run-b96105f9481e Created
-Inspecting container filesystem for prohibited artifacts...
-[PASS] Container security assertion passed. No prohibited artifacts found.
-[PASS] Recursive Container Security Assertion completed successfully.
-************************************************************
-ALL VERIFICATION STEPS PASSED
-************************************************************
-EXIT CODE: 0
-
-========================================
-COMMAND: bash ./verify.sh
-EXPECTED EXIT CODE: 0
-========================================
-Starting Micro1 Challenge Verification Pipeline (POSIX)...
-/c/Program Files/Docker/Docker/resources/bin/docker
-/mingw64/bin/git
-============================================================
-STEP: Git Tracked Traces Check
-============================================================
-[PASS] Git Tracked Traces Check completed successfully.
-============================================================
-STEP: Compose Config Isolation Check
-============================================================
-[PASS] Compose Config Isolation Check completed successfully.
-============================================================
-STEP: Docker Build
-============================================================
- Image micro1-challenge-phase1-verifier:latest Building
- Image micro1-challenge-phase0:latest Building
-#1 [internal] load local bake definitions
-#1 reading from stdin 1.40kB done
-#1 DONE 0.0s
-
-#2 [micro1_app internal] load build definition from Dockerfile
-#2 transferring dockerfile: 1.75kB done
-#2 DONE 0.0s
-
-#3 [phase1_verifier internal] load metadata for docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
-#3 DONE 0.0s
-
-#4 [phase1_verifier internal] load .dockerignore
-#4 transferring context: 187B done
-#4 DONE 0.0s
-
-#5 [micro1_app internal] load build context
-#5 transferring context: 954B done
-#5 DONE 0.0s
-
-#6 [phase1_verifier internal] load build context
-#6 transferring context: 120.36kB 0.0s done
-#6 DONE 0.0s
-
-#7 [phase1_verifier base 1/5] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
-#7 resolve docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 0.0s done
-#7 DONE 0.0s
-
-#8 [phase1_verifier base 2/5] WORKDIR /app
-#8 CACHED
-
-#9 [micro1_app base 3/5] COPY requirements.lock requirements.txt ./
-#9 DONE 0.0s
-
-#9 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
-#9 DONE 0.0s
-
-#10 [micro1_app base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#10 1.507 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#10 1.593
-#10 1.593 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#10 1.593 [notice] To update, run: pip install --upgrade pip
-#10 DONE 1.7s
-
-#10 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#10 DONE 1.7s
-
-#11 [micro1_app base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#11 DONE 0.2s
-
-#11 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#11 DONE 0.2s
-
-#12 [phase1_verifier base 3/5] COPY requirements.lock requirements.txt ./
-#12 CACHED
-
-#13 [phase1_verifier base 4/5] RUN pip install --no-cache-dir -r requirements.lock
-#13 CACHED
-
-#14 [phase1_verifier base 5/5] RUN useradd -m micro1user && chown micro1user:micro1user /app
-#14 CACHED
-
-#15 [phase1_verifier verifier 1/9] COPY requirements-dev.txt ./
-#15 DONE 0.0s
-
-#16 [micro1_app runtime 1/5] COPY --chown=micro1user:micro1user src/ ./src/
-#16 DONE 0.0s
-
-#17 [micro1_app runtime 2/5] COPY --chown=micro1user:micro1user benchmark/RULEBOOK.md ./benchmark/RULEBOOK.md
-#17 DONE 0.0s
-
-#18 [micro1_app runtime 3/5] COPY --chown=micro1user:micro1user benchmark/schemas/public_evidence_bundle.json benchmark/schemas/output_contract.json ./benchmark/schemas/
-#18 DONE 0.0s
-
-#19 [phase1_verifier verifier 2/9] RUN pip install --no-cache-dir -r requirements-dev.txt
-#19 ...
-
-#20 [micro1_app runtime 4/5] COPY --chown=micro1user:micro1user data/cases/public/ ./data/cases/public/
-#20 DONE 0.0s
-
-#21 [micro1_app runtime 5/5] COPY --chown=micro1user:micro1user scripts/verify_container_security.sh ./scripts/verify_container_security.sh
-#21 DONE 0.0s
-
-#22 [micro1_app] exporting to image
-#22 exporting layers
-#22 exporting layers 0.5s done
-#22 exporting manifest sha256:19abe692342c570faf49d386e44ac0a2b1d5178dfb012767679608274e493620 0.0s done
-#22 exporting config sha256:c506a5a663ad4cc2d160ba0771f91027ea5963f81eb07dc5fe32b21a52d67529 0.0s done
-#22 exporting attestation manifest sha256:151c16865c6e94d7f4141b631543c1727cba390da099d595c4a1459b433eddbd 0.0s done
-#22 exporting manifest list sha256:cf214ae58caabbf3cf08a16cbcc860942810c6a473d5d3c9bba970d1da0f2683 0.0s done
-#22 naming to docker.io/library/micro1-challenge-phase0:latest done
-#22 unpacking to docker.io/library/micro1-challenge-phase0:latest
-#22 unpacking to docker.io/library/micro1-challenge-phase0:latest 0.3s done
-#22 DONE 0.8s
-
-#23 [micro1_app] resolving provenance for metadata file
-#23 DONE 0.0s
-
-#19 [phase1_verifier verifier 2/9] RUN pip install --no-cache-dir -r requirements-dev.txt
-#19 0.693 Collecting pytest==8.3.2 (from -r requirements-dev.txt (line 2))
-#19 0.761   Downloading pytest-8.3.2-py3-none-any.whl.metadata (7.5 kB)
-#19 0.779 Collecting iniconfig==2.0.0 (from -r requirements-dev.txt (line 3))
-#19 0.788   Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
-#19 0.811 Collecting packaging==24.1 (from -r requirements-dev.txt (line 4))
-#19 0.823   Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
-#19 0.841 Collecting pluggy==1.5.0 (from -r requirements-dev.txt (line 5))
-#19 0.853   Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
-#19 0.885 Collecting jsonschema==4.23.0 (from -r requirements-dev.txt (line 6))
-#19 0.895   Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
-#19 0.922 Collecting attrs>=22.2.0 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#19 0.935   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
-#19 0.952 Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#19 0.960   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
-#19 0.996 Collecting referencing>=0.28.4 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#19 1.008   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
-#19 1.330 Collecting rpds-py>=0.7.1 (from jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#19 1.383   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
-#19 1.458 Collecting typing-extensions>=4.4.0 (from referencing>=0.28.4->jsonschema==4.23.0->-r requirements-dev.txt (line 6))
-#19 1.473   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
-#19 1.514 Downloading pytest-8.3.2-py3-none-any.whl (341 kB)
-#19 1.620 Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-#19 1.652 Downloading packaging-24.1-py3-none-any.whl (53 kB)
-#19 1.691 Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
-#19 1.726 Downloading jsonschema-4.23.0-py3-none-any.whl (88 kB)
-#19 1.774 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
-#19 1.812 Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
-#19 1.860 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
-#19 1.869 Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
-#19 1.971 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
-#19 1.994 Installing collected packages: typing-extensions, rpds-py, pluggy, packaging, iniconfig, attrs, referencing, pytest, jsonschema-specifications, jsonschema
-#19 2.510 Successfully installed attrs-26.1.0 iniconfig-2.0.0 jsonschema-4.23.0 jsonschema-specifications-2025.9.1 packaging-24.1 pluggy-1.5.0 pytest-8.3.2 referencing-0.37.0 rpds-py-2026.6.3 typing-extensions-4.16.0
-#19 2.511 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#19 2.626
-#19 2.626 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-#19 2.626 [notice] To update, run: pip install --upgrade pip
-#19 DONE 2.8s
-
-#24 [phase1_verifier verifier 3/9] COPY --chown=micro1user:micro1user src/ ./src/
-#24 DONE 0.1s
-
-#25 [phase1_verifier verifier 4/9] COPY --chown=micro1user:micro1user tests/ ./tests/
-#25 DONE 0.0s
-
-#26 [phase1_verifier verifier 5/9] COPY --chown=micro1user:micro1user scripts/ ./scripts/
-#26 DONE 0.0s
-
-#27 [phase1_verifier verifier 6/9] COPY --chown=micro1user:micro1user benchmark/ ./benchmark/
-#27 DONE 0.0s
-
-#28 [phase1_verifier verifier 7/9] COPY --chown=micro1user:micro1user data/ ./data/
-#28 DONE 0.0s
-
-#29 [phase1_verifier verifier 8/9] COPY --chown=micro1user:micro1user evidence/phase_1/SHA256_MANIFEST.txt ./evidence/phase_1/SHA256_MANIFEST.txt
-#29 DONE 0.0s
-
-#30 [phase1_verifier verifier 9/9] COPY --chown=micro1user:micro1user pytest.ini Dockerfile .dockerignore docker-compose.yml ./
-#30 DONE 0.1s
-
-#31 [phase1_verifier] exporting to image
-#31 exporting layers 0.4s done
-#31 exporting manifest sha256:432447e059dae4917248a22bd6c20c6be982739f94831ae162c5365ca3831931 0.0s done
-#31 exporting config sha256:6a0f70d035fca02182a86787fccd241aff81d0b5855b6c1125762523b6138ca6 0.0s done
-#31 exporting attestation manifest sha256:7c37d7bbd6d87e49b362dba5b095dd708ccfa144c5d73f65ca6d0e02ce63c691 0.0s done
-#31 exporting manifest list sha256:732fa4f78c29f1a65c50b3771dc0044295f76c2cbc5e08986a6030de6ab8e7a6 0.0s done
-#31 naming to docker.io/library/micro1-challenge-phase1-verifier:latest done
-#31 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest
-#31 unpacking to docker.io/library/micro1-challenge-phase1-verifier:latest 0.2s done
-#31 DONE 0.7s
-
-#32 [phase1_verifier] resolving provenance for metadata file
-#32 DONE 0.0s
- Image micro1-challenge-phase0:latest Built
- Image micro1-challenge-phase1-verifier:latest Built
-[PASS] Docker Build completed successfully.
-============================================================
-STEP: Evaluator Test Suite Execution (isolated Docker target)
-============================================================
-Running tests inside evaluator-only container...
- Container pbp_clone_3db409e1-phase1_verifier-run-9897a6c700c2 Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-9897a6c700c2 Created
-..............................................                           [100%]
-46 passed in 0.35s
-Running Phase 1 Schema Validator...
- Container pbp_clone_3db409e1-phase1_verifier-run-9fe8f925c0ba Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-9fe8f925c0ba Created
-Starting Phase 1 Validation...
-[PASS] Case count validation
-[PASS] Schema validation
-[PASS] Leakage validation
-[PASS] Synthetic data validation
-Case ID                             | Derived Rec | Truth Rec   | PASS
---------------------------------------------------------------------------------
-case_001                            | PAY         | PAY         | True
-case_002                            | HOLD        | HOLD        | True
-case_003                            | HOLD        | HOLD        | True
-case_004                            | HOLD        | HOLD        | True
-case_005                            | INVESTIGATE | INVESTIGATE | True
-case_006                            | HOLD        | HOLD        | True
-[PASS] Oracle ground truth validation
-ALL PHASE 1 VALIDATIONS PASSED
-Running Manifest Verification...
- Container pbp_clone_3db409e1-phase1_verifier-run-b4a770899485 Creating
- Container pbp_clone_3db409e1-phase1_verifier-run-b4a770899485 Created
-Manifest verification passed.
-[PASS] Automated Test Suite Execution completed successfully.
-============================================================
-STEP: Smoke Execution
-============================================================
- Container pbp_clone_3db409e1-micro1_app-run-500fa1445e8d Creating
- Container pbp_clone_3db409e1-micro1_app-run-500fa1445e8d Created
-Running smoke test...
-Smoke test complete. Check traces directory for output.
-[PASS] Smoke Execution completed successfully.
-============================================================
-STEP: Recursive Container Security Assertion
-============================================================
-Checking required public runtime inputs...
- Container pbp_clone_3db409e1-micro1_app-run-750c3e5b48a9 Creating
- Container pbp_clone_3db409e1-micro1_app-run-750c3e5b48a9 Created
-[PASS] Required public runtime inputs are present.
-Running forced-failure isolation test...
- Container pbp_clone_3db409e1-micro1_app-run-7f194b6b0432 Creating
- Container pbp_clone_3db409e1-micro1_app-run-7f194b6b0432 Created
-Inspecting container filesystem for prohibited artifacts...
-[FAIL] Found prohibited secret, answer key, or evaluator artifact:
-/app/data/cases/ground_truth
-/app/data/cases/ground_truth/case_001.json
-/app/data/cases/ground_truth/case_002.json
-/app/data/cases/ground_truth/case_003.json
-/app/data/cases/ground_truth/case_004.json
-/app/data/cases/ground_truth/case_005.json
-/app/data/cases/ground_truth/case_006.json
-Forced-failure scanner exit code: 1
-[PASS] Forced-failure isolation check rejected the injected ground truth with exit 1.
- Container pbp_clone_3db409e1-micro1_app-run-3f8aee12a1fc Creating
- Container pbp_clone_3db409e1-micro1_app-run-3f8aee12a1fc Created
-Inspecting container filesystem for prohibited artifacts...
-[PASS] Container security assertion passed. No prohibited artifacts found.
-[PASS] Recursive Container Security Assertion completed successfully.
-************************************************************
-ALL VERIFICATION STEPS PASSED
-************************************************************
-EXIT CODE: 0
-
-========================================
-COMMAND: git diff --check
-EXPECTED EXIT CODE: 0
-========================================
-EXIT CODE: 0
-
-========================================
-COMMAND: git diff --cached --check
-EXPECTED EXIT CODE: 0
-========================================
-EXIT CODE: 0
-
-========================================
-COMMAND: git status --short
-EXPECTED EXIT CODE: 0
-========================================
-EXIT CODE: 0
-POST-TEST STATUS EXIT CODE: 0
-POST-TEST STATUS OUTPUT:
-
-CLEAN CLONE TEST RESULT: PASS
+e167f35 Phase 2.2 Benchmark Coverage Expansion
+scripts/generate_phase2_data.py:11: trailing whitespace.
++
+scripts/generate_phase2_data.py:38: trailing whitespace.
++    c8["purchase_order"]["currency"] = "EUR"
+EXIT CODE: 2
+ERROR: Expected exit 0 but observed 2.
+HARNESS ABORTED: Candidate commit whitespace validation failed.
 
 ========================================
 COMMAND: exact-project docker compose down --remove-orphans
 EXPECTED EXIT CODE: 0
 ========================================
- Network pbp_clone_3db409e1_default Removing
- Network pbp_clone_3db409e1_default Removed
-EXIT CODE: 0
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+EXIT CODE: 1
+ERROR: Expected exit 0 but observed 1.
 
 ========================================
 COMMAND: verify exact-project containers removed
 EXPECTED EXIT CODE: 0
 ========================================
-EXIT CODE: 0
-REMAINING PROJECT CONTAINERS:
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+EXIT CODE: 1
+ERROR: Expected exit 0 but observed 1.
+REMAINING PROJECT CONTAINERS: docker : failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is
+correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file
+specified.
+At D:\MICRO.1\scripts\run_clean_clone_tests.ps1:293 char:29
++ ... ntainers = (docker ps -a --filter "label=com.docker.compose.project=$ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (failed to conne...file specified.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ERROR: Exact-project containers remain after cleanup.
 
 ========================================
 COMMAND: verify exact-project networks removed
 EXPECTED EXIT CODE: 0
 ========================================
-EXIT CODE: 0
-REMAINING PROJECT NETWORKS:
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+EXIT CODE: 1
+ERROR: Expected exit 0 but observed 1.
+REMAINING PROJECT NETWORKS: docker : failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is
+correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file
+specified.
+At D:\MICRO.1\scripts\run_clean_clone_tests.ps1:304 char:27
++ ... Networks = (docker network ls --filter "label=com.docker.compose.proj ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (failed to conne...file specified.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ERROR: Exact-project networks remain after cleanup.
 EXACT CLONE PATH REMOVED: PASS
+CLEAN CLONE HARNESS RESULT: FAIL
+HARNESS EXIT CODE: 1
