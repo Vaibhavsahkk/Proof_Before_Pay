@@ -1,28 +1,28 @@
 # Project Status
 
 Current phase: Phase 2 - Fair Baseline
-Phase status: ACTIVE in remediation (PHASE FAIL from External ChatGPT)
-Last completed task: Received PHASE FAIL verdict from External ChatGPT due to 100% baseline accuracy leaving no room for measurable improvement.
-Current task: Document and execute Phase 2 remediation plan (docs/PHASE_2_REMEDIATION_PLAN.md).
-Next task: Expand benchmark and/or amend metrics as per remediation plan. Phase 3 remains locked unless External ChatGPT returns exactly `PHASE APPROVED — 100%`.
+Phase status: READY FOR EXTERNAL CHATGPT REVIEW
+Last completed task: Completed Phase 2.2 benchmark coverage expansion and actual baseline execution.
+Current task: Correcting governance documentation to accurately acknowledge the Phase 2.2 baseline execution.
+Next task: Await final Phase 2 gatekeeper approval. Phase 3 remains locked.
 
 Human actions required: None.
 
 ## Accepted Phase 2 baseline
 
-- Run: `evidence/phase_2/runs/run_20260829_154058_02e9416b`.
-- Source commit: `7512b9eace0e43045a406bc7cf46d76e1eb21ea7`; source tree recorded clean.
+- Run: `evidence/phase_2/runs/run_20260830_091031_f1cc354c`.
+- Source commit: `2f7602a33dcbed5c36886e8e7e2d116e66291708`; source tree recorded clean.
 - Provider/model: Google Gemini, requested and returned `gemini-3.6-flash`.
-- SDK: `google-genai==2.19.0`.
+- SDK: `google-genai==2.20.0`.
 - Manifest: `phase2-baseline-run-v2`; input hashes use `utf8-text-normalized-lf`.
-- 6/6 final successful case outcomes; 9 total provider attempts; 3 transient retries; exact retry status codes/messages UNRECORDED; final successful raw responses preserved.
+- 12/12 final successful case outcomes; final successful raw responses preserved.
 - Evaluator status: VALID.
-- Exact case-level recommendation accuracy: 100%.
-- Findings correctness: 100%.
-- Schema validity: 100%.
-- Unsafe-PAY rate: 0/5, 0%.
-- Runtime: 181.891378800006 seconds total; 30.315229800001 seconds mean.
-- Tokens: 11,710 prompt and 1,439 candidate.
+- Exact case-level recommendation accuracy: 100.0%.
+- Findings correctness: 100.0%.
+- Schema validity: 100.0%.
+- Unsafe-PAY rate: 0/10, 0.0%.
+- Runtime: 121.17994389999967 seconds total; 10.098328658333307 seconds mean.
+- Tokens: 23,314 prompt and 3,095 candidate.
 - Cost: UNKNOWN; no unsupported price estimate is claimed.
 
 ## Verification summary
