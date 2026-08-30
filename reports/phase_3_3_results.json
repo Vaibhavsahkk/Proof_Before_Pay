@@ -10,10 +10,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "No material uncertainty identified.",
@@ -33,10 +33,10 @@
       "prior_payment_history"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The automated system detected a potential duplicate billing event due to matching invoice parameters (such as vendor, amount, or invoice number), but cannot definitively confirm whether this represents a legitimate separate transaction, a system glitch, or an unintentional double-submission.",
@@ -55,10 +55,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "There is a discrepancy between the quantity of items billed in the payment request and the quantity specified in the corresponding purchase order or receiving report.",
@@ -77,10 +77,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "There is a discrepancy between the price requested for payment and the reference price specified in the associated purchase order, contract, or standard line-item pricing.",
@@ -100,10 +100,10 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The payment request incorporates updated banking details that have not undergone formal authentication, posing a risk of fraudulent fund diversion or unauthorized account modification.",
@@ -125,10 +125,10 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The payment request presents a potential fraud or operational risk due to a possible repeated charge combined with an unconfirmed modification to the payee's banking details.",
@@ -147,10 +147,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The calculated totals, line items, taxes, or discounts on the payment request do not match, creating uncertainty regarding whether this is a simple clerical mistake or deliberate amount manipulation.",
@@ -170,10 +170,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The automated system detected an unformatted or invalid currency code alongside a mismatch between the currency specified in the payment request and the primary currency of the associated account or invoice.",
@@ -192,10 +192,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The payment details provided do not match the registered vendor identity in the master database, raising concerns about potential fraudulent invoice submission, unauthorized account changes, or misdirected funds.",
@@ -214,10 +214,10 @@
       "vendor_master"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "The payment request is missing a Purchase Order (PO) Line ID, making it unclear which specific item, service, or budget line from the approved PO this invoice should be billed against.",
@@ -235,10 +235,10 @@
       "goods_receipt"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [
       "Missing Vendor Master"
@@ -258,10 +258,10 @@
       "bank_change_evidence"
     ],
     "deterministic_calculation_references": [
-      "calculator.sum_values",
-      "calculator.check_equality",
       "calculator.calculate_tax",
-      "calculator.multiply"
+      "calculator.multiply",
+      "calculator.check_equality",
+      "calculator.sum_values"
     ],
     "missing_evidence": [],
     "uncertainty": "No material uncertainty identified.",
