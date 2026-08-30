@@ -1,6 +1,5 @@
 import os
 import sys
-import pwd
 
 def test_python_version():
     """
@@ -19,6 +18,7 @@ def test_non_root_user_in_container():
     """
     # This test assumes it's running in the container.
     assert os.name == 'posix', "Test must run in POSIX environment (the container)"
+    import pwd
     euid = os.geteuid()
     assert euid != 0, "Security violation: running as root (UID 0)"
     pw_name = pwd.getpwuid(euid).pw_name
