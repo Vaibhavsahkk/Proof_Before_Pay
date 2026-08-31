@@ -1,0 +1,1 @@
+{"documents": [{"doc_type": "invoice", "content": "Invoice: INV-2101\nVendor: SYNTHETIC WIDGETS LLC\nTax ID: TX-9101\nBank Account: ACC-1011\nCurrency: USD\nQuantity: 100\nUnit Price: 5.50 USD\nLine Total: 550.00 USD\nSubtotal: 550.00 USD\nTax Rate: 10%\nTax Amount: 55.00 USD\nTotal Amount: 605.00 USD"}]}

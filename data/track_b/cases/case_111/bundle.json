@@ -1,0 +1,12 @@
+{
+  "case_id": "case_111",
+  "track": "B",
+  "documents": [
+    "invoice.pdf",
+    "purchase_order.png",
+    "goods_receipt.pdf",
+    "vendor_master.json",
+    "remittance_advice.pdf",
+    "bank_change_notice.pdf"
+  ]
+}

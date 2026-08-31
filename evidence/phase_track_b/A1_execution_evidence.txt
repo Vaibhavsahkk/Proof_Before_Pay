@@ -1,0 +1,75 @@
+================================================================
+SUB-PHASE A1 EXECUTION EVIDENCE — TRACK B DESIGN AND FREEZE
+Date: 2026-08-31T14:15:35Z
+Executor HEAD: adc33289e6272496d769fc8b26fb43e34b529a1e
+Branch: master
+================================================================
+
+COMMAND: python data/track_b/verify_track_b.py
+EXPECTED EXIT: 0
+----------------------------------------------------------------
+TRACK B VERIFICATION PASSED
+  cases: 12 (case_101..case_112), case_111 challenging
+  ground truth: 12/12 re-derived by official Phase1Oracle, no drift
+  documents: all parseable, bundles consistent, no leakage, synthetic vendors only
+  generator: deterministic (regenerated manifest matches frozen manifest)
+EXIT CODE: 0
+
+COMMAND: python -m pytest tests/test_track_b_freeze.py -q
+EXPECTED: 14 passed
+----------------------------------------------------------------
+..............                                                           [100%]
+14 passed in 1.52s
+EXIT CODE: 0
+
+COMMAND: python scripts/validate_phase1.py (regression - official benchmark untouched)
+----------------------------------------------------------------
+case_012                            | PAY         | PAY         | True 
+[PASS] Oracle ground truth validation
+ALL PHASE 1 VALIDATIONS PASSED
+EXIT CODE: 0
+
+COMMAND: python scripts/verify_manifest.py (regression)
+----------------------------------------------------------------
+Manifest verification passed.
+EXIT CODE: 0
+
+COMMAND: python scripts/evaluate_agent.py (regression)
+----------------------------------------------------------------
+Phase 3.5 Evaluation Metrics:
+{
+  "total_cases": 12,
+  "exact_case_level_recommendation_accuracy_percent": 100.0,
+  "findings_correctness_percent": 100.0,
+  "unsafe_pay_rate_percent": 0.0,
+  "unsafe_pay_count": 0,
+  "total_non_pay_cases": 10
+}
+EXIT CODE: 0
+
+NOTE: python -m pytest --ignore=tests/test_environment.py -q
+RESULT: 163 passed in 103.51s (0 failures) - full regression run
+
+COMMAND: git status --short (A1 file footprint)
+----------------------------------------------------------------
+?? data/track_b/
+?? evidence/phase_track_b/
+?? tests/test_track_b_freeze.py
+EXIT CODE: 0
+
+MANIFEST SHA256 (SHA-256 of the frozen manifest itself):
+3711501A354C9F0C40B0C1831E42D06415A26C03E10AFEA54FD9CD4A3F6ABDE2
+
+ORACLE-DERIVED GROUND TRUTH (read-only print):
+  case_101: PAY          findings=[]
+  case_102: PAY          findings=[]
+  case_103: HOLD         findings=['Duplicate Billing']
+  case_104: HOLD         findings=['Price Contradiction']
+  case_105: HOLD         findings=['Quantity Mismatch']
+  case_106: INVESTIGATE  findings=['Unverified Bank Change']
+  case_107: HOLD         findings=['Math Error']
+  case_108: INVESTIGATE  findings=['Missing PO']
+  case_109: INVESTIGATE  findings=['Vendor Identity Mismatch']
+  case_110: HOLD         findings=['Currency Mismatch', 'Invalid Currency']
+  case_111: HOLD         findings=['Duplicate Billing', 'Unverified Bank Change']
+  case_112: INVESTIGATE  findings=['Missing GRN', 'Missing Vendor Master']

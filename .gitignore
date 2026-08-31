@@ -31,3 +31,10 @@ trajectories/raw/
 # Obsidian local UI state; project knowledge notes remain versionable.
 PROJECT_KNOWLEDGE/.obsidian/
 PROJECT_KNOWLEDGE/.trash/
+
+# Scratch & temporary artifacts
+__clean_clone/
+scratch_test_docs/
+run_log.txt
+server_log.txt
+data/cache/explanations/case_000.json

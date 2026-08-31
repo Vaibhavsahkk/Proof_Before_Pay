@@ -1,103 +1,124 @@
 import json
 import traceback
 import jsonschema
+import time
 from typing import Dict, Any, List
 
 from src.agent.extraction import LLMExtractor
+from src.agent.credentials import RetrySignal
 from src.tools.calculator import DecimalCalculator, CalculatorError
 from src.tools.equality import EqualityChecker
 from src.tools.rule_evaluator import RuleEvaluator
 from src.utils.logger import TraceLogger
 from src.utils.human_checkpoint import request_human_approval
+from src.agent.memory import MemoryManager
 
 class AgentOrchestrator:
-    def __init__(self, api_key: str = None, output_schema_path: str = "benchmark/schemas/output_contract.json"):
-        self.extractor = LLMExtractor(api_key=api_key)
+    def __init__(self, api_key: str = None, credential_manager = None, output_schema_path: str = "benchmark/schemas/output_contract.json"):
+        self.extractor = LLMExtractor(api_key=api_key, credential_manager=credential_manager)
         self.logger = TraceLogger()
         self.output_schema_path = output_schema_path
+        self.memory = MemoryManager()
 
     def run_workflow(self, case_id: str, raw_evidence: str) -> Dict[str, Any]:
         """
         Orchestrates the workflow: OBSERVE -> EXTRACT -> VERIFY -> APPLY RULES ->
         CHECK COMPLETENESS -> EXPLAIN -> HUMAN ESCALATION.
         """
-        try:
-            self.last_extracted_data = None
-            
-            # 1. OBSERVE & EXTRACT
-            self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, None, "STARTED")
-            extracted_data = self.extractor.extract_evidence(case_id, raw_evidence)
-            self.last_extracted_data = extracted_data
-            self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, extracted_data, "SUCCESS")
-            
-            # 2. VERIFY (Deterministic checks)
-            self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, None, "STARTED")
-            anomalies, calculation_refs = self._run_deterministic_verification(extracted_data)
-            self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, anomalies, "SUCCESS")
-
-            # 3. APPLY RULES
-            self.logger.log_event("apply_rules", "orchestrator", "evaluate_rules", "rule_evaluator", anomalies, None, "STARTED")
-            rule_result = RuleEvaluator.evaluate(anomalies)
-            self.logger.log_event("apply_rules", "orchestrator", "evaluate_rules", "rule_evaluator", anomalies, rule_result, "SUCCESS")
-
-            # 4. EXPLAIN
-            self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], None, "STARTED")
-            uncertainty, next_step = self.extractor.generate_explanation(case_id, rule_result["findings"])
-            self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], {"uncertainty": uncertainty, "next_step": next_step}, "SUCCESS")
-            
-            evidence_refs = []
-            for doc in ["invoice", "purchase_order", "goods_receipt", "vendor_master", "prior_payment_history", "bank_change_evidence"]:
-                if extracted_data.get(doc):
-                    evidence_refs.append(doc)
-
-            missing_docs_set = {"Missing PO", "Missing GRN", "Missing Vendor Master"}
-            missing_evidence = [f for f in rule_result["findings"] if f in missing_docs_set]
-
-
-            output = {
-                "case_id": case_id,
-                "recommendation": rule_result["recommendation"],
-                "findings": rule_result["findings"],
-                "evidence_references": evidence_refs,
-                "deterministic_calculation_references": list(set(calculation_refs)),
-                "missing_evidence": missing_evidence,
-                "uncertainty": uncertainty,
-                "required_human_next_step": next_step
-            }
-
-            # 6. OUTPUT VALIDATION
+        while True:
             try:
-                with open(self.output_schema_path, "r", encoding="utf-8") as f:
-                    schema = json.load(f)
-                jsonschema.validate(instance=output, schema=schema)
-                self.logger.log_event("validate", "orchestrator", "validate_output_schema", "jsonschema", output, None, "SUCCESS")
-            except jsonschema.ValidationError as ve:
-                self.logger.log_event("validate", "orchestrator", "validate_output_schema", "jsonschema", output, str(ve), "ERROR")
-                raise RuntimeError(f"Output schema validation failed: {ve}")
+                self.last_extracted_data = None
+                self.last_checks_performed = []
+                self.last_checks_skipped = []
 
-            # 7. HUMAN ESCALATION BOUNDARY
-            if output["recommendation"] in ["HOLD", "INVESTIGATE"]:
-                self.logger.log_event("escalate", "orchestrator", "human_checkpoint", "human", output["recommendation"], None, "STARTED")
-                # We request approval, but since this is batch execution, we just trace it.
-                # If we wanted to pause in a real script, we'd call request_human_approval here.
-                # For this minimum implementation, outputting HOLD/INVESTIGATE is the escalation.
-                self.logger.log_event("escalate", "orchestrator", "human_checkpoint", "human", output["recommendation"], "ESCALATED", "SUCCESS")
-            
-            return output
+                # 1. OBSERVE & EXTRACT
+                self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, None, "STARTED")
+                extracted_data = self.extractor.extract_evidence(case_id, raw_evidence)
+                self.last_extracted_data = extracted_data
+                self.logger.log_event("extract", "orchestrator", "observe_and_extract", "llm_extractor", case_id, extracted_data, "SUCCESS")
 
-        except Exception as e:
-            self.logger.log_event("workflow", "orchestrator", "run_workflow", "system", case_id, None, "ERROR", error=traceback.format_exc())
-            # Fail closed
-            return {
-                "case_id": case_id,
-                "recommendation": "INVESTIGATE",
-                "findings": ["Extraction or System Failure"],
-                "evidence_references": [],
-                "deterministic_calculation_references": [],
-                "missing_evidence": [],
-                "uncertainty": f"System failure occurred: {str(e)}",
-                "required_human_next_step": "Human review required due to system error."
-            }
+                # 2. VERIFY (Deterministic checks)
+                self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, None, "STARTED")
+                anomalies, calculation_refs = self._run_deterministic_verification(extracted_data)
+                self.logger.log_event("verify", "orchestrator", "run_deterministic_checks", "calculator_equality", extracted_data, anomalies, "SUCCESS")
+
+                # 3. APPLY RULES
+                self.logger.log_event("apply_rules", "orchestrator", "evaluate_rules", "rule_evaluator", anomalies, None, "STARTED")
+                rule_result = RuleEvaluator.evaluate(anomalies)
+                self.logger.log_event("apply_rules", "orchestrator", "evaluate_rules", "rule_evaluator", anomalies, rule_result, "SUCCESS")
+
+                # 4. EXPLAIN
+                self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], None, "STARTED")
+                uncertainty, next_step = self.extractor.generate_explanation(case_id, rule_result["findings"])
+                self.logger.log_event("explain", "orchestrator", "generate_explanation", "llm_extractor", rule_result["findings"], {"uncertainty": uncertainty, "next_step": next_step}, "SUCCESS")
+
+                evidence_refs = []
+                for doc in ["invoice", "purchase_order", "goods_receipt", "vendor_master", "prior_payment_history", "bank_change_evidence"]:
+                    if extracted_data.get(doc):
+                        evidence_refs.append(doc)
+
+                missing_docs_set = {"Missing PO", "Missing GRN", "Missing Vendor Master"}
+                missing_evidence = [f for f in rule_result["findings"] if f in missing_docs_set]
+
+                output = {
+                    "case_id": case_id,
+                    "recommendation": rule_result["recommendation"],
+                    "findings": rule_result["findings"],
+                    "evidence_references": evidence_refs,
+                    "deterministic_calculation_references": list(set(calculation_refs)),
+                    "missing_evidence": missing_evidence,
+                    "uncertainty": uncertainty,
+                    "required_human_next_step": next_step
+                }
+
+                # 6. OUTPUT VALIDATION
+                try:
+                    with open(self.output_schema_path, "r", encoding="utf-8") as f:
+                        schema = json.load(f)
+                    jsonschema.validate(instance=output, schema=schema)
+                    self.logger.log_event("validate", "orchestrator", "validate_output_schema", "jsonschema", output, None, "SUCCESS")
+                except jsonschema.ValidationError as ve:
+                    self.logger.log_event("validate", "orchestrator", "validate_output_schema", "jsonschema", output, str(ve), "ERROR")
+                    raise RuntimeError(f"Output schema validation failed: {ve}")
+
+                # 7. HUMAN ESCALATION BOUNDARY
+                if output["recommendation"] in ["HOLD", "INVESTIGATE"]:
+                    self.logger.log_event("escalate", "orchestrator", "human_checkpoint", "human", output["recommendation"], None, "STARTED")
+                    self.logger.log_event("escalate", "orchestrator", "human_checkpoint", "human", output["recommendation"], "ESCALATED", "SUCCESS")
+
+                return output
+
+            except RetrySignal as rs:
+                wait_time = self.extractor.cred_manager.get_wait_time()
+                if wait_time < 0:
+                    self.logger.log_event("workflow", "orchestrator", "run_workflow", "system", case_id, None, "ERROR", error="All credentials exhausted.")
+                    return {
+                        "case_id": case_id,
+                        "recommendation": "INVESTIGATE",
+                        "findings": ["All credentials exhausted"],
+                        "evidence_references": [],
+                        "deterministic_calculation_references": [],
+                        "missing_evidence": [],
+                        "uncertainty": "All Gemini API keys have exhausted their quota.",
+                        "required_human_next_step": "Human review required. Ensure billing and quota limits."
+                    }
+
+                self.logger.log_event("workflow", "orchestrator", "retry_wait", "system", case_id, None, "WARNING", error=f"Waiting {wait_time:.1f}s due to RetrySignal: {str(rs)}")
+                print(f"[ORCHESTRATOR] Received RetrySignal. Waiting {wait_time:.1f}s before resuming {case_id}...")
+                time.sleep(wait_time)
+
+            except Exception as e:
+                self.logger.log_event("workflow", "orchestrator", "run_workflow", "system", case_id, None, "ERROR", error=traceback.format_exc())
+                return {
+                    "case_id": case_id,
+                    "recommendation": "INVESTIGATE",
+                    "findings": ["Extraction or System Failure"],
+                    "evidence_references": [],
+                    "deterministic_calculation_references": [],
+                    "missing_evidence": [],
+                    "uncertainty": f"System failure occurred: {str(e)}",
+                    "required_human_next_step": "Human review required due to system error."
+                }
 
     def _run_deterministic_verification(self, data: Dict[str, Any]) -> tuple[List[str], List[str]]:
         anomalies = []
@@ -106,14 +127,25 @@ class AgentOrchestrator:
         po = data.get("purchase_order")
         grn = data.get("goods_receipt")
         vm = data.get("vendor_master")
-        hist = data.get("prior_payment_history")
+        hist = data.get("prior_payment_history") or []
         bank = data.get("bank_change_evidence")
+
+        # Basic checks tracking
+        if inv:
+            self.last_checks_performed.append("Invoice math and totals")
+        else:
+            self.last_checks_skipped.append("Invoice math and totals")
 
         # 1. Vendor Checks
         if not vm:
             anomalies.append("Missing Vendor Master")
+            self.last_checks_skipped.append("Vendor Identity")
         else:
-            if not EqualityChecker.is_exact_match(inv.get("vendor_name"), vm.get("vendor_name")) or \
+            self.last_checks_performed.append("Vendor Identity")
+            inv_vendor_name = self.memory.resolve_vendor(inv.get("vendor_name"))
+            vm_vendor_name = self.memory.resolve_vendor(vm.get("vendor_name"))
+
+            if not EqualityChecker.is_exact_match(inv_vendor_name, vm_vendor_name) or \
                not EqualityChecker.is_exact_match(inv.get("vendor_tax_id"), vm.get("vendor_tax_id")):
                 anomalies.append("Vendor Identity Mismatch")
             
@@ -121,19 +153,29 @@ class AgentOrchestrator:
                 if bank and bank.get("approval_status") == "APPROVED" and \
                    EqualityChecker.is_exact_match(bank.get("old_bank_account"), vm.get("bank_account")) and \
                    EqualityChecker.is_exact_match(bank.get("new_bank_account"), inv.get("bank_account")):
-                    pass
+                    self.last_checks_performed.append("Bank Change Verification")
                 else:
                     anomalies.append("Unverified Bank Change")
 
         # 2. Missing Documents
         if not po:
             anomalies.append("Missing PO")
+            self.last_checks_skipped.append("Purchase Order matching")
+        else:
+            self.last_checks_performed.append("Purchase Order matching")
+
         if not grn:
             anomalies.append("Missing GRN")
+            self.last_checks_skipped.append("Goods Receipt matching")
+        else:
+            self.last_checks_performed.append("Goods Receipt matching")
 
-        # 3. Duplicate Billing
-        if hist:
-            for past in hist:
+        # 3. Duplicate Billing (Local and Global)
+        global_hist = self.memory.get_prior_history(inv.get("vendor_tax_id"), inv.get("invoice_number"))
+        combined_hist = list(hist) + global_hist
+        if combined_hist:
+            self.last_checks_performed.append("Duplicate Billing")
+            for past in combined_hist:
                 if EqualityChecker.is_exact_match(past.get("vendor_tax_id"), inv.get("vendor_tax_id")) and \
                    EqualityChecker.is_exact_match(past.get("invoice_number"), inv.get("invoice_number")):
                     try:

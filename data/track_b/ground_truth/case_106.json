@@ -1,0 +1,75 @@
+{
+  "case_id": "case_106",
+  "track": "B",
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Unverified Bank Change"
+  ],
+  "challenging": false,
+  "canonical": {
+    "invoice": {
+      "invoice_number": "INV-2106",
+      "vendor_name": "TESTAMENT FACILITIES LLC",
+      "vendor_tax_id": "TX-9106",
+      "bank_account": "ACC-9066",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "FLOOR-CLEAN",
+          "description": "Floor Cleaning Service",
+          "quantity": "1",
+          "unit_price": "350.00",
+          "line_total": "350.00"
+        }
+      ],
+      "subtotal": "350.00",
+      "tax": "0.00",
+      "total": "350.00"
+    },
+    "purchase_order": {
+      "po_number": "PO-3106",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "FLOOR-CLEAN",
+          "quantity": "1",
+          "unit_price": "350.00"
+        }
+      ]
+    },
+    "goods_receipt": {
+      "grn_number": "GRN-4106",
+      "items": [
+        {
+          "item_id": "FLOOR-CLEAN",
+          "quantity_accepted": "1"
+        }
+      ]
+    },
+    "vendor_master": {
+      "vendor_name": "TESTAMENT FACILITIES LLC",
+      "vendor_tax_id": "TX-9106",
+      "bank_account": "ACC-1066"
+    },
+    "prior_payment_history": [],
+    "bank_change_evidence": {
+      "old_bank_account": "ACC-1066",
+      "new_bank_account": "ACC-9066",
+      "approval_status": "PENDING",
+      "verified_by": "System"
+    },
+    "case_id": "case_106"
+  },
+  "render_spec": {
+    "po_format": "pdf",
+    "grn_format": "pdf",
+    "vm_format": "pdf",
+    "invoice_noise": 0,
+    "po_noise": 0,
+    "label_set": 0,
+    "bank_doc": true
+  },
+  "derived_by": "scripts/validate_phase1.Phase1Oracle (official rulebook logic, unmodified)"
+}

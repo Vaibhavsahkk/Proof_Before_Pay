@@ -1,0 +1,58 @@
+{
+  "case_id": "case_108",
+  "track": "B",
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Missing PO"
+  ],
+  "challenging": false,
+  "canonical": {
+    "invoice": {
+      "invoice_number": "INV-2108",
+      "vendor_name": "FAKECORP LOGISTICS INC",
+      "vendor_tax_id": "TX-9108",
+      "bank_account": "ACC-1088",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "FREIGHT-LCL",
+          "description": "LCL Freight Charge",
+          "quantity": "3",
+          "unit_price": "420.00",
+          "line_total": "1260.00"
+        }
+      ],
+      "subtotal": "1260.00",
+      "tax": "0.00",
+      "total": "1260.00"
+    },
+    "purchase_order": null,
+    "goods_receipt": {
+      "grn_number": "GRN-4108",
+      "items": [
+        {
+          "item_id": "FREIGHT-LCL",
+          "quantity_accepted": "3"
+        }
+      ]
+    },
+    "vendor_master": {
+      "vendor_name": "FAKECORP LOGISTICS INC",
+      "vendor_tax_id": "TX-9108",
+      "bank_account": "ACC-1088"
+    },
+    "prior_payment_history": [],
+    "bank_change_evidence": null,
+    "case_id": "case_108"
+  },
+  "render_spec": {
+    "po_format": null,
+    "grn_format": "pdf",
+    "vm_format": "pdf",
+    "invoice_noise": 1,
+    "po_noise": 0,
+    "label_set": 0
+  },
+  "derived_by": "scripts/validate_phase1.Phase1Oracle (official rulebook logic, unmodified)"
+}

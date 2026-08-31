@@ -1,0 +1,70 @@
+{
+  "case_id": "case_110",
+  "track": "B",
+  "expected_recommendation": "HOLD",
+  "expected_findings": [
+    "Currency Mismatch",
+    "Invalid Currency"
+  ],
+  "challenging": false,
+  "canonical": {
+    "invoice": {
+      "invoice_number": "INV-2110",
+      "vendor_name": "MOCK GLOBAL TRADE LTD",
+      "vendor_tax_id": "TX-9110",
+      "bank_account": "ACC-1100",
+      "currency": "EUR",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "LAMP-LED",
+          "description": "LED Panel Lamp",
+          "quantity": "25",
+          "unit_price": "40.00",
+          "line_total": "1000.00"
+        }
+      ],
+      "subtotal": "1000.00",
+      "tax": "0.00",
+      "total": "1000.00"
+    },
+    "purchase_order": {
+      "po_number": "PO-3110",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "LAMP-LED",
+          "quantity": "25",
+          "unit_price": "40.00"
+        }
+      ]
+    },
+    "goods_receipt": {
+      "grn_number": "GRN-4110",
+      "items": [
+        {
+          "item_id": "LAMP-LED",
+          "quantity_accepted": "25"
+        }
+      ]
+    },
+    "vendor_master": {
+      "vendor_name": "MOCK GLOBAL TRADE LTD",
+      "vendor_tax_id": "TX-9110",
+      "bank_account": "ACC-1100"
+    },
+    "prior_payment_history": [],
+    "bank_change_evidence": null,
+    "case_id": "case_110"
+  },
+  "render_spec": {
+    "po_format": "pdf",
+    "grn_format": "pdf",
+    "vm_format": "pdf",
+    "invoice_noise": 2,
+    "po_noise": 2,
+    "label_set": 1
+  },
+  "derived_by": "scripts/validate_phase1.Phase1Oracle (official rulebook logic, unmodified)"
+}

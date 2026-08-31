@@ -1,0 +1,83 @@
+{
+  "case_id": "case_102",
+  "track": "B",
+  "expected_recommendation": "PAY",
+  "expected_findings": [],
+  "challenging": false,
+  "canonical": {
+    "invoice": {
+      "invoice_number": "INV-2102",
+      "vendor_name": "FAKECORP STATIONERY INC",
+      "vendor_tax_id": "TX-9102",
+      "bank_account": "ACC-1022",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "PAPER-A4",
+          "description": "A4 Copy Paper Ream",
+          "quantity": "40",
+          "unit_price": "12.50",
+          "line_total": "500.00"
+        },
+        {
+          "item_id": "PEN-BL",
+          "description": "Blue Ballpoint Box",
+          "quantity": "20",
+          "unit_price": "2.50",
+          "line_total": "50.00"
+        }
+      ],
+      "subtotal": "550.00",
+      "tax": "0.00",
+      "total": "550.00"
+    },
+    "purchase_order": {
+      "po_number": "PO-3102",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "PAPER-A4",
+          "quantity": "40",
+          "unit_price": "12.50"
+        },
+        {
+          "item_id": "PEN-BL",
+          "quantity": "20",
+          "unit_price": "2.50"
+        }
+      ]
+    },
+    "goods_receipt": {
+      "grn_number": "GRN-4102",
+      "items": [
+        {
+          "item_id": "PAPER-A4",
+          "quantity_accepted": "40"
+        },
+        {
+          "item_id": "PEN-BL",
+          "quantity_accepted": "20"
+        }
+      ]
+    },
+    "vendor_master": {
+      "vendor_name": "FAKECORP STATIONERY INC",
+      "vendor_tax_id": "TX-9102",
+      "bank_account": "ACC-1022"
+    },
+    "prior_payment_history": [],
+    "bank_change_evidence": null,
+    "case_id": "case_102"
+  },
+  "render_spec": {
+    "po_format": "png",
+    "grn_format": "pdf",
+    "vm_format": "json",
+    "invoice_noise": 0,
+    "po_noise": 0,
+    "label_set": 1
+  },
+  "derived_by": "scripts/validate_phase1.Phase1Oracle (official rulebook logic, unmodified)"
+}

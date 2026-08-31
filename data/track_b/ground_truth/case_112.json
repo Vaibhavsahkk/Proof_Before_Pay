@@ -1,0 +1,58 @@
+{
+  "case_id": "case_112",
+  "track": "B",
+  "expected_recommendation": "INVESTIGATE",
+  "expected_findings": [
+    "Missing GRN",
+    "Missing Vendor Master"
+  ],
+  "challenging": false,
+  "canonical": {
+    "invoice": {
+      "invoice_number": "INV-2112",
+      "vendor_name": "PSEUDO SERVICES LLC",
+      "vendor_tax_id": "TX-9112",
+      "bank_account": "ACC-1122",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "HVAC-SVC",
+          "description": "HVAC Maintenance Visit",
+          "quantity": "2",
+          "unit_price": "225.00",
+          "line_total": "450.00"
+        }
+      ],
+      "subtotal": "450.00",
+      "tax": "0.00",
+      "total": "450.00"
+    },
+    "purchase_order": {
+      "po_number": "PO-3112",
+      "currency": "USD",
+      "tax_rate_percent": "0.00",
+      "items": [
+        {
+          "item_id": "HVAC-SVC",
+          "quantity": "2",
+          "unit_price": "225.00"
+        }
+      ]
+    },
+    "goods_receipt": null,
+    "vendor_master": null,
+    "prior_payment_history": [],
+    "bank_change_evidence": null,
+    "case_id": "case_112"
+  },
+  "render_spec": {
+    "po_format": "pdf",
+    "grn_format": null,
+    "vm_format": null,
+    "invoice_noise": 2,
+    "po_noise": 0,
+    "label_set": 2
+  },
+  "derived_by": "scripts/validate_phase1.Phase1Oracle (official rulebook logic, unmodified)"
+}

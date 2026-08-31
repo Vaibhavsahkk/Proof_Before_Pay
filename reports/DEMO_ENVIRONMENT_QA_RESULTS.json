@@ -1,0 +1,279 @@
+{
+  "started": "2026-08-31 18:31:11",
+  "base": "http://127.0.0.1:8080",
+  "sections": {
+    "P1_startup": [
+      {
+        "name": "root page 200",
+        "pass": true,
+        "detail": "status=200 t=0.0s len=43383"
+      },
+      {
+        "name": "UI contains 'Proof Before Pay'",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "UI contains 'Review Supplier Payment'",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "UI contains 'api/investigate'",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "UI contains 'sample-btn'",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "UI contains 'start-btn'",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "health endpoint 200",
+        "pass": true,
+        "detail": "status=200 body={\"status\": \"ok\", \"app\": \"Proof Before Pay\"}"
+      },
+      {
+        "name": "GET /api/cases lists 12 cases",
+        "pass": true,
+        "detail": "status=200 n=12"
+      },
+      {
+        "name": "GET /api/cases/case_001 200",
+        "pass": true,
+        "detail": "status=200 len=890"
+      }
+    ],
+    "P2_cached_cases": [
+      {
+        "name": "case_001 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=PAY expected=PAY t=0.02s"
+      },
+      {
+        "name": "case_001 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=PAY expected=PAY"
+      },
+      {
+        "name": "case_002 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.02s"
+      },
+      {
+        "name": "case_002 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_003 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.04s"
+      },
+      {
+        "name": "case_003 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_004 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.03s"
+      },
+      {
+        "name": "case_004 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_005 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=INVESTIGATE expected=INVESTIGATE t=0.02s"
+      },
+      {
+        "name": "case_005 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=INVESTIGATE expected=INVESTIGATE"
+      },
+      {
+        "name": "case_006 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.04s"
+      },
+      {
+        "name": "case_006 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_007 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.02s"
+      },
+      {
+        "name": "case_007 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_008 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=HOLD expected=HOLD t=0.03s"
+      },
+      {
+        "name": "case_008 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=HOLD expected=HOLD"
+      },
+      {
+        "name": "case_009 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=INVESTIGATE expected=INVESTIGATE t=0.02s"
+      },
+      {
+        "name": "case_009 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=INVESTIGATE expected=INVESTIGATE"
+      },
+      {
+        "name": "case_010 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=INVESTIGATE expected=INVESTIGATE t=0.02s"
+      },
+      {
+        "name": "case_010 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=INVESTIGATE expected=INVESTIGATE"
+      },
+      {
+        "name": "case_011 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=INVESTIGATE expected=INVESTIGATE t=0.04s"
+      },
+      {
+        "name": "case_011 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=INVESTIGATE expected=INVESTIGATE"
+      },
+      {
+        "name": "case_012 investigate 200+schema",
+        "pass": true,
+        "detail": "status=200 rec=PAY expected=PAY t=0.02s"
+      },
+      {
+        "name": "case_012 recommendation matches ground truth",
+        "pass": true,
+        "detail": "rec=PAY expected=PAY"
+      }
+    ],
+    "P3_uploads": [
+      {
+        "name": "upload single JSON 200",
+        "pass": true,
+        "detail": "status=200 t=7.06s rec=INVESTIGATE"
+      },
+      {
+        "name": "upload JSON returns metadata",
+        "pass": true,
+        "detail": ""
+      }
+    ],
+    "P4_adversarial": [
+      {
+        "name": "unsupported .exe rejected",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Unsupported file format '.exe' for 'malware.exe'. Supported formats are: .jpeg, .jpg, .json, .pdf, .png\", \"result\": {\"case_id\": \"case_000\","
+      },
+      {
+        "name": "corrupt PDF handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Failed to process document 'corrupt.pdf': 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The document has no pages.', 'status': "
+      },
+      {
+        "name": "empty file handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"File 'empty.json' is empty.\", \"result\": {\"case_id\": \"case_000\", \"recommendation\": \"INVESTIGATE\", \"findings\": [\"Unreadable Document\"], \"evid"
+      },
+      {
+        "name": "invalid JSON handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Invalid JSON syntax in 'bad.json': Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\", \"result\": {\"case_id\": \"cas"
+      },
+      {
+        "name": "unknown case handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Please upload at least one supplier document to start the review.\"}"
+      },
+      {
+        "name": "malformed JSON body handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Invalid JSON payload: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\"}"
+      },
+      {
+        "name": "GET on /api/investigate rejected",
+        "pass": true,
+        "detail": "status=404"
+      },
+      {
+        "name": "empty payload handled",
+        "pass": true,
+        "detail": "status=400 body={\"error\": \"Please upload at least one supplier document to start the review.\"}"
+      },
+      {
+        "name": "trace traversal does not leak .env secrets",
+        "pass": true,
+        "detail": "status=200 body={\"trace_file\": \"../../.env\", \"events\": []}"
+      },
+      {
+        "name": "trace reads only jsonl lines (single-line json yields 0 events)",
+        "pass": true,
+        "detail": "status=200 len=70 note=containment gap, see QA report"
+      }
+    ],
+    "P5_trace": [
+      {
+        "name": "trace 404 graceful",
+        "pass": true,
+        "detail": "status=200"
+      },
+      {
+        "name": "trace default returns latest trace file",
+        "pass": true,
+        "detail": "status=200 file=traces/raw\\trace_20260831_123132_a10046f6.jsonl n_events=396"
+      },
+      {
+        "name": "trace endpoint returns events",
+        "pass": true,
+        "detail": "status=200 n_events=396"
+      }
+    ]
+  },
+  "case_timings_sec": {
+    "case_001": 0.02,
+    "case_002": 0.02,
+    "case_003": 0.04,
+    "case_004": 0.03,
+    "case_005": 0.02,
+    "case_006": 0.04,
+    "case_007": 0.02,
+    "case_008": 0.03,
+    "case_009": 0.02,
+    "case_010": 0.02,
+    "case_011": 0.04,
+    "case_012": 0.02
+  },
+  "finished": "2026-08-31 18:31:19",
+  "summary": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0,
+    "pct": 100.0,
+    "cached_case_avg_sec": 0.03,
+    "live_mode": false
+  }
+}

@@ -28,13 +28,13 @@ Map every proposed agent capability to an observed baseline failure or explicit 
 
 ## Phase 4 - Minimal Agent V1
 
-Status: LOCKED.
+Status: APPROVED.
 
 Build the smallest useful workflow: ingest -> extract -> reconcile -> deterministic checks -> verify -> reviewer-ready report.
 
 ## Phase 5 - Memory, History, and Human Review
 
-Status: LOCKED.
+Status: ACTIVE.
 
 Add only evidence-backed capabilities such as vendor aliases, prior-transaction context, uncertainty handling, and explicit human checkpoints.
 

@@ -1,0 +1,10 @@
+{
+  "case_id": "case_105",
+  "track": "B",
+  "documents": [
+    "invoice.pdf",
+    "purchase_order.pdf",
+    "goods_receipt.png",
+    "vendor_master.pdf"
+  ]
+}
