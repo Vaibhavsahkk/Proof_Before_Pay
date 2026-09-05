@@ -10,6 +10,7 @@ Generated on 2026-09-06 from the current repository state.
 - `proof_before_pay_3d_explainer.mp4` - enhanced narrated explainer with a rendered Blender 3D architecture chapter.
 - `proof_before_pay_sync_verified.mp4` - paragraph-timed version with measured narration chapters and verified visual checkpoints.
 - `proof_before_pay_cto_explainer.mp4` - 7-minute CTO/hiring-manager walkthrough with public GitHub context, key code decisions, evidence, and Blender architecture motion.
+- `proof_before_pay_cto_explainer_live.mp4` - local-only final version with the real smoke and Compose live-run chapter added.
 - `cto_narration.txt` - narration source for the CTO walkthrough.
 - `../scripts/build_cto_slides.py` - reproducible code/evidence slide generator.
 - `blender_architecture_3d.mp4` - standalone 15-second narrated Blender architecture clip.
@@ -38,6 +39,11 @@ The CTO walkthrough uses 19 measured chapters. Its source narration is
 `428.847s`; the final muxed video is `428.800s`, within roughly `0.047s`.
 It intentionally shows only public repository content, bounded demo evidence,
 and non-secret code excerpts.
+
+The live-run version uses 20 measured chapters. Its source narration is
+`447.027s`; the final muxed video is `446.967s`, within roughly `0.060s`.
+The video files are intentionally kept on the local machine and are not
+tracked or uploaded to GitHub. The player expects the local MP4 to exist.
 
 Intermediate audio, segment files, and raw browser recordings are local build
 artifacts and are intentionally excluded from the repository package.

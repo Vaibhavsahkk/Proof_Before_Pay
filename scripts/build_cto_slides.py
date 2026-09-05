@@ -58,6 +58,35 @@ def slide(number, title, body, code=None, image=None, kicker="PROOF BEFORE PAY /
     draw.text((70, 675), f"{number:02d}  |  evidence-led engineering, human-controlled consequences", fill="#7891a1", font=font(FONT, 15))
     canvas.save(OUT / f"chapter_{number:02d}.png")
 
+def build_live_run_visual():
+    canvas = Image.new("RGB", (1280, 720), "#071018")
+    draw = ImageDraw.Draw(canvas)
+    draw.rectangle((0, 0, 1280, 8), fill="#4fd1c5")
+    draw.text((70, 48), "LIVE RUN / LOCAL VERIFICATION", fill="#7dd3fc", font=font(BOLD, 17))
+    draw.text((70, 88), "The repository running for real", fill="#f8fafc", font=font(BOLD, 42))
+    draw.rounded_rectangle((70, 180, 1210, 605), radius=12, fill="#020609", outline="#31566a", width=2)
+    lines = [
+        "PS D:\\Proof Before Pay\\MICRO.1>",
+        "> python -m src.main --smoke",
+        "Running smoke test...",
+        "Smoke test complete. Check traces directory for output.",
+        "",
+        "> docker compose config --services",
+        "micro1_app",
+        "phase1_verifier",
+        "",
+        "STATUS: executable path passed | runtime/verifier boundary resolved",
+    ]
+    y = 215
+    for index, line in enumerate(lines):
+        color = "#9ee7df" if index in (2, 3, 6, 7, 9) else "#d7e3ea"
+        draw.text((105, y), line, fill=color, font=font(MONO, 22))
+        y += 36
+    draw.text((70, 675), "LIVE EVIDENCE  |  no personal documents, API keys, or private data shown", fill="#7891a1", font=font(FONT, 15))
+    canvas.save(MEDIA / "live_run.png")
+
+build_live_run_visual()
+
 slides = [
     ("Executive overview", "What is being built and why", "Proof Before Pay is a focused investigation workflow for supplier payment exceptions. It turns scattered records into a traceable recommendation without taking payment action.", None, "github_repo.png"),
     ("The problem", "A plausible invoice is not proof", "The expensive failures are cross-document failures: duplicate billing, price contradictions, missing receipts, identity mismatch, and unverified bank changes.", None, "01_architecture.png"),
@@ -65,6 +94,7 @@ slides = [
     ("Repository", "An executable project, not a prompt", "The public repository puts README claims next to source, schemas, tests, Docker targets, public cases, traces, and verification scripts. The repo itself is part of the evidence.", None, "github_repo.png"),
     ("Architecture", "Separate interpretation from correctness", "AI reads and explains. Deterministic tools calculate. Rules classify. Schemas validate. Traces record. Humans decide.", None, "01_architecture.png"),
     ("Request path", "From evidence intake to a review decision", "The reviewer UI accepts PDF, images, or JSON, normalizes the request, and sends it to the orchestrator. The demo uses bounded local fixtures, never personal documents.", "UI -> /api/investigate\n     -> AgentOrchestrator\n     -> trace + structured result", None),
+    ("Live run", "The repository running for real", "The smoke command completes successfully, and Compose resolves both the application runtime and the separate verifier service. This is the first operational checkpoint before provider-backed review.", None, "live_run.png"),
     ("Orchestrator", "The control flow is intentionally readable", "The orchestrator is the system's spine. Its phases are visible in code and in trace events, so a reviewer can follow the decision rather than trusting a black box.", "extract -> verify -> apply_rules\n        -> explain -> validate -> escalate", None),
     ("Extraction contract", "The model cannot silently drop required facts", "LLM schemas are not always strong enough. The extractor checks item fields and invoice totals after the response, reinforces the prompt, retries, and repairs only when the evidence makes the repair deterministic.", "missing = _missing_item_fields(data)\nif missing:\n    retry_with_reinforced_contract()\n    repair_from_purchase_order()", None),
     ("Deterministic checks", "Do not ask a model to guess arithmetic", "The verifier checks totals, prices, quantities, currencies, taxes, duplicates, vendor identity, bank changes, PO matching, and GRN matching with explicit calculator and equality helpers.", "DecimalCalculator.multiply(...)\nDecimalCalculator.check_equality(...)\nRuleEvaluator.evaluate(anomalies)", None),

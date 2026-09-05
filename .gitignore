@@ -5,6 +5,8 @@ media/raw/
 media/segments/
 media/media/
 media/*.wav
+media/*.mp4
+media/*.webm
 media/visuals.mp4
 media/visuals_3d.mp4
 media/*.blend*

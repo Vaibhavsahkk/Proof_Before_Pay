@@ -10,6 +10,8 @@ The first architectural decision is a separation of responsibilities. The langua
 
 The request path starts in the reviewer UI. A reviewer can upload PDF, image, or JSON evidence, or select a public example. The browser sends an investigation request to the local API. The API normalizes the case, applies request limits, and passes the evidence into the orchestrator. This is a real workflow, but the demo recording uses bounded local fixtures so no personal documents or provider credentials appear in the video.
 
+Here is the project running, not just being described. The smoke command completes successfully, and Docker Compose resolves both the application runtime and the separate verifier service. This is the first operational checkpoint: the repository can start its executable path and identify the two boundaries that matter before any provider-backed review is attempted.
+
 Now look at the orchestrator. Its control flow is intentionally readable: extract, verify, apply rules, explain, validate, and escalate. Each phase writes a trace event. That means an answer is not just a final label; a reviewer can inspect what happened before the label was returned.
 
 The extraction module contains an important engineering lesson. LLM response schemas are not always strong enough to enforce every required field. The project therefore validates the extracted contract after the model responds. If item quantity, unit price, line total, or invoice totals are missing, it reinforces the prompt, retries once, and applies deterministic repair where the purchase order provides enough evidence. The model is useful, but the contract is enforced outside the model.
