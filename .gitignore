@@ -15,6 +15,12 @@ media/narration_chapters/
 media/sync_visuals.mp4
 media/narration_aligned.wav
 media/sync_check/
+media/cto_audio/
+media/cto_segments/
+media/cto_check/
+media/cto_visuals.mp4
+media/cto_narration_aligned.wav
+media/cto_contact_sheet.png
 .env.*
 !.env.example
 tokenrouter.local.env
