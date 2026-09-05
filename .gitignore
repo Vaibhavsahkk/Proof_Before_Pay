@@ -10,6 +10,11 @@ media/visuals_3d.mp4
 media/*.blend*
 media/blender_verification.png
 media/blender_architecture_3d_silent.mp4
+media/sync_segments/
+media/narration_chapters/
+media/sync_visuals.mp4
+media/narration_aligned.wav
+media/sync_check/
 .env.*
 !.env.example
 tokenrouter.local.env
