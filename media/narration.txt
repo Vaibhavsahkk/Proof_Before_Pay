@@ -1,0 +1,31 @@
+Welcome to Proof Before Pay, an evidence-driven pre-payment exception investigator for small businesses.
+
+The problem is simple, but expensive. A supplier invoice can look normal while the purchase order, goods receipt, vendor master, payment history, or bank-change evidence tells a different story. If a business pays too quickly, it can overpay, pay twice, accept goods that were never received, or send money to an unverified account. Traditional automation often treats a plausible document as enough. This project starts from the opposite principle: proof must come before payment.
+
+The system does not move money. It does not change bank details. It does not declare that a supplier is fraudulent. It investigates the evidence and gives a human reviewer a structured recommendation: PAY, HOLD, or INVESTIGATE.
+
+Here is the architecture. First, the reviewer uploads supplier evidence or selects an example case. The evidence can include an invoice, purchase order, goods receipt, vendor master record, prior payment history, and bank-change evidence. Next, an extraction layer reads the documents and turns them into structured facts such as vendor identity, invoice number, line items, quantities, prices, totals, currency, and bank details.
+
+The important design choice is what happens next. The language model is used to read and explain evidence. Deterministic tools perform the calculations and equality checks. The system checks invoice math, purchase-order matching, goods-receipt matching, vendor identity, bank changes, duplicate billing, currency, tax rate, and line identifiers. This separation makes the final decision auditable instead of relying on a single model answer.
+
+Now let us walk through the real reviewer interface. The first screen is the intake workspace. A human can upload PDF, image, or JSON evidence, or choose a public example. The interface explains what the system is about to verify: amounts, orders, and bank details. There is also a visible system-status indicator showing that deterministic verification is active.
+
+For this walkthrough we choose the price-mismatch example. The invoice price is higher than the approved purchase order price. Selecting a case does not approve anything. It only chooses the evidence bundle that will be investigated.
+
+When Review Payment is pressed, the interface shows the investigation stages. First, the system reads supplier documents. Second, it extracts supplier details, line items, and totals. Third, it checks order matching, math accuracy, and bank details. Fourth, it prepares a recommendation. These steps are not decorative: they correspond to the application pipeline and are recorded in the audit trace.
+
+The result in this example is HOLD. The reason is a price contradiction, alongside a mathematical inconsistency in the invoice evidence. The reviewer gets a clear next step: hold payment and confirm the discrepancy with the supplier. This is deliberately different from silently rejecting the supplier or automatically sending money.
+
+The Vendor and Bank Details panel shows which identity facts were extracted. The Invoice Summary panel shows the invoice number, total, and currency. The Issues Found tab keeps the explanation close to the decision. The Verified Documents tab shows what evidence was actually linked to the result. This makes missing evidence visible rather than hiding it behind a confidence score.
+
+The Automated Checks tab shows the deterministic work. Calculators and equality checkers verify totals, prices, quantities, and duplicates. Rule evaluation then applies the project policy: HOLD takes precedence over INVESTIGATE, and INVESTIGATE takes precedence over PAY. In other words, uncertainty is not converted into optimism.
+
+The Audit and Connection Log tab shows the trace. It records extraction, verification, rule application, explanation, schema validation, and human escalation. The output is validated against a strict JSON contract before it is returned. This makes the result useful for review, testing, and later investigation.
+
+The project is different from a general generative AI assistant because it is narrow, evidence-linked, and consequence-aware. A general assistant can summarize an invoice. Proof Before Pay compares multiple business records, calls deterministic tools for calculations, preserves evidence references, exposes missing checks, and stops at the human decision boundary. The system is designed to be useful precisely where a fluent answer is not enough.
+
+The repository also separates the runtime image from the verifier image. The runtime receives public application assets and public cases. Evaluation code, tests, manifests, and hidden ground truth stay in the verifier boundary. The container runs as a non-root user, and the reviewer API has authentication, same-origin CORS defaults, and a request-size limit.
+
+There are still operational steps before calling this a broadly deployed production service: ingress and TLS, readiness probes, metrics, centralized logs, secret rotation, alerting, rollback procedures, and an operations runbook. Those are service-level responsibilities around the core system. The core evidence workflow is already executable and testable.
+
+The final idea is the name: Proof Before Pay. Before a payment becomes an action, the system asks whether the supporting records agree. AI helps read and explain. Deterministic checks calculate. Rules make the risk posture explicit. A human makes the consequential decision. That is the project in one sentence: investigate payment evidence before money moves.

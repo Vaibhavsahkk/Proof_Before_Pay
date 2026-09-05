@@ -1,5 +1,10 @@
 # Secrets
 .env
+.venv/
+media/raw/
+media/segments/
+media/*.wav
+media/visuals.mp4
 .env.*
 !.env.example
 tokenrouter.local.env
