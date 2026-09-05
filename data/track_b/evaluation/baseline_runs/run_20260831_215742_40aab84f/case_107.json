@@ -1,0 +1,56 @@
+{
+  "baseline_output": {
+    "case_id": "case_107",
+    "deterministic_calculation_references": [
+      "10 units * 50.00 USD/unit = 500.00 USD line total (differs from invoice line total and subtotal of 600.00 USD)"
+    ],
+    "evidence_references": [
+      "Invoice INV-2107",
+      "Purchase Order PO-3107"
+    ],
+    "findings": [
+      "Math Error"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Contact the vendor to clarify the price/total calculation error and request a corrected invoice for INV-2107.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_107",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "2CE5C8E6879696C809ABDDCBEB30EB311504366915EF0A82EEF27FA3B0B44CFD",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 8.064095700000507,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:59:44.218722Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 188,
+      "prompt_token_count": 3087,
+      "total_token_count": 4352
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_107\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Math Error\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2107\",\n    \"Purchase Order PO-3107\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"10 units * 50.00 USD/unit = 500.00 USD line total (differs from invoice line total and subtotal of 600.00 USD)\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Contact the vendor to clarify the price/total calculation error and request a corrected invoice for INV-2107.\"\n}"
+}

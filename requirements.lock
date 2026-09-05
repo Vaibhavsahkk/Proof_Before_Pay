@@ -2,3 +2,8 @@
 google-genai==2.19.0
 jsonschema==4.26.0
 python-dotenv==1.2.2
+# Runtime dependencies imported by src/agent/document_adapter.py
+# (PDF text extraction, PDF fallback, image verification)
+pymupdf==1.28.0
+pypdf==6.14.2
+pillow==12.3.0

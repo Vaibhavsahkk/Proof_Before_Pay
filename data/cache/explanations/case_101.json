@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The total requested payment amount does not match the sum of the individual line items, subtotals, or tax calculations, indicating a calculation mistake or potential data manipulation.",
+  "required_human_next_step": "Manually recalculate the invoice line items and taxes, compare them against the supporting documentation, and either adjust the totals or request a corrected submission from the vendor."
+}

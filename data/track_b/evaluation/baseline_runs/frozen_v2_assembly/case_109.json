@@ -1,0 +1,58 @@
+{
+  "baseline_output": {
+    "case_id": "case_109",
+    "deterministic_calculation_references": [
+      "Line Total = 8 * 75.00 USD = 600.00 USD",
+      "Total Amount = 600.00 USD + 0.00 USD = 600.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2109",
+      "Vendor Master Record (Tax ID TX-9109)"
+    ],
+    "findings": [
+      "Vendor Identity Mismatch"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify whether 'SYNTHETIC WIDGETS' on the invoice matches the registered vendor entity 'SYNTHETIC WIDGETS LLC' in the Vendor Master Record.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_109",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "4FCC8184B41A371AC52BA439D04C96A55715393B8E3CDBC2906C9631257E0CA9",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 32.309827199999745,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "source_run_id": "run_20260831_215742_40aab84f",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T22:00:25.624275Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 217,
+      "prompt_token_count": 3087,
+      "total_token_count": 5279
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_109\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Vendor Identity Mismatch\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2109\",\n    \"Vendor Master Record (Tax ID TX-9109)\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line Total = 8 * 75.00 USD = 600.00 USD\",\n    \"Total Amount = 600.00 USD + 0.00 USD = 600.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Verify whether 'SYNTHETIC WIDGETS' on the invoice matches the registered vendor entity 'SYNTHETIC WIDGETS LLC' in the Vendor Master Record.\"\n}"
+}

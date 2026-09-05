@@ -1,0 +1,56 @@
+{
+  "baseline_output": {
+    "case_id": "case_104",
+    "deterministic_calculation_references": [
+      "Invoice unit price (2.20 USD) does not match Purchase Order unit price (2.00 USD): 500 * 2.20 USD = 1100.00 USD vs 500 * 2.00 USD = 1000.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2104",
+      "Purchase Order PO-3104"
+    ],
+    "findings": [
+      "Price Contradiction"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Contact the vendor or purchasing agent to resolve the price mismatch between Invoice INV-2104 and Purchase Order PO-3104.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_104",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "8DC25D1B04E7D97CAD24739504143CDB7E83F63DA695CB1AEB6C431F3FABB95D",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 11.022858700000143,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:39:58.231317Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 219,
+      "prompt_token_count": 3087,
+      "total_token_count": 4791
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_104\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Price Contradiction\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2104\",\n    \"Purchase Order PO-3104\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Invoice unit price (2.20 USD) does not match Purchase Order unit price (2.00 USD): 500 * 2.20 USD = 1100.00 USD vs 500 * 2.00 USD = 1000.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Contact the vendor or purchasing agent to resolve the price mismatch between Invoice INV-2104 and Purchase Order PO-3104.\"\n}"
+}

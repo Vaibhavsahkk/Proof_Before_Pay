@@ -1,0 +1,40 @@
+{
+  "baseline_output": null,
+  "case_id": "case_102",
+  "metadata": {
+    "attempt_count": 2,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json"
+    ],
+    "error": "Server disconnected without sending a response.",
+    "input_hash": "223C95D121C9B2661DAB715C66A65D42B6BD2861D6FE9100BAB866D3F32F62BB",
+    "key_rotations": 1,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "NOT_RETURNED",
+    "runtime_seconds": 19.812380599999415,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "API_ERROR",
+    "timestamp_utc": "2026-08-31T21:58:11.632391Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": "NOT_RETURNED",
+      "prompt_token_count": "NOT_RETURNED",
+      "total_token_count": "NOT_RETURNED"
+    }
+  },
+  "raw_response": "Server disconnected without sending a response."
+}

@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The automated system detected a potential duplicate billing anomaly, but it is uncertain whether this represents an accidental resubmission by the vendor, a legitimate recurring payment with identical parameters, or an intentional double-billing attempt.",
+  "required_human_next_step": "Cross-reference the current payment request against recent transaction history for matching invoice numbers, amounts, and dates, and contact the vendor to verify whether the charge is authorized."
+}

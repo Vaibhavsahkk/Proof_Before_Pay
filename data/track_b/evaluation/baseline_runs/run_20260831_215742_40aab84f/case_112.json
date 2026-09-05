@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_112",
+    "deterministic_calculation_references": [
+      "Line Total: 2 * 225.00 USD = 450.00 USD",
+      "Total Amount: 450.00 USD + 0.00 USD = 450.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2112",
+      "Purchase Order PO-3112"
+    ],
+    "findings": [
+      "Missing GRN",
+      "Missing Vendor Master"
+    ],
+    "missing_evidence": [
+      "Goods Receipt Note (GRN)",
+      "Vendor Master Record"
+    ],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Obtain Goods Receipt Note and Vendor Master Record to verify fulfillment and bank account details.",
+    "uncertainty": "Cannot verify service receipt or bank details without Goods Receipt Note and Vendor Master Record."
+  },
+  "case_id": "case_112",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf"
+    ],
+    "error": null,
+    "input_hash": "A388EED57607ABD3EE83E15B0CAE70685993F6FCA8C7CB2E3048A9802CACE124",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 11.825048100000458,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T22:01:04.725021Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 236,
+      "prompt_token_count": 2023,
+      "total_token_count": 3605
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_112\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Missing GRN\",\n    \"Missing Vendor Master\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2112\",\n    \"Purchase Order PO-3112\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line Total: 2 * 225.00 USD = 450.00 USD\",\n    \"Total Amount: 450.00 USD + 0.00 USD = 450.00 USD\"\n  ],\n  \"missing_evidence\": [\n    \"Goods Receipt Note (GRN)\",\n    \"Vendor Master Record\"\n  ],\n  \"uncertainty\": \"Cannot verify service receipt or bank details without Goods Receipt Note and Vendor Master Record.\",\n  \"required_human_next_step\": \"Obtain Goods Receipt Note and Vendor Master Record to verify fulfillment and bank account details.\"\n}"
+}

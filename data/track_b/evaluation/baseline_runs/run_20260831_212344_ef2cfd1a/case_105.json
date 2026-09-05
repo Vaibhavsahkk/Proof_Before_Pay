@@ -1,0 +1,60 @@
+{
+  "baseline_output": {
+    "case_id": "case_105",
+    "deterministic_calculation_references": [
+      "Invoice Line Total calculation: 60 units * 10.00 USD = 600.00 USD",
+      "Accepted Goods Value calculation: 45 units * 10.00 USD = 450.00 USD",
+      "Overbilled Amount calculation: 600.00 USD - 450.00 USD = 150.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2105",
+      "Purchase Order PO-3105",
+      "Goods Receipt Note GRN-4105",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Quantity mismatch: Invoice bills for 60 units of STEEL-ROD, but Goods Receipt Note GRN-4105 shows only 45 units accepted."
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Hold payment and contact the vendor/receiving department to clarify if a partial delivery occurred and request a credit note or adjusted invoice for 450.00 USD.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_105",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.png",
+      "vendor_master.pdf"
+    ],
+    "error": "'Quantity mismatch: Invoice bills for 60 units of STEEL-ROD, but Goods Receipt Note GRN-4105 shows only 45 units accepted.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Iden",
+    "input_hash": "D06321A319C497C56C0A0203283ED823AE387971022A9E4430F5F66103F0AF37",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 12.57348330000059,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:27:59.093184Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 299,
+      "prompt_token_count": 3055,
+      "total_token_count": 4323
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_105\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Quantity mismatch: Invoice bills for 60 units of STEEL-ROD, but Goods Receipt Note GRN-4105 shows only 45 units accepted.\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2105\",\n    \"Purchase Order PO-3105\",\n    \"Goods Receipt Note GRN-4105\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Invoice Line Total calculation: 60 units * 10.00 USD = 600.00 USD\",\n    \"Accepted Goods Value calculation: 45 units * 10.00 USD = 450.00 USD\",\n    \"Overbilled Amount calculation: 600.00 USD - 450.00 USD = 150.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Hold payment and contact the vendor/receiving department to clarify if a partial delivery occurred and request a credit note or adjusted invoice for 450.00 USD.\"\n}"
+}

@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_110",
+    "deterministic_calculation_references": [
+      "25 * 40.00 EUR = 1000.00 EUR line total",
+      "1000.00 EUR subtotal + 0.00 EUR tax = 1000.00 EUR total"
+    ],
+    "evidence_references": [
+      "Invoice INV-2110",
+      "Purchase Order PO-3110",
+      "Goods Receipt Note GRN-4110",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Currency mismatch: Invoice currency is EUR, whereas Purchase Order currency is USD."
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Clarify the currency discrepancy with the purchasing department or vendor before approving payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_110",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": "'Currency mismatch: Invoice currency is EUR, whereas Purchase Order currency is USD.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Identity Mismatch']\n\nFailed validating 'en",
+    "input_hash": "84A6990546E1AD6DD3226B23508F50DFE118CD4207908D0DF02A975B5590CB02",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 12.630605000000287,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:29:30.644559Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 224,
+      "prompt_token_count": 2492,
+      "total_token_count": 3608
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_110\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Currency mismatch: Invoice currency is EUR, whereas Purchase Order currency is USD.\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2110\",\n    \"Purchase Order PO-3110\",\n    \"Goods Receipt Note GRN-4110\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"25 * 40.00 EUR = 1000.00 EUR line total\",\n    \"1000.00 EUR subtotal + 0.00 EUR tax = 1000.00 EUR total\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Clarify the currency discrepancy with the purchasing department or vendor before approving payment.\"\n}"
+}

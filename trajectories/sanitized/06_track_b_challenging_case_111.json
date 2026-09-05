@@ -1,0 +1,505 @@
+{
+  "trajectory_id": "06_track_b_challenging_case_111",
+  "source_trace": "trace_20260901_075736_8301dded.jsonl",
+  "scenario": "Track B challenging case_111 (TESTAMENT SOFTWARE CORP): 6 documents in 3 formats (noisy invoice PDF, PO as PNG via live OCR, GRN PDF, vendor master JSON, remittance advice PDF, bank-change notice PENDING). The agent's deterministic cross-document verification found BOTH signals - Duplicate Billing (history in remittance vs invoice, via EqualityChecker/DecimalCalculator) and Unverified Bank Change - and produced the exact ground-truth result: HOLD. This was the case the one-prompt baseline got wrong.",
+  "event_count": 19,
+  "events": [
+    {
+      "timestamp": "2026-09-01T07:57:41.895194+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:42.592258+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "workflow",
+      "agent": "orchestrator",
+      "action": "retry_wait",
+      "tool": "system",
+      "input": "case_111",
+      "output": null,
+      "result": "WARNING",
+      "error": "Waiting 0.0s due to RetrySignal: Key rate limited: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 15.45613061s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-3.6-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '15s'}]}}",
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:42.595518+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:43.380622+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "workflow",
+      "agent": "orchestrator",
+      "action": "retry_wait",
+      "tool": "system",
+      "input": "case_111",
+      "output": null,
+      "result": "WARNING",
+      "error": "Waiting 0.0s due to RetrySignal: Key rate limited: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:43.383278+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:44.022914+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "workflow",
+      "agent": "orchestrator",
+      "action": "retry_wait",
+      "tool": "system",
+      "input": "case_111",
+      "output": null,
+      "result": "WARNING",
+      "error": "Waiting 0.0s due to RetrySignal: Key rate limited: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 14.018658226s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '14s'}]}}",
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:44.025657+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:44.632625+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "workflow",
+      "agent": "orchestrator",
+      "action": "retry_wait",
+      "tool": "system",
+      "input": "case_111",
+      "output": null,
+      "result": "WARNING",
+      "error": "Waiting 0.0s due to RetrySignal: Key rate limited: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 13.408216126s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.6-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '13s'}]}}",
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:57:44.632625+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.686112+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_111",
+      "output": {
+        "case_id": "case_111",
+        "invoice": {
+          "invoice_number": "INV-2111",
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-9111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00",
+              "line_total": "5000.00"
+            }
+          ],
+          "subtotal": "5000.00",
+          "tax": "0.00",
+          "total": "5000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-3111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-4111",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity_accepted": "2"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-1111"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-2111",
+            "vendor_tax_id": "TX-9111",
+            "amount": "5000.00",
+            "payment_date": "2026-06-20"
+          }
+        ],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-1111",
+          "new_bank_account": "ACC-9111",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.689830+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_111",
+        "invoice": {
+          "invoice_number": "INV-2111",
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-9111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00",
+              "line_total": "5000.00"
+            }
+          ],
+          "subtotal": "5000.00",
+          "tax": "0.00",
+          "total": "5000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-3111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-4111",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity_accepted": "2"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-1111"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-2111",
+            "vendor_tax_id": "TX-9111",
+            "amount": "5000.00",
+            "payment_date": "2026-06-20"
+          }
+        ],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-1111",
+          "new_bank_account": "ACC-9111",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.691421+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_111",
+        "invoice": {
+          "invoice_number": "INV-2111",
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-9111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00",
+              "line_total": "5000.00"
+            }
+          ],
+          "subtotal": "5000.00",
+          "tax": "0.00",
+          "total": "5000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-3111",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity": "2",
+              "unit_price": "2500.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-4111",
+          "items": [
+            {
+              "item_id": "CRM-LIC",
+              "quantity_accepted": "2"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SOFTWARE CORP",
+          "vendor_tax_id": "TX-9111",
+          "bank_account": "ACC-1111"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-2111",
+            "vendor_tax_id": "TX-9111",
+            "amount": "5000.00",
+            "payment_date": "2026-06-20"
+          }
+        ],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-1111",
+          "new_bank_account": "ACC-9111",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "output": [
+        "Unverified Bank Change",
+        "Duplicate Billing"
+      ],
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.691421+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Unverified Bank Change",
+        "Duplicate Billing"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.691421+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Unverified Bank Change",
+        "Duplicate Billing"
+      ],
+      "output": {
+        "recommendation": "HOLD",
+        "findings": [
+          "Duplicate Billing",
+          "Unverified Bank Change"
+        ]
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:11.696516+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Duplicate Billing",
+        "Unverified Bank Change"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:19.780204+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Duplicate Billing",
+        "Unverified Bank Change"
+      ],
+      "output": {
+        "uncertainty": "The payment request presents a high risk of unauthorized fund diversion, as the invoice details potentially replicate a previously processed payment, and the requested destination account has not been verified against trusted vendor records.",
+        "next_step": "Cross-reference the invoice details against historical payment logs to check for prior processing, and contact the vendor via a pre-established, out-of-band phone number to confirm the legitimate bank account change before approving the transaction."
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:19.785248+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "validate",
+      "agent": "orchestrator",
+      "action": "validate_output_schema",
+      "tool": "jsonschema",
+      "input": {
+        "case_id": "case_111",
+        "recommendation": "HOLD",
+        "findings": [
+          "Duplicate Billing",
+          "Unverified Bank Change"
+        ],
+        "evidence_references": [
+          "invoice",
+          "purchase_order",
+          "goods_receipt",
+          "vendor_master",
+          "prior_payment_history",
+          "bank_change_evidence"
+        ],
+        "deterministic_calculation_references": [
+          "calculator.check_equality",
+          "calculator.multiply",
+          "calculator.calculate_tax",
+          "calculator.sum_values"
+        ],
+        "missing_evidence": [],
+        "uncertainty": "The payment request presents a high risk of unauthorized fund diversion, as the invoice details potentially replicate a previously processed payment, and the requested destination account has not been verified against trusted vendor records.",
+        "required_human_next_step": "Cross-reference the invoice details against historical payment logs to check for prior processing, and contact the vendor via a pre-established, out-of-band phone number to confirm the legitimate bank account change before approving the transaction."
+      },
+      "output": null,
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:19.785248+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "HOLD",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T07:58:19.785248+00:00",
+      "run_id": "8301dded-7aaf-4269-8f88-b8762b762687",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "HOLD",
+      "output": "ESCALATED",
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    }
+  ]
+}

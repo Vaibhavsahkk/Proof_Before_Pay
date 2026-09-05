@@ -1,0 +1,120 @@
+{
+  "cases": [
+    {
+      "case_id": "case_101",
+      "input_hash": "2B6A0A1566BA72C3DFCDAF60C4221C50E93882C7039DCB0EB285D0CE037D25CF",
+      "output_file": "case_101.json",
+      "output_sha256": "3EBBC44E651F1253A657730D81FC5E1A62B53622588B410F468A316FBBADC51F",
+      "status": "API_ERROR"
+    },
+    {
+      "case_id": "case_102",
+      "input_hash": "223C95D121C9B2661DAB715C66A65D42B6BD2861D6FE9100BAB866D3F32F62BB",
+      "output_file": "case_102.json",
+      "output_sha256": "8AC19EAA1F1198DA37B4B56A6ED9C6D6A2A61E5D638DB64D5DB62AFAE54FE886",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_103",
+      "input_hash": "526B1807CB47C55BA5F4A85D46F24BF5E1D53241AAB5D21BA69EAACA7E126C41",
+      "output_file": "case_103.json",
+      "output_sha256": "F13E595BB0EA6013084108111A80BBE0CCA2096F50F2D5518B9D81E9100A7AFC",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_104",
+      "input_hash": "8DC25D1B04E7D97CAD24739504143CDB7E83F63DA695CB1AEB6C431F3FABB95D",
+      "output_file": "case_104.json",
+      "output_sha256": "B96D43BEA0AE20CDD739BA38C03ED2B9CA6B968892047098A9CC5048459D74BA",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_105",
+      "input_hash": "D06321A319C497C56C0A0203283ED823AE387971022A9E4430F5F66103F0AF37",
+      "output_file": "case_105.json",
+      "output_sha256": "59CB5899B67250E02578AE6DA86C2C95EDB22E4B7DBA5F5FDB267A1B2E03B6CE",
+      "status": "API_ERROR"
+    },
+    {
+      "case_id": "case_106",
+      "input_hash": "FE03533EE465546D78CDAD86215DA497EB462967F8B8AE4394B1FE43198540BF",
+      "output_file": "case_106.json",
+      "output_sha256": "2E54A49FCF90D3268CAC291D5B162C9E7CDCC8F57F82A5EE3E2AF3CD23DC0244",
+      "status": "API_ERROR"
+    },
+    {
+      "case_id": "case_107",
+      "input_hash": "2CE5C8E6879696C809ABDDCBEB30EB311504366915EF0A82EEF27FA3B0B44CFD",
+      "output_file": "case_107.json",
+      "output_sha256": "DF2D4BB044EDA07212C069F8250F4690BF4FF82B75816C3FA817B862C8BC2779",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_108",
+      "input_hash": "C98207FACD654E210C373C6BD65D0EF9EC106339C4AA6C67164D4CD7C73B3228",
+      "output_file": "case_108.json",
+      "output_sha256": "72385DF0A4B77A9F46B8533DEE08E2A0FD08EF883A362CB8F3636F5B021D4B6B",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_109",
+      "input_hash": "4FCC8184B41A371AC52BA439D04C96A55715393B8E3CDBC2906C9631257E0CA9",
+      "output_file": "case_109.json",
+      "output_sha256": "E3BECC0C80B8A1A8D05E6AFCE77F9F4DB3AE5369F8C7F9CF773827E93B18CF87",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_110",
+      "input_hash": "84A6990546E1AD6DD3226B23508F50DFE118CD4207908D0DF02A975B5590CB02",
+      "output_file": "case_110.json",
+      "output_sha256": "B3BBF96A7B5F9C0F394E5F7F0D4EAE9B77D75E9D38ACEECF46023DE022DE62FC",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_111",
+      "input_hash": "668B6E0B7221A8CC9E1D244242B9D96D5C17EECE936E928663F2E598DD4B3DE6",
+      "output_file": "case_111.json",
+      "output_sha256": "E422789F8EEADECFF4F9A7C58CE54CE6CF227485873734081DBDCCD7B301B759",
+      "status": "SUCCESS"
+    },
+    {
+      "case_id": "case_112",
+      "input_hash": "A388EED57607ABD3EE83E15B0CAE70685993F6FCA8C7CB2E3048A9802CACE124",
+      "output_file": "case_112.json",
+      "output_sha256": "2B465E38709A449AD261DE5B1D1F8FECBF5B519C8D18BB4FC3C0BD93B861F94A",
+      "status": "SUCCESS"
+    }
+  ],
+  "end_time_utc": "2026-08-31T21:54:06.533235Z",
+  "git_head": "9b243a82de91bbdd16beae9c53100634559a3634",
+  "mode": "baseline",
+  "overall_status": "PARTIAL_ERROR",
+  "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+  "prompt_version": "v2",
+  "provider": "google",
+  "requested_model": "gemini-3.6-flash",
+  "retry_policy": {
+    "backoff_seconds": [
+      1,
+      2
+    ],
+    "maximum_attempts": 3,
+    "retryable_http_codes": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ]
+  },
+  "run_id": "run_20260831_213900_9339c075",
+  "settings": {
+    "max_output_tokens": 4096,
+    "response_mime_type": "application/json",
+    "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+    "temperature": 0.0,
+    "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+  },
+  "start_time_utc": "2026-08-31T21:39:00.476499Z",
+  "track": "B"
+}

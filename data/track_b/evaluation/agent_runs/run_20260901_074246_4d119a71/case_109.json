@@ -1,0 +1,119 @@
+{
+  "agent_output": {
+    "case_id": "case_109",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "findings": [
+      "Math Error",
+      "Vendor Identity Mismatch"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Re-calculate invoice line items against supporting documentation to correct the math error, and cross-reference the payment details with the approved Vendor Master file to verify the recipient's identity before proceeding.",
+    "uncertainty": "The math error suggests incorrect invoice totals or line-item pricing, while the vendor identity mismatch introduces risk that the payment is being misdirected to an unauthorized or incorrect entity."
+  },
+  "case_id": "case_109",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1244,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1187,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1101,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1096,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_109",
+      "goods_receipt": {
+        "grn_number": "GRN-4109",
+        "items": [
+          {
+            "item_id": "GASKET-9",
+            "quantity_accepted": "8"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1099",
+        "currency": "USD",
+        "invoice_number": "INV-2109",
+        "items": [
+          {
+            "item_id": "GASKET-9",
+            "line_total": "600.00"
+          }
+        ],
+        "subtotal": "600.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "600.00",
+        "vendor_name": "SYNTHETIC WIDGETS",
+        "vendor_tax_id": "TX-9109"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "GASKET-9",
+            "quantity": "8",
+            "unit_price": "75.00"
+          }
+        ],
+        "po_number": "PO-3109",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1099",
+        "vendor_name": "SYNTHETIC WIDGETS LLC",
+        "vendor_tax_id": "TX-9109"
+      }
+    },
+    "input_hash": "4FCC8184B41A371AC52BA439D04C96A55715393B8E3CDBC2906C9631257E0CA9",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 38.94434000000001,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:46:02.914399Z",
+    "trace_file": "traces/raw\\trace_20260901_074523_0937c834.jsonl",
+    "track": "B"
+  }
+}

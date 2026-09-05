@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request indicates a discrepancy between the vendor's identity as submitted and our established records. This could be due to data entry errors, an outdated vendor profile, or a potential attempt to misdirect funds to an unauthorized entity.",
+  "required_human_next_step": "Verify the vendor's identity and banking details against the master vendor file and, if necessary, contact the vendor directly using independently verified contact information (not from the payment request itself) to confirm the legitimacy of the request and the accuracy of the payment details."
+}

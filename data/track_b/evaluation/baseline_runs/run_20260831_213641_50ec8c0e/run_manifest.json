@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "case_id": "case_101",
+      "input_hash": "2B6A0A1566BA72C3DFCDAF60C4221C50E93882C7039DCB0EB285D0CE037D25CF",
+      "output_file": "case_101.json",
+      "output_sha256": "D0218FAAA698A57C23C57BF294B21B01EF3F7F9184E14029561E0AAF106D857F",
+      "status": "API_ERROR"
+    }
+  ],
+  "end_time_utc": "2026-08-31T21:36:45.126312Z",
+  "git_head": "9b243a82de91bbdd16beae9c53100634559a3634",
+  "mode": "baseline",
+  "overall_status": "PARTIAL_ERROR",
+  "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+  "prompt_version": "v2",
+  "provider": "google",
+  "requested_model": "gemini-3.6-flash",
+  "retry_policy": {
+    "backoff_seconds": [
+      1,
+      2
+    ],
+    "maximum_attempts": 3,
+    "retryable_http_codes": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ]
+  },
+  "run_id": "run_20260831_213641_50ec8c0e",
+  "settings": {
+    "max_output_tokens": 4096,
+    "response_mime_type": "application/json",
+    "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+    "temperature": 0.0,
+    "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+  },
+  "start_time_utc": "2026-08-31T21:36:41.599853Z",
+  "track": "B"
+}

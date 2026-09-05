@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request lacks both a Purchase Order (PO) and a PO Line ID, creating uncertainty around whether this expenditure was pre-authorized, tied to an approved vendor agreement, or properly budgeted.",
+  "required_human_next_step": "Determine if this transaction qualifies for an approved non-PO payment exception. If it does not, contact the submitter to obtain and attach a valid, approved Purchase Order and Line ID before proceeding."
+}

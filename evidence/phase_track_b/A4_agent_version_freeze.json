@@ -1,0 +1,40 @@
+{
+  "git_head": "9b243a82de91bbdd16beae9c53100634559a3634",
+  "git_branch": "master",
+  "recorded_at_utc": "2026-08-31T21:25:24.424311+00:00",
+  "working_tree_note": "uncommitted: src/agent/extraction.py (schema-constrained extraction + normalization; predates A1, documented)",
+  "untracked_runners": [
+    "data/track_b/evaluation/run_track_b.py",
+    "data/track_b/evaluation/baseline_prompt_v1.txt (+sha256)"
+  ],
+  "component_hashes": {
+    "src/agent/extraction.py": "DC33ABEF030F86201AE258C29C413958BD3237317C825D2B0ED969B46EECC567",
+    "src/agent/orchestrator.py": "507A3532A2BB19E6A464C7125EEF5635D88C54D025D71D44AAF9977EAA7FAE44",
+    "src/agent/document_adapter.py": "BFD52D525B59A15F37CE36E4AD11A1F20A2956BC1861C10173F40A9DEC15F178",
+    "src/agent/credentials.py": "542890D1D77944A2A41C660E4F590956E4E69DBBA5282BFADB198BDBE6E361CC",
+    "src/agent/memory.py": "EF2A1C77C7B40EA10D46E1BF6764CA88F6379FA7724A368B70A61E03C036EC4D",
+    "src/tools/calculator.py": "1321C8EF3F5C44F8A4AA90B3ADFD6C5BA067175907E931C8A8FB9E16E201FC33",
+    "src/tools/equality.py": "3C10CA06727EA5F8A5B051262B705A7EAAE0A22D5A338E03E9934F8468B65DE5",
+    "src/tools/rule_evaluator.py": "1167481A62D99C08D894DEC191ADF1D60B961C4FA28850A441CD22592630FC98",
+    "src/utils/logger.py": "7955B0AC7C86E0F69298BE23CC487194BF3926D5817557BE32F7E8456C5BA84B",
+    "src/utils/human_checkpoint.py": "721D0CDB6C9FACA048FEAED008E9138B64920C25BDB72B4AF0A222DA70C772EC",
+    "benchmark/schemas/public_evidence_bundle.json": "DF0ED33A4923BDB483321744B6F6249B6B6A103E61A65BE815A8068A075C0D73",
+    "benchmark/schemas/output_contract.json": "AC926AB68038D2774DD3FCFC59654375EBB2AAFE502428939B66478B020D9372"
+  },
+  "runtime_dependencies": {
+    "google-genai": "2.20.0",
+    "jsonschema": "4.26.0",
+    "pymupdf": "1.28.0",
+    "pypdf": "6.14.2",
+    "pillow": "12.3.0",
+    "python-dotenv": "1.2.2"
+  },
+  "python": "3.11.15",
+  "model_configuration": {
+    "extraction_model": "gemini-3.6-flash",
+    "multimodal_ocr_model": "gemini-2.5-flash",
+    "explanation_model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "response_mime_type": "application/json"
+  }
+}

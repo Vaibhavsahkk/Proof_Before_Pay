@@ -1,0 +1,122 @@
+{
+  "agent_output": {
+    "case_id": "case_107",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.calculate_tax",
+      "calculator.check_equality",
+      "calculator.sum_values"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "findings": [
+      "Math Error"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Reconcile the line items, taxes, and subtotal against the primary invoice or receipt, correct the figures in the system, and re-evaluate prior to approval.",
+    "uncertainty": "The payment request contains a mathematical discrepancy, as the total amount does not match the sum of the individual line items, applicable taxes, or applied discounts."
+  },
+  "case_id": "case_107",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1343,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1186,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1101,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1094,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_107",
+      "goods_receipt": {
+        "grn_number": "GRN-4107",
+        "items": [
+          {
+            "item_id": "BROCHURE",
+            "quantity_accepted": "10"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1077",
+        "currency": "USD",
+        "invoice_number": "INV-2107",
+        "items": [
+          {
+            "item_id": "BROCHURE",
+            "line_total": "600.00",
+            "quantity": "10",
+            "unit_price": "50.00"
+          }
+        ],
+        "subtotal": "600.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "600.00",
+        "vendor_name": "PSEUDO PRINT CO",
+        "vendor_tax_id": "TX-9107"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "BROCHURE",
+            "quantity": "10",
+            "unit_price": "50.00"
+          }
+        ],
+        "po_number": "PO-3107",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1077",
+        "vendor_name": "PSEUDO PRINT CO",
+        "vendor_tax_id": "TX-9107"
+      }
+    },
+    "input_hash": "2CE5C8E6879696C809ABDDCBEB30EB311504366915EF0A82EEF27FA3B0B44CFD",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 31.617483800000628,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:44:55.199225Z",
+    "trace_file": "traces/raw\\trace_20260901_074423_fd52401b.jsonl",
+    "track": "B"
+  }
+}

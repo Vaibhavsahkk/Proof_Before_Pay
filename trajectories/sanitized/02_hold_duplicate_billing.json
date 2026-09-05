@@ -1,0 +1,373 @@
+{
+  "trajectory_id": "02_hold_duplicate_billing",
+  "source_trace": "trace_20260901_000259_8fde9aa6.jsonl",
+  "scenario": "Multi-finding HOLD - case_002 duplicate billing (FAKECORP INC, INV-1002): deterministic check detects Duplicate Billing, HOLD, human escalation",
+  "event_count": 11,
+  "events": [
+    {
+      "timestamp": "2026-09-01T00:02:59.899102+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_002",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.899102+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_002",
+      "output": {
+        "case_id": "case_002",
+        "invoice": {
+          "invoice_number": "INV-1002",
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "description": "Consulting",
+              "quantity": "10",
+              "unit_price": "100.00",
+              "line_total": "1000.00"
+            }
+          ],
+          "subtotal": "1000.00",
+          "tax": "0.00",
+          "total": "1000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2002",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity": "10",
+              "unit_price": "100.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3002",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity_accepted": "10"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-1002",
+            "vendor_tax_id": "TX-8888",
+            "amount": "1000.00",
+            "payment_date": "2025-01-15"
+          }
+        ],
+        "bank_change_evidence": null
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.900201+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_002",
+        "invoice": {
+          "invoice_number": "INV-1002",
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "description": "Consulting",
+              "quantity": "10",
+              "unit_price": "100.00",
+              "line_total": "1000.00"
+            }
+          ],
+          "subtotal": "1000.00",
+          "tax": "0.00",
+          "total": "1000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2002",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity": "10",
+              "unit_price": "100.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3002",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity_accepted": "10"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-1002",
+            "vendor_tax_id": "TX-8888",
+            "amount": "1000.00",
+            "payment_date": "2025-01-15"
+          }
+        ],
+        "bank_change_evidence": null
+      },
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.900764+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_002",
+        "invoice": {
+          "invoice_number": "INV-1002",
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "description": "Consulting",
+              "quantity": "10",
+              "unit_price": "100.00",
+              "line_total": "1000.00"
+            }
+          ],
+          "subtotal": "1000.00",
+          "tax": "0.00",
+          "total": "1000.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2002",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity": "10",
+              "unit_price": "100.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3002",
+          "items": [
+            {
+              "item_id": "SERVICE-B",
+              "quantity_accepted": "10"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "FAKECORP INC",
+          "vendor_tax_id": "TX-8888",
+          "bank_account": "ACC-2222"
+        },
+        "prior_payment_history": [
+          {
+            "invoice_number": "INV-1002",
+            "vendor_tax_id": "TX-8888",
+            "amount": "1000.00",
+            "payment_date": "2025-01-15"
+          }
+        ],
+        "bank_change_evidence": null
+      },
+      "output": [
+        "Duplicate Billing"
+      ],
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.901364+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Duplicate Billing"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.901364+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Duplicate Billing"
+      ],
+      "output": {
+        "recommendation": "HOLD",
+        "findings": [
+          "Duplicate Billing"
+        ]
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.901364+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Duplicate Billing"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.901364+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Duplicate Billing"
+      ],
+      "output": {
+        "uncertainty": "The automated system detected a potential duplicate billing event due to matching invoice parameters (such as vendor, amount, or invoice number), but cannot definitively confirm whether this represents a legitimate separate transaction, a system glitch, or an unintentional double-submission.",
+        "next_step": "Compare this payment request against historical vendor payments for identical dates, invoice numbers, or amounts, and contact the submitting department or vendor to verify if this is a unique, authorized charge prior to releasing payment."
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.902370+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "validate",
+      "agent": "orchestrator",
+      "action": "validate_output_schema",
+      "tool": "jsonschema",
+      "input": {
+        "case_id": "case_002",
+        "recommendation": "HOLD",
+        "findings": [
+          "Duplicate Billing"
+        ],
+        "evidence_references": [
+          "invoice",
+          "purchase_order",
+          "goods_receipt",
+          "vendor_master",
+          "prior_payment_history"
+        ],
+        "deterministic_calculation_references": [
+          "calculator.sum_values",
+          "calculator.calculate_tax",
+          "calculator.check_equality",
+          "calculator.multiply"
+        ],
+        "missing_evidence": [],
+        "uncertainty": "The automated system detected a potential duplicate billing event due to matching invoice parameters (such as vendor, amount, or invoice number), but cannot definitively confirm whether this represents a legitimate separate transaction, a system glitch, or an unintentional double-submission.",
+        "required_human_next_step": "Compare this payment request against historical vendor payments for identical dates, invoice numbers, or amounts, and contact the submitting department or vendor to verify if this is a unique, authorized charge prior to releasing payment."
+      },
+      "output": null,
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.902370+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "HOLD",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.902370+00:00",
+      "run_id": "8fde9aa6-5318-4c19-90f8-92af619ea32f",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "HOLD",
+      "output": "ESCALATED",
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    }
+  ]
+}

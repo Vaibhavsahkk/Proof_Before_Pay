@@ -1,0 +1,87 @@
+{
+  "track": "B",
+  "mode": "agent",
+  "assembly": true,
+  "primary_run": "run_20260901_074246_4d119a71",
+  "substituted_cases": {
+    "case_102": "run_20260901_075421_d232430a",
+    "case_105": "run_20260901_075627_6d4cc170",
+    "case_111": "run_20260901_075733_e55edd95"
+  },
+  "substitution_reason": "cases 102/105/111 (the PNG-document cases) failed in the primary run due to (a) an evaluation-harness bug (UnboundLocalError on doc_meta in the DocumentProcessingError handler) and (b) gemini-2.5-flash OCR daily-quota exhaustion on 4/5 keys at that moment. Both were harness/infra, not agent defects. The harness was fixed (doc_meta=None; cache-isolation corrected to its actual purpose) and the three cases were re-executed live, full pipeline. Every record copied verbatim; no output edited.",
+  "agent_version_freeze": "evidence/phase_track_b/A4_agent_version_freeze.json",
+  "cases": [
+    {
+      "case_id": "case_101",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "6BA5F5F7210BEF29DEB3F7B69A8714111EFF861E93986C8BA1AF55E314F047EC"
+    },
+    {
+      "case_id": "case_102",
+      "source_run_id": "run_20260901_075421_d232430a",
+      "status": "SUCCESS",
+      "output_sha256": "EA5ADC476A7AE46E7065705106FE5BEA6F340A0EA9174ECD7488B5B5E814BDB3"
+    },
+    {
+      "case_id": "case_103",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "27DFDEC90BC19A111EE0F599434BA81D84568D647E906DBF4CF14A4BC4DC5889"
+    },
+    {
+      "case_id": "case_104",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "7FD7B898E6B6A6E60C97495DD12B06381C9E6609CB06BC8CFD19796D47A324E4"
+    },
+    {
+      "case_id": "case_105",
+      "source_run_id": "run_20260901_075627_6d4cc170",
+      "status": "SUCCESS",
+      "output_sha256": "B852CA1FA092073E2077D3720E407701E890649F9B8B233560D4D5C33E40B2B8"
+    },
+    {
+      "case_id": "case_106",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "B5845FE246BCE9F3E26D23A4124BE3829D65BD4414C85D7B296067B93F5D0C9D"
+    },
+    {
+      "case_id": "case_107",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "1F1DA37C5A7F51A4F3DB3D83D834351BB4EE2CA28552329AAC25699EC2605A1A"
+    },
+    {
+      "case_id": "case_108",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "CB3B45AFDA5CB0EF0A7BFEFDDE321A252646660BCF8FA15B9E01E544D5349065"
+    },
+    {
+      "case_id": "case_109",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "1194B3D79B477C8D6726CAB4F24C1253422492C93243A7F8678F15BAFE5F63D1"
+    },
+    {
+      "case_id": "case_110",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "558DF3CBA0D5ED603B9EDA85DF0AAFBCB804BA1DB086FD5CE6D46A8BAA4FF9CB"
+    },
+    {
+      "case_id": "case_111",
+      "source_run_id": "run_20260901_075733_e55edd95",
+      "status": "SUCCESS",
+      "output_sha256": "999A4FD5D3793BAFD783E637496BBF8590462525DC1E6D304021BE159737BB05"
+    },
+    {
+      "case_id": "case_112",
+      "source_run_id": "run_20260901_074246_4d119a71",
+      "status": "SUCCESS",
+      "output_sha256": "F8A9C3F3A5A859C74D5A2976A388541ABD31D1BD0CB52CFE95A774982E90DE66"
+    }
+  ]
+}

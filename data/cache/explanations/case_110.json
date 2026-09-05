@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The automated engine flagged multiple conflicting financial attributes: an unrecognized currency code, a discrepancy between the expected and billed currency, and an arithmetic calculation error. It is uncertain whether these issues stem from a system integration glitch, manual entry error, or potential fraudulent manipulation of transaction figures.",
+  "required_human_next_step": "Inspect the original invoice or supporting documentation to confirm the legitimate currency and line-item amounts, recalculate the payment total, and either reject the request or correct the transaction details in the system."
+}

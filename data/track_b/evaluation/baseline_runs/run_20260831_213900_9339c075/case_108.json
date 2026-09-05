@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_108",
+    "deterministic_calculation_references": [
+      "Line total: 3 * 420.00 USD = 1260.00 USD",
+      "Total amount: 1260.00 USD + 0.00 USD = 1260.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2108",
+      "Goods Receipt Note GRN-4108",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Missing PO"
+    ],
+    "missing_evidence": [
+      "Purchase Order"
+    ],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Obtain and review the missing Purchase Order to verify approved pricing and quantities before approving payment.",
+    "uncertainty": "Unable to verify agreed pricing or purchase authorization without the Purchase Order."
+  },
+  "case_id": "case_108",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "C98207FACD654E210C373C6BD65D0EF9EC106339C4AA6C67164D4CD7C73B3228",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 93.17955239999992,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:50:01.252089Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 227,
+      "prompt_token_count": 2555,
+      "total_token_count": 3651
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_108\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Missing PO\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2108\",\n    \"Goods Receipt Note GRN-4108\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line total: 3 * 420.00 USD = 1260.00 USD\",\n    \"Total amount: 1260.00 USD + 0.00 USD = 1260.00 USD\"\n  ],\n  \"missing_evidence\": [\n    \"Purchase Order\"\n  ],\n  \"uncertainty\": \"Unable to verify agreed pricing or purchase authorization without the Purchase Order.\",\n  \"required_human_next_step\": \"Obtain and review the missing Purchase Order to verify approved pricing and quantities before approving payment.\"\n}"
+}

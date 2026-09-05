@@ -1,0 +1,6 @@
+{
+  "status": "INVALID_RUN",
+  "reason": "All 12 cases returned the documented fail-closed fallback (INVESTIGATE / All credentials exhausted). The agent consumed the per-day free-tier quota during the run (12 cases x multiple live calls each vs 20 req/day/key limit). Not a live execution - excluded from evaluation.",
+  "detected": "every case record contains findings=[\"All credentials exhausted\"]",
+  "action": "rerun with pacing after quota window"
+}

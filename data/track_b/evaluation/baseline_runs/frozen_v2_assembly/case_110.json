@@ -1,0 +1,60 @@
+{
+  "baseline_output": {
+    "case_id": "case_110",
+    "deterministic_calculation_references": [
+      "Invoice line total: 25 * 40.00 EUR = 1000.00 EUR",
+      "Invoice total: 1000.00 EUR + 0.00 EUR = 1000.00 EUR"
+    ],
+    "evidence_references": [
+      "Invoice INV-2110",
+      "PO PO-3110",
+      "GRN GRN-4110",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Currency Mismatch"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Resolve currency mismatch between Invoice (EUR) and Purchase Order (USD) with the procurement team and vendor.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_110",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "84A6990546E1AD6DD3226B23508F50DFE118CD4207908D0DF02A975B5590CB02",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 16.278443199999856,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "source_run_id": "run_20260831_215742_40aab84f",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T22:00:41.905007Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 220,
+      "prompt_token_count": 3087,
+      "total_token_count": 4320
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_110\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Currency Mismatch\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2110\",\n    \"PO PO-3110\",\n    \"GRN GRN-4110\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Invoice line total: 25 * 40.00 EUR = 1000.00 EUR\",\n    \"Invoice total: 1000.00 EUR + 0.00 EUR = 1000.00 EUR\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Resolve currency mismatch between Invoice (EUR) and Purchase Order (USD) with the procurement team and vendor.\"\n}"
+}

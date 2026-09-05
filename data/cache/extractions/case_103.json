@@ -1,0 +1,57 @@
+{
+  "case_id": "case_103",
+  "invoice": {
+    "invoice_number": "INV-2103",
+    "vendor_name": "FAKECORP CONSULTING INC",
+    "vendor_tax_id": "TX-9103",
+    "bank_account": "ACC-1033",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SRV-AUD",
+        "quantity": "1",
+        "unit_price": "800.00",
+        "line_total": "800.00"
+      }
+    ],
+    "subtotal": "800.00",
+    "tax": "0.00",
+    "total": "800.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3103",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "SRV-AUD",
+        "quantity": "1",
+        "unit_price": "800.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4103",
+    "items": [
+      {
+        "item_id": "SRV-AUD",
+        "quantity_accepted": "1"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "FAKECORP CONSULTING INC",
+    "vendor_tax_id": "TX-9103",
+    "bank_account": "ACC-1033"
+  },
+  "prior_payment_history": [
+    {
+      "invoice_number": "INV-2103",
+      "vendor_tax_id": "TX-9103",
+      "amount": "800.00",
+      "payment_date": "2026-05-12"
+    }
+  ],
+  "bank_change_evidence": null
+}

@@ -38,3 +38,6 @@ scratch_test_docs/
 run_log.txt
 server_log.txt
 data/cache/explanations/case_000.json
+
+# Obsidian workspace UI state (regenerates per machine, never versionable)
+.obsidian/workspace.json

@@ -1,0 +1,55 @@
+{
+  "case_id": "case_106",
+  "invoice": {
+    "invoice_number": "INV-2106",
+    "vendor_name": "TESTAMENT FACILITIES LLC",
+    "vendor_tax_id": "TX-9106",
+    "bank_account": "ACC-9066",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "FLOOR-CLEAN",
+        "quantity": "1",
+        "unit_price": "350.00",
+        "line_total": "350.00"
+      }
+    ],
+    "subtotal": "350.00",
+    "tax": "0.00",
+    "total": "350.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3106",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "FLOOR-CLEAN",
+        "quantity": "1",
+        "unit_price": "350.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4106",
+    "items": [
+      {
+        "item_id": "FLOOR-CLEAN",
+        "quantity_accepted": "1"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "TESTAMENT FACILITIES LLC",
+    "vendor_tax_id": "TX-9106",
+    "bank_account": "ACC-1066"
+  },
+  "prior_payment_history": null,
+  "bank_change_evidence": {
+    "old_bank_account": "ACC-1066",
+    "new_bank_account": "ACC-9066",
+    "approval_status": "PENDING",
+    "verified_by": "System"
+  }
+}

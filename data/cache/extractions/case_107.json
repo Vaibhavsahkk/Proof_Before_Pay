@@ -1,0 +1,50 @@
+{
+  "case_id": "case_107",
+  "invoice": {
+    "invoice_number": "INV-2107",
+    "vendor_name": "PSEUDO PRINT CO",
+    "vendor_tax_id": "TX-9107",
+    "bank_account": "ACC-1077",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "BROCHURE",
+        "quantity": "10",
+        "unit_price": "50.00",
+        "line_total": "600.00"
+      }
+    ],
+    "subtotal": "600.00",
+    "tax": "0.00",
+    "total": "600.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3107",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "BROCHURE",
+        "quantity": "10",
+        "unit_price": "50.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4107",
+    "items": [
+      {
+        "item_id": "BROCHURE",
+        "quantity_accepted": "10"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "PSEUDO PRINT CO",
+    "vendor_tax_id": "TX-9107",
+    "bank_account": "ACC-1077"
+  },
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

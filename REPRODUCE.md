@@ -72,7 +72,20 @@ Run both complete Docker pipelines:
 ./verify.sh
 ```
 
-Expected full result in each pipeline: 46 passed, followed by `ALL VERIFICATION STEPS PASSED`. Each pipeline also proves that the runtime contains required public inputs, excludes evaluator/ground-truth artifacts, and rejects an injected ground-truth mount with scanner exit 1.
+Expected full result in each pipeline: all collected tests pass (the count has
+grown with the project: 46 at Phase 1 freeze, 81 at Phase 2, 135 at Phase 4.8,
+165 collected at the 2026-09-01 audit — check the verifier image output for
+the exact current number), followed by `ALL VERIFICATION STEPS PASSED`. Each
+pipeline also proves that the runtime contains required public inputs,
+excludes evaluator/ground-truth artifacts, and rejects an injected
+ground-truth mount with scanner exit 1.
+
+Note (2026-09-01 audit): `tests/test_environment.py` runs only inside the
+Linux Docker container by design; `tests/test_ui_e2e_integration.py` and the
+pipeline tests in `tests/test_ui.py` call the live Gemini API for uncached
+cases and require `GEMINI_API_KEY` with available quota. The offline suite
+(`python -m pytest --ignore=tests/test_environment.py --ignore=tests/test_ui_e2e_integration.py --ignore=tests/test_ui.py -q`)
+passed 144/144 on this host and from a fresh git-archive clone.
 
 ## Fresh-clone reproduction
 
@@ -108,7 +121,7 @@ Expected result: `CLEAN CLONE HARNESS RESULT: PASS` and exit 0. The gate verifie
 Verify the accepted report offline, without an API key:
 
 ```powershell
-python -m eval.evaluate_baseline evidence/phase_2/runs/run_20260829_154058_02e9416b --verify-existing
+python -m eval.evaluate_baseline evidence/phase_2/runs/run_20260830_091031_f1cc354c --verify-existing
 ```
 
 To generate a new provider run, first ensure the repository is clean and set `GEMINI_API_KEY` only in the local process environment, then run:

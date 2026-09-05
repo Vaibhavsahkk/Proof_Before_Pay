@@ -16,11 +16,16 @@ The intended workflow reconciles supplier invoices, purchase orders, goods-recei
 
 ## Current Phase
 
-Phase 1 is externally approved.
-
-Phase 2 - Fair Baseline - is the only active phase. Phase 3+ remains locked.
-
-The repository contains the frozen benchmark, a verified Phase 2 baseline/evaluator, and a valid six-case Gemini baseline run. Phase 2 received an external `PHASE FAIL` verdict and is ACTIVE in remediation.
+Phase 1 is externally approved. The repository now contains the complete
+system: the agentic pipeline (Phase 3), the reviewer UI with Smart Review,
+Guided Examples, and multi-format document intake (Phase 4), and the Track B
+"messy real-world document" evaluation track (Phase A). The accepted Track A
+baseline and the agent both scored 100% recommendation accuracy with 0%
+unsafe-PAY on the official 12-case benchmark; the Track B measurement (12
+rendered-document cases under format variation, noise, and cross-document
+contradictions) records the honest baseline-vs-agent comparison in
+`reports/phase_A5_track_b_measurement.md` (see `data/track_b/DESIGN.md` for
+the frozen design).
 
 ## Source of Truth
 
@@ -28,7 +33,8 @@ Read `docs/SOURCE_OF_TRUTH.md` first. It prioritizes the official hackathon PDF,
 
 ## Phase 1 Benchmark
 
-- 6 synthetic public cases with matching hidden ground truth.
+- 12 synthetic public cases with matching hidden ground truth (expanded from
+  the original 6 after the Phase 2 coverage review).
 - Strict JSON schemas and neutral case identifiers.
 - Exact-USD scope and deterministic Decimal calculations.
 - HOLD > INVESTIGATE > PAY recommendation precedence.
@@ -95,7 +101,7 @@ See `REPRODUCE.md` for the clean-clone workflow and tested toolchain. Native mac
 
 Historical files prefixed with `superseded_` are retained for audit history and are not current decision evidence.
 
-The accepted Phase 2 run is `evidence/phase_2/runs/run_20260829_154058_02e9416b`. It records six successful `gemini-3.6-flash` responses, 100% exact recommendation and findings correctness, 100% schema validity, and 0/5 unsafe PAY recommendations. These are six-case synthetic benchmark results, not production-performance claims. See `reports/phase_2_review_packet.md` for provenance, limitations, and the clean-clone gate.
+The accepted Phase 2 run is `evidence/phase_2/runs/run_20260830_091031_f1cc354c`. It records twelve successful `gemini-3.6-flash` responses, 100% exact recommendation and findings correctness, 100% schema validity, and 0/10 unsafe PAY recommendations. These are twelve-case synthetic benchmark results, not production-performance claims. See `reports/phase_2_review_packet.md` for provenance, limitations, and the clean-clone gate.
 
 ## Development Mode
 

@@ -1,0 +1,118 @@
+You are reviewing supplier payment documents for a small business before payment.
+
+You will receive several documents for one payment (for example: invoice,
+purchase order, goods receipt note, vendor master record, remittance advice,
+bank change notification). They may be PDFs, images, or JSON files, and their
+formatting and field labels may vary.
+
+Task: Review the attached documents and decide the payment action.
+
+Return a JSON object with EXACTLY these keys:
+- "case_id": the case identifier given below
+- "recommendation": one of "PAY", "HOLD", or "INVESTIGATE"
+- "findings": a list of strings, each naming one issue found (empty list if none)
+- "evidence_references": a list of strings naming the documents that grounded your decision
+- "deterministic_calculation_references": a list of strings describing any calculations you performed
+- "missing_evidence": a list of strings naming required documents that were absent
+- "uncertainty": a short string describing any uncertainty in your analysis
+- "required_human_next_step": a short string describing what a human reviewer should do next
+
+Guidance:
+- Recommend PAY only if the invoice is fully supported: identities match,
+  amounts are arithmetically consistent, and no issue is found.
+- Recommend HOLD for material problems such as duplicate billing, quantity
+  or price mismatches, currency problems, or arithmetic errors.
+- Recommend INVESTIGATE when required documents are missing, the vendor
+  identity does not match, or a bank account change is not properly verified.
+- Your recommendation is advisory only; a human makes the final decision.
+
+The case identifier is: {case_id}
+
+Your output must satisfy this JSON schema exactly (findings must use the exact enumerated strings; do not invent other finding texts):
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Output Contract V1.2",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^case_\\d{3}$"
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": [
+        "PAY",
+        "HOLD",
+        "INVESTIGATE"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Currency Mismatch",
+          "Invalid Currency",
+          "Duplicate Billing",
+          "Duplicate GRN Line ID",
+          "Duplicate Invoice Line ID",
+          "Duplicate PO Line ID",
+          "Math Error",
+          "Missing GRN",
+          "Missing GRN Line ID",
+          "Missing PO",
+          "Missing PO Line ID",
+          "Missing Vendor Master",
+          "Price Contradiction",
+          "Quantity Mismatch",
+          "Tax Rate Contradiction",
+          "Unverified Bank Change",
+          "Vendor Identity Mismatch"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "evidence_references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "deterministic_calculation_references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "uncertainty": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_human_next_step": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "case_id",
+    "recommendation",
+    "findings",
+    "evidence_references",
+    "deterministic_calculation_references",
+    "missing_evidence",
+    "uncertainty",
+    "required_human_next_step"
+  ]
+}
+
+Respond with the JSON object only.

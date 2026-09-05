@@ -1,12 +1,45 @@
 # Project Status
 
-Current phase: Phase 4 — Minimal Agent V1
-Phase status: IN PROGRESS
-Last completed task: Phase 4.4 Final Demo Workflow Validation & Reviewer Simulation completed. The CLI demo workflow has been fully audited and verified against the reviewer experience.
-Current task: Standby for Phase 5 instructions.
-Next task: Phase 5 (LOCKED).
+Current phase: Phase A (Track B Measurement) — A4 + A5 COMPLETE
+Phase status: MEASURED. The full Track B comparison is recorded in
+`reports/phase_A5_track_b_measurement.md` (machine-readable:
+`reports/track_b_final_results.json`). Honest headline: the current agent
+did NOT beat the fair baseline on primary accuracy (75.00% vs 83.33%,
+delta -8.33 pp), while eliminating the unsafe-PAY error (0/10 vs 1/10) and
+being the only system to solve the challenging case_111. Dominant agent
+failure mode: one extraction defect (dropped quantity/unit_price → false
+Math Error, fail-closed direction). Smallest evidence-backed next step
+(section 18 of the A5 report) is NOT yet executed and NOT claimed.
+Last completed: extraction-contract fix (2026-09-02, see
+`reports/remediation_extraction_contract.md`): Gemini `response_schema`
+drops the `required` keyword (SDK-unsupported), so item-level
+quantity/unit_price were silently omitted on some cases (102/109/112),
+producing false Math Error HOLDs. Fix: prompt-reinforced item contract +
+post-extraction validation (`_missing_item_fields`) + one reinforced
+retry + deterministic Decimal repair (`_repair_item_arithmetic`) +
+self-verifying cross-PO completion with exact line_total check
+(`_repair_from_purchase_order`) + honest empty-description fallback.
+Live re-verification (cache-cleared, production DocumentAdapter flow):
+case_102 → PAY/[] exact match; case_109 → INVESTIGATE/[Vendor Identity
+Mismatch] exact match; case_112 → INVESTIGATE with both expected findings
+(plus one cascade finding "Missing GRN Line ID" that the baseline also
+produces on this case; recommendation and all expected findings match).
+Docker Desktop daemon was repaired on this host (server 29.6.2); the
+Linux container suite now passes 165/165 and the Track B verifier passes
+on both Windows and Linux (PNG determinism compared via decoded pixel
+data: Pillow's bundled zlib encoder differs per platform wheel while
+pixel content is identical — see `verify_track_b.py`).
+Known remaining honest gaps: the A5 headline metrics (75.00% vs 83.33%)
+are the measurement of the PRE-fix agent version and are NOT re-measured
+post-fix (daily free-tier quota for `gemini-3.6-flash` was exhausted at
+fix time; live re-measurement is a human decision); the live re-verify
+above used the quota-available `gemini-2.5-flash` bucket, so post-fix
+3.6-flash A/B numbers remain to be recorded when quota resets.
 
-Human actions required: None.
+Human actions required: review the A5 report and the post-fix live
+re-verification above; decide whether to re-measure A5 with the fixed
+agent once `gemini-3.6-flash` daily quota resets (recommended before
+submission), then push.
 
 ## Accepted Phase 2 baseline
 
@@ -27,7 +60,7 @@ Human actions required: None.
 
 ## Verification summary
 
-- Independent read-only run audit: PASS for all six canonical input hashes, output hashes, rendered-prompt hashes, schemas, case bindings, raw-response equality, metadata, calculations, citations, metrics, and common secret patterns.
+- Independent read-only run audit: PASS for all canonical input hashes, output hashes, rendered-prompt hashes, schemas, case bindings, raw-response equality, metadata, calculations, citations, metrics, and common secret patterns.
 - Existing-report deterministic re-evaluation: PASS, exit 0.
 - Focused Phase 2 suite: PASS, 35 tests.
 - Full PowerShell Docker pipeline: PASS, 81 tests, exit 0.
@@ -50,8 +83,7 @@ Human actions required: None.
 - Native macOS/Linux execution is unverified; the verified POSIX-like pipeline uses Git Bash on Windows.
 - No vulnerability/CVE scanner was run, and no remediation claim is made.
 - Cost remains UNKNOWN.
-- The six-case synthetic benchmark is intentionally small; Phase 2 reports baseline performance only and makes no production-generalization claim.
-- Phase 3+ implementation is unauthorized.
+- The twelve-case synthetic benchmark is intentionally small; benchmark reports state performance on that set only and make no production-generalization claim. Track B (12 further rendered-document cases) likewise supports no production-generalization claim.
 
 ## Evidence
 

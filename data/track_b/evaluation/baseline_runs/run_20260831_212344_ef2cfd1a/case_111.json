@@ -1,0 +1,61 @@
+{
+  "baseline_output": {
+    "case_id": "case_111",
+    "deterministic_calculation_references": [
+      "2 * 2500.00 USD = 5000.00 USD (Line Total)",
+      "5000.00 USD + 0.00 USD tax = 5000.00 USD (Total Amount)"
+    ],
+    "evidence_references": [
+      "Invoice INV-2111",
+      "Vendor Master",
+      "Bank Account Change Notification"
+    ],
+    "findings": [
+      "Invoice bank account ACC-9111 does not match vendor master bank account ACC-1111",
+      "Bank account change notification to ACC-9111 has approval status PENDING"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify vendor credentials and approve the bank account change request prior to approving payment to account ACC-9111.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_111",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json",
+      "remittance_advice.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "error": "'Bank account change notification to ACC-9111 has approval status PENDING' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Identity Mismatch']\n\nFailed validating 'enum' in sche",
+    "input_hash": "668B6E0B7221A8CC9E1D244242B9D96D5C17EECE936E928663F2E598DD4B3DE6",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 93.07524600000033,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:31:03.723037Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 245,
+      "prompt_token_count": 3640,
+      "total_token_count": 4924
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_111\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Invoice bank account ACC-9111 does not match vendor master bank account ACC-1111\",\n    \"Bank account change notification to ACC-9111 has approval status PENDING\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2111\",\n    \"Vendor Master\",\n    \"Bank Account Change Notification\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"2 * 2500.00 USD = 5000.00 USD (Line Total)\",\n    \"5000.00 USD + 0.00 USD tax = 5000.00 USD (Total Amount)\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Verify vendor credentials and approve the bank account change request prior to approving payment to account ACC-9111.\"\n}"
+}

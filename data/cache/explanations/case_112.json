@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request is missing critical foundational information: a registered vendor (Missing Vendor Master) and proof of goods/services receipt (Missing GRN, Missing GRN Line ID). This creates high uncertainty regarding the legitimacy of the request, the existence of the vendor, and whether any goods or services were actually delivered, indicating a significant potential for error or fraudulent activity.",
+  "required_human_next_step": "Immediately halt payment processing. The human reviewer must investigate the legitimacy of the vendor and verify the actual receipt of goods/services. Obtain or create all missing GRN/GRN Line ID documentation and ensure the vendor is properly registered in the system before any further action. Additionally, identify the process breakdown that allowed this request to be submitted with critical missing information."
+}

@@ -1,0 +1,117 @@
+{
+  "agent_output": {
+    "case_id": "case_110",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "findings": [
+      "Currency Mismatch",
+      "Invalid Currency",
+      "Math Error"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Inspect the original invoice or supporting documentation to confirm the legitimate currency and line-item amounts, recalculate the payment total, and either reject the request or correct the transaction details in the system.",
+    "uncertainty": "The automated engine flagged multiple conflicting financial attributes: an unrecognized currency code, a discrepancy between the expected and billed currency, and an arithmetic calculation error. It is uncertain whether these issues stem from a system integration glitch, manual entry error, or potential fraudulent manipulation of transaction figures."
+  },
+  "case_id": "case_110",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1301,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1179,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1100,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1101,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_110",
+      "goods_receipt": {
+        "grn_number": "GRN-4110",
+        "items": [
+          {
+            "item_id": "LAMP-LED",
+            "quantity_accepted": "25"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1100",
+        "currency": "EUR",
+        "invoice_number": "INV-2110",
+        "items": [
+          {
+            "item_id": "LAMP-LED",
+            "line_total": "1000.00"
+          }
+        ],
+        "tax_rate_percent": "0.00",
+        "vendor_name": "MOCK GLOBAL TRADE LTD",
+        "vendor_tax_id": "TX-9110"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "LAMP-LED",
+            "quantity": "25",
+            "unit_price": "40.00"
+          }
+        ],
+        "po_number": "PO-3110",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1100",
+        "vendor_name": "MOCK GLOBAL TRADE LTD",
+        "vendor_tax_id": "TX-9110"
+      }
+    },
+    "input_hash": "84A6990546E1AD6DD3226B23508F50DFE118CD4207908D0DF02A975B5590CB02",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 31.2351462000006,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:46:34.152262Z",
+    "trace_file": "traces/raw\\trace_20260901_074602_c681624f.jsonl",
+    "track": "B"
+  }
+}

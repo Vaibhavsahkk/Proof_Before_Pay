@@ -1,0 +1,40 @@
+{
+  "baseline_output": null,
+  "case_id": "case_101",
+  "metadata": {
+    "attempt_count": 3,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+    "input_hash": "2B6A0A1566BA72C3DFCDAF60C4221C50E93882C7039DCB0EB285D0CE037D25CF",
+    "key_rotations": 2,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "NOT_RETURNED",
+    "runtime_seconds": 69.09370729999955,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "API_ERROR",
+    "timestamp_utc": "2026-08-31T21:24:55.280316Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": "NOT_RETURNED",
+      "prompt_token_count": "NOT_RETURNED",
+      "total_token_count": "NOT_RETURNED"
+    }
+  },
+  "raw_response": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+}

@@ -1,0 +1,132 @@
+{
+  "agent_output": {
+    "case_id": "case_102",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "findings": [
+      "Math Error"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Manually recalculate the line items, tax, and subtotal on the invoice to locate the discrepancy, and contact the submitter or vendor for a corrected payment request if an error is confirmed.",
+    "uncertainty": "The calculated total does not match the sum of the individual line items, taxes, or discounts listed on the payment request, indicating a potential calculation or data entry discrepancy."
+  },
+  "case_id": "case_102",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1306,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.png",
+        "size_bytes": 10318,
+        "type": "image/png"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1111,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.json",
+        "size_bytes": 138,
+        "type": "application/json"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_102",
+      "goods_receipt": {
+        "grn_number": "GRN-4102",
+        "items": [
+          {
+            "item_id": "PAPER-A4",
+            "quantity_accepted": "40"
+          },
+          {
+            "item_id": "PEN-BL",
+            "quantity_accepted": "20"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1022",
+        "currency": "USD",
+        "invoice_number": "INV-2102",
+        "items": [
+          {
+            "item_id": "PAPER-A4",
+            "line_total": "500.00"
+          },
+          {
+            "item_id": "PEN-BL",
+            "line_total": "50.00"
+          }
+        ],
+        "subtotal": "550.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "550.00",
+        "vendor_name": "FAKECORP STATIONERY INC",
+        "vendor_tax_id": "TX-9102"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "PAPER-A4",
+            "quantity": "40",
+            "unit_price": "12.50"
+          },
+          {
+            "item_id": "PEN-BL",
+            "quantity": "20",
+            "unit_price": "2.50"
+          }
+        ],
+        "po_number": "PO-3102",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1022",
+        "vendor_name": "FAKECORP STATIONERY INC",
+        "vendor_tax_id": "TX-9102"
+      }
+    },
+    "input_hash": "223C95D121C9B2661DAB715C66A65D42B6BD2861D6FE9100BAB866D3F32F62BB",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 82.16946439999992,
+    "source_run_id": "run_20260901_075421_d232430a",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:55:47.199212Z",
+    "trace_file": "traces/raw\\trace_20260901_075425_3d66d12e.jsonl",
+    "track": "B"
+  }
+}

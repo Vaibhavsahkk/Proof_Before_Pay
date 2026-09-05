@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request contains a mathematical discrepancy, as the total amount does not match the sum of the individual line items, applicable taxes, or applied discounts.",
+  "required_human_next_step": "Reconcile the line items, taxes, and subtotal against the primary invoice or receipt, correct the figures in the system, and re-evaluate prior to approval."
+}

@@ -1,0 +1,88 @@
+{
+  "track": "B",
+  "mode": "baseline",
+  "prompt_version": "v2",
+  "assembly": true,
+  "primary_run": "run_20260831_215742_40aab84f",
+  "substituted_cases": {
+    "case_101": "run_20260831_220935_4b39378e",
+    "case_102": "run_20260831_213900_9339c075"
+  },
+  "assembly_rule": "complete-coverage assembly of v2 runs; every record preserved verbatim from its own run; no manual edits",
+  "note": "cases 101/102 failed in primary run on transient 429/503; their SUCCESS results come from other full-fidelity v2 runs (same prompt hash, same inputs, same policy)",
+  "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+  "cases": [
+    {
+      "case_id": "case_101",
+      "source_run_id": "run_20260831_220935_4b39378e",
+      "status": "SUCCESS",
+      "output_sha256": "6812EF1922C2F89A9FD9F7B32B39EA990C54DCDC0179AF8EEC74B3E305DC6FA6"
+    },
+    {
+      "case_id": "case_102",
+      "source_run_id": "run_20260831_213900_9339c075",
+      "status": "SUCCESS",
+      "output_sha256": "2317F826E30138390A6B86D711131C3809BC01C27E950B57460B599C329B513E"
+    },
+    {
+      "case_id": "case_103",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "8F80278397BA189D8B7556C5798252F1BAB3E1029C4C2DA87548C18A40EC5FD5"
+    },
+    {
+      "case_id": "case_104",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "7A9F9497342B5A676FD51885E139F1C4EDDF7CC47566AB0851102BB72EB7C7BB"
+    },
+    {
+      "case_id": "case_105",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "0B3D120B6D1B1AD0DAA25606A26BBF502EE1E50F97A14CE0ED32FC6C66A1BF70"
+    },
+    {
+      "case_id": "case_106",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "7FAAFE2DDD257E1E28B3F78ACD3B0E58C4C7350FC85486886CB61DCC4F75A59A"
+    },
+    {
+      "case_id": "case_107",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "0A196268164099FAEAAFB8F7ACA67A21457CBB09EFDB40F36555A758E0950F32"
+    },
+    {
+      "case_id": "case_108",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "3DDC0531E5CEE39A72C8C364284169FF7034962551808585905C002965EF8CBE"
+    },
+    {
+      "case_id": "case_109",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "9BF2FA77F996D327DA3629E0C38F4A64DA775A6EF5B53D3B8A5BEDEEF37C3F04"
+    },
+    {
+      "case_id": "case_110",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "B682A3350DE0B36ABF4D862D3DDE9C6EC5696DFFC18046B95609E41925E237A0"
+    },
+    {
+      "case_id": "case_111",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "E553BE866A8C6789A992F3E3A7F69C0325773FF38CB77FBFA7B5A1CC9DD5EF0B"
+    },
+    {
+      "case_id": "case_112",
+      "source_run_id": "run_20260831_215742_40aab84f",
+      "status": "SUCCESS",
+      "output_sha256": "2D01D46339E3DE220FE8DC09BEA8381F584A50999D8685B5BCA7F090C3A5D9B5"
+    }
+  ]
+}

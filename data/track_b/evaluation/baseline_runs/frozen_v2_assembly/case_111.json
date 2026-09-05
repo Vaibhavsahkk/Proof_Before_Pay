@@ -1,0 +1,61 @@
+{
+  "baseline_output": {
+    "case_id": "case_111",
+    "deterministic_calculation_references": [
+      "Line Total = 2 * 2500.00 USD = 5000.00 USD",
+      "Total Amount = 5000.00 USD + 0.00 USD = 5000.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice Number: INV-2111",
+      "Bank Account Change Notification",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Unverified Bank Change"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify the bank account change request from ACC-1111 to ACC-9111 before releasing payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_111",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json",
+      "remittance_advice.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "error": null,
+    "input_hash": "668B6E0B7221A8CC9E1D244242B9D96D5C17EECE936E928663F2E598DD4B3DE6",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 10.985866500000157,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "source_run_id": "run_20260831_215742_40aab84f",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T22:00:52.895686Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 212,
+      "prompt_token_count": 4235,
+      "total_token_count": 5809
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_111\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Unverified Bank Change\"\n  ],\n  \"evidence_references\": [\n    \"Invoice Number: INV-2111\",\n    \"Bank Account Change Notification\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line Total = 2 * 2500.00 USD = 5000.00 USD\",\n    \"Total Amount = 5000.00 USD + 0.00 USD = 5000.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Verify the bank account change request from ACC-1111 to ACC-9111 before releasing payment.\"\n}"
+}

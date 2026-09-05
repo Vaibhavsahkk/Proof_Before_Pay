@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_104",
+    "deterministic_calculation_references": [
+      "Invoice line total calculation: 500 units * 2.20 USD = 1100.00 USD",
+      "Purchase Order line total calculation: 500 units * 2.00 USD = 1000.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2104",
+      "Purchase Order PO-3104",
+      "Goods Receipt Note GRN-4104",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Unit price mismatch for item BRK-PAD: Invoice specifies 2.20 USD per unit, while Purchase Order specifies 2.00 USD per unit."
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Contact the vendor or purchasing department to resolve the unit price discrepancy of 0.20 USD per unit.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_104",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": "'Unit price mismatch for item BRK-PAD: Invoice specifies 2.20 USD per unit, while Purchase Order specifies 2.00 USD per unit.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor I",
+    "input_hash": "8DC25D1B04E7D97CAD24739504143CDB7E83F63DA695CB1AEB6C431F3FABB95D",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 17.322495399999752,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:27:46.515794Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 254,
+      "prompt_token_count": 2492,
+      "total_token_count": 3647
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_104\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Unit price mismatch for item BRK-PAD: Invoice specifies 2.20 USD per unit, while Purchase Order specifies 2.00 USD per unit.\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2104\",\n    \"Purchase Order PO-3104\",\n    \"Goods Receipt Note GRN-4104\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Invoice line total calculation: 500 units * 2.20 USD = 1100.00 USD\",\n    \"Purchase Order line total calculation: 500 units * 2.00 USD = 1000.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Contact the vendor or purchasing department to resolve the unit price discrepancy of 0.20 USD per unit.\"\n}"
+}

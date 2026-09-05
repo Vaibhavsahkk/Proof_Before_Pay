@@ -1,0 +1,4 @@
+{
+  "uncertainty": "It is unclear whether this payment request is a legitimate off-system procurement, a corrupted automated data entry, or an attempted fraudulent payment due to the simultaneous absence of core reference records (Vendor Master, PO, GRN) and internal invoice discrepancies (calculation errors and duplicate line IDs).",
+  "required_human_next_step": "Freeze the payment request immediately, contact the submitting department to confirm vendor legitimacy, obtain valid PO/GRN documentation, and require a reissued invoice with accurate line items and calculations."
+}

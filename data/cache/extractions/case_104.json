@@ -1,0 +1,50 @@
+{
+  "case_id": "case_104",
+  "invoice": {
+    "invoice_number": "INV-2104",
+    "vendor_name": "PSEUDO PARTS GMBH",
+    "vendor_tax_id": "TX-9104",
+    "bank_account": "ACC-1044",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "BRK-PAD",
+        "quantity": "500",
+        "unit_price": "2.20",
+        "line_total": "1100.00"
+      }
+    ],
+    "subtotal": "1100.00",
+    "tax": "0.00",
+    "total": "1100.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3104",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "BRK-PAD",
+        "quantity": "500",
+        "unit_price": "2.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4104",
+    "items": [
+      {
+        "item_id": "BRK-PAD",
+        "quantity_accepted": "500"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "PSEUDO PARTS GMBH",
+    "vendor_tax_id": "TX-9104",
+    "bank_account": "ACC-1044"
+  },
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

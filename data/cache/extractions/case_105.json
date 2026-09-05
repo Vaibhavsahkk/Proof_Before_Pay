@@ -1,0 +1,50 @@
+{
+  "case_id": "case_105",
+  "invoice": {
+    "invoice_number": "INV-2105",
+    "vendor_name": "MOCK METALS LTD",
+    "vendor_tax_id": "TX-9105",
+    "bank_account": "ACC-1055",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "STEEL-ROD",
+        "quantity": "60",
+        "unit_price": "10.00",
+        "line_total": "600.00"
+      }
+    ],
+    "subtotal": "600.00",
+    "tax": "0.00",
+    "total": "600.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3105",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "STEEL-ROD",
+        "quantity": "60",
+        "unit_price": "10.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4105",
+    "items": [
+      {
+        "item_id": "STEEL-ROD",
+        "quantity_accepted": "45"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "MOCK METALS LTD",
+    "vendor_tax_id": "TX-9105",
+    "bank_account": "ACC-1055"
+  },
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

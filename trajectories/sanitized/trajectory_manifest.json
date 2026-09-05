@@ -1,0 +1,29 @@
+{
+  "package": "Proof Before Pay - representative agent trajectories (REAL execution traces)",
+  "generated": "2026-09-01",
+  "sanitization": "TraceLogger recursive sanitization + post-hoc key-pattern redaction (verified per file)",
+  "01_clean_pay": {
+    "events": 9,
+    "secret_scan": "CLEAN"
+  },
+  "02_hold_duplicate_billing": {
+    "events": 11,
+    "secret_scan": "CLEAN"
+  },
+  "03_missing_evidence_investigate": {
+    "events": 11,
+    "secret_scan": "CLEAN"
+  },
+  "04_unverified_bank_change": {
+    "events": 11,
+    "secret_scan": "CLEAN"
+  },
+  "05_credential_failover_recovery": {
+    "events": 12,
+    "secret_scan": "CLEAN"
+  },
+  "06_track_b_challenging_case_111": {
+    "events": 19,
+    "secret_scan": "CLEAN"
+  }
+}

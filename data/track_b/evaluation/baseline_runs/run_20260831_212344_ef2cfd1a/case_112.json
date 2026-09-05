@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_112",
+    "deterministic_calculation_references": [
+      "Line total: 2 * 225.00 USD = 450.00 USD",
+      "Total amount: 450.00 USD subtotal + 0.00 USD tax = 450.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2112",
+      "Purchase Order PO-3112"
+    ],
+    "findings": [
+      "Missing Goods Receipt Note (GRN) / proof of service completion",
+      "Missing Vendor Master Record to verify bank account ACC-1122"
+    ],
+    "missing_evidence": [
+      "Goods Receipt Note (GRN)",
+      "Vendor Master Record"
+    ],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Obtain proof of service completion (GRN) and verify vendor bank account details against official vendor master records before approving payment.",
+    "uncertainty": "Service completion cannot be verified without a Goods Receipt Note or confirmation of service, and bank details cannot be cross-referenced without a Vendor Master Record."
+  },
+  "case_id": "case_112",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf"
+    ],
+    "error": "'Missing Vendor Master Record to verify bank account ACC-1122' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Identity Mismatch']\n\nFailed validating 'enum' in schema['properti",
+    "input_hash": "A388EED57607ABD3EE83E15B0CAE70685993F6FCA8C7CB2E3048A9802CACE124",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 18.57594380000046,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:31:22.300284Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 281,
+      "prompt_token_count": 1428,
+      "total_token_count": 2866
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_112\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Missing Goods Receipt Note (GRN) / proof of service completion\",\n    \"Missing Vendor Master Record to verify bank account ACC-1122\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2112\",\n    \"Purchase Order PO-3112\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line total: 2 * 225.00 USD = 450.00 USD\",\n    \"Total amount: 450.00 USD subtotal + 0.00 USD tax = 450.00 USD\"\n  ],\n  \"missing_evidence\": [\n    \"Goods Receipt Note (GRN)\",\n    \"Vendor Master Record\"\n  ],\n  \"uncertainty\": \"Service completion cannot be verified without a Goods Receipt Note or confirmation of service, and bank details cannot be cross-referenced without a Vendor Master Record.\",\n  \"required_human_next_step\": \"Obtain proof of service completion (GRN) and verify vendor bank account details against official vendor master records before approving payment.\"\n}"
+}

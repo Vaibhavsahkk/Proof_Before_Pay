@@ -1,0 +1,39 @@
+{
+  "case_id": "case_001",
+  "invoice": {
+    "invoice_number": "INV-2112",
+    "vendor_name": "PSEUDO SERVICES LLC",
+    "vendor_tax_id": "TX-9112",
+    "bank_account": "ACC-1122",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "HVAC-SVC",
+        "quantity": "2",
+        "unit_price": "225.00",
+        "line_total": "450.00",
+        "description": ""
+      }
+    ],
+    "subtotal": "450.00",
+    "tax": "0.00",
+    "total": "450.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3112",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "HVAC-SVC",
+        "quantity": "2",
+        "unit_price": "225.00"
+      }
+    ]
+  },
+  "goods_receipt": null,
+  "vendor_master": null,
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

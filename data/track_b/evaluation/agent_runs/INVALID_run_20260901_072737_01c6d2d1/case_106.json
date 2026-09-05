@@ -1,0 +1,64 @@
+{
+  "agent_output": {
+    "case_id": "case_106",
+    "deterministic_calculation_references": [],
+    "evidence_references": [],
+    "findings": [
+      "All credentials exhausted"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Human review required. Ensure billing and quota limits.",
+    "uncertainty": "All Gemini API keys have exhausted their quota."
+  },
+  "case_id": "case_106",
+  "metadata": {
+    "checks_performed": [],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1265,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1145,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1104,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1103,
+        "type": "application/pdf"
+      },
+      {
+        "name": "bank_change_notice.pdf",
+        "size_bytes": 1118,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": null,
+    "input_hash": "FE03533EE465546D78CDAD86215DA497EB462967F8B8AE4394B1FE43198540BF",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 0.48330750000059197,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:28:28.219739Z",
+    "trace_file": "traces/raw\\trace_20260901_072827_7a852eb2.jsonl",
+    "track": "B"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "agent_output": {
+    "case_id": "case_105",
+    "deterministic_calculation_references": [
+      "calculator.calculate_tax",
+      "calculator.multiply",
+      "calculator.sum_values",
+      "calculator.check_equality"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master"
+    ],
+    "findings": [
+      "Quantity Mismatch"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Cross-reference the invoice line items against the purchase order and goods received note (GRN), and contact the receiving department to verify the exact quantity delivered prior to approving payment.",
+    "uncertainty": "The item quantity billed on the invoice does not match the quantity specified in the approved purchase order or receiving documentation, introducing uncertainty regarding potential overbilling or partial delivery."
+  },
+  "case_id": "case_105",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.png",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1304,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1142,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.png",
+        "size_bytes": 6394,
+        "type": "image/png"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1094,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_105",
+      "goods_receipt": {
+        "grn_number": "GRN-4105",
+        "items": [
+          {
+            "item_id": "STEEL-ROD",
+            "quantity_accepted": "45"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1055",
+        "currency": "USD",
+        "invoice_number": "INV-2105",
+        "items": [
+          {
+            "item_id": "STEEL-ROD",
+            "line_total": "600.00",
+            "quantity": "60",
+            "unit_price": "10.00"
+          }
+        ],
+        "subtotal": "600.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "600.00",
+        "vendor_name": "MOCK METALS LTD",
+        "vendor_tax_id": "TX-9105"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "STEEL-ROD",
+            "quantity": "60",
+            "unit_price": "10.00"
+          }
+        ],
+        "po_number": "PO-3105",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1055",
+        "vendor_name": "MOCK METALS LTD",
+        "vendor_tax_id": "TX-9105"
+      }
+    },
+    "input_hash": "D06321A319C497C56C0A0203283ED823AE387971022A9E4430F5F66103F0AF37",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 53.72587890000068,
+    "source_run_id": "run_20260901_075627_6d4cc170",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:57:24.676556Z",
+    "trace_file": "traces/raw\\trace_20260901_075630_1c711f66.jsonl",
+    "track": "B"
+  }
+}

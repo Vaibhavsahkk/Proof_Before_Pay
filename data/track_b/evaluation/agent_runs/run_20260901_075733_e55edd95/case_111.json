@@ -1,0 +1,150 @@
+{
+  "agent_output": {
+    "case_id": "case_111",
+    "deterministic_calculation_references": [
+      "calculator.check_equality",
+      "calculator.multiply",
+      "calculator.calculate_tax",
+      "calculator.sum_values"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "prior_payment_history",
+      "bank_change_evidence"
+    ],
+    "findings": [
+      "Duplicate Billing",
+      "Unverified Bank Change"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Cross-reference the invoice details against historical payment logs to check for prior processing, and contact the vendor via a pre-established, out-of-band phone number to confirm the legitimate bank account change before approving the transaction.",
+    "uncertainty": "The payment request presents a high risk of unauthorized fund diversion, as the invoice details potentially replicate a previously processed payment, and the requested destination account has not been verified against trusted vendor records."
+  },
+  "case_id": "case_111",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching",
+      "Duplicate Billing"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json",
+      "remittance_advice.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1348,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.png",
+        "size_bytes": 10155,
+        "type": "image/png"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1098,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.json",
+        "size_bytes": 138,
+        "type": "application/json"
+      },
+      {
+        "name": "remittance_advice.pdf",
+        "size_bytes": 1115,
+        "type": "application/pdf"
+      },
+      {
+        "name": "bank_change_notice.pdf",
+        "size_bytes": 1117,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": {
+        "approval_status": "PENDING",
+        "new_bank_account": "ACC-9111",
+        "old_bank_account": "ACC-1111",
+        "verified_by": "System"
+      },
+      "case_id": "case_111",
+      "goods_receipt": {
+        "grn_number": "GRN-4111",
+        "items": [
+          {
+            "item_id": "CRM-LIC",
+            "quantity_accepted": "2"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-9111",
+        "currency": "USD",
+        "invoice_number": "INV-2111",
+        "items": [
+          {
+            "item_id": "CRM-LIC",
+            "line_total": "5000.00",
+            "quantity": "2",
+            "unit_price": "2500.00"
+          }
+        ],
+        "subtotal": "5000.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "5000.00",
+        "vendor_name": "TESTAMENT SOFTWARE CORP",
+        "vendor_tax_id": "TX-9111"
+      },
+      "prior_payment_history": [
+        {
+          "amount": "5000.00",
+          "invoice_number": "INV-2111",
+          "payment_date": "2026-06-20",
+          "vendor_tax_id": "TX-9111"
+        }
+      ],
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "CRM-LIC",
+            "quantity": "2",
+            "unit_price": "2500.00"
+          }
+        ],
+        "po_number": "PO-3111",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1111",
+        "vendor_name": "TESTAMENT SOFTWARE CORP",
+        "vendor_tax_id": "TX-9111"
+      }
+    },
+    "input_hash": "668B6E0B7221A8CC9E1D244242B9D96D5C17EECE936E928663F2E598DD4B3DE6",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 43.33855460000086,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:58:19.788969Z",
+    "trace_file": "traces/raw\\trace_20260901_075736_8301dded.jsonl",
+    "track": "B"
+  }
+}

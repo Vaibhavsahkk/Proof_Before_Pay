@@ -1,0 +1,58 @@
+{
+  "baseline_output": {
+    "case_id": "case_107",
+    "deterministic_calculation_references": [
+      "10 * 50.00 USD = 500.00 USD (Calculated) vs 600.00 USD (Invoiced Line Total and Subtotal)"
+    ],
+    "evidence_references": [
+      "SYNTHETIC SAMPLE INVOICE (Inv #: INV-2107)",
+      "SYNTHETIC SAMPLE PURCHASE ORDER (PO Number: PO-3107)",
+      "SYNTHETIC SAMPLE GOODS RECEIPT NOTE (GRN Number: GRN-4107)",
+      "SYNTHETIC SAMPLE VENDOR MASTER RECORD"
+    ],
+    "findings": [
+      "Line total arithmetic error: 10 units at 50.00 USD per unit equals 500.00 USD, but invoice lists line total and total amount as 600.00 USD."
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Contact vendor PSEUDO PRINT CO to resolve the arithmetic mismatch and request a revised invoice for 500.00 USD.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_107",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": "'Line total arithmetic error: 10 units at 50.00 USD per unit equals 500.00 USD, but invoice lists line total and total amount as 600.00 USD.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Cha",
+    "input_hash": "2CE5C8E6879696C809ABDDCBEB30EB311504366915EF0A82EEF27FA3B0B44CFD",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 44.210879000000205,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:28:52.094549Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 285,
+      "prompt_token_count": 2492,
+      "total_token_count": 3798
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_107\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Line total arithmetic error: 10 units at 50.00 USD per unit equals 500.00 USD, but invoice lists line total and total amount as 600.00 USD.\"\n  ],\n  \"evidence_references\": [\n    \"SYNTHETIC SAMPLE INVOICE (Inv #: INV-2107)\",\n    \"SYNTHETIC SAMPLE PURCHASE ORDER (PO Number: PO-3107)\",\n    \"SYNTHETIC SAMPLE GOODS RECEIPT NOTE (GRN Number: GRN-4107)\",\n    \"SYNTHETIC SAMPLE VENDOR MASTER RECORD\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"10 * 50.00 USD = 500.00 USD (Calculated) vs 600.00 USD (Invoiced Line Total and Subtotal)\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Contact vendor PSEUDO PRINT CO to resolve the arithmetic mismatch and request a revised invoice for 500.00 USD.\"\n}"
+}

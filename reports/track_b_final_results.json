@@ -1,0 +1,506 @@
+{
+  "evaluation": "Track B v1.0 frozen dataset \u2014 offline re-scoring of frozen run artifacts",
+  "ground_truth": "data/track_b/ground_truth/ (SHA-256 manifest verified)",
+  "baseline_run": "frozen_v2_assembly",
+  "agent_run": "frozen_v1_assembly",
+  "metrics_table": {
+    "recommendation_accuracy_percent": {
+      "baseline": 83.33,
+      "agent": 75.0,
+      "delta": -8.33
+    },
+    "findings_exactness_percent": {
+      "baseline": 75.0,
+      "agent": 58.33,
+      "delta": -16.67
+    },
+    "schema_validity_percent": {
+      "baseline": 100.0,
+      "agent": 100.0,
+      "delta": 0.0
+    },
+    "unsafe_pay_rate_percent": {
+      "baseline": 10.0,
+      "agent": 0.0,
+      "delta": -10.0
+    }
+  },
+  "baseline": {
+    "mode": "baseline",
+    "run_id": "frozen_v2_assembly",
+    "metrics": {
+      "total_cases": 12,
+      "recommendation_accuracy_percent": 83.33,
+      "recommendation_correct_count": 10,
+      "findings_exactness_percent": 75.0,
+      "findings_correct_count": 9,
+      "schema_validity_percent": 100.0,
+      "schema_valid_count": 12,
+      "unsafe_pay_count": 1,
+      "non_pay_denominator": 10,
+      "unsafe_pay_rate_percent": 10.0,
+      "execution_failure_count": 0,
+      "total_runtime_seconds": 202.5,
+      "token_count_total": 54678
+    },
+    "per_case": [
+      {
+        "case_id": "case_101",
+        "expected_recommendation": "PAY",
+        "expected_findings": [],
+        "actual_recommendation": "PAY",
+        "actual_findings": [],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 14.272491199999422,
+        "error": null
+      },
+      {
+        "case_id": "case_102",
+        "expected_recommendation": "PAY",
+        "expected_findings": [],
+        "actual_recommendation": "PAY",
+        "actual_findings": [],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 15.258467600000586,
+        "error": null
+      },
+      {
+        "case_id": "case_103",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Duplicate Billing"
+        ],
+        "actual_recommendation": "PAY",
+        "actual_findings": [],
+        "recommendation_correct": false,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": true,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 32.61991349999971,
+        "error": null
+      },
+      {
+        "case_id": "case_104",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Price Contradiction"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Price Contradiction"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 26.363284800000656,
+        "error": null
+      },
+      {
+        "case_id": "case_105",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Quantity Mismatch"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Quantity Mismatch"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 16.88738530000046,
+        "error": null
+      },
+      {
+        "case_id": "case_106",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Unverified Bank Change"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Unverified Bank Change"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 8.583660899999813,
+        "error": null
+      },
+      {
+        "case_id": "case_107",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Math Error"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Math Error"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 8.064095700000507,
+        "error": null
+      },
+      {
+        "case_id": "case_108",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Missing PO"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Missing PO"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 9.086142000000109,
+        "error": null
+      },
+      {
+        "case_id": "case_109",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Vendor Identity Mismatch"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Vendor Identity Mismatch"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 32.309827199999745,
+        "error": null
+      },
+      {
+        "case_id": "case_110",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Currency Mismatch",
+          "Invalid Currency"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Currency Mismatch"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 16.278443199999856,
+        "error": null
+      },
+      {
+        "case_id": "case_111",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Duplicate Billing",
+          "Unverified Bank Change"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Unverified Bank Change"
+        ],
+        "recommendation_correct": false,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 10.985866500000157,
+        "error": null
+      },
+      {
+        "case_id": "case_112",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Missing GRN",
+          "Missing Vendor Master"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Missing GRN",
+          "Missing Vendor Master"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 11.825048100000458,
+        "error": null
+      }
+    ]
+  },
+  "agent": {
+    "mode": "agent",
+    "run_id": "frozen_v1_assembly",
+    "metrics": {
+      "total_cases": 12,
+      "recommendation_accuracy_percent": 75.0,
+      "recommendation_correct_count": 9,
+      "findings_exactness_percent": 58.33,
+      "findings_correct_count": 7,
+      "schema_validity_percent": 100.0,
+      "schema_valid_count": 12,
+      "unsafe_pay_count": 0,
+      "non_pay_denominator": 10,
+      "unsafe_pay_rate_percent": 0.0,
+      "execution_failure_count": 0,
+      "total_runtime_seconds": 461.5,
+      "token_count_total": null
+    },
+    "per_case": [
+      {
+        "case_id": "case_101",
+        "expected_recommendation": "PAY",
+        "expected_findings": [],
+        "actual_recommendation": "PAY",
+        "actual_findings": [],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 17.301126499998645,
+        "error": null
+      },
+      {
+        "case_id": "case_102",
+        "expected_recommendation": "PAY",
+        "expected_findings": [],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Math Error"
+        ],
+        "recommendation_correct": false,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 82.16946439999992,
+        "error": null
+      },
+      {
+        "case_id": "case_103",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Duplicate Billing"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Duplicate Billing"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 28.373597800000425,
+        "error": null
+      },
+      {
+        "case_id": "case_104",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Price Contradiction"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Price Contradiction"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 25.590509999999995,
+        "error": null
+      },
+      {
+        "case_id": "case_105",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Quantity Mismatch"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Quantity Mismatch"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 53.72587890000068,
+        "error": null
+      },
+      {
+        "case_id": "case_106",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Unverified Bank Change"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Unverified Bank Change"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 21.454135699999824,
+        "error": null
+      },
+      {
+        "case_id": "case_107",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Math Error"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Math Error"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 31.617483800000628,
+        "error": null
+      },
+      {
+        "case_id": "case_108",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Missing PO"
+        ],
+        "actual_recommendation": "INVESTIGATE",
+        "actual_findings": [
+          "Missing PO",
+          "Missing PO Line ID"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 28.760863899999094,
+        "error": null
+      },
+      {
+        "case_id": "case_109",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Vendor Identity Mismatch"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Math Error",
+          "Vendor Identity Mismatch"
+        ],
+        "recommendation_correct": false,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 38.94434000000001,
+        "error": null
+      },
+      {
+        "case_id": "case_110",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Currency Mismatch",
+          "Invalid Currency"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Currency Mismatch",
+          "Invalid Currency",
+          "Math Error"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 31.2351462000006,
+        "error": null
+      },
+      {
+        "case_id": "case_111",
+        "expected_recommendation": "HOLD",
+        "expected_findings": [
+          "Duplicate Billing",
+          "Unverified Bank Change"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Duplicate Billing",
+          "Unverified Bank Change"
+        ],
+        "recommendation_correct": true,
+        "findings_correct": true,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 43.33855460000086,
+        "error": null
+      },
+      {
+        "case_id": "case_112",
+        "expected_recommendation": "INVESTIGATE",
+        "expected_findings": [
+          "Missing GRN",
+          "Missing Vendor Master"
+        ],
+        "actual_recommendation": "HOLD",
+        "actual_findings": [
+          "Math Error",
+          "Missing GRN",
+          "Missing Vendor Master"
+        ],
+        "recommendation_correct": false,
+        "findings_correct": false,
+        "schema_valid": true,
+        "unsafe_pay": false,
+        "execution_status": "SUCCESS",
+        "runtime_seconds": 58.995925699999134,
+        "error": null
+      }
+    ]
+  },
+  "delta": {
+    "recommendation_accuracy_delta_percent": -8.33,
+    "findings_exactness_delta_percent": -16.67,
+    "schema_validity_delta_percent": 0.0,
+    "unsafe_pay_rate_delta_percent": -10.0
+  }
+}

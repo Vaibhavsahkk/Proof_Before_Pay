@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "case_id": "case_101",
+      "credential_recoveries": 0,
+      "input_hash": "2B6A0A1566BA72C3DFCDAF60C4221C50E93882C7039DCB0EB285D0CE037D25CF",
+      "output_file": "case_101.json",
+      "output_sha256": "665E3D741DF604954B014801AFF42A7D42714D4944D71FB1525D4A360EA87327",
+      "status": "SUCCESS",
+      "trace_file": "traces/raw\\trace_20260831_221017_30702759.jsonl"
+    }
+  ],
+  "end_time_utc": "2026-08-31T22:10:18.002290Z",
+  "git_head": "9b243a82de91bbdd16beae9c53100634559a3634",
+  "mode": "agent",
+  "overall_status": "SUCCESS",
+  "prompt_template_sha256": null,
+  "prompt_version": null,
+  "provider": "google",
+  "requested_model": "gemini-3.6-flash",
+  "retry_policy": {
+    "backoff_seconds": [
+      1,
+      2
+    ],
+    "maximum_attempts": 3,
+    "retryable_http_codes": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ]
+  },
+  "run_id": "run_20260831_221016_46be0f5a",
+  "settings": null,
+  "start_time_utc": "2026-08-31T22:10:16.421149Z",
+  "track": "B"
+}

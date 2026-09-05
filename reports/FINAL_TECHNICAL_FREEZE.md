@@ -77,3 +77,29 @@ All technical code, tests, schemas, tools, UI assets, and reports are frozen.
 Phase 5 remains LOCKED until the human completes form submission.
 ================================================================================
 ```
+
+---
+
+## 5. Post-Freeze Audit Addendum (2026-09-01 — final deep end-to-end audit)
+
+The table above records the verified state at commit `adc3328` on
+2026-08-30 and is preserved unchanged as historical evidence. Findings of the
+2026-09-01 deep audit executed against the current tree (`9b243a8` + working
+state):
+
+| Area | Audit result (current, executed 2026-09-01) |
+|---|---|
+| Official benchmark | `validate_phase1.py` PASS, `verify_manifest.py` PASS, `evaluate_agent.py` 100/100/0% — unchanged |
+| Track B frozen dataset | `verify_track_b.py` PASS (12 cases, oracle re-derivation, byte-level determinism) |
+| Offline test suite | 144 passed, 0 failed (excluding container-only `test_environment.py` and live-API UI e2e tests) |
+| Collected tests | 165, no collection errors |
+| UI live verification | clean-start PASS; empty-input safety PASS (alert guard, no fake review); guided examples 001 PAY / 002 HOLD / 004 HOLD / 005 INVESTIGATE all correct through the real browser |
+| Deterministic safety | re-proven by direct execution: Decimal math exact, fail-closed on malformed input, HOLD>INVESTIGATE>PAY precedence, model cannot set recommendation |
+| Security | no real keys in any tracked file; traces masked; `.env` untracked |
+| Fresh-clone reproduction | PASS (fresh venv, install from lock, all imports OK, 144 tests, validators, UI starts, representative cases reproduce) |
+| Dependency declaration | FIXED: `pymupdf`, `pypdf`, `pillow` added to `requirements.lock` (previously undeclared; proven by fresh-env failure before the fix) |
+| UI concurrency | FIXED: `ThreadingHTTPServer` (a stuck live-API investigation previously froze the whole single-threaded UI) |
+| Trajectory package | REAL trajectories added under `trajectories/sanitized/` (5 scenarios + manifest; dummy placeholder removed) |
+| Track B baseline (A2/A3) | COMPLETE and frozen: 12/12 SUCCESS, prompt v2 hash-pinned, per-case provenance, measured 83.33% recommendation accuracy / 75.00% findings / 100% schema / 10.00% unsafe-PAY (1/10) |
+| Track B agent (A4) + measurement (A5) | scheduled at provider daily-quota reset (automation `automation-a4cda0a1`, 2026-09-01 12:38 IST); results will be recorded honestly whatever they show |
+| Docker on this host | BLOCKED: Docker Desktop daemon fails to start on this audit host; last proven-good container run remains the `adc3328` evidence above |

@@ -1,0 +1,135 @@
+{
+  "agent_output": {
+    "case_id": "case_106",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.calculate_tax",
+      "calculator.check_equality",
+      "calculator.sum_values"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "bank_change_evidence"
+    ],
+    "findings": [
+      "Unverified Bank Change"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Perform an out-of-band verification by contacting the vendor directly using a previously established, trusted phone number to confirm the bank detail update before releasing the payment.",
+    "uncertainty": "The payment request involves a recent modification to the payee's banking details that has not been authenticated, introducing a risk of unauthorized account diversion or vendor impersonation fraud."
+  },
+  "case_id": "case_106",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1265,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1145,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1104,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1103,
+        "type": "application/pdf"
+      },
+      {
+        "name": "bank_change_notice.pdf",
+        "size_bytes": 1118,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": {
+        "approval_status": "PENDING",
+        "new_bank_account": "ACC-9066",
+        "old_bank_account": "ACC-1066",
+        "verified_by": "System"
+      },
+      "case_id": "case_106",
+      "goods_receipt": {
+        "grn_number": "GRN-4106",
+        "items": [
+          {
+            "item_id": "FLOOR-CLEAN",
+            "quantity_accepted": "1"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-9066",
+        "currency": "USD",
+        "invoice_number": "INV-2106",
+        "items": [
+          {
+            "item_id": "FLOOR-CLEAN",
+            "line_total": "350.00",
+            "quantity": "1",
+            "unit_price": "350.00"
+          }
+        ],
+        "subtotal": "350.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "350.00",
+        "vendor_name": "TESTAMENT FACILITIES LLC",
+        "vendor_tax_id": "TX-9106"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "FLOOR-CLEAN",
+            "quantity": "1",
+            "unit_price": "350.00"
+          }
+        ],
+        "po_number": "PO-3106",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1066",
+        "vendor_name": "TESTAMENT FACILITIES LLC",
+        "vendor_tax_id": "TX-9106"
+      }
+    },
+    "input_hash": "FE03533EE465546D78CDAD86215DA497EB462967F8B8AE4394B1FE43198540BF",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 21.454135699999824,
+    "source_run_id": "run_20260901_074246_4d119a71",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:44:23.578032Z",
+    "trace_file": "traces/raw\\trace_20260901_074402_3a23071e.jsonl",
+    "track": "B"
+  }
+}

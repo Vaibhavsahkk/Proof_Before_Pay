@@ -1,0 +1,58 @@
+{
+  "agent_output": {
+    "case_id": "case_109",
+    "deterministic_calculation_references": [],
+    "evidence_references": [],
+    "findings": [
+      "All credentials exhausted"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Human review required. Ensure billing and quota limits.",
+    "uncertainty": "All Gemini API keys have exhausted their quota."
+  },
+  "case_id": "case_109",
+  "metadata": {
+    "checks_performed": [],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1244,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1187,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1101,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1096,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": null,
+    "input_hash": "4FCC8184B41A371AC52BA439D04C96A55715393B8E3CDBC2906C9631257E0CA9",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 0.5007887000010669,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:28:29.680061Z",
+    "trace_file": "traces/raw\\trace_20260901_072829_f207bf48.jsonl",
+    "track": "B"
+  }
+}

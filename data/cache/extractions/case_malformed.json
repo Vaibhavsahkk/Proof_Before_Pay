@@ -1,0 +1,30 @@
+{
+  "case_id": "case_000",
+  "invoice": {
+    "invoice_number": "UNKNOWN",
+    "vendor_name": "UNKNOWN",
+    "vendor_tax_id": "UNKNOWN",
+    "bank_account": "UNKNOWN",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "UNKNOWN",
+        "line_total": "0.00"
+      },
+      {
+        "item_id": "UNKNOWN",
+        "quantity": "0",
+        "unit_price": "0.00"
+      }
+    ],
+    "subtotal": "0.00",
+    "tax": "0.00",
+    "total": "0.00"
+  },
+  "purchase_order": null,
+  "goods_receipt": null,
+  "vendor_master": null,
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

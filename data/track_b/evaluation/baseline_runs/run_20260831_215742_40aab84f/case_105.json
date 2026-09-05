@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_105",
+    "deterministic_calculation_references": [
+      "Invoice line total calculation: 60 * 10.00 USD = 600.00 USD",
+      "Quantity comparison: Invoice quantity (60) vs GRN accepted quantity (45)"
+    ],
+    "evidence_references": [
+      "Invoice INV-2105",
+      "PO PO-3105",
+      "GRN GRN-4105",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Quantity Mismatch"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Investigate the discrepancy between the invoiced quantity of 60 and the accepted GRN quantity of 45 before approving payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_105",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.png",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "D06321A319C497C56C0A0203283ED823AE387971022A9E4430F5F66103F0AF37",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 16.88738530000046,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:59:27.561661Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 214,
+      "prompt_token_count": 3650,
+      "total_token_count": 4800
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_105\",\n  \"recommendation\": \"HOLD\",\n  \"findings\": [\n    \"Quantity Mismatch\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2105\",\n    \"PO PO-3105\",\n    \"GRN GRN-4105\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Invoice line total calculation: 60 * 10.00 USD = 600.00 USD\",\n    \"Quantity comparison: Invoice quantity (60) vs GRN accepted quantity (45)\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Investigate the discrepancy between the invoiced quantity of 60 and the accepted GRN quantity of 45 before approving payment.\"\n}"
+}

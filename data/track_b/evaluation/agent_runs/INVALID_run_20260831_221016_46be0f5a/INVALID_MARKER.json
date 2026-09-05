@@ -1,0 +1,6 @@
+{
+  "status": "INVALID_RUN",
+  "reason": "All Gemini API keys exhausted their daily free-tier quota before this run; the case_101 result is the documented fail-closed fallback (INVESTIGATE / All credentials exhausted), not a live agent execution. Discarded from evaluation.",
+  "detected": "quota probe showed GenerateRequestsPerDayPerProjectPerModel-FreeTier exhausted on all 5 keys",
+  "superseded_by": "the A4 agent run executed after quota reset"
+}

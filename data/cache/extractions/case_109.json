@@ -1,0 +1,51 @@
+{
+  "case_id": "case_001",
+  "invoice": {
+    "invoice_number": "INV-2109",
+    "vendor_name": "SYNTHETIC WIDGETS",
+    "vendor_tax_id": "TX-9109",
+    "bank_account": "ACC-1099",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "GASKET-9",
+        "quantity": "8",
+        "unit_price": "75.00",
+        "line_total": "600.00",
+        "description": ""
+      }
+    ],
+    "subtotal": "600.00",
+    "tax": "0.00",
+    "total": "600.00"
+  },
+  "purchase_order": {
+    "po_number": "PO-3109",
+    "currency": "USD",
+    "tax_rate_percent": "0.00",
+    "items": [
+      {
+        "item_id": "GASKET-9",
+        "quantity": "8",
+        "unit_price": "75.00"
+      }
+    ]
+  },
+  "goods_receipt": {
+    "grn_number": "GRN-4109",
+    "items": [
+      {
+        "item_id": "GASKET-9",
+        "quantity_accepted": "8"
+      }
+    ]
+  },
+  "vendor_master": {
+    "vendor_name": "SYNTHETIC WIDGETS LLC",
+    "vendor_tax_id": "TX-9109",
+    "bank_account": "ACC-1099"
+  },
+  "prior_payment_history": null,
+  "bank_change_evidence": null
+}

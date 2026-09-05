@@ -1,0 +1,60 @@
+{
+  "baseline_output": {
+    "case_id": "case_106",
+    "deterministic_calculation_references": [
+      "1 * 350.00 USD = 350.00 USD line total",
+      "350.00 USD subtotal + 0.00 USD tax = 350.00 USD total amount"
+    ],
+    "evidence_references": [
+      "Invoice INV-2106",
+      "Vendor Master Record",
+      "Bank Account Change Notification"
+    ],
+    "findings": [
+      "Bank account on invoice (ACC-9066) differs from vendor master record (ACC-1066).",
+      "Bank account change notification for new account ACC-9066 has an approval status of PENDING."
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify vendor credentials and confirm approval of the pending bank account change before releasing payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_106",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "error": "'Bank account change notification for new account ACC-9066 has an approval status of PENDING.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Identity Mismatch']\n\nFailed valid",
+    "input_hash": "FE03533EE465546D78CDAD86215DA497EB462967F8B8AE4394B1FE43198540BF",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 8.781049600000188,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:28:07.875899Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 242,
+      "prompt_token_count": 3024,
+      "total_token_count": 4228
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_106\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Bank account on invoice (ACC-9066) differs from vendor master record (ACC-1066).\",\n    \"Bank account change notification for new account ACC-9066 has an approval status of PENDING.\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2106\",\n    \"Vendor Master Record\",\n    \"Bank Account Change Notification\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"1 * 350.00 USD = 350.00 USD line total\",\n    \"350.00 USD subtotal + 0.00 USD tax = 350.00 USD total amount\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Verify vendor credentials and confirm approval of the pending bank account change before releasing payment.\"\n}"
+}

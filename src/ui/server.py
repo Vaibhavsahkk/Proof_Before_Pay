@@ -4,7 +4,7 @@ import glob
 import json
 import re
 import urllib.parse
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from typing import Dict, Any
 
 from dotenv import load_dotenv
@@ -268,7 +268,7 @@ class ReviewerAppHandler(SimpleHTTPRequestHandler):
 
 def run_server(port: int = 8080):
     server_address = ("127.0.0.1", port)
-    httpd = HTTPServer(server_address, ReviewerAppHandler)
+    httpd = ThreadingHTTPServer(server_address, ReviewerAppHandler)
     print(f"Proof Before Pay Reviewer App running at http://127.0.0.1:{port}/")
     try:
         httpd.serve_forever()

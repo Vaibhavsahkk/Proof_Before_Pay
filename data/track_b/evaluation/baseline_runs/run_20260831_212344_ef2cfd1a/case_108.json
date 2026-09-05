@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_108",
+    "deterministic_calculation_references": [
+      "3 * 420.00 USD = 1260.00 USD",
+      "1260.00 USD subtotal + 0.00 USD tax = 1260.00 USD total"
+    ],
+    "evidence_references": [
+      "Invoice INV-2108",
+      "GRN GRN-4108",
+      "Vendor Master Record"
+    ],
+    "findings": [
+      "Purchase Order is missing to verify authorized pricing and order terms."
+    ],
+    "missing_evidence": [
+      "Purchase Order"
+    ],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Locate or request the approved Purchase Order to confirm pricing and authorization before proceeding with payment.",
+    "uncertainty": "Unable to verify pre-approval of freight charges without a Purchase Order."
+  },
+  "case_id": "case_108",
+  "metadata": {
+    "attempt_count": 2,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": "'Purchase Order is missing to verify authorized pricing and order terms.' is not one of ['Currency Mismatch', 'Invalid Currency', 'Duplicate Billing', 'Duplicate GRN Line ID', 'Duplicate Invoice Line ID', 'Duplicate PO Line ID', 'Math Error', 'Missing GRN', 'Missing GRN Line ID', 'Missing PO', 'Missing PO Line ID', 'Missing Vendor Master', 'Price Contradiction', 'Quantity Mismatch', 'Tax Rate Contradiction', 'Unverified Bank Change', 'Vendor Identity Mismatch']\n\nFailed validating 'enum' in schem",
+    "input_hash": "C98207FACD654E210C373C6BD65D0EF9EC106339C4AA6C67164D4CD7C73B3228",
+    "key_rotations": 1,
+    "mode": "baseline",
+    "prompt_template_sha256": "3CA82D5AD74C1608DBA8663B34873BC8029C0F42191F37C2BFE22A4397B7EA36",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 15.124715500000093,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SCHEMA_INVALID",
+    "timestamp_utc": "2026-08-31T21:29:07.224348Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 232,
+      "prompt_token_count": 1960,
+      "total_token_count": 3627
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_108\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Purchase Order is missing to verify authorized pricing and order terms.\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2108\",\n    \"GRN GRN-4108\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"3 * 420.00 USD = 1260.00 USD\",\n    \"1260.00 USD subtotal + 0.00 USD tax = 1260.00 USD total\"\n  ],\n  \"missing_evidence\": [\n    \"Purchase Order\"\n  ],\n  \"uncertainty\": \"Unable to verify pre-approval of freight charges without a Purchase Order.\",\n  \"required_human_next_step\": \"Locate or request the approved Purchase Order to confirm pricing and authorization before proceeding with payment.\"\n}"
+}

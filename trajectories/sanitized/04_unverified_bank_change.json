@@ -1,0 +1,367 @@
+{
+  "trajectory_id": "04_unverified_bank_change",
+  "source_trace": "trace_20260901_000259_b68105cc.jsonl",
+  "scenario": "Bank-change safety - case_005 (TESTAMENT SERVICES, INV-1005): Unverified Bank Change detected, INVESTIGATE, human escalation (fraud-diversion risk)",
+  "event_count": 11,
+  "events": [
+    {
+      "timestamp": "2026-09-01T00:02:59.903874+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_005",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.904889+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "extract",
+      "agent": "orchestrator",
+      "action": "observe_and_extract",
+      "tool": "llm_extractor",
+      "input": "case_005",
+      "output": {
+        "case_id": "case_005",
+        "invoice": {
+          "invoice_number": "INV-1005",
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-9999",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "description": "Cleaning",
+              "quantity": "1",
+              "unit_price": "200.00",
+              "line_total": "200.00"
+            }
+          ],
+          "subtotal": "200.00",
+          "tax": "0.00",
+          "total": "200.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2005",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity": "1",
+              "unit_price": "200.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3005",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity_accepted": "1"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-5555"
+        },
+        "prior_payment_history": [],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-5555",
+          "new_bank_account": "ACC-9999",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.904889+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_005",
+        "invoice": {
+          "invoice_number": "INV-1005",
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-9999",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "description": "Cleaning",
+              "quantity": "1",
+              "unit_price": "200.00",
+              "line_total": "200.00"
+            }
+          ],
+          "subtotal": "200.00",
+          "tax": "0.00",
+          "total": "200.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2005",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity": "1",
+              "unit_price": "200.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3005",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity_accepted": "1"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-5555"
+        },
+        "prior_payment_history": [],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-5555",
+          "new_bank_account": "ACC-9999",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.905879+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "verify",
+      "agent": "orchestrator",
+      "action": "run_deterministic_checks",
+      "tool": "calculator_equality",
+      "input": {
+        "case_id": "case_005",
+        "invoice": {
+          "invoice_number": "INV-1005",
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-9999",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "description": "Cleaning",
+              "quantity": "1",
+              "unit_price": "200.00",
+              "line_total": "200.00"
+            }
+          ],
+          "subtotal": "200.00",
+          "tax": "0.00",
+          "total": "200.00"
+        },
+        "purchase_order": {
+          "po_number": "PO-2005",
+          "currency": "USD",
+          "tax_rate_percent": "0.00",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity": "1",
+              "unit_price": "200.00"
+            }
+          ]
+        },
+        "goods_receipt": {
+          "grn_number": "GRN-3005",
+          "items": [
+            {
+              "item_id": "SERV-E",
+              "quantity_accepted": "1"
+            }
+          ]
+        },
+        "vendor_master": {
+          "vendor_name": "TESTAMENT SERVICES",
+          "vendor_tax_id": "TX-5555",
+          "bank_account": "ACC-5555"
+        },
+        "prior_payment_history": [],
+        "bank_change_evidence": {
+          "old_bank_account": "ACC-5555",
+          "new_bank_account": "ACC-9999",
+          "approval_status": "PENDING",
+          "verified_by": "System"
+        }
+      },
+      "output": [
+        "Unverified Bank Change"
+      ],
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.905879+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Unverified Bank Change"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.905879+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "apply_rules",
+      "agent": "orchestrator",
+      "action": "evaluate_rules",
+      "tool": "rule_evaluator",
+      "input": [
+        "Unverified Bank Change"
+      ],
+      "output": {
+        "recommendation": "INVESTIGATE",
+        "findings": [
+          "Unverified Bank Change"
+        ]
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.905879+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Unverified Bank Change"
+      ],
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.906889+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "explain",
+      "agent": "orchestrator",
+      "action": "generate_explanation",
+      "tool": "llm_extractor",
+      "input": [
+        "Unverified Bank Change"
+      ],
+      "output": {
+        "uncertainty": "The payment request incorporates updated banking details that have not undergone formal authentication, posing a risk of fraudulent fund diversion or unauthorized account modification.",
+        "next_step": "Conduct an out-of-band verification by contacting the payee directly via a trusted, previously recorded phone number to confirm the authenticity of the new bank account details before approving the transaction."
+      },
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.907887+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "validate",
+      "agent": "orchestrator",
+      "action": "validate_output_schema",
+      "tool": "jsonschema",
+      "input": {
+        "case_id": "case_005",
+        "recommendation": "INVESTIGATE",
+        "findings": [
+          "Unverified Bank Change"
+        ],
+        "evidence_references": [
+          "invoice",
+          "purchase_order",
+          "goods_receipt",
+          "vendor_master",
+          "bank_change_evidence"
+        ],
+        "deterministic_calculation_references": [
+          "calculator.sum_values",
+          "calculator.calculate_tax",
+          "calculator.check_equality",
+          "calculator.multiply"
+        ],
+        "missing_evidence": [],
+        "uncertainty": "The payment request incorporates updated banking details that have not undergone formal authentication, posing a risk of fraudulent fund diversion or unauthorized account modification.",
+        "required_human_next_step": "Conduct an out-of-band verification by contacting the payee directly via a trusted, previously recorded phone number to confirm the authenticity of the new bank account details before approving the transaction."
+      },
+      "output": null,
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.908407+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "INVESTIGATE",
+      "output": null,
+      "result": "STARTED",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    },
+    {
+      "timestamp": "2026-09-01T00:02:59.908407+00:00",
+      "run_id": "b68105cc-f72c-4ef6-a47b-bae403e10ddc",
+      "phase": "escalate",
+      "agent": "orchestrator",
+      "action": "human_checkpoint",
+      "tool": "human",
+      "input": "INVESTIGATE",
+      "output": "ESCALATED",
+      "result": "SUCCESS",
+      "error": null,
+      "latency_ms": 0,
+      "metadata": null
+    }
+  ]
+}

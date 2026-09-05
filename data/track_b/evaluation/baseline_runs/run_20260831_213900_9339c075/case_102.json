@@ -1,0 +1,59 @@
+{
+  "baseline_output": {
+    "case_id": "case_102",
+    "deterministic_calculation_references": [
+      "40 * 12.50 USD = 500.00 USD",
+      "20 * 2.50 USD = 50.00 USD",
+      "500.00 USD + 50.00 USD = 550.00 USD subtotal",
+      "550.00 USD + 0.00 USD tax = 550.00 USD total"
+    ],
+    "evidence_references": [
+      "Invoice INV-2102",
+      "Purchase Order PO-3102",
+      "Goods Receipt Note GRN-4102",
+      "Vendor Master Record"
+    ],
+    "findings": [],
+    "missing_evidence": [],
+    "recommendation": "PAY",
+    "required_human_next_step": "Approve invoice for payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_102",
+  "metadata": {
+    "attempt_count": 2,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.png",
+      "goods_receipt.pdf",
+      "vendor_master.json"
+    ],
+    "error": null,
+    "input_hash": "223C95D121C9B2661DAB715C66A65D42B6BD2861D6FE9100BAB866D3F32F62BB",
+    "key_rotations": 1,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 15.258467600000586,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:39:29.392485Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 238,
+      "prompt_token_count": 3175,
+      "total_token_count": 4436
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_102\",\n  \"recommendation\": \"PAY\",\n  \"findings\": [],\n  \"evidence_references\": [\n    \"Invoice INV-2102\",\n    \"Purchase Order PO-3102\",\n    \"Goods Receipt Note GRN-4102\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"40 * 12.50 USD = 500.00 USD\",\n    \"20 * 2.50 USD = 50.00 USD\",\n    \"500.00 USD + 50.00 USD = 550.00 USD subtotal\",\n    \"550.00 USD + 0.00 USD tax = 550.00 USD total\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Approve invoice for payment.\"\n}"
+}

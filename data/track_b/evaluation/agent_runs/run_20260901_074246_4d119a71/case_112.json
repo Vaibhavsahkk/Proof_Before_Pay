@@ -1,0 +1,98 @@
+{
+  "agent_output": {
+    "case_id": "case_112",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.check_equality"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order"
+    ],
+    "findings": [
+      "Math Error",
+      "Missing GRN",
+      "Missing Vendor Master"
+    ],
+    "missing_evidence": [
+      "Missing GRN",
+      "Missing Vendor Master"
+    ],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Place an immediate hold on the payment request, audit the vendor's legitimacy to complete vendor master onboarding, obtain physical/digital proof of delivery to generate the required GRN, and request a corrected invoice from the vendor.",
+    "uncertainty": "The payment request exhibits severe compliance and integrity risks: the vendor is not registered in the system master data, there is no proof of receipt for the goods or services (Missing GRN), and the invoice calculations are inaccurate. It is uncertain whether this represents an attempted fraudulent payout or an unvetted vendor transaction combined with heavy administrative errors."
+  },
+  "case_id": "case_112",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Purchase Order matching"
+    ],
+    "checks_skipped": [
+      "Vendor Identity",
+      "Goods Receipt matching"
+    ],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1303,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1140,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_112",
+      "goods_receipt": null,
+      "invoice": {
+        "bank_account": "ACC-1122",
+        "currency": "USD",
+        "invoice_number": "INV-2112",
+        "items": [
+          {
+            "item_id": "HVAC-SVC",
+            "line_total": "450.00"
+          }
+        ],
+        "subtotal": "450.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "450.00",
+        "vendor_name": "PSEUDO SERVICES LLC",
+        "vendor_tax_id": "TX-9112"
+      },
+      "prior_payment_history": null,
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "HVAC-SVC",
+            "quantity": "2",
+            "unit_price": "225.00"
+          }
+        ],
+        "po_number": "PO-3112",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": null
+    },
+    "input_hash": "A388EED57607ABD3EE83E15B0CAE70685993F6FCA8C7CB2E3048A9802CACE124",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 58.995925699999134,
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:47:33.617782Z",
+    "trace_file": "traces/raw\\trace_20260901_074634_0a7eb02e.jsonl",
+    "track": "B"
+  }
+}

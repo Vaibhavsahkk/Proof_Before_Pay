@@ -1,0 +1,60 @@
+{
+  "baseline_output": {
+    "case_id": "case_106",
+    "deterministic_calculation_references": [
+      "1 * 350.00 = 350.00 USD",
+      "350.00 + 0.00 = 350.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2106",
+      "Vendor Master Record",
+      "Bank Account Change Notification"
+    ],
+    "findings": [
+      "Unverified Bank Change"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Verify and approve the pending bank account change to ACC-9066 before processing payment.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_106",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf",
+      "bank_change_notice.pdf"
+    ],
+    "error": null,
+    "input_hash": "FE03533EE465546D78CDAD86215DA497EB462967F8B8AE4394B1FE43198540BF",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 8.583660899999813,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "source_run_id": "run_20260831_215742_40aab84f",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:59:36.151124Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 190,
+      "prompt_token_count": 3619,
+      "total_token_count": 4638
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_106\",\n  \"recommendation\": \"INVESTIGATE\",\n  \"findings\": [\n    \"Unverified Bank Change\"\n  ],\n  \"evidence_references\": [\n    \"Invoice INV-2106\",\n    \"Vendor Master Record\",\n    \"Bank Account Change Notification\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"1 * 350.00 = 350.00 USD\",\n    \"350.00 + 0.00 = 350.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Verify and approve the pending bank account change to ACC-9066 before processing payment.\"\n}"
+}

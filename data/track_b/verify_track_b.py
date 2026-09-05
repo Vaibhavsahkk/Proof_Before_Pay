@@ -203,7 +203,16 @@ def check_ground_truth(gt):
 def determinism_via_temp_copy():
     """True determinism check: copy the generator into a temp TRACK_B root,
     regenerate there, and compare manifests. The subprocess runs with the
-    repo root on PYTHONPATH so the official oracle import resolves."""
+    repo root on PYTHONPATH so the official oracle import resolves.
+
+    PNG files: Pillow's bundled zlib encoder differs between the Windows
+    and Linux wheels of the same Pillow version (verified: identical pixel
+    data, different file bytes). A raw byte comparison of PNG entries is
+    therefore platform-dependent and would fail the freeze on any host
+    whose Pillow build differs from the one that produced the frozen
+    dataset. PNG entries are instead compared through their DECODED pixel
+    data, which is the platform-independent content of the document; all
+    other entries (PDF/JSON) remain byte-exact."""
     import os
 
     if fitz is None:
@@ -224,10 +233,66 @@ def determinism_via_temp_copy():
         if proc.returncode != 0:
             fail(f"Determinism regeneration failed: {proc.stderr.strip()[:400]}")
             return
-        regen = (root / "MANIFEST.sha256").read_bytes()
-        frozen = MANIFEST_PATH.read_bytes()
-        if regen != frozen:
-            fail("Generator is not deterministic: regenerated manifest differs from frozen manifest")
+        _compare_manifests_platform_safe(root)
+
+
+def _compare_manifests_platform_safe(root: Path):
+    """Compare regenerated vs frozen manifests. PNG entries compare by
+    decoded pixel hash; every other entry compares byte-exact."""
+    def parse_manifest(path: Path):
+        entries = {}
+        for line in path.read_text(encoding="utf-8").splitlines():
+            parts = line.split()
+            if len(parts) == 2:
+                entries[parts[1]] = parts[0]
+        return entries
+
+    frozen = parse_manifest(MANIFEST_PATH)
+    regen = parse_manifest(root / "MANIFEST.sha256")
+
+    if set(frozen) != set(regen):
+        fail("Generator is not deterministic: manifest entry sets differ "
+             f"(only-frozen={sorted(set(frozen) - set(regen))[:5]}, "
+             f"only-regen={sorted(set(regen) - set(frozen))[:5]})")
+        return
+
+    png_mismatches, byte_mismatches = [], []
+    try:
+        from PIL import Image  # noqa: E402
+    except ImportError:
+        Image = None
+
+    for rel, frozen_hash in sorted(frozen.items()):
+        regen_hash = regen[rel]
+        if frozen_hash == regen_hash:
+            continue
+        if rel.endswith(".png") and Image is not None:
+            frozen_px = _pixel_hash(TRACK_B_DIR / rel, Image)
+            regen_px = _pixel_hash(root / rel, Image)
+            if frozen_px is None or regen_px is None or frozen_px != regen_px:
+                png_mismatches.append(rel)
+        else:
+            byte_mismatches.append(rel)
+
+    problems = []
+    if byte_mismatches:
+        problems.append("non-PNG entries differ byte-wise: " + ", ".join(byte_mismatches[:6]))
+    if png_mismatches:
+        problems.append("PNG entries differ in decoded pixel data: " + ", ".join(png_mismatches[:6]))
+    if problems:
+        fail("Generator is not deterministic: " + "; ".join(problems))
+
+
+def _pixel_hash(png_path: Path, Image) -> str:
+    """MD5 over the decoded RGB pixel data of a PNG, or None if it cannot
+    be read as an image."""
+    try:
+        import hashlib
+        import io
+        with Image.open(io.BytesIO(png_path.read_bytes())) as img:
+            return hashlib.md5(img.convert("RGB").tobytes()).hexdigest()
+    except Exception:
+        return None
 
 
 def main():

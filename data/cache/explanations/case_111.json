@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The payment request presents a high risk of unauthorized fund diversion, as the invoice details potentially replicate a previously processed payment, and the requested destination account has not been verified against trusted vendor records.",
+  "required_human_next_step": "Cross-reference the invoice details against historical payment logs to check for prior processing, and contact the vendor via a pre-established, out-of-band phone number to confirm the legitimate bank account change before approving the transaction."
+}

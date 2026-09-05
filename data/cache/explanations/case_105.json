@@ -1,0 +1,4 @@
+{
+  "uncertainty": "The item quantity billed on the invoice does not match the quantity specified in the approved purchase order or receiving documentation, introducing uncertainty regarding potential overbilling or partial delivery.",
+  "required_human_next_step": "Cross-reference the invoice line items against the purchase order and goods received note (GRN), and contact the receiving department to verify the exact quantity delivered prior to approving payment."
+}

@@ -1,0 +1,4 @@
+{
+  "uncertainty": "There is a discrepancy between the price listed on the payment request invoice and the authorized price in the associated purchase order or contract.",
+  "required_human_next_step": "Cross-reference the invoice line-item pricing with the master contract or approved purchase order, and obtain confirmation from the procurement department before approving the payment."
+}

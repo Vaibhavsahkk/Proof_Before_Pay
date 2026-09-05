@@ -1,0 +1,37 @@
+{
+  "agent_output": {
+    "case_id": "case_105",
+    "deterministic_calculation_references": [],
+    "evidence_references": [],
+    "findings": [
+      "Extraction or System Failure"
+    ],
+    "missing_evidence": [],
+    "recommendation": "INVESTIGATE",
+    "required_human_next_step": "Human review required due to system error.",
+    "uncertainty": "System failure occurred: cannot access local variable 'doc_meta' where it is not associated with a value"
+  },
+  "case_id": "case_105",
+  "metadata": {
+    "checks_performed": [],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.png",
+      "vendor_master.pdf"
+    ],
+    "documents_metadata": [],
+    "extracted_data": null,
+    "input_hash": "D06321A319C497C56C0A0203283ED823AE387971022A9E4430F5F66103F0AF37",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 0.4882456999985152,
+    "status": "SYSTEM_ERROR",
+    "timestamp_utc": "2026-09-01T07:44:02.122514Z",
+    "trace_file": "traces/raw\\trace_20260901_074401_6c005493.jsonl",
+    "track": "B"
+  }
+}

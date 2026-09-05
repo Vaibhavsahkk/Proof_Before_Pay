@@ -1,0 +1,58 @@
+{
+  "baseline_output": {
+    "case_id": "case_101",
+    "deterministic_calculation_references": [
+      "Line Total = 100 * 5.50 USD = 550.00 USD",
+      "Tax Amount = 550.00 USD * 0.10 = 55.00 USD",
+      "Total Amount = 550.00 USD + 55.00 USD = 605.00 USD"
+    ],
+    "evidence_references": [
+      "Invoice INV-2101",
+      "Purchase Order PO-3101",
+      "Goods Receipt Note GRN-4101",
+      "Vendor Master Record"
+    ],
+    "findings": [],
+    "missing_evidence": [],
+    "recommendation": "PAY",
+    "required_human_next_step": "Proceed with payment release to SYNTHETIC WIDGETS LLC.",
+    "uncertainty": "None"
+  },
+  "case_id": "case_101",
+  "metadata": {
+    "attempt_count": 1,
+    "cooldown_wait_seconds": 0.0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf"
+    ],
+    "error": null,
+    "input_hash": "2B6A0A1566BA72C3DFCDAF60C4221C50E93882C7039DCB0EB285D0CE037D25CF",
+    "key_rotations": 0,
+    "mode": "baseline",
+    "prompt_template_sha256": "4E1E2853E9E5A0B3C2C62487938D72C6E84278D57855D4025ED27451878E3E16",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "retry_policy": "transient_only_plus_key_rotation",
+    "returned_model": "gemini-3.6-flash",
+    "runtime_seconds": 10.857706300000245,
+    "settings": {
+      "max_output_tokens": 4096,
+      "response_mime_type": "application/json",
+      "safety_settings": "SDK_DEFAULT_NOT_EXPLICIT",
+      "temperature": 0.0,
+      "timeout": "SDK_DEFAULT_NOT_EXPLICIT"
+    },
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-08-31T21:38:37.871197Z",
+    "track": "B",
+    "usage_metadata": {
+      "candidates_token_count": 231,
+      "prompt_token_count": 3087,
+      "total_token_count": 4393
+    }
+  },
+  "raw_response": "{\n  \"case_id\": \"case_101\",\n  \"recommendation\": \"PAY\",\n  \"findings\": [],\n  \"evidence_references\": [\n    \"Invoice INV-2101\",\n    \"Purchase Order PO-3101\",\n    \"Goods Receipt Note GRN-4101\",\n    \"Vendor Master Record\"\n  ],\n  \"deterministic_calculation_references\": [\n    \"Line Total = 100 * 5.50 USD = 550.00 USD\",\n    \"Tax Amount = 550.00 USD * 0.10 = 55.00 USD\",\n    \"Total Amount = 550.00 USD + 55.00 USD = 605.00 USD\"\n  ],\n  \"missing_evidence\": [],\n  \"uncertainty\": \"None\",\n  \"required_human_next_step\": \"Proceed with payment release to SYNTHETIC WIDGETS LLC.\"\n}"
+}

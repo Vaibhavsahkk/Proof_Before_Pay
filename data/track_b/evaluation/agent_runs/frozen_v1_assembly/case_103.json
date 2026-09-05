@@ -1,0 +1,138 @@
+{
+  "agent_output": {
+    "case_id": "case_103",
+    "deterministic_calculation_references": [
+      "calculator.multiply",
+      "calculator.calculate_tax",
+      "calculator.check_equality",
+      "calculator.sum_values"
+    ],
+    "evidence_references": [
+      "invoice",
+      "purchase_order",
+      "goods_receipt",
+      "vendor_master",
+      "prior_payment_history"
+    ],
+    "findings": [
+      "Duplicate Billing"
+    ],
+    "missing_evidence": [],
+    "recommendation": "HOLD",
+    "required_human_next_step": "Cross-reference the current payment request against recent transaction history for matching invoice numbers, amounts, and dates, and contact the vendor to verify whether the charge is authorized.",
+    "uncertainty": "The automated system detected a potential duplicate billing anomaly, but it is uncertain whether this represents an accidental resubmission by the vendor, a legitimate recurring payment with identical parameters, or an intentional double-billing attempt."
+  },
+  "case_id": "case_103",
+  "metadata": {
+    "checks_performed": [
+      "Invoice math and totals",
+      "Vendor Identity",
+      "Purchase Order matching",
+      "Goods Receipt matching",
+      "Duplicate Billing"
+    ],
+    "checks_skipped": [],
+    "credential_recoveries": 0,
+    "documents": [
+      "invoice.pdf",
+      "purchase_order.pdf",
+      "goods_receipt.pdf",
+      "vendor_master.pdf",
+      "remittance_advice.pdf"
+    ],
+    "documents_metadata": [
+      {
+        "name": "invoice.pdf",
+        "size_bytes": 1310,
+        "type": "application/pdf"
+      },
+      {
+        "name": "purchase_order.pdf",
+        "size_bytes": 1139,
+        "type": "application/pdf"
+      },
+      {
+        "name": "goods_receipt.pdf",
+        "size_bytes": 1099,
+        "type": "application/pdf"
+      },
+      {
+        "name": "vendor_master.pdf",
+        "size_bytes": 1103,
+        "type": "application/pdf"
+      },
+      {
+        "name": "remittance_advice.pdf",
+        "size_bytes": 1117,
+        "type": "application/pdf"
+      }
+    ],
+    "extracted_data": {
+      "bank_change_evidence": null,
+      "case_id": "case_103",
+      "goods_receipt": {
+        "grn_number": "GRN-4103",
+        "items": [
+          {
+            "item_id": "SRV-AUD",
+            "quantity_accepted": "1"
+          }
+        ]
+      },
+      "invoice": {
+        "bank_account": "ACC-1033",
+        "currency": "USD",
+        "invoice_number": "INV-2103",
+        "items": [
+          {
+            "item_id": "SRV-AUD",
+            "line_total": "800.00",
+            "quantity": "1",
+            "unit_price": "800.00"
+          }
+        ],
+        "subtotal": "800.00",
+        "tax": "0.00",
+        "tax_rate_percent": "0.00",
+        "total": "800.00",
+        "vendor_name": "FAKECORP CONSULTING INC",
+        "vendor_tax_id": "TX-9103"
+      },
+      "prior_payment_history": [
+        {
+          "amount": "800.00",
+          "invoice_number": "INV-2103",
+          "payment_date": "2026-05-12",
+          "vendor_tax_id": "TX-9103"
+        }
+      ],
+      "purchase_order": {
+        "currency": "USD",
+        "items": [
+          {
+            "item_id": "SRV-AUD",
+            "quantity": "1",
+            "unit_price": "800.00"
+          }
+        ],
+        "po_number": "PO-3103",
+        "tax_rate_percent": "0.00"
+      },
+      "vendor_master": {
+        "bank_account": "ACC-1033",
+        "vendor_name": "FAKECORP CONSULTING INC",
+        "vendor_tax_id": "TX-9103"
+      }
+    },
+    "input_hash": "526B1807CB47C55BA5F4A85D46F24BF5E1D53241AAB5D21BA69EAACA7E126C41",
+    "mode": "agent",
+    "provider": "google",
+    "requested_model": "gemini-3.6-flash",
+    "runtime_seconds": 28.373597800000425,
+    "source_run_id": "run_20260901_074246_4d119a71",
+    "status": "SUCCESS",
+    "timestamp_utc": "2026-09-01T07:43:36.035672Z",
+    "trace_file": "traces/raw\\trace_20260901_074307_31c82a5a.jsonl",
+    "track": "B"
+  }
+}
