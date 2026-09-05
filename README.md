@@ -112,3 +112,23 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 ```
 
 Do not use global Docker prune commands for this project workflow.
+
+## Reviewer UI Runtime Configuration
+
+The reviewer UI (`python -m src.ui.server`) enforces the following
+hardening defaults, overridable through the environment:
+
+- `PBP_UI_AUTH_TOKEN` — fixed API token for `/api/investigate` POSTs.
+  When unset, a random per-process token is generated, printed on
+  startup, and injected into the same-origin UI page automatically (the
+  browser UI needs no manual step; external API callers must send it as
+  the `X-Auth-Token` header; requests without or with a wrong token get
+  401).
+- `PBP_UI_CORS_ORIGIN` — allowed cross-origin source. Defaults to a
+  strict same-origin policy (no cross-site browser access).
+- `PBP_UI_MAX_BODY_BYTES` — request body cap (default 20 MiB;
+  oversized requests get 413).
+- `GEMINI_OCR_MODEL` — primary transcription model for image/scanned-PDF
+  intake. The adapter falls back to `gemini-3.6-flash` when the primary
+  is unavailable or rate-limited, rotating API keys only when every
+  candidate model on the current key is quota-limited.

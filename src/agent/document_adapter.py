@@ -35,6 +35,15 @@ class DocumentAdapter:
     """
     SUPPORTED_EXTENSIONS = {".json", ".pdf", ".png", ".jpg", ".jpeg"}
 
+    # OCR/transcription model candidates, tried in order. The primary is
+    # configurable via GEMINI_OCR_MODEL; fallbacks keep image/scanned-PDF
+    # intake working when a model bucket is unavailable (404 model-not-found
+    # or 429 quota) on the current key.
+    OCR_MODEL_CANDIDATES = [
+        os.environ.get("GEMINI_OCR_MODEL") or "gemini-2.5-flash",
+        "gemini-3.6-flash",
+    ]
+
     def __init__(self, credential_manager: Optional[CredentialManager] = None):
         self.cred_manager = credential_manager or CredentialManager()
 
@@ -147,21 +156,50 @@ class DocumentAdapter:
             current_key = self.cred_manager.get_current_key()
             client = genai.Client(api_key=current_key)
             part = types.Part.from_bytes(data=content_bytes, mime_type=mime_type)
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=[part, prompt]
-            )
-            extracted_text = response.text.strip() if response.text else ""
+            extracted_text = ""
+            last_error = None
+            for model_id in self.OCR_MODEL_CANDIDATES:
+                try:
+                    response = client.models.generate_content(
+                        model=model_id,
+                        contents=[part, prompt]
+                    )
+                    extracted_text = (response.text or "").strip()
+                    if extracted_text:
+                        break
+                    last_error = f"model '{model_id}' returned empty transcription"
+                except Exception as model_error:
+                    err = str(model_error)
+                    if "RESOURCE_EXHAUSTED" in err or "429" in err or "quota" in err.lower():
+                        # Quota errors are per-MODEL buckets: one model being
+                        # exhausted does not mean the whole key is. Cooldown
+                        # applies to the key, but the remaining candidate
+                        # models on this key are still tried first — only if
+                        # every model on this key is rate-limited does the
+                        # RetrySignal propagate to key rotation.
+                        self.cred_manager.mark_cooldown(60.0)
+                        last_error = f"model '{model_id}' rate limited: {err[:200]}"
+                        continue
+                    last_error = f"model '{model_id}': {err}"
+                    continue
             if not extracted_text:
-                raise DocumentProcessingError(f"No readable content could be extracted from '{filename}'.")
+                if last_error and ("RESOURCE_EXHAUSTED" in last_error
+                                   or "rate limited" in last_error):
+                    # Every transcription model on this key is quota-limited:
+                    # surface the credential failover so the orchestrator
+                    # rotates to another key.
+                    raise RetrySignal(
+                        f"Key rate limited during document processing: {last_error}"
+                    )
+                raise DocumentProcessingError(
+                    f"No readable content could be extracted from '{filename}' "
+                    f"(all transcription models failed; last: {last_error})."
+                )
             return f"=== DOCUMENT: {filename} (Format: {mime_type}) ===\n{extracted_text}"
         except RetrySignal:
             raise
         except Exception as e:
             err_str = str(e)
-            if "RESOURCE_EXHAUSTED" in err_str or "429" in err_str or "quota" in err_str.lower():
-                self.cred_manager.mark_cooldown(60.0)
-                raise RetrySignal(f"Key rate limited during document processing: {err_str}") from e
             raise DocumentProcessingError(f"Failed to process document '{filename}': {err_str}") from e
 
     def process_bundle(self, files: List[Dict[str, Any]]) -> Tuple[str, List[Dict[str, str]]]:

@@ -17,8 +17,8 @@ from src.agent.orchestrator import AgentOrchestrator
 class TestUIRecoveryUX(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.port = 8891
-        cls.server = HTTPServer(("127.0.0.1", cls.port), ReviewerAppHandler)
+        cls.server = HTTPServer(("127.0.0.1", 0), ReviewerAppHandler)
+        cls.port = cls.server.server_address[1]
         cls.server_thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.server_thread.start()
         time.sleep(0.5)
@@ -31,7 +31,12 @@ class TestUIRecoveryUX(unittest.TestCase):
     def _post(self, endpoint, data):
         url = f"http://127.0.0.1:{self.port}{endpoint}"
         body = json.dumps(data).encode("utf-8")
-        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url,
+            data=body,
+            headers={"Content-Type": "application/json",
+                     "X-Auth-Token": ReviewerAppHandler.auth_token},
+        )
         with urllib.request.urlopen(req) as resp:
             return resp.status, json.loads(resp.read().decode("utf-8"))
 

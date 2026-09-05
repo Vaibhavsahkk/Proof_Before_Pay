@@ -16,8 +16,8 @@ from src.ui.server import ReviewerAppHandler
 class TestUIEndToEndIntegration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.port = 8899
-        cls.server = HTTPServer(("127.0.0.1", cls.port), ReviewerAppHandler)
+        cls.server = HTTPServer(("127.0.0.1", 0), ReviewerAppHandler)
+        cls.port = cls.server.server_address[1]
         cls.server_thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.server_thread.start()
         time.sleep(0.5)
@@ -30,7 +30,12 @@ class TestUIEndToEndIntegration(unittest.TestCase):
     def _post(self, endpoint, data):
         url = f"http://127.0.0.1:{self.port}{endpoint}"
         body = json.dumps(data).encode("utf-8")
-        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url,
+            data=body,
+            headers={"Content-Type": "application/json",
+                     "X-Auth-Token": ReviewerAppHandler.auth_token},
+        )
         with urllib.request.urlopen(req) as resp:
             return resp.status, json.loads(resp.read().decode("utf-8"))
 
@@ -85,7 +90,12 @@ class TestUIEndToEndIntegration(unittest.TestCase):
 
     def test_e2e_failure_flow_malformed_json_syntax(self):
         url = f"http://127.0.0.1:{self.port}/api/investigate"
-        req = urllib.request.Request(url, data=b"{malformed_json_not_valid", headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url,
+            data=b"{malformed_json_not_valid",
+            headers={"Content-Type": "application/json",
+                     "X-Auth-Token": ReviewerAppHandler.auth_token},
+        )
         try:
             with urllib.request.urlopen(req) as resp:
                 self.fail("Should have failed with 400 Bad Request")
@@ -96,7 +106,12 @@ class TestUIEndToEndIntegration(unittest.TestCase):
 
     def test_e2e_failure_flow_missing_case_id(self):
         url = f"http://127.0.0.1:{self.port}/api/investigate"
-        req = urllib.request.Request(url, data=json.dumps({"case_id": "non_existent_case_9999"}).encode("utf-8"), headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url,
+            data=json.dumps({"case_id": "non_existent_case_9999"}).encode("utf-8"),
+            headers={"Content-Type": "application/json",
+                     "X-Auth-Token": ReviewerAppHandler.auth_token},
+        )
         try:
             with urllib.request.urlopen(req) as resp:
                 self.fail("Should have failed with 400 Bad Request")
@@ -153,7 +168,11 @@ class TestUIEndToEndIntegration(unittest.TestCase):
             "case_id": "bad_doc_case",
             "files": [{"name": "corrupted.pdf", "data": base64.b64encode(b"NOT_A_PDF").decode(), "type": "application/pdf"}]
         }).encode("utf-8")
-        req = urllib.request.Request(url, data=bad_payload, headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url, data=bad_payload,
+            headers={"Content-Type": "application/json",
+                     "X-Auth-Token": ReviewerAppHandler.auth_token},
+        )
         try:
             with urllib.request.urlopen(req) as resp:
                 self.fail("Should have failed with 400 Bad Request")

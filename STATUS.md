@@ -45,6 +45,42 @@ fix"), after a live run showed the model dropping invoice totals while
 items were perfect; case_112 was re-verified INVESTIGATE with all
 expected findings through the repair pipeline.
 
+Production-hardening round (2026-09-06, all live-verified):
+1. OCR model resilience — the image/scanned-PDF transcription path
+   hardcoded `gemini-2.5-flash`, which returns 404 model-not-found on 4 of
+   5 pool keys. The adapter now tries a configurable candidate chain
+   (`GEMINI_OCR_MODEL`, then `gemini-3.6-flash`) and treats quota errors
+   as per-MODEL buckets: a 429 on the primary falls through to the
+   fallback on the same key, and only a rate-limited-everywhere condition
+   rotates the key (RetrySignal). Live proof: case_102's PNG purchase
+   order now OCRs correctly while 2.5-flash is 404/429, and the full
+   production flow returns the exact ground-truth PAY/[].
+2. Absent-document guard — the extraction contract previously could not
+   distinguish "model dropped the entire purchase_order object" from
+   "genuinely no PO in the case" (demonstrated as a false-INVESTIGATE on
+   case_102). `_missing_extracted_documents` now flags documents whose
+   strong source markers (titles/labels) appear in the evidence text but
+   whose objects are missing from the extraction, feeding the same
+   reinforced retry. Genuinely-absent documents never trigger it
+   (case_112 shape re-verified: no false Missing-PO flags).
+3. Credential-cooldown test determinism — `test_orchestrator_resume_state`
+   was racy: with a real clock, the orchestrator's ~60 s cooldown wait
+   could land just before/after key A's recovery and flip the rotated-key
+   assertion. The test now freezes `src.agent.credentials.time.time` and
+   no-ops the orchestrator sleep (15/15 stable consecutive runs).
+4. Reviewer-UI hardening — `/api/investigate` now requires an
+   `X-Auth-Token` (constant-time compare; 401 without/with-wrong token,
+   live-verified), the token is auto-injected into the same-origin UI
+   page (strict CORS default `null` — no cross-origin browser access),
+   request bodies are capped (`PBP_UI_MAX_BODY_BYTES`, default 20 MiB,
+   413 live-verified), and all test servers use OS-assigned ephemeral
+   ports to eliminate cross-run socket interference.
+   `tests/test_production_hardening.py` carries 17 regression tests for
+   all of the above; host suite is 181 passed / 2 container-only skipped,
+   and the full `verify.sh` Docker pipeline (build, container suite,
+   Phase 1 validator, manifest, smoke, security assertions, forced-
+   failure isolation) passes end-to-end on this tree.
+
 Human actions required: review the A5 report and the post-fix live
 re-verification above; decide whether to re-measure A5 with the fixed
 agent once `gemini-3.6-flash` daily quota resets (recommended before

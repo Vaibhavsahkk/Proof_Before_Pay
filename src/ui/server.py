@@ -3,6 +3,7 @@ import sys
 import glob
 import json
 import re
+import secrets
 import urllib.parse
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from typing import Dict, Any
@@ -11,8 +12,28 @@ from dotenv import load_dotenv
 from src.agent.orchestrator import AgentOrchestrator
 from src.agent.document_adapter import DocumentAdapter, DocumentProcessingError
 
+# Hardening defaults (overridable via environment):
+#   PBP_UI_AUTH_TOKEN   - if set, all /api/* POST requests must present it as
+#                         the X-Auth-Token header. If unset, a random
+#                         per-process token is generated and printed to
+#                         stdout so a local reviewer can still call the API
+#                         deliberately, while random network scans fail.
+#   PBP_UI_CORS_ORIGIN  - allowed cross-origin source. Defaults to
+#                         same-origin (no cross-site browser access).
+#   PBP_UI_MAX_BODY_BYTES - POST body cap (default 20 MiB) to stop
+#                         unbounded uploads from exhausting memory.
+DEFAULT_MAX_BODY_BYTES = 20 * 1024 * 1024
+
+def _get_cors_origin() -> str:
+    origin = os.environ.get("PBP_UI_CORS_ORIGIN", "")
+    return origin if origin else "null"
+
 class ReviewerAppHandler(SimpleHTTPRequestHandler):
     orchestrator = None
+    auth_token = os.environ.get("PBP_UI_AUTH_TOKEN") or secrets.token_urlsafe(24)
+    if not os.environ.get("PBP_UI_AUTH_TOKEN"):
+        # Ephemeral token for this process lifetime only.
+        print(f"[UI AUTH] No PBP_UI_AUTH_TOKEN configured; generated ephemeral API token: {auth_token}")
 
     @classmethod
     def get_orchestrator(cls):
@@ -21,22 +42,28 @@ class ReviewerAppHandler(SimpleHTTPRequestHandler):
             cls.orchestrator = AgentOrchestrator()
         return cls.orchestrator
 
+    def _cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", _get_cors_origin())
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Auth-Token")
+
     def _send_json(self, data: Dict[str, Any], status: int = 200):
         body = json.dumps(data).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self._cors_headers()
         self.end_headers()
         self.wfile.write(body)
 
+    def _authorized(self) -> bool:
+        presented = self.headers.get("X-Auth-Token", "")
+        # Constant-time comparison to avoid token-byte timing leaks.
+        return secrets.compare_digest(presented, self.auth_token)
+
     def do_OPTIONS(self):
         self.send_response(204)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self._cors_headers()
         self.end_headers()
 
     def do_GET(self):
@@ -101,6 +128,15 @@ class ReviewerAppHandler(SimpleHTTPRequestHandler):
             if os.path.exists(index_path):
                 with open(index_path, "rb") as f:
                     content = f.read()
+                # Same-origin trust: the reviewer loads the UI from this
+                # server itself, so the page receives the session token it
+                # will need for /api/investigate. Cross-origin sites cannot
+                # read this page (strict CORS), so the token is not exposed
+                # to them.
+                token_inject = (
+                    f"<script>window.UI_AUTH_TOKEN = {json.dumps(self.auth_token)};</script>"
+                ).encode("utf-8")
+                content = content.replace(b"</head>", token_inject + b"</head>", 1) if b"</head>" in content else content
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
                 self.send_header("Content-Length", str(len(content)))
@@ -115,8 +151,26 @@ class ReviewerAppHandler(SimpleHTTPRequestHandler):
         path = parsed.path
 
         if path == "/api/investigate":
+            # Auth gate: without a valid token the request is refused before
+            # any payload parsing or orchestrator work happens.
+            if not self._authorized():
+                self._send_json(
+                    {"error": "Unauthorized: missing or invalid X-Auth-Token."},
+                    status=401,
+                )
+                return
+
             try:
                 length = int(self.headers.get("Content-Length", 0))
+                max_body = int(os.environ.get("PBP_UI_MAX_BODY_BYTES", DEFAULT_MAX_BODY_BYTES))
+                if length <= 0:
+                    raise ValueError("empty request body")
+                if length > max_body:
+                    self._send_json(
+                        {"error": f"Request body exceeds the {max_body} byte limit."},
+                        status=413,
+                    )
+                    return
                 body = self.rfile.read(length).decode("utf-8")
                 req = json.loads(body)
             except Exception as e:

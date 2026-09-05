@@ -61,22 +61,31 @@ class TestCredentialFailover(unittest.TestCase):
         self.assertEqual(cm.get_current_key(), "k1") # K1 recovered
         self.assertEqual(cm.credentials[0].state, CredentialState.ACTIVE)
 
+    @patch("src.agent.orchestrator.time.sleep")
+    @patch("src.agent.credentials.time.time")
     @patch("src.agent.extraction.genai.Client")
-    def test_orchestrator_resume_state(self, MockClient):
+    def test_orchestrator_resume_state(self, MockClient, mock_time, mock_sleep):
+        # Freeze the credential-module clock so cooldown expiry depends only
+        # on the mocked time, never on real elapsed milliseconds, and no-op
+        # the orchestrator's cooldown wait (previously a real ~60s sleep
+        # whose landing point versus key A's recovery made this test racy).
+        mock_time.return_value = 100.0
+        mock_sleep.return_value = None
+
         mock_client = MagicMock()
         MockClient.return_value = mock_client
-        
+
         mock_models = MagicMock()
         mock_client.models = mock_models
-        
+
         call_count = [0]
-        
+
         def fake_generate_content(*args, **kwargs):
             call_count[0] += 1
             if call_count[0] == 1:
                 # First try fails with 429
                 raise Exception("429 RESOURCE_EXHAUSTED")
-            
+
             # Second try succeeds
             mock_resp = MagicMock()
             # Must return valid structure, even if mocked. The response must
@@ -106,21 +115,26 @@ class TestCredentialFailover(unittest.TestCase):
                          "subtotal": "100.00",
                          "tax": "0.00",
                          "total": "100.00"
-                     }
+                     },
+                     "purchase_order": None,
+                     "goods_receipt": None,
+                     "vendor_master": None
                  })
             return mock_resp
-            
+
         mock_models.generate_content.side_effect = fake_generate_content
-        
+
         # Set explicitly to 2 keys
         orchestrator = AgentOrchestrator(api_key="keyA,keyB")
-        
+
         raw_evidence = '{"test": "data"}'
         result = orchestrator.run_workflow("case_429", raw_evidence)
-        
+
         self.assertEqual(result["case_id"], "case_429")
         # 1st call fails, 2nd succeeds extraction, 3rd succeeds explanation
         self.assertEqual(call_count[0], 3)
+        # Key A stays in cooldown at the frozen time (recovers at 160.0),
+        # so rotation to key B is deterministic.
         self.assertEqual(orchestrator.extractor.cred_manager.current_index, 1)
 
 if __name__ == '__main__':

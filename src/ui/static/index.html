@@ -1093,11 +1093,26 @@
           payload = { case_id: selectedCaseId };
         }
 
+        // Same-origin POST: attach the reviewer API token. If the server
+        // runs with a fixed PBP_UI_AUTH_TOKEN, the reviewer pastes it into
+        // the token field that appears on a 401 response; with the default
+        // per-process token it is injected into the page below.
+        const authToken = (window.UI_AUTH_TOKEN || (sessionStorage.getItem('pbp_ui_token') || ''));
         const res = await fetch('/api/investigate', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'X-Auth-Token': authToken },
           body: JSON.stringify(payload)
         });
+        if (res.status === 401 && !document.getElementById('ui-auth-row')) {
+          const row = document.createElement('div');
+          row.id = 'ui-auth-row';
+          row.style.cssText = 'margin:12px 0';
+          row.innerHTML = '<label>Reviewer API token: <input id="ui-auth-token" type="password" placeholder="Paste server token" style="margin-left:8px"></label>';
+          (document.getElementById('step-2') || document.body).prepend(row);
+          document.getElementById('ui-auth-token').addEventListener('change', (ev) => {
+            sessionStorage.setItem('pbp_ui_token', ev.target.value.trim());
+          });
+        }
         const data = await res.json();
         
         setTimeout(() => {

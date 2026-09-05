@@ -143,17 +143,23 @@ class LLMExtractor:
                 # contract: a drop there also triggers the reinforced retry.
                 missing = self._missing_item_fields(data)
                 missing += self._missing_invoice_totals(data)
+                missing += self._missing_extracted_documents(
+                    data, raw_bundle_str
+                )
                 if missing and "FIELD CONTRACT VIOLATION DETAIL" not in prompt:
                     violation_detail = "; ".join(
                         f"{doc}.{fld} missing from {n} item(s)"
+                        if fld else f"{doc} missing entirely"
                         for doc, fld, n in missing
                     )
                     reinforced_prompt = prompt + (
                         "\n\nYOUR PREVIOUS OUTPUT VIOLATED THE FIELD CONTRACT: "
                         f"{violation_detail}.\nRe-extract and output the FULL "
                         "bundle again, this time with every required item key "
-                        "present. Copy quantity, unit_price, description, "
-                        "line_total exactly as printed in the documents."
+                        "present and every document that appears in the "
+                        "evidence bundle represented as a JSON object. Copy "
+                        "quantity, unit_price, description, line_total "
+                        "exactly as printed in the documents."
                     )
                     retry_resp = client.models.generate_content(
                         model=self.model_id,
@@ -170,6 +176,8 @@ class LLMExtractor:
                     # Keep whichever attempt satisfies more of the contract.
                     if (len(self._missing_item_fields(retry_data))
                             + len(self._missing_invoice_totals(retry_data))
+                            + len(self._missing_extracted_documents(
+                                retry_data, raw_bundle_str))
                             < len(missing)):
                         data = retry_data
                 data = self._repair_item_arithmetic(data)
@@ -387,6 +395,42 @@ class LLMExtractor:
                         entry["vendor_tax_id"] = entry.pop("tax_id")
 
         return data
+
+    # Source-side document indicators: substrings that reliably mark a
+    # document section as PRESENT in the raw evidence text. Used by
+    # _missing_extracted_documents to distinguish "the model dropped the
+    # whole purchase_order object" (fixable via reinforced retry) from "the
+    # document genuinely is not part of this case" (a real Missing-PO
+    # finding that must be preserved).
+    SOURCE_DOC_INDICATORS = {
+        "purchase_order": ("purchase order", "po number", "p.o. number",
+                           "order lines", "po-3", "po_no", "po_number"),
+        "goods_receipt": ("goods receipt", "grn number", "received items",
+                          "delivery note", "grn-4", "grn_no", "grn_number"),
+        "vendor_master": ("vendor master", "vendor_name", "vendor tax id",
+                          "vendor_tax_id", "approved vendor", "bank_account"),
+    }
+
+    @classmethod
+    def _missing_extracted_documents(
+        cls, data: Dict[str, Any], raw_bundle_str: str
+    ) -> List[Tuple[str, str, int]]:
+        """Return [(document, "", 1)] for every document that clearly
+        appears in the SOURCE text but was dropped entirely from the
+        extracted output. Only fires on strong, unambiguous source markers
+        (document titles/labels, not incidental words), so a genuinely
+        absent document never triggers a false violation."""
+        if not isinstance(raw_bundle_str, str) or not raw_bundle_str:
+            return []
+        source_lower = raw_bundle_str.lower()
+        violations = []
+        for doc, indicators in cls.SOURCE_DOC_INDICATORS.items():
+            doc_obj = data.get(doc)
+            if isinstance(doc_obj, dict) and doc_obj:
+                continue  # extracted: nothing to check
+            if any(ind in source_lower for ind in indicators):
+                violations.append((doc, "", 1))
+        return violations
 
     @staticmethod
     def _missing_item_fields(data: Dict[str, Any]) -> List[Tuple[str, str, int]]:
