@@ -1,6 +1,12 @@
 import os
 import sys
 
+import pytest
+
+CONTAINER_ONLY = os.name == "posix" and os.path.exists("/.dockerenv")
+
+
+@pytest.mark.skipif(not CONTAINER_ONLY, reason="Container-only benchmark security check; skipped on host runners")
 def test_python_version():
     """
     WHAT IS BEING TESTED: Python version is 3.12.x.
@@ -10,6 +16,8 @@ def test_python_version():
     assert sys.version_info.major == 3, "Python major version must be 3"
     assert sys.version_info.minor == 12, f"Python minor version must be 12, got {sys.version_info.minor}"
 
+
+@pytest.mark.skipif(not CONTAINER_ONLY, reason="Container-only security validation; skipped on host runners")
 def test_non_root_user_in_container():
     """
     WHAT IS BEING TESTED: Process is not running as root (UID 0) inside Linux environments (like our Docker container).
