@@ -23,6 +23,7 @@ except ImportError:
 from google import genai
 from google.genai import types
 from src.agent.credentials import CredentialManager, RetrySignal
+from src.agent.tokenrouter_client import TokenRouterClient, TokenRouterError
 
 class DocumentProcessingError(Exception):
     """Raised when an uploaded document cannot be read or parsed safely."""
@@ -46,6 +47,17 @@ class DocumentAdapter:
 
     def __init__(self, credential_manager: Optional[CredentialManager] = None):
         self.cred_manager = credential_manager or CredentialManager()
+        configured_ocr_provider = os.environ.get("OCR_PROVIDER")
+        self.ocr_provider = (
+            configured_ocr_provider or os.environ.get("LLM_PROVIDER", "gemini")
+        ).lower()
+        self.ocr_cred_manager = (
+            self.cred_manager
+            if credential_manager is not None and not configured_ocr_provider
+            else CredentialManager(provider="gemini")
+            if self.ocr_provider == "gemini"
+            else self.cred_manager
+        )
 
     def process_file(self, filename: str, content_bytes: bytes, mime_type: Optional[str] = None) -> str:
         """
@@ -153,7 +165,21 @@ class DocumentAdapter:
         )
 
         try:
-            current_key = self.cred_manager.get_current_key()
+            current_key = self.ocr_cred_manager.get_current_key()
+            if self.ocr_provider in {"tokenrouter", "nvidia"}:
+                model_id = os.environ.get(
+                    "NVIDIA_OCR_MODEL" if self.ocr_provider == "nvidia" else "TOKENROUTER_OCR_MODEL",
+                    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning" if self.ocr_provider == "nvidia" else "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+                )
+                extracted_text = TokenRouterClient(
+                    api_key=current_key,
+                    model_id=model_id,
+                    base_url=os.environ.get(
+                        "NVIDIA_BASE_URL" if self.ocr_provider == "nvidia" else "TOKENROUTER_BASE_URL"
+                    ),
+                ).complete_with_image(filename, content_bytes, mime_type, prompt)
+                return f"=== DOCUMENT: {filename} (Format: {mime_type}) ===\n{extracted_text}"
+
             client = genai.Client(api_key=current_key)
             part = types.Part.from_bytes(data=content_bytes, mime_type=mime_type)
             extracted_text = ""
@@ -177,7 +203,7 @@ class DocumentAdapter:
                         # models on this key are still tried first — only if
                         # every model on this key is rate-limited does the
                         # RetrySignal propagate to key rotation.
-                        self.cred_manager.mark_cooldown(60.0)
+                        self.ocr_cred_manager.mark_cooldown(60.0)
                         last_error = f"model '{model_id}' rate limited: {err[:200]}"
                         continue
                     last_error = f"model '{model_id}': {err}"

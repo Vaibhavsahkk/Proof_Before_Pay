@@ -9,7 +9,8 @@ from src.utils.human_checkpoint import request_human_approval
 from src.agent.orchestrator import AgentOrchestrator
 
 def main():
-    load_dotenv()
+    load_dotenv(dotenv_path=os.environ.get("TOKENROUTER_ENV_FILE", ".env"), override=False)
+    load_dotenv(dotenv_path=os.environ.get("NVIDIA_ENV_FILE", "nvidia.local.env"), override=False)
     parser = argparse.ArgumentParser(description="micro1 Hackathon Agent Scaffold")
     parser.add_argument("--smoke", action="store_true", help="Run a smoke test")
     parser.add_argument("--run-all", action="store_true", help="Run the agent on all public cases")

@@ -38,7 +38,8 @@ class ReviewerAppHandler(SimpleHTTPRequestHandler):
     @classmethod
     def get_orchestrator(cls):
         if cls.orchestrator is None:
-            load_dotenv()
+            load_dotenv(dotenv_path=os.environ.get("TOKENROUTER_ENV_FILE", ".env"), override=False)
+            load_dotenv(dotenv_path=os.environ.get("NVIDIA_ENV_FILE", "nvidia.local.env"), override=False)
             cls.orchestrator = AgentOrchestrator()
         return cls.orchestrator
 

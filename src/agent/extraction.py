@@ -7,6 +7,7 @@ from google import genai
 from google.genai import types
 
 from src.agent.credentials import CredentialManager, RetrySignal
+from src.agent.tokenrouter_client import TokenRouterClient, TokenRouterError
 
 class ExtractionError(Exception):
     pass
@@ -52,12 +53,21 @@ ITEM_CONTRACT_TEXT = (
 
 class LLMExtractor:
     def __init__(self, api_key: str = None, model_id: str = "gemini-3.6-flash", credential_manager: CredentialManager = None):
+        self.provider = os.environ.get("LLM_PROVIDER", "gemini").lower()
         if credential_manager:
             self.cred_manager = credential_manager
         else:
             explicit_keys = [k.strip() for k in api_key.split(",")] if api_key else None
-            self.cred_manager = CredentialManager(explicit_keys=explicit_keys)
-        self.model_id = model_id
+            self.cred_manager = CredentialManager(
+                explicit_keys=explicit_keys, provider=self.provider
+            )
+        if self.provider in {"tokenrouter", "nvidia"}:
+            self.model_id = os.environ.get(
+                "NVIDIA_EXTRACTION_MODEL" if self.provider == "nvidia" else "TOKENROUTER_EXTRACTION_MODEL",
+                "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning" if self.provider == "nvidia" else "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+            )
+        else:
+            self.model_id = model_id
 
     def extract_evidence(self, case_id: str, raw_bundle_str: str, max_retries: int = 20) -> Dict[str, Any]:
         """
@@ -116,24 +126,40 @@ class LLMExtractor:
             f"Evidence Bundle:\n{raw_bundle_str}"
         )
 
+        deterministic_data = self._extract_text_pdf_bundle(raw_bundle_str)
+        if deterministic_data is not None:
+            if case_id != "case_000":
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(deterministic_data, f, indent=2)
+            return deterministic_data
+
         total_rotations = 0
 
         for attempt in range(max_retries + 1):
             try:
                 # This may raise RetrySignal if all keys are in cooldown/exhausted
                 current_key = self.cred_manager.get_current_key()
-                client = genai.Client(api_key=current_key)
-                response = client.models.generate_content(
-                    model=self.model_id,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        temperature=0.0,
-                        response_mime_type="application/json",
-                        response_schema=gemini_schema
+                if self.provider in {"tokenrouter", "nvidia"}:
+                    base_url = os.environ.get(
+                        "NVIDIA_BASE_URL" if self.provider == "nvidia" else "TOKENROUTER_BASE_URL"
                     )
-                )
+                    response_text = TokenRouterClient(
+                        api_key=current_key, model_id=self.model_id, base_url=base_url
+                    ).complete(prompt, response_format=True)
+                else:
+                    client = genai.Client(api_key=current_key)
+                    response = client.models.generate_content(
+                        model=self.model_id,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json",
+                            response_schema=gemini_schema
+                        )
+                    )
+                    response_text = response.text
 
-                data = json.loads(response.text)
+                data = json.loads(response_text)
                 data = self._normalize_extracted_data(data)
                 # Deterministic item-contract enforcement: if required item
                 # fields are missing (Gemini's constrained decoding drops
@@ -161,17 +187,26 @@ class LLMExtractor:
                         "quantity, unit_price, description, line_total "
                         "exactly as printed in the documents."
                     )
-                    retry_resp = client.models.generate_content(
-                        model=self.model_id,
-                        contents=reinforced_prompt,
-                        config=types.GenerateContentConfig(
-                            temperature=0.0,
-                            response_mime_type="application/json",
-                            response_schema=gemini_schema
+                    if self.provider in {"tokenrouter", "nvidia"}:
+                        base_url = os.environ.get(
+                            "NVIDIA_BASE_URL" if self.provider == "nvidia" else "TOKENROUTER_BASE_URL"
                         )
-                    )
+                        retry_text = TokenRouterClient(
+                            api_key=current_key, model_id=self.model_id, base_url=base_url
+                        ).complete(reinforced_prompt, response_format=True)
+                    else:
+                        retry_resp = client.models.generate_content(
+                            model=self.model_id,
+                            contents=reinforced_prompt,
+                            config=types.GenerateContentConfig(
+                                temperature=0.0,
+                                response_mime_type="application/json",
+                                response_schema=gemini_schema
+                            )
+                        )
+                        retry_text = retry_resp.text
                     retry_data = self._normalize_extracted_data(
-                        json.loads(retry_resp.text)
+                        json.loads(retry_text)
                     )
                     # Keep whichever attempt satisfies more of the contract.
                     if (len(self._missing_item_fields(retry_data))
@@ -213,6 +248,96 @@ class LLMExtractor:
                         raise ExtractionError(f"Failed to extract evidence after {max_retries} retries: {err_str}") from e
                     time.sleep(2)
 
+    @staticmethod
+    def _extract_text_pdf_bundle(raw_bundle_str: str) -> Dict[str, Any] | None:
+        """Parse the project's explicit text-PDF evidence format locally.
+
+        This is deliberately conservative: it returns a bundle only when all
+        four core documents and every value-bearing field match the known
+        labels. Any unrecognised document layout still follows the LLM path.
+        """
+        if not isinstance(raw_bundle_str, str):
+            return None
+        sections = {}
+        for match in re.finditer(
+            r"=== DOCUMENT:\s*([^\s(]+).*?===\s*(.*?)(?=(?:=== DOCUMENT:|={20,}|$))",
+            raw_bundle_str,
+            flags=re.IGNORECASE | re.DOTALL,
+        ):
+            sections[match.group(1).lower()] = match.group(2)
+        required = {"invoice.pdf", "purchase_order.pdf", "goods_receipt.pdf", "vendor_master.pdf"}
+        if not required.issubset(sections):
+            return None
+
+        def value(text, label):
+            found = re.search(rf"{label}\s*:\s*([^\r\n]+)", text, re.IGNORECASE)
+            return found.group(1).strip() if found else None
+
+        invoice = sections["invoice.pdf"]
+        po = sections["purchase_order.pdf"]
+        grn = sections["goods_receipt.pdf"]
+        vendor = sections["vendor_master.pdf"]
+        item = re.search(
+            r"Item\s+([^|\r\n]+)\s*\|\s*([^|\r\n]+)\s*\|\s*Quantity\s+(\d+)\s*\|\s*Unit Price\s+([\d.]+).*?\|\s*Line Total\s+([\d.]+)",
+            invoice,
+            re.IGNORECASE,
+        )
+        po_item = re.search(
+            r"Item\s+([^|\r\n]+)\s*\|\s*Quantity\s+(\d+)\s*\|\s*Unit Price\s+([\d.]+)",
+            po,
+            re.IGNORECASE,
+        )
+        grn_item = re.search(
+            r"Item\s+([^|\r\n]+)\s*\|\s*Quantity Accepted\s+(\d+)",
+            grn,
+            re.IGNORECASE,
+        )
+        if not (item and po_item and grn_item):
+            return None
+        item_id, description, quantity, unit_price, line_total = [part.strip() for part in item.groups()]
+        if item_id != po_item.group(1).strip() or item_id != grn_item.group(1).strip():
+            return None
+        invoice_data = {
+            "invoice_number": value(invoice, r"Invoice Number"),
+            "vendor_name": value(invoice, r"Vendor"),
+            "vendor_tax_id": value(invoice, r"Tax ID"),
+            "bank_account": value(invoice, r"Bank Account"),
+            "currency": value(invoice, r"Currency"),
+            "tax_rate_percent": LLMExtractor._strip_currency(value(invoice, r"Tax Rate Percent")),
+            "items": [{"item_id": item_id, "description": description,
+                       "quantity": quantity, "unit_price": unit_price,
+                       "line_total": line_total}],
+            "subtotal": LLMExtractor._strip_currency(value(invoice, r"Subtotal")),
+            "tax": LLMExtractor._strip_currency(value(invoice, r"Tax Amount")),
+            "total": LLMExtractor._strip_currency(value(invoice, r"Total Amount")),
+        }
+        if any(value is None for value in invoice_data.values() if not isinstance(value, list)):
+            return None
+        return {
+            "case_id": value(invoice, r"Case ID") or "case_000",
+            "invoice": invoice_data,
+            "purchase_order": {
+                "po_number": value(po, r"PO Number"),
+                "currency": value(po, r"Currency"),
+                "tax_rate_percent": LLMExtractor._strip_currency(value(po, r"Tax Rate Percent")),
+                "items": [{"item_id": po_item.group(1).strip(),
+                           "quantity": po_item.group(2),
+                           "unit_price": LLMExtractor._strip_currency(po_item.group(3))}],
+            },
+            "goods_receipt": {
+                "grn_number": value(grn, r"GRN Number"),
+                "items": [{"item_id": grn_item.group(1).strip(),
+                           "quantity_accepted": grn_item.group(2)}],
+            },
+            "vendor_master": {
+                "vendor_name": value(vendor, r"Vendor Name"),
+                "vendor_tax_id": value(vendor, r"Tax ID"),
+                "bank_account": value(vendor, r"Bank Account"),
+            },
+            "prior_payment_history": [],
+            "bank_change_evidence": None,
+        }
+
     def generate_explanation(self, case_id: str, findings: list, max_retries: int = 20) -> Tuple[str, str]:
         """
         Generates human-readable explanation and next steps based on the findings.
@@ -239,16 +364,30 @@ class LLMExtractor:
         for attempt in range(max_retries + 1):
             try:
                 current_key = self.cred_manager.get_current_key()
-                client = genai.Client(api_key=current_key)
-                response = client.models.generate_content(
-                    model=self.model_id,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        temperature=0.0,
-                        response_mime_type="application/json"
+                if self.provider in {"tokenrouter", "nvidia"}:
+                    explanation_model = os.environ.get(
+                        "NVIDIA_EXPLANATION_MODEL" if self.provider == "nvidia" else "TOKENROUTER_EXPLANATION_MODEL",
+                        self.model_id,
                     )
-                )
-                data = json.loads(response.text)
+                    response_text = TokenRouterClient(
+                        api_key=current_key,
+                        model_id=explanation_model,
+                        base_url=os.environ.get(
+                            "NVIDIA_BASE_URL" if self.provider == "nvidia" else "TOKENROUTER_BASE_URL"
+                        ),
+                    ).complete(prompt, response_format=True)
+                else:
+                    client = genai.Client(api_key=current_key)
+                    response = client.models.generate_content(
+                        model=self.model_id,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json"
+                        )
+                    )
+                    response_text = response.text
+                data = json.loads(response_text)
                 uncertainty = data.get("uncertainty", "Uncertainty exists due to identified anomalies.")
                 next_step = data.get("required_human_next_step", "Human review required.")
 

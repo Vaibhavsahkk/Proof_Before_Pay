@@ -27,10 +27,11 @@ class Credential:
         return f"{self.api_key[:4]}...{self.api_key[-4:]}"
 
 class CredentialManager:
-    def __init__(self, explicit_keys: List[str] = None):
+    def __init__(self, explicit_keys: List[str] = None, provider: str = None):
+        self.provider = (provider or os.environ.get("LLM_PROVIDER", "gemini")).lower()
         keys = self._load_keys(explicit_keys)
         if not keys:
-            raise ValueError("No Gemini API keys found. Please set GEMINI_API_KEYS or GEMINI_API_KEY in .env or environment.")
+            raise ValueError("No provider API keys found. Configure the selected provider in the environment.")
         self.credentials = [Credential(k) for k in keys]
         self.current_index = 0
 
@@ -43,26 +44,49 @@ class CredentialManager:
             if keys:
                 return list(dict.fromkeys(keys))
 
-        env_keys = os.environ.get("GEMINI_API_KEYS") or os.environ.get("GEMINI_API_KEY")
+        tokenrouter_mode = self.provider == "tokenrouter"
+        nvidia_mode = self.provider == "nvidia"
+        if tokenrouter_mode:
+            env_keys = os.environ.get("TOKENROUTER_API_KEYS") or os.environ.get("TOKENROUTER_API_KEY")
+        elif nvidia_mode:
+            env_keys = os.environ.get("NVIDIA_API_KEYS") or os.environ.get("NVIDIA_API_KEY")
+        else:
+            env_keys = os.environ.get("GEMINI_API_KEYS") or os.environ.get("GEMINI_API_KEY")
         if env_keys:
             for part in re.split(r"[,;\n\s]+", env_keys.strip()):
                 if part.startswith("AQ.") or part.startswith("AIza") or len(part) > 20:
                     keys.append(part.strip())
 
-        if os.path.exists(".env"):
+        if tokenrouter_mode:
+            env_path = os.environ.get("TOKENROUTER_ENV_FILE", ".env")
+        elif nvidia_mode:
+            env_path = os.environ.get("NVIDIA_ENV_FILE", "nvidia.local.env")
+        else:
+            env_path = ".env"
+        if os.path.exists(env_path):
             try:
-                with open(".env", "r", encoding="utf-8") as f:
+                with open(env_path, "r", encoding="utf-8") as f:
                     for line in f:
                         line = line.strip()
                         if not line or line.startswith("#"):
                             continue
                         if "=" in line:
-                            val = line.split("=", 1)[1].strip()
+                            name, val = line.split("=", 1)
+                            name = name.strip()
+                            if tokenrouter_mode:
+                                if name not in {"TOKENROUTER_API_KEY", "TOKENROUTER_API_KEYS"}:
+                                    continue
+                            elif nvidia_mode:
+                                if name not in {"NVIDIA_API_KEY", "NVIDIA_API_KEYS"}:
+                                    continue
+                            elif name not in {"GEMINI_API_KEY", "GEMINI_API_KEYS"}:
+                                continue
+                            val = val.strip()
                             for part in re.split(r"[,;\s]+", val):
                                 if len(part) > 20:
                                     keys.append(part.strip())
-                        elif len(line) > 20:
-                            keys.append(line.strip())
+                        elif not tokenrouter_mode and not nvidia_mode and len(line) > 20:
+                            keys.append(line)
             except Exception:
                 pass
 
