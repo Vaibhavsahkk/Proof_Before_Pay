@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build verifier image
+        run: docker build --target verifier --tag proof-before-pay-verifier .
+      - name: Run verifier suite
+        run: docker run --rm proof-before-pay-verifier
+
+  runtime-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build runtime image
+        run: docker build --target runtime --tag proof-before-pay-runtime .
+      - name: Run runtime smoke test
+        run: docker run --rm proof-before-pay-runtime
+
+  # Track B reproducibility on Linux: the frozen-dataset gate must pass on
+  # every push. PNG entries compare via decoded pixel data (Pillow's zlib
+  # encoder output differs across platform wheels); everything else is
+  # byte-exact. Runs the host verifier inside the verifier image so the
+  # dependencies match the pinned lock exactly.
+  track-b-freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build verifier image
+        run: docker build --target verifier --tag proof-before-pay-verifier .
+      - name: Run Track B freeze verifier
+        run: >
+          docker run --rm
+          -v "$PWD/data/track_b:/app/data/track_b:ro"
+          -v "$PWD/benchmark:/app/benchmark:ro"
+          -v "$PWD/scripts:/app/scripts:ro"
+          -w /app
+          --entrypoint sh
+          proof-before-pay-verifier
+          -c "python data/track_b/verify_track_b.py"

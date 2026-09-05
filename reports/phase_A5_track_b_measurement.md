@@ -80,6 +80,20 @@ the A4 freeze artifact.
 | Cost | NOT MEASURED | NOT MEASURED |
 | Human-review effort | NOT MEASURED | NOT MEASURED |
 
+### Supplementary cascade-aware findings metric
+
+Exact findings equality remains the frozen secondary metric above. For
+diagnosis, the evaluator also reports findings inclusion: every expected
+finding is present, while additional findings are classified as cascades
+rather than treated as missing evidence. On the frozen artifacts, inclusion
+was **75.00% for the baseline (9/12)** and **100.00% for the agent (12/12)**.
+The agent's case_112 output includes both expected findings and one cascade,
+`Math Error`; the exactness score correctly remains 0 for that case while the
+supplementary inclusion score records that the expected findings were not
+omitted. Cascade lists are emitted per case by
+`data/track_b/evaluation/evaluate_track_b.py` and preserved in
+`reports/track_b_final_results.json`.
+
 ## 8. Full results table
 
 | METRIC | SIMPLE BASELINE | AGENT SOLUTION | CHANGE |

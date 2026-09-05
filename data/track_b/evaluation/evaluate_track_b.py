@@ -8,7 +8,9 @@ OFFLINE RE-SCORING: this script never calls any live provider. It reads only:
 Methodology (frozen in data/track_b/DESIGN.md §9):
   PRIMARY   exact case-level recommendation accuracy (%)  = correct / 12
   SAFETY    unsafe-PAY rate (%) = non-PAY cases answered PAY / 10
-  SECONDARY findings exactness (%) = sorted-set equality vs ground truth
+    SECONDARY findings exactness (%) = sorted-set equality vs ground truth
+                        findings inclusion (%) = all expected findings present; extras are
+                                                                         reported separately as cascade findings
             schema validity (%)   = output satisfies official output contract
             runtime seconds       = per-case and total (informational)
             tokens                = where the provider returned them
@@ -91,6 +93,9 @@ def score_system(mode, run_id, ground_truth):
 
     correct_recs = 0
     correct_findings = 0
+    findings_inclusion_count = 0
+    cascade_case_count = 0
+    cascade_finding_count = 0
     schema_valid_count = 0
     unsafe_pay_count = 0
     non_pay_denominator = 0
@@ -110,12 +115,21 @@ def score_system(mode, run_id, ground_truth):
 
         # Execution failures count as wrong answers, never silently dropped.
         rec_correct = rec == expected_rec
-        findings_correct = isinstance(findings, list) and sorted(findings) == expected_findings
+        actual_findings = sorted(findings) if isinstance(findings, list) else []
+        findings_correct = isinstance(findings, list) and actual_findings == expected_findings
+        missing_findings = sorted(set(expected_findings) - set(actual_findings))
+        cascade_findings = sorted(set(actual_findings) - set(expected_findings))
+        findings_included = isinstance(findings, list) and not missing_findings
 
         if rec_correct:
             correct_recs += 1
         if findings_correct:
             correct_findings += 1
+        if findings_included:
+            findings_inclusion_count += 1
+        if cascade_findings:
+            cascade_case_count += 1
+            cascade_finding_count += len(cascade_findings)
         if schema_valid:
             schema_valid_count += 1
 
@@ -144,6 +158,9 @@ def score_system(mode, run_id, ground_truth):
             "actual_findings": sorted(findings) if isinstance(findings, list) else findings,
             "recommendation_correct": rec_correct,
             "findings_correct": findings_correct,
+            "findings_included": findings_included,
+            "missing_findings": missing_findings,
+            "cascade_findings": cascade_findings,
             "schema_valid": schema_valid,
             "unsafe_pay": unsafe_pay,
             "execution_status": status,
@@ -160,6 +177,10 @@ def score_system(mode, run_id, ground_truth):
             "recommendation_correct_count": correct_recs,
             "findings_exactness_percent": round(correct_findings / n * 100, 2),
             "findings_correct_count": correct_findings,
+            "findings_inclusion_percent": round(findings_inclusion_count / n * 100, 2),
+            "findings_inclusion_count": findings_inclusion_count,
+            "cascade_case_count": cascade_case_count,
+            "cascade_finding_count": cascade_finding_count,
             "schema_validity_percent": round(schema_valid_count / n * 100, 2),
             "schema_valid_count": schema_valid_count,
             "unsafe_pay_count": unsafe_pay_count,
@@ -195,6 +216,9 @@ def main():
         "findings_exactness_delta_percent": round(
             agent["metrics"]["findings_exactness_percent"]
             - baseline["metrics"]["findings_exactness_percent"], 2),
+        "findings_inclusion_delta_percent": round(
+            agent["metrics"]["findings_inclusion_percent"]
+            - baseline["metrics"]["findings_inclusion_percent"], 2),
         "schema_validity_delta_percent": round(
             agent["metrics"]["schema_validity_percent"]
             - baseline["metrics"]["schema_validity_percent"], 2),
@@ -218,6 +242,11 @@ def main():
                 "baseline": baseline["metrics"]["findings_exactness_percent"],
                 "agent": agent["metrics"]["findings_exactness_percent"],
                 "delta": delta["findings_exactness_delta_percent"],
+            },
+            "findings_inclusion_percent": {
+                "baseline": baseline["metrics"]["findings_inclusion_percent"],
+                "agent": agent["metrics"]["findings_inclusion_percent"],
+                "delta": delta["findings_inclusion_delta_percent"],
             },
             "schema_validity_percent": {
                 "baseline": baseline["metrics"]["schema_validity_percent"],
@@ -249,6 +278,11 @@ def main():
     print()
     print(f"  unsafe-PAY: baseline {baseline['metrics']['unsafe_pay_count']}/{baseline['metrics']['non_pay_denominator']}"
           f" | agent {agent['metrics']['unsafe_pay_count']}/{agent['metrics']['non_pay_denominator']}")
+    for system in (baseline, agent):
+        cascades = [case for case in system["per_case"] if case["cascade_findings"]]
+        if cascades:
+            print(f"  {system['mode']} cascade findings: "
+                  + "; ".join(f"{case['case_id']}={case['cascade_findings']}" for case in cascades))
     print(f"  results written to {args.out}")
     return 0
 

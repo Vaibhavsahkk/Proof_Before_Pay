@@ -12,16 +12,20 @@ expected_findings are the output of the official Phase1Oracle
 (scripts/validate_phase1.py) applied to each case's canonical bundle —
 the same deterministic rule engine used for the official Track A benchmark.
 
-Deterministic: fixed metadata, fixed layouts, fixed PNG seeds. Running this
+Deterministic: fixed metadata, fixed layouts, fixed PNG seeds, and a fixed
+PNG encoder. Running this
 script twice must reproduce byte-identical artifacts (self-checked by
 scripts via regenerate-into-temp + manifest equality in verify_track_b.py).
 """
 
+import binascii
 import hashlib
 import json
 import os
 import re
+import struct
 import sys
+import zlib
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -423,7 +427,36 @@ def render_png(path, lines):
     for ln in lines:
         draw.text((30, y), ln, fill="black", font=font)
         y += line_h
-    img.save(path, format="PNG", optimize=False)
+    _write_deterministic_png(path, width, height, img.tobytes())
+
+
+def _write_deterministic_png(path, width, height, rgb_bytes):
+    """Write RGB PNG bytes without Pillow/zlib implementation variance."""
+    raw = b"".join(
+        b"\x00" + rgb_bytes[row * width * 3:(row + 1) * width * 3]
+        for row in range(height)
+    )
+    blocks = []
+    for offset in range(0, len(raw), 65535):
+        block = raw[offset:offset + 65535]
+        final = offset + len(block) >= len(raw)
+        blocks.append((b"\x01" if final else b"\x00")
+                      + struct.pack("<H", len(block))
+                      + struct.pack("<H", 0xFFFF - len(block))
+                      + block)
+    zlib_stream = (b"\x78\x01" + b"".join(blocks)
+                   + struct.pack(">I", zlib.adler32(raw) & 0xFFFFFFFF))
+
+    def chunk(kind, data):
+        payload = kind + data
+        return (struct.pack(">I", len(data)) + payload
+                + struct.pack(">I", binascii.crc32(payload) & 0xFFFFFFFF))
+
+    png = b"\x89PNG\r\n\x1a\n"
+    png += chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+    png += chunk(b"IDAT", zlib_stream)
+    png += chunk(b"IEND", b"")
+    path.write_bytes(png)
 
 
 def render_json(path, key, obj):

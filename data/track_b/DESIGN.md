@@ -78,6 +78,15 @@ Rationale: Track B tests **format tolerance, extraction under noise, and
 cross-document reconciliation**, not OCR archaeology. This keeps the ground
 truth derivable and the comparison fair to both systems.
 
+### Deterministic PNG encoding
+
+The generator renders PNG pixels with Pillow but writes the PNG container with
+its own fixed encoder: RGB color type, filter 0 for every scanline, and
+DEFLATE stored blocks with fixed zlib framing. This avoids platform-specific
+Pillow/zlib compression output while preserving the rendered pixel content.
+The frozen v1.0 files remain unchanged; the integrity verifier compares their
+decoded pixels with regenerated output for backward-compatible freeze checks.
+
 ## 4. Case Inventory (frozen)
 
 | Case | Vendor (synthetic) | Deliberate condition | Documents | Expected rec | Expected findings |
