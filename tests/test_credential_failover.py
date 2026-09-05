@@ -79,11 +79,35 @@ class TestCredentialFailover(unittest.TestCase):
             
             # Second try succeeds
             mock_resp = MagicMock()
-            # Must return valid structure, even if mocked
+            # Must return valid structure, even if mocked. The response must
+            # ALSO satisfy the item/totals field contract (invoice-level
+            # subtotal/tax/total + items with quantity/unit_price/line_total),
+            # otherwise the extractor's contract validation fires a
+            # reinforced retry and this test would count 4 calls instead of 3.
             if kwargs.get('contents', '').startswith("You are a financial investigator"):
                  mock_resp.text = json.dumps({"uncertainty": "test", "required_human_next_step": "test"})
             else:
-                 mock_resp.text = json.dumps({"case_id": "case_429", "invoice": {"total": 100, "currency": "USD"}})
+                 mock_resp.text = json.dumps({
+                     "case_id": "case_429",
+                     "invoice": {
+                         "invoice_number": "INV-429",
+                         "vendor_name": "SYNTHETIC TEST VENDOR",
+                         "vendor_tax_id": "TX-429",
+                         "bank_account": "ACC-429",
+                         "currency": "USD",
+                         "tax_rate_percent": "0.00",
+                         "items": [{
+                             "item_id": "TEST-1",
+                             "description": "test item",
+                             "quantity": "1",
+                             "unit_price": "100.00",
+                             "line_total": "100.00"
+                         }],
+                         "subtotal": "100.00",
+                         "tax": "0.00",
+                         "total": "100.00"
+                     }
+                 })
             return mock_resp
             
         mock_models.generate_content.side_effect = fake_generate_content

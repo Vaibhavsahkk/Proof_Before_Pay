@@ -72,6 +72,62 @@ fail-closed to HOLD with a false `Math Error` finding.
   they assert the Docker runtime); 165/165 in the Linux verifier container
   with the fixes mounted.
 
+### Runtime alignment
+
+- The runtime lockfile now pins `google-genai==2.20.0`, matching the SDK
+  version recorded by the A4 agent freeze and Track B execution envelope.
+  The host venv and offline suite were re-verified on 2.20.0
+  (164 passed / 2 container-only skipped, exit 0).
+- Historical Phase 2 artifacts that recorded `2.19.0` remain immutable
+  evidence of that earlier run and are not rewritten.
+
+### Post-audit follow-up fix (2026-09-05, invoice-level totals contract)
+
+A live post-fix run (23:31–23:32, `trace_20260905_180134_82965860.jsonl`)
+exposed a sibling of the original defect: the item contract held
+(case_112 items extracted perfectly), but the model dropped the
+invoice-LEVEL totals fields (`subtotal`/`tax`/`total`), which are also
+`required` by the frozen public schema but were not covered by the
+item-only contract. The orchestrator's totals checks then failed
+(`sum(line_totals) vs None`) → false `Math Error` → wrong HOLD on
+case_112. Fixes:
+
+- `INVOICE_REQUIRED_FIELDS` + prompt contract line for invoice totals;
+  `_missing_invoice_totals` validator feeding the same reinforced retry.
+- `_repair_invoice_totals`: deterministic completion grounded in
+  extracted values only — `subtotal = sum(line_totals)`,
+  `tax = round_to_cents(subtotal × tax_rate/100)` (mirrors
+  `DecimalCalculator.calculate_tax` so the orchestrator's check passes
+  by construction), `total = subtotal + tax`. Present values are never
+  overwritten, so a deliberate totals-mismatch invoice keeps its
+  fail-closed Math Error path.
+- Regression test fix: `test_orchestrator_resume_state`'s mocked
+  extraction response was itself contract-violating (invoice without
+  subtotal/tax/items), which fired the reinforced retry and broke the
+  call-count assertion after the contract extension. The mock is now
+  schema-complete; the failover behavior (429 → cooldown → next key →
+  success) is unchanged and still asserted.
+- Working-tree hygiene: a corrupted `reports/phase_3_3_results.json`
+  (overwritten by quota-exhausted probe runs — three Track A cases showed
+  `INVESTIGATE / ["All credentials exhausted"]`) and three deleted Track A
+  extraction caches were restored from HEAD; the schema-invalid
+  case_112 Track B cache produced by the same evening's runs was
+  replaced with the verified HEAD cache (items + totals complete).
+- Offline verdict verification through the cache path after the repair
+  pipeline: case_102 PAY exact; case_109 INVESTIGATE exact; case_112
+  INVESTIGATE with both expected findings (plus the baseline-consistent
+  `Missing GRN Line ID` cascade).
+- `remeasure_a5.py` now enforces both master-prompt requirements that
+  were missing: a 1-token quota pre-check on the A4-recorded extraction
+  model (exits 3 with the provider's own reset/quota message before any
+  run starts — verified live against the currently exhausted 3.6-flash
+  bucket) and Track B cache clearing for all 12 cases before the
+  re-measurement (`--keep-cache` opt-out for cache-based debugging).
+- CI (`ci.yml`) gained a `track-b-freeze` job running
+  `data/track_b/verify_track_b.py` on Linux via the verifier image on
+  every push (simulated locally: PASS), closing the prompt's requirement
+  that the pixel-hash determinism gate run on Linux in CI.
+
 ## 4. Reproducibility fixes shipped alongside
 
 - `data/track_b/verify_track_b.py`: the determinism gate compared

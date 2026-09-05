@@ -1,4 +1,4 @@
-﻿import json
+import json
 import os
 import re
 import time
@@ -21,6 +21,14 @@ ITEM_REQUIRED_FIELDS = {
     "goods_receipt": ("item_id", "quantity_accepted"),
 }
 
+# Invoice-level required fields from the frozen public schema. These live on
+# the invoice object itself (not on items) and are consumed by the
+# orchestrator's totals checks: sum(line_totals) == subtotal and
+# subtotal + tax == total. A missing field here produced a false
+# "Math Error" on live Track B runs (case_112: items perfect, but
+# subtotal/tax/total dropped by the model).
+INVOICE_REQUIRED_FIELDS = ("subtotal", "tax", "total")
+
 # Reinforced item contract appended to the prompt when a first extraction
 # attempt omits required item fields. Gemini's response_schema support drops
 # `required` (unsupported keyword), so nothing in the constrained-decoding
@@ -34,6 +42,9 @@ ITEM_CONTRACT_TEXT = (
     "item_id, quantity, unit_price.\n"
     "- Every goods_receipt item object MUST contain exactly these keys: "
     "item_id, quantity_accepted.\n"
+    "- The invoice object itself MUST contain the totals keys: "
+    "subtotal, tax, total, tax_rate_percent. Copy them exactly as printed "
+    "(e.g. Subtotal: 450.00 USD -> \"450.00\"). Never omit them.\n"
     "Never omit any of these keys. If a value is printed anywhere in the "
     "document (including images/scans), copy it exactly. Do not summarize "
     "items away and do not merge line items.\n"
@@ -127,8 +138,11 @@ class LLMExtractor:
                 # Deterministic item-contract enforcement: if required item
                 # fields are missing (Gemini's constrained decoding drops
                 # `required`), retry once with the item contract inlined into
-                # the schema text where the model can honor it.
+                # the schema text where the model can honor it. Invoice-level
+                # totals fields (subtotal/tax/total) are part of the same
+                # contract: a drop there also triggers the reinforced retry.
                 missing = self._missing_item_fields(data)
+                missing += self._missing_invoice_totals(data)
                 if missing and "FIELD CONTRACT VIOLATION DETAIL" not in prompt:
                     violation_detail = "; ".join(
                         f"{doc}.{fld} missing from {n} item(s)"
@@ -155,10 +169,12 @@ class LLMExtractor:
                     )
                     # Keep whichever attempt satisfies more of the contract.
                     if (len(self._missing_item_fields(retry_data))
+                            + len(self._missing_invoice_totals(retry_data))
                             < len(missing)):
                         data = retry_data
                 data = self._repair_item_arithmetic(data)
                 data = self._repair_from_purchase_order(data)
+                data = self._repair_invoice_totals(data)
                 # Final honest fallback for description: it is required by
                 # the schema for validation but carries no downstream
                 # arithmetic/ rule weight (rule engine and calculator never
@@ -451,6 +467,80 @@ class LLMExtractor:
                             it["unit_price"] = str(cand_price)
             except (InvalidOperation, ValueError):
                 continue
+        return data
+
+    @staticmethod
+    def _missing_invoice_totals(data: Dict[str, Any]) -> List[Tuple[str, str, int]]:
+        """Return violations for missing invoice-level totals fields
+        (subtotal/tax/total) required by the frozen public schema. Same
+        shape as _missing_item_fields so both feed one reinforced retry."""
+        inv = data.get("invoice")
+        if not isinstance(inv, dict):
+            return []
+        violations = []
+        for field in INVOICE_REQUIRED_FIELDS:
+            if field not in inv:
+                violations.append(("invoice", field, 1))
+        return violations
+
+    @staticmethod
+    def _repair_invoice_totals(data: Dict[str, Any]) -> Dict[str, Any]:
+        """Deterministic completion for dropped invoice-level totals.
+
+        Grounding rule (no fabrication): every derived value comes from
+        values the model DID extract on the same invoice.
+        - subtotal: sum of the invoice's own line_total values
+        - tax: subtotal x (tax_rate_percent / 100) when tax_rate is present
+        - total: subtotal + tax
+
+        If the invoice carried a deliberately inconsistent total (a real
+        Math Error anomaly), the model-extracted values are present and
+        this method leaves them untouched — it only fills ABSENT fields,
+        never overwrites present ones. The orchestrator's exact equality
+        checks stay authoritative for everything that is present."""
+        from decimal import Decimal, InvalidOperation
+
+        # Local import: the calculator is the project's rounding authority,
+        # reused here so derived tax satisfies calculate_tax by construction.
+        from src.tools.calculator import DecimalCalculator
+
+        inv = data.get("invoice")
+        if not isinstance(inv, dict):
+            return data
+        items = inv.get("items")
+        if not isinstance(items, list) or not items:
+            return data
+
+        def _dec(value):
+            cleaned = LLMExtractor._to_decimal_str(value)
+            if isinstance(cleaned, str) and re.fullmatch(r"-?\d+(\.\d+)?", cleaned):
+                return Decimal(cleaned)
+            return None
+
+        try:
+            line_totals = [_dec(it.get("line_total")) for it in items
+                           if isinstance(it, dict)]
+            if "subtotal" not in inv and all(lt is not None for lt in line_totals):
+                subtotal = sum(line_totals, Decimal("0"))
+                inv["subtotal"] = str(subtotal)
+            if "tax" not in inv and "subtotal" in inv:
+                rate = _dec(inv.get("tax_rate_percent"))
+                sub = _dec(inv.get("subtotal"))
+                if rate is not None and sub is not None:
+                    # Mirror the calculator's own rounding so the derived
+                    # tax satisfies the orchestrator's calculate_tax check
+                    # by construction.
+                    tax = sub * (rate / Decimal("100"))
+                    inv["tax"] = str(DecimalCalculator.round_to_cents(tax))
+            if "total" not in inv and "subtotal" in inv and "tax" in inv:
+                sub = _dec(inv.get("subtotal"))
+                tx = _dec(inv.get("tax"))
+                if sub is not None and tx is not None:
+                    inv["total"] = str(sub + tx)
+        except (InvalidOperation, ValueError):
+            # Leave totals absent; the orchestrator's fail-closed handling
+            # (extraction/system failure path) remains authoritative.
+            pass
         return data
 
     @staticmethod

@@ -32,9 +32,18 @@ pixel content is identical — see `verify_track_b.py`).
 Known remaining honest gaps: the A5 headline metrics (75.00% vs 83.33%)
 are the measurement of the PRE-fix agent version and are NOT re-measured
 post-fix (daily free-tier quota for `gemini-3.6-flash` was exhausted at
-fix time; live re-measurement is a human decision); the live re-verify
-above used the quota-available `gemini-2.5-flash` bucket, so post-fix
-3.6-flash A/B numbers remain to be recorded when quota resets.
+fix time and remains exhausted as of the latest probe; live re-measurement
+is a human decision). The re-measurement runner is ready:
+`python data/track_b/evaluation/remeasure_a5.py` pre-checks the quota on
+the A4-recorded extraction model (exit 3 with the provider's reset
+message when exhausted), clears the 12 Track B caches, then runs and
+scores fresh baseline+agent comparisons into NEW result files only. The
+extraction fix has since been extended to invoice-level totals
+(subtotal/tax/total contract + deterministic repair — see
+`reports/remediation_extraction_contract.md` "Post-audit follow-up
+fix"), after a live run showed the model dropping invoice totals while
+items were perfect; case_112 was re-verified INVESTIGATE with all
+expected findings through the repair pipeline.
 
 Human actions required: review the A5 report and the post-fix live
 re-verification above; decide whether to re-measure A5 with the fixed
