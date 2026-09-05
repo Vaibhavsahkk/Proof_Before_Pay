@@ -3,8 +3,13 @@
 .venv/
 media/raw/
 media/segments/
+media/media/
 media/*.wav
 media/visuals.mp4
+media/visuals_3d.mp4
+media/*.blend*
+media/blender_verification.png
+media/blender_architecture_3d_silent.mp4
 .env.*
 !.env.example
 tokenrouter.local.env

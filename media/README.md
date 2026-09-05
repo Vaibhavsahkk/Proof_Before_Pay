@@ -7,6 +7,9 @@ Generated on 2026-09-06 from the current repository state.
 - `architecture.svg` - code-backed system architecture image.
 - `architecture.png` - raster architecture image when a local rasterizer is available.
 - `proof_before_pay_explainer.mp4` - approximately five-minute narrated explainer.
+- `proof_before_pay_3d_explainer.mp4` - enhanced narrated explainer with a rendered Blender 3D architecture chapter.
+- `blender_architecture_3d.mp4` - standalone 15-second narrated Blender architecture clip.
+- `../scripts/blender_explainer.py` - reproducible Blender scene and animation script.
 - `01_architecture.png` through `07_audit_trace.png` - storyboard evidence frames.
 - `narration.txt` - narration source text.
 - `../scripts/record_explainer.py` - reproducible browser capture harness.
